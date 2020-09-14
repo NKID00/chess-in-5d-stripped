@@ -1,0 +1,54 @@
+{
+  "name": "chess-in-5d",
+  "author": {
+    "name": "Shaun Wu",
+    "email": "alexbay218@gmail.com"
+  },
+  "version": "0.0.1",
+  "private": true,
+  "build": {
+    "appId": "com.electron.chess-in-5d",
+    "productName": "Chess In 5D"
+  },
+  "dependencies": {
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.5.0",
+    "@testing-library/user-event": "^7.2.1",
+    "concurrently": "^5.3.0",
+    "electron-is-dev": "^1.2.0",
+    "material-ui": "^0.20.2",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-router": "^5.2.0",
+    "react-scripts": "3.4.3",
+    "wait-on": "^5.2.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "estart": "concurrently \"npm start\" \"wait-on http://localhost:3000 && electron ./public/electron.js\"",
+    "build": "react-scripts build",
+    "ebuild": "npm run build && electron-builder",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "electron": "^9.0.4",
+    "electron-builder": "^22.8.0",
+    "react-cosmos": "^5.4.0"
+  }
+}
