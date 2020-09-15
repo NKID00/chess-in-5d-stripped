@@ -15,17 +15,23 @@
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
     "concurrently": "^5.3.0",
+    "deep-copy": "^1.4.2",
     "electron-is-dev": "^1.2.0",
     "material-ui": "^0.20.2",
+    "module-alias": "^2.2.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-router": "^5.2.0",
     "react-scripts": "3.4.3",
     "wait-on": "^5.2.0"
   },
+  "_moduleAliases": {
+    "@local": "./src"
+  },
   "scripts": {
     "start": "react-scripts start",
     "estart": "concurrently \"npm start\" \"wait-on http://localhost:3000 && electron ./public/electron.js\"",
+    "cli": "nodemon ./src/engine/cli/initCli.js",
     "build": "react-scripts build",
     "ebuild": "npm run build && electron-builder",
     "test": "react-scripts test",
@@ -49,6 +55,7 @@
   "devDependencies": {
     "electron": "^9.0.4",
     "electron-builder": "^22.8.0",
+    "nodemon": "^2.0.4",
     "react-cosmos": "^5.4.0"
   }
 }

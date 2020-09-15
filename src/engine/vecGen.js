@@ -1,187 +1,21 @@
 exports.generate = (maxTurn, minTimeline, maxTimeline, currPosition, vec) => {
   var res = [];
-  for(var t = currPosition[0];t >= 1;t--) {
-    var absT = Math.abs(currPosition[0] - t);
-    for(var l = currPosition[1];l >= minTimeline;l--) {
-      var absL = Math.abs(currPosition[1] - l);
-      for(var r = currPosition[2];r >= 0;r--) {
-        var absR = Math.abs(currPosition[2] - r);
-        for(var f = currPosition[3];f >= 0;f--) {
-          var absF = Math.abs(currPosition[3] - f);
-          var isInVec = true;
-          if(isInVec) { isInVec = absT === vec[0]; }
-          if(isInVec) { isInVec = absL === vec[1]; }
-          if(isInVec) { isInVec = absR === vec[2]; }
-          if(isInVec) { isInVec = absF === vec[3]; }
-          if(isInVec) { res.push([t, l, r, f]); }
-        }
-        for(var f = currPosition[3];f <= 7;f++) {
-          var absF = Math.abs(currPosition[3] - f);
-          var isInVec = true;
-          if(isInVec) { isInVec = absT === vec[0]; }
-          if(isInVec) { isInVec = absL === vec[1]; }
-          if(isInVec) { isInVec = absR === vec[2]; }
-          if(isInVec) { isInVec = absF === vec[3]; }
-          if(isInVec) { res.push([t, l, r, f]); }
-        }
-      }
-      for(var r = currPosition[2];r <= 7;r++) {
-        var absR = Math.abs(currPosition[2] - r);
-        for(var f = currPosition[3];f >= 0;f--) {
-          var absF = Math.abs(currPosition[3] - f);
-          var isInVec = true;
-          if(isInVec) { isInVec = absT === vec[0]; }
-          if(isInVec) { isInVec = absL === vec[1]; }
-          if(isInVec) { isInVec = absR === vec[2]; }
-          if(isInVec) { isInVec = absF === vec[3]; }
-          if(isInVec) { res.push([t, l, r, f]); }
-        }
-        for(var f = currPosition[3];f <= 7;f++) {
-          var absF = Math.abs(currPosition[3] - f);
-          var isInVec = true;
-          if(isInVec) { isInVec = absT === vec[0]; }
-          if(isInVec) { isInVec = absL === vec[1]; }
-          if(isInVec) { isInVec = absR === vec[2]; }
-          if(isInVec) { isInVec = absF === vec[3]; }
-          if(isInVec) { res.push([t, l, r, f]); }
-        }
-      }
-    }
-    for(var l = currPosition[1];l <= maxTimeline;l++) {
-      var absL = Math.abs(currPosition[1] - l);
-      for(var r = currPosition[2];r >= 0;r--) {
-        var absR = Math.abs(currPosition[2] - r);
-        for(var f = currPosition[3];f >= 0;f--) {
-          var absF = Math.abs(currPosition[3] - f);
-          var isInVec = true;
-          if(isInVec) { isInVec = absT === vec[0]; }
-          if(isInVec) { isInVec = absL === vec[1]; }
-          if(isInVec) { isInVec = absR === vec[2]; }
-          if(isInVec) { isInVec = absF === vec[3]; }
-          if(isInVec) { res.push([t, l, r, f]); }
-        }
-        for(var f = currPosition[3];f <= 7;f++) {
-          var absF = Math.abs(currPosition[3] - f);
-          var isInVec = true;
-          if(isInVec) { isInVec = absT === vec[0]; }
-          if(isInVec) { isInVec = absL === vec[1]; }
-          if(isInVec) { isInVec = absR === vec[2]; }
-          if(isInVec) { isInVec = absF === vec[3]; }
-          if(isInVec) { res.push([t, l, r, f]); }
-        }
-      }
-      for(var r = currPosition[2];r <= 7;r++) {
-        var absR = Math.abs(currPosition[2] - r);
-        for(var f = currPosition[3];f >= 0;f--) {
-          var absF = Math.abs(currPosition[3] - f);
-          var isInVec = true;
-          if(isInVec) { isInVec = absT === vec[0]; }
-          if(isInVec) { isInVec = absL === vec[1]; }
-          if(isInVec) { isInVec = absR === vec[2]; }
-          if(isInVec) { isInVec = absF === vec[3]; }
-          if(isInVec) { res.push([t, l, r, f]); }
-        }
-        for(var f = currPosition[3];f <= 7;f++) {
-          var absF = Math.abs(currPosition[3] - f);
-          var isInVec = true;
-          if(isInVec) { isInVec = absT === vec[0]; }
-          if(isInVec) { isInVec = absL === vec[1]; }
-          if(isInVec) { isInVec = absR === vec[2]; }
-          if(isInVec) { isInVec = absF === vec[3]; }
-          if(isInVec) { res.push([t, l, r, f]); }
-        }
-      }
-    }
-  }
-  for(var t = currPosition[0];t <= maxTurn;t++) {
-    var absT = Math.abs(currPosition[0] - t);
-    for(var l = currPosition[1];l >= minTimeline;l--) {
-      var absL = Math.abs(currPosition[1] - l);
-      for(var r = currPosition[2];r >= 0;r--) {
-        var absR = Math.abs(currPosition[2] - r);
-        for(var f = currPosition[3];f >= 0;f--) {
-          var absF = Math.abs(currPosition[3] - f);
-          var isInVec = true;
-          if(isInVec) { isInVec = absT === vec[0]; }
-          if(isInVec) { isInVec = absL === vec[1]; }
-          if(isInVec) { isInVec = absR === vec[2]; }
-          if(isInVec) { isInVec = absF === vec[3]; }
-          if(isInVec) { res.push([t, l, r, f]); }
-        }
-        for(var f = currPosition[3];f <= 7;f++) {
-          var absF = Math.abs(currPosition[3] - f);
-          var isInVec = true;
-          if(isInVec) { isInVec = absT === vec[0]; }
-          if(isInVec) { isInVec = absL === vec[1]; }
-          if(isInVec) { isInVec = absR === vec[2]; }
-          if(isInVec) { isInVec = absF === vec[3]; }
-          if(isInVec) { res.push([t, l, r, f]); }
-        }
-      }
-      for(var r = currPosition[2];r <= 7;r++) {
-        var absR = Math.abs(currPosition[2] - r);
-        for(var f = currPosition[3];f >= 0;f--) {
-          var absF = Math.abs(currPosition[3] - f);
-          var isInVec = true;
-          if(isInVec) { isInVec = absT === vec[0]; }
-          if(isInVec) { isInVec = absL === vec[1]; }
-          if(isInVec) { isInVec = absR === vec[2]; }
-          if(isInVec) { isInVec = absF === vec[3]; }
-          if(isInVec) { res.push([t, l, r, f]); }
-        }
-        for(var f = currPosition[3];f <= 7;f++) {
-          var absF = Math.abs(currPosition[3] - f);
-          var isInVec = true;
-          if(isInVec) { isInVec = absT === vec[0]; }
-          if(isInVec) { isInVec = absL === vec[1]; }
-          if(isInVec) { isInVec = absR === vec[2]; }
-          if(isInVec) { isInVec = absF === vec[3]; }
-          if(isInVec) { res.push([t, l, r, f]); }
-        }
-      }
-    }
-    for(var l = currPosition[1];l <= maxTimeline;l++) {
-      var absL = Math.abs(currPosition[1] - l);
-      for(var r = currPosition[2];r >= 0;r--) {
-        var absR = Math.abs(currPosition[2] - r);
-        for(var f = currPosition[3];f >= 0;f--) {
-          var absF = Math.abs(currPosition[3] - f);
-          var isInVec = true;
-          if(isInVec) { isInVec = absT === vec[0]; }
-          if(isInVec) { isInVec = absL === vec[1]; }
-          if(isInVec) { isInVec = absR === vec[2]; }
-          if(isInVec) { isInVec = absF === vec[3]; }
-          if(isInVec) { res.push([t, l, r, f]); }
-        }
-        for(var f = currPosition[3];f <= 7;f++) {
-          var absF = Math.abs(currPosition[3] - f);
-          var isInVec = true;
-          if(isInVec) { isInVec = absT === vec[0]; }
-          if(isInVec) { isInVec = absL === vec[1]; }
-          if(isInVec) { isInVec = absR === vec[2]; }
-          if(isInVec) { isInVec = absF === vec[3]; }
-          if(isInVec) { res.push([t, l, r, f]); }
-        }
-      }
-      for(var r = currPosition[2];r <= 7;r++) {
-        var absR = Math.abs(currPosition[2] - r);
-        for(var f = currPosition[3];f >= 0;f--) {
-          var absF = Math.abs(currPosition[3] - f);
-          var isInVec = true;
-          if(isInVec) { isInVec = absT === vec[0]; }
-          if(isInVec) { isInVec = absL === vec[1]; }
-          if(isInVec) { isInVec = absR === vec[2]; }
-          if(isInVec) { isInVec = absF === vec[3]; }
-          if(isInVec) { res.push([t, l, r, f]); }
-        }
-        for(var f = currPosition[3];f <= 7;f++) {
-          var absF = Math.abs(currPosition[3] - f);
-          var isInVec = true;
-          if(isInVec) { isInVec = absT === vec[0]; }
-          if(isInVec) { isInVec = absL === vec[1]; }
-          if(isInVec) { isInVec = absR === vec[2]; }
-          if(isInVec) { isInVec = absF === vec[3]; }
-          if(isInVec) { res.push([t, l, r, f]); }
+  var blocked = false;
+  var newPosition = currPosition.slice();
+  while(!blocked) {
+    newPosition[0] += vec[0];
+    newPosition[1] += vec[1];
+    newPosition[2] += vec[2];
+    newPosition[3] += vec[3];
+
+    blocked = true;
+    if(newPosition[0] >= 1 && newPosition[0] <= maxTurn) {
+      if(newPosition[1] >= minTimeline && newPosition[1] <= maxTimeline) {
+        if(newPosition[2] >= 0 && newPosition[2] <= 7) {
+          if(newPosition[3] >= 0 && newPosition[3] <= 7) {
+            res.push(newPosition.slice());
+            blocked = false;
+          }
         }
       }
     }

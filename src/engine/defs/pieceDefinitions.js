@@ -1,4 +1,4 @@
-exports = [
+exports.defs = [
   {
     name: 'pawn',
     displayName: 'Pawn',
@@ -6,7 +6,10 @@ exports = [
     checkmate: false,
     moveSpec: [],
     moveVec: [],
-    moveGen: (gameState, currPosition, player) => {
+    moveGen: (gameState, currPosition) => {
+      return [];
+    },
+    highlightGen: (gameState, currPosition) => {
       return [];
     }
   },
@@ -16,15 +19,35 @@ exports = [
     char: 'B',
     checkmate: false,
     moveSpec: [],
-    moveVec: [ //[Turn, Timeline, Rank, File]
-      [0,0,1,1],
-      [0,1,0,1],
-      [0,1,1,0],
-      [1,0,0,1],
-      [1,0,1,0],
-      [1,1,0,0]
+    moveVec: [
+      //[Turn, Timeline, Rank, File]
+      [ 0, 0, 1, 1],
+      [ 0, 0, 1,-1],
+      [ 0, 0,-1, 1],
+      [ 0, 0,-1,-1],
+
+      [ 0, 1, 0, 1],
+      [ 0, 1, 0,-1],
+      [ 0,-1, 0, 1],
+      [ 0,-1, 0,-1],
+
+      [ 1, 0, 0, 1],
+      [ 1, 0, 0,-1],
+      [-1, 0, 0, 1],
+      [-1, 0, 0,-1],
+
+      [ 1, 0, 1, 0],
+      [ 1, 0,-1, 0],
+      [-1, 0, 1, 0],
+      [-1, 0,-1, 0],
+
+      [ 1, 1, 0, 0],
+      [ 1,-1, 0, 0],
+      [-1, 1, 0, 0],
+      [-1,-1, 0, 0]
     ],
-    moveGen: (gameState, currPosition, player) => { return []; }
+    moveGen: (gameState, currPosition) => { return []; },
+    highlightGen: (gameState, currPosition) => { return []; }
   },
   {
     name: 'knight',
@@ -63,7 +86,8 @@ exports = [
       [-1,-2, 0, 0]
     ],
     moveVec: [],
-    moveGen: (gameState, currPosition, player) => { return []; }
+    moveGen: (gameState, currPosition) => { return []; },
+    highlightGen: (gameState, currPosition) => { return []; }
   },
   {
     name: 'rook',
@@ -71,13 +95,19 @@ exports = [
     char: 'R',
     checkmate: false,
     moveSpec: [],
-    moveVec: [ //[Turn, Timeline, Rank, File]
-      [0,0,0,1],
-      [0,0,1,0],
-      [0,1,0,0],
-      [1,0,0,0]
+    moveVec: [
+      //[Turn, Timeline, Rank, File]
+      [ 0, 0, 0, 1],
+      [ 0, 0, 1, 0],
+      [ 0, 1, 0, 0],
+      [ 1, 0, 0, 0],
+      [ 0, 0, 0,-1],
+      [ 0, 0,-1, 0],
+      [ 0,-1, 0, 0],
+      [-1, 0, 0, 0]
     ],
-    moveGen: (gameState, currPosition, player) => { return []; }
+    moveGen: (gameState, currPosition) => { return []; },
+    highlightGen: (gameState, currPosition, player) => { return []; }
   },
   {
     name: 'queen',
@@ -85,29 +115,99 @@ exports = [
     char: 'Q',
     checkmate: false,
     moveSpec: [],
-    moveVec: [ //[Turn, Timeline, Rank, File]
-      [0,0,0,1],
-      [0,0,1,0],
-      [0,0,1,1],
-      [0,1,0,0],
-      [0,1,0,1],
-      [0,1,1,1],
-      [1,0,0,0],
-      [1,0,0,1],
-      [1,0,1,0],
-      [1,0,1,1],
-      [1,1,0,0],
-      [1,1,0,1],
-      [1,1,1,1]
+    moveVec: [
+      //[Turn, Timeline, Rank, File]
+      [ 0, 0, 0, 1],
+      [ 0, 0, 0,-1],
+
+      [ 0, 0, 1, 0],
+      [ 0, 0,-1, 0],
+
+      [ 0, 0, 1, 1],
+      [ 0, 0, 1,-1],
+      [ 0, 0,-1, 1],
+      [ 0, 0,-1,-1],
+
+      [ 0, 1, 0, 0],
+      [ 0,-1, 0, 0],
+
+      [ 0, 1, 0, 1],
+      [ 0, 1, 0,-1],
+      [ 0,-1, 0, 1],
+      [ 0,-1, 0,-1],
+
+      [ 0, 1, 1, 1],
+      [ 0, 1, 1,-1],
+      [ 0, 1,-1, 1],
+      [ 0, 1,-1,-1],
+      [ 0,-1, 1, 1],
+      [ 0,-1, 1,-1],
+      [ 0,-1,-1, 1],
+      [ 0,-1,-1,-1],
+
+      [ 1, 0, 0, 0],
+      [-1, 0, 0, 0],
+
+      [ 1, 0, 0, 1],
+      [ 1, 0, 0,-1],
+      [-1, 0, 0, 1],
+      [-1, 0, 0,-1],
+
+      [ 1, 0, 1, 0],
+      [ 1, 0,-1, 0],
+      [-1, 0, 1, 0],
+      [-1, 0,-1, 0],
+
+      [ 1, 0, 1, 1],
+      [ 1, 0, 1,-1],
+      [ 1, 0,-1, 1],
+      [ 1, 0,-1,-1],
+      [-1, 0, 1, 1],
+      [-1, 0, 1,-1],
+      [-1, 0,-1, 1],
+      [-1, 0,-1,-1],
+
+      [ 1, 1, 0, 0],
+      [ 1,-1, 0, 0],
+      [-1, 1, 0, 0],
+      [-1,-1, 0, 0],
+
+      [ 1, 1, 0, 1],
+      [ 1, 1, 0,-1],
+      [ 1,-1, 0, 1],
+      [ 1,-1, 0,-1],
+      [-1, 1, 0, 1],
+      [-1, 1, 0,-1],
+      [-1,-1, 0, 1],
+      [-1,-1, 0,-1],
+
+      [ 1, 1, 1, 1],
+      [ 1, 1, 1,-1],
+      [ 1, 1,-1, 1],
+      [ 1, 1,-1,-1],
+      [ 1,-1, 1, 1],
+      [ 1,-1, 1,-1],
+      [ 1,-1,-1, 1],
+      [ 1,-1,-1,-1],
+      [-1, 1, 1, 1],
+      [-1, 1, 1,-1],
+      [-1, 1,-1, 1],
+      [-1, 1,-1,-1],
+      [-1,-1, 1, 1],
+      [-1,-1, 1,-1],
+      [-1,-1,-1, 1],
+      [-1,-1,-1,-1]
     ],
-    moveGen: (gameState, currPosition, player) => { return []; }
+    moveGen: (gameState, currPosition) => { return []; },
+    highlightGen: (gameState, currPosition) => { return []; }
   },
   {
     name: 'king',
     displayName: 'King',
     char: 'K',
     checkmate: true,
-    moveSpec: [ //[Turn, Timeline, Rank, File]
+    moveSpec: [
+      //[Turn, Timeline, Rank, File]
       [ 0, 0, 0, 1],
       [ 0, 0, 0,-1],
 
@@ -190,6 +290,7 @@ exports = [
       [-1,-1,-1,-1]
     ],
     moveVec: [],
-    moveGen: (gameState, currPosition, player) => { return []; }
+    moveGen: (gameState, currPosition) => { return []; },
+    highlightGen: (gameState, currPosition) => { return []; }
   }
 ];

@@ -16,10 +16,24 @@
     },
     "pieceCapture": {
       "anyOf": [
-        { "$ref": "positionSchema.json" },
+        {
+          "type": "object",
+          "properties": {
+            "piece": {
+              "$ref": "pieceSchema.json"
+              "description": "Used for indicating piece being captured by this move."
+            }
+            "position": {
+              "anyOf": [
+                { "$ref": "positionSchema.json" }
+              ],
+              "description": "Position of piece getting captured by this move. Usually the same as destinationPosition, but moves like En Passant break this."
+            }
+          }
+        },
         { "type": "null" }
       ],
-      "description": "Position of piece getting captured by this move. Null if no piece is captured. Usually the same as destinationPosition, but moves like En Passant break this."
+      "description": "Used to indicate if a piece is being captured, null if no piece is captured by this move"
     },
     "sourcePosition": {
       "$ref": "positionSchema.json",
