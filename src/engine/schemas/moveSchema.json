@@ -1,0 +1,47 @@
+{
+  "$id": "moveSchema.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Move",
+  "description": "Describes a possible piece move to be taken during a player's action",
+  "type": "object",
+  "properties": {
+    "action": {
+      "type": "integer",
+      "description": "The associated action number of a move",
+      "minimum": 1
+    },
+    "player": {
+      "$ref": "playerSchema.json",
+      "description": "String of player making this move (white, black, etc.)"
+    },
+    "pieceCapture": {
+      "anyOf": [
+        { "$ref": "positionSchema.json" },
+        { "type": "null" }
+      ],
+      "description": "Position of piece getting captured by this move. Null if no piece is captured. Usually the same as destinationPosition, but moves like En Passant break this."
+    },
+    "sourcePosition": {
+      "$ref": "positionSchema.json",
+      "description": "Position of the piece to move"
+    },
+    "destinationPosition": {
+      "$ref": "positionSchema.json",
+      "description": "Position for the piece to move to"
+    },
+    "destinationPiece": {
+      "anyOf": [
+        { "$ref": "pieceSchema.json" },
+        { "type": "null" }
+      ],
+      "description": "Used for promotion, reference to the new piece to promote to. Null if no promotion/piece changing is needed."
+    },
+    "additionalMoves": {
+      "type": "array",
+      "items": {
+        "$ref": "moveSchema.json"
+      },
+      "description": "Array of additional moves to be taken if this move is executed (example: castling)"
+    }
+  }
+}
