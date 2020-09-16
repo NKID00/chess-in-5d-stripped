@@ -1,5 +1,6 @@
 const deepcopy = require('deep-copy');
 const turnUtils = require('@local/engine/turnUtils');
+const stateUtils = require('@local/engine/stateUtils');
 const moveUtils = require('@local/engine/move/moveUtils');
 
 const stateModify = (gameState, move, allowNewTurns = true) => {
@@ -26,6 +27,9 @@ const stateModify = (gameState, move, allowNewTurns = true) => {
             }
             newGameState.timelines[i].turns.push(newTurn);
           }
+          else {
+            newGameState.timelines[i].turns[j] = turnUtils.turnRemovePiece(newGameState.timelines[i].turns[j], move.sourcePosition.slice(2));
+          }
         }
       }
     }
@@ -33,7 +37,7 @@ const stateModify = (gameState, move, allowNewTurns = true) => {
   for(var i = 0;i < newGameState.timelines.length;i++) {
     if(newGameState.timelines[i].timeline === move.destinationPosition[1]) {
       for(var j = 0;j < newGameState.timelines[i].turns.length;j++) {
-        if(newGameState.timelines[i].turns[j].turn === move.destinationPosition[0] && newGameState.timelines[i].turns[j].playerTurn === move.player) {
+        if(newGameState.timelines[i].turns[j].turn === move.destinationPosition[0] && newGameState.timelines[i].turns[j].playerTurn === move.player && move.sourcePosition[1] !== move.destinationPosition[1]) {
           if(allowNewTurns) {
             var newTurn = deepcopy(newGameState.timelines[i].turns[j]);
             if(newTurn.playerTurn === 'white') {
@@ -42,10 +46,56 @@ const stateModify = (gameState, move, allowNewTurns = true) => {
             else {
               newTurn.turn++;
             }
-            if(moveUtils.checkPositionIsLatest(newGameState, move.destinationPosition, move.player)) {
-
+            newTurn = turnUtils.turnAddPiece(newTurn, move.destinationPosition.slice(2), move.destinationPiece ? move.destinationPiece : piece.type, move.player, true);
+            if(!moveUtils.checkPositionIsLatest(newGameState, move.destinationPosition, move.player)) {
+              if(move.player === 'white') {
+                var maxTimeline = 0;
+                for(var k = 0;k < gameState.timelines.length;k++) {
+                  if(gameState.timelines[k].timeline > maxTimeline) { maxTimeline = gameState.timelines[k].timeline; }
+                }
+                gameState.timelines.push({
+                  timeline: maxTimeline + 1,
+                  active: true,
+                  turns: [
+                    newTurn
+                  ]
+                });
+              }
+              if(move.player === 'black') {
+                var minTimeline = 0;
+                for(var k = 0;k < gameState.timelines.length;k++) {
+                  if(gameState.timelines[k].timeline < minTimeline) { minTimeline = gameState.timelines[k].timeline; }
+                }
+                gameState.timelines.push({
+                  timeline: minTimeline - 1,
+                  active: true,
+                  turns: [
+                    newTurn
+                  ]
+                });
+              }
+            }
+            else {
+              newGameState.timelines[i].turns.push(newTurn);
             }
           }
+        }
+        if(
+          !allowNewTurns ||
+          (move.player === 'white' &&
+          newGameState.timelines[i].turns[j].turn === move.destinationPosition[0] &&
+          newGameState.timelines[i].turns[j].playerTurn === 'black') ||
+          (move.player === 'black' &&
+          newGameState.timelines[i].turns[j].turn + 1 === move.destinationPosition[0] &&
+          newGameState.timelines[i].turns[j].playerTurn === 'white')
+        ) {
+          newGameState.timelines[i].turns[j] = turnUtils.turnAddPiece(
+            newGameState.timelines[i].turns[j],
+            move.destinationPosition.slice(2),
+            move.destinationPiece ? move.destinationPiece : piece.type,
+            move.player,
+            true
+          );
         }
       }
     }
@@ -53,6 +103,7 @@ const stateModify = (gameState, move, allowNewTurns = true) => {
   for(var i = 0;i < move.additionalMoves.length;i++) {
     newGameState = stateModify(newGameState, move.additionalMoves[i], false);
   }
+  newGameState = stateUtils.stateActivateTimelines(newGameState);
   return newGameState;
 };
 

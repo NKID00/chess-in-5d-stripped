@@ -6,10 +6,11 @@ exports.defs = [
     checkmate: false,
     moveSpec: [],
     moveVec: [],
-    moveGen: (gameState, currPosition) => {
-      return [];
+    moveGen: (gameState, currPosition, customPlayer) => {
+      var res = [];
+      return res;
     },
-    highlightGen: (gameState, currPosition) => {
+    highlightGen: (gameState, currPosition,playerTurn) => {
       return [];
     }
   },

@@ -5,7 +5,7 @@ const turnRemovePiece = (turn, position) => {
   var newTurn = deepcopy(turn);
   for(var i = 0;i < newTurn.pieces.length;i++) {
     var currPiece = newTurn.pieces[i];
-    if(currPiece.position[0] === currPosition[0] && currPiece.position[1] === currPosition[1]) {
+    if(currPiece.position[0] === position[0] && currPiece.position[1] === position[1]) {
       var tmpBefore = newTurn.pieces.slice(0,i);
       var tmpAfter = newTurn.pieces.slice(i+1);
       for(var j = 0;j < tmpAfter.length;j++) {
@@ -30,9 +30,9 @@ const turnAddPiece = (turn, position, type, player, moved = true) => {
 };
 
 const turnGetPiece = (turn, position) => {
-  for(var i = 0;i < newTurn.pieces.length;i++) {
-    var currPiece = newTurn.pieces[i];
-    if(currPiece.position[0] === currPosition[0] && currPiece.position[1] === currPosition[1]) {
+  for(var i = 0;i < turn.pieces.length;i++) {
+    var currPiece = turn.pieces[i];
+    if(currPiece.position[0] === position[0] && currPiece.position[1] === position[1]) {
       return currPiece;
     }
   }
