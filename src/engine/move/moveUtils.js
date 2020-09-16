@@ -1,6 +1,6 @@
 const deepcopy = require('deep-copy');
 
-const checkPieceBlock = (gameState, currPosition, player) => {
+const checkPieceBlock = (gameState, currPosition, playerTurn, customPlayer) => {
   var res = {
     isBlocking: false,
     capturePieceStr: null
@@ -8,12 +8,12 @@ const checkPieceBlock = (gameState, currPosition, player) => {
   for(var i = 0;i < gameState.timelines.length;i++) {
     if(gameState.timelines[i].timeline === currPosition[1]) {
       for(var j = 0;j < gameState.timelines[i].turns.length;j++) {
-        if(gameState.timelines[i].turns[j].playerTurn === player && gameState.timelines[i].turns[j].turn === currPosition[0]) {
+        if(gameState.timelines[i].turns[j].playerTurn === playerTurn && gameState.timelines[i].turns[j].turn === currPosition[0]) {
           for(var k = 0;k < gameState.timelines[i].turns[j].pieces.length;k++) {
             var currPiece = gameState.timelines[i].turns[j].pieces[k];
             if(currPiece.position[0] === currPosition[2] && currPiece.position[1] === currPosition[3]) {
               res.isBlocking = true;
-              res.capturePieceStr = currPiece.player !== player ? currPiece.type : null;
+              res.capturePieceStr = currPiece.player !== customPlayer ? currPiece.type : null;
             }
           }
         }

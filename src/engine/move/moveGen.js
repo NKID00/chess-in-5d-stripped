@@ -2,7 +2,7 @@ const vecGen = require('@local/engine/vecGen');
 const pieceDefs =  require('@local/engine/defs/pieceDefinitions').defs;
 const moveUtils = require('@local/engine/move/moveUtils');
 
-const pieceMoveGen = (gameState, currPosition, player, pieceStr, maxTurn, minTimeline, maxTimeline) => {
+const pieceMoveGen = (gameState, currPosition, customPlayer, pieceStr, maxTurn, minTimeline, maxTimeline) => {
   var res = [];
   var pieceDef = null;
   for(var i = 0;i < pieceDefs.length;i++) {
@@ -22,17 +22,17 @@ const pieceMoveGen = (gameState, currPosition, player, pieceStr, maxTurn, minTim
         if(newPosition[1] >= minTimeline && newPosition[1] <= maxTimeline) {
           if(newPosition[2] >= 0 && newPosition[2] <= 7) {
             if(newPosition[3] >= 0 && newPosition[3] <= 7) {
-              if(moveUtils.checkPositionExists(gameState, newPosition, player)) {
+              if(moveUtils.checkPositionExists(gameState, newPosition, gameState.playerAction)) {
                 var newMove = {};
                 newMove.action = gameState.action;
-                newMove.player = gameState.playerAction;
+                newMove.player = customPlayer;
                 newMove.pieceCapture = null;
                 newMove.sourcePosition = currPosition.slice();
                 newMove.destinationPosition = newPosition.slice();
                 newMove.destinationPiece = null;
                 newMove.additionalMoves = [];
 
-                var pieceBlock = moveUtils.checkPieceBlock(gameState, newPosition, player);
+                var pieceBlock = moveUtils.checkPieceBlock(gameState, newPosition, gameState.playerAction, customPlayer);
                 blocking = pieceBlock.isBlocking;
                 if(!blocking) {
                   res.push(newMove);
@@ -58,17 +58,17 @@ const pieceMoveGen = (gameState, currPosition, player, pieceStr, maxTurn, minTim
       for(var j = 0;j < vec.length && !blocking;j++) {
         var newPosition = vec[j].slice();
 
-        if(moveUtils.checkPositionExists(gameState, newPosition, player)) {
+        if(moveUtils.checkPositionExists(gameState, newPosition, gameState.playerAction)) {
           var newMove = {};
           newMove.action = gameState.action;
-          newMove.player = gameState.playerAction;
+          newMove.player = customPlayer;
           newMove.pieceCapture = null;
           newMove.sourcePosition = currPosition.slice();
           newMove.destinationPosition = newPosition.slice();
           newMove.destinationPiece = null;
           newMove.additionalMoves = [];
 
-          var pieceBlock = moveUtils.checkPieceBlock(gameState, newPosition, player);
+          var pieceBlock = moveUtils.checkPieceBlock(gameState, newPosition, gameState.playerAction, customPlayer);
           blocking = pieceBlock.isBlocking;
           if(!blocking) {
             res.push(newMove);
@@ -85,7 +85,7 @@ const pieceMoveGen = (gameState, currPosition, player, pieceStr, maxTurn, minTim
         }
       }
     }
-    var genMoves = pieceDef.moveGen(gameState, currPosition, player);
+    var genMoves = pieceDef.moveGen(gameState, currPosition);
     for(var i = 0;i < genMoves.length;i++) {
       res.push(genMoves[i]);
     }
@@ -113,7 +113,7 @@ const possibleMoveGen = (gameState, customPlayer = null) => {
       if(gameState.timelines[i].turns[j].turn > highestTurn) {
         highestTurn = gameState.timelines[i].turns[j].turn;
       }
-      if(gameState.timelines[i].turns[j].turn > highestCurrPlayerTurn && (customPlayer ? customPlayer : gameState.playerAction) === gameState.timelines[i].turns[j].playerTurn) {
+      if(gameState.timelines[i].turns[j].turn > highestCurrPlayerTurn && gameState.playerAction === gameState.timelines[i].turns[j].playerTurn) {
         highestCurrPlayerTurn = gameState.timelines[i].turns[j].turn;
         highestCurrPlayerTurnIndex = j;
       }
