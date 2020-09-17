@@ -1,12 +1,12 @@
 const deepcopy = require('deep-copy');
 const moveUtils = require('@local/engine/move/moveUtils');
+const stateUtils = require('@local/engine/stateUtils');
 
 exports.defs = [
   {
     name: 'pawn',
     displayName: 'Pawn',
     char: '',
-    checkmate: false,
     moveSpec: [],
     moveVec: [],
     moveGen: (gameState, currPosition) => {
@@ -109,14 +109,14 @@ exports.defs = [
                           currPosition[2] - 1,
                           currPosition[3] - 2
                         ], gameState.playerAction, 'white');
-                        if(pieceBlock.capturePieceStr !== null && pieceBlock2.capturePieceStr === null) {
+                        if(pieceBlock.capturePieceStr === 'pawn' && pieceBlock2.capturePieceStr === null) {
                           var pieceBlock = moveUtils.checkPieceBlock(gameState, [
                             currPosition[0] - 1,
                             currPosition[1],
                             currPosition[2] - 1,
                             currPosition[3] - 2
                           ], gameState.playerAction, 'white');
-                          if(pieceBlock.capturePieceStr !== null) {
+                          if(pieceBlock.capturePieceStr === 'pawn') {
                             res.push({
                               action: gameState.action,
                               player: currPiece.player,
@@ -148,14 +148,14 @@ exports.defs = [
                           currPosition[2] + 1,
                           currPosition[3] - 2
                         ], gameState.playerAction, 'white');
-                        if(pieceBlock.capturePieceStr !== null && pieceBlock2.capturePieceStr === null) {
+                        if(pieceBlock.capturePieceStr === 'pawn' && pieceBlock2.capturePieceStr === null) {
                           var pieceBlock = moveUtils.checkPieceBlock(gameState, [
                             currPosition[0] - 1,
                             currPosition[1],
                             currPosition[2] + 1,
                             currPosition[3] - 2
                           ], gameState.playerAction, 'white');
-                          if(pieceBlock.capturePieceStr !== null) {
+                          if(pieceBlock.capturePieceStr === 'pawn') {
                             res.push({
                               action: gameState.action,
                               player: currPiece.player,
@@ -469,14 +469,14 @@ exports.defs = [
                           currPosition[2] - 1,
                           currPosition[3] + 2
                         ], gameState.playerAction, 'black');
-                        if(pieceBlock.capturePieceStr !== null && pieceBlock2.capturePieceStr === null) {
+                        if(pieceBlock.capturePieceStr === 'pawn' && pieceBlock2.capturePieceStr === null) {
                           var pieceBlock = moveUtils.checkPieceBlock(gameState, [
                             currPosition[0] - 1,
                             currPosition[1],
                             currPosition[2] - 1,
                             currPosition[3] + 2
                           ], gameState.playerAction, 'black');
-                          if(pieceBlock.capturePieceStr !== null) {
+                          if(pieceBlock.capturePieceStr === 'pawn') {
                             res.push({
                               action: gameState.action,
                               player: currPiece.player,
@@ -751,7 +751,6 @@ exports.defs = [
     name: 'bishop',
     displayName: 'Bishop',
     char: 'B',
-    checkmate: false,
     moveSpec: [],
     moveVec: [
       //[Turn, Timeline, Rank, File]
@@ -786,7 +785,6 @@ exports.defs = [
     name: 'knight',
     displayName: 'Knight',
     char: 'N',
-    checkmate: false,
     moveSpec: [ //[Turn, Timeline, Rank, File]
       [ 0, 0, 1, 2],
       [ 0, 0, 1,-2],
@@ -849,7 +847,6 @@ exports.defs = [
     name: 'rook',
     displayName: 'Rook',
     char: 'R',
-    checkmate: false,
     moveSpec: [],
     moveVec: [
       //[Turn, Timeline, Rank, File]
@@ -868,7 +865,6 @@ exports.defs = [
     name: 'queen',
     displayName: 'Queen',
     char: 'Q',
-    checkmate: false,
     moveSpec: [],
     moveVec: [
       //[Turn, Timeline, Rank, File]
@@ -959,7 +955,6 @@ exports.defs = [
     name: 'king',
     displayName: 'King',
     char: 'K',
-    checkmate: true,
     moveSpec: [
       //[Turn, Timeline, Rank, File]
       [ 0, 0, 0, 1],
@@ -1044,6 +1039,266 @@ exports.defs = [
       [-1,-1,-1,-1]
     ],
     moveVec: [],
-    moveGen: (gameState, currPosition) => { return []; }
+    moveGen: (gameState, currPosition) => {
+      var res = [];
+      for(var i = 0;i < gameState.timelines.length;i++) {
+        for(var j = 0;j < gameState.timelines[i].turns.length;j++) {
+          if(currPosition[1] === gameState.timelines[i].timeline) {
+            if(currPosition[0] === gameState.timelines[i].turns[j].turn && gameState.playerAction === gameState.timelines[i].turns[j].playerTurn) {
+              for(var k = 0;k < gameState.timelines[i].turns[j].pieces.length;k++) {
+                var currPiece = gameState.timelines[i].turns[j].pieces[k];
+                if(currPiece.position[0] === currPosition[2] && currPiece.position[1] === currPosition[3]) {
+                  //Grab rook pieces
+                  var queenRook = null;
+                  var kingRook = null;
+                  for(var l = 0;l < gameState.timelines[i].turns[j].pieces.length;l++) {
+                    var currPiece2 = gameState.timelines[i].turns[j].pieces[l];
+                    if(!currPiece2.hasMoved) {
+                      if(currPiece2.type === 'rook') {
+                        if(currPiece2.position[0] === 0) {
+                          queenRook = currPiece2;
+                        }
+                        if(currPiece2.position[0] === 7) {
+                          kingRook = currPiece2;
+                        }
+                      }
+                    }
+                  }
+                  //Queenside Castling
+                  baseMove = {
+                    action: gameState.action,
+                    player: currPiece.player,
+                    pieceCapture: null,
+                    sourcePosition: currPosition,
+                    destinationPosition: [
+                      currPosition[0],
+                      currPosition[1],
+                      currPosition[2] - 2,
+                      currPosition[3]
+                    ],
+                    destinationPiece: null,
+                    additionalMoves: [{
+                      action: gameState.action,
+                      player: currPiece.player,
+                      pieceCapture: null,
+                      sourcePosition: [
+                        currPosition[0],
+                        currPosition[1],
+                        currPosition[2] - 4,
+                        currPosition[3]
+                      ],
+                      destinationPosition: [
+                        currPosition[0],
+                        currPosition[1],
+                        currPosition[2] - 1,
+                        currPosition[3]
+                      ],
+                      destinationPiece: null,
+                      additionalMoves: []
+                    }]
+                  };
+                  if(queenRook !== null) {
+                    //Check no blocking pieces
+                    var pieceBlock = moveUtils.checkPieceBlock(gameState, [
+                      currPosition[0],
+                      currPosition[1],
+                      currPosition[2] - 1,
+                      currPosition[3]
+                    ], gameState.playerAction, currPiece.player);
+                    if(!pieceBlock.isBlocking) {
+                      var pieceBlock = moveUtils.checkPieceBlock(gameState, [
+                        currPosition[0],
+                        currPosition[1],
+                        currPosition[2] - 2,
+                        currPosition[3]
+                      ], gameState.playerAction, currPiece.player);
+                      if(!pieceBlock.isBlocking) {
+                        var pieceBlock = moveUtils.checkPieceBlock(gameState, [
+                          currPosition[0],
+                          currPosition[1],
+                          currPosition[2] - 3,
+                          currPosition[3]
+                        ], gameState.playerAction, currPiece.player);
+                        if(!pieceBlock.isBlocking) {
+                          //Check King is not in attack
+                          var currChecks = stateUtils.stateGetChecks(gameState);
+                          var inCheckHere = false;
+                          for(var m = 0;m < currChecks.length;m++) {
+                            if(
+                              currChecks[m].destinationPosition[0] === currPosition[0] + 1 &&
+                              currChecks[m].destinationPosition[1] === currPosition[1] &&
+                              currChecks[m].destinationPosition[2] === currPosition[2] &&
+                              currChecks[m].destinationPosition[3] === currPosition[3]
+                            ) {
+                              inCheckHere = true;
+                            }
+                          }
+                          if(currChecks.length === 0 || !inCheckHere) {
+                            var betweenMove = {
+                              action: gameState.action,
+                              player: currPiece.player,
+                              pieceCapture: null,
+                              sourcePosition: currPosition,
+                              destinationPosition: [
+                                currPosition[0],
+                                currPosition[1],
+                                currPosition[2] - 1,
+                                currPosition[3]
+                              ],
+                              destinationPiece: null,
+                              additionalMoves: []
+                            };
+                            var currChecks = stateUtils.stateGetChecks(moveState.stateModify(gameState, betweenMove));
+                            var inCheckHere = false;
+                            for(var m = 0;m < currChecks.length;m++) {
+                              if(
+                                currChecks[m].destinationPosition[0] === currPosition[0] + 1 &&
+                                currChecks[m].destinationPosition[1] === currPosition[1] &&
+                                currChecks[m].destinationPosition[2] === currPosition[2] &&
+                                currChecks[m].destinationPosition[3] === currPosition[3]
+                              ) {
+                                inCheckHere = true;
+                              }
+                            }
+                            if(currChecks.length === 0 || !inCheckHere) {
+                              var currChecks = stateUtils.stateGetChecks(moveState.stateModify(gameState, baseMove));
+                              var inCheckHere = false;
+                              for(var m = 0;m < currChecks.length;m++) {
+                                if(
+                                  currChecks[m].destinationPosition[0] === currPosition[0] + 1 &&
+                                  currChecks[m].destinationPosition[1] === currPosition[1] &&
+                                  currChecks[m].destinationPosition[2] === currPosition[2] &&
+                                  currChecks[m].destinationPosition[3] === currPosition[3]
+                                ) {
+                                  inCheckHere = true;
+                                }
+                              }
+                              if(currChecks.length === 0 || !inCheckHere) {
+                                res.push(baseMove);
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                  //Kingside Castling
+                  baseMove = {
+                    action: gameState.action,
+                    player: currPiece.player,
+                    pieceCapture: null,
+                    sourcePosition: currPosition,
+                    destinationPosition: [
+                      currPosition[0],
+                      currPosition[1],
+                      currPosition[2] + 2,
+                      currPosition[3]
+                    ],
+                    destinationPiece: null,
+                    additionalMoves: [{
+                      action: gameState.action,
+                      player: currPiece.player,
+                      pieceCapture: null,
+                      sourcePosition: [
+                        currPosition[0],
+                        currPosition[1],
+                        currPosition[2] + 3,
+                        currPosition[3]
+                      ],
+                      destinationPosition: [
+                        currPosition[0],
+                        currPosition[1],
+                        currPosition[2] + 1,
+                        currPosition[3]
+                      ],
+                      destinationPiece: null,
+                      additionalMoves: []
+                    }]
+                  };
+                  if(kingRook !== null) {
+                    //Check no blocking pieces
+                    var pieceBlock = moveUtils.checkPieceBlock(gameState, [
+                      currPosition[0],
+                      currPosition[1],
+                      currPosition[2] + 1,
+                      currPosition[3]
+                    ], gameState.playerAction, currPiece.player);
+                    if(!pieceBlock.isBlocking) {
+                      var pieceBlock = moveUtils.checkPieceBlock(gameState, [
+                        currPosition[0],
+                        currPosition[1],
+                        currPosition[2] + 2,
+                        currPosition[3]
+                      ], gameState.playerAction, currPiece.player);
+                      if(!pieceBlock.isBlocking) {
+                        //Check King is not in attack
+                        var currChecks = stateUtils.stateGetChecks(gameState);
+                        var inCheckHere = false;
+                        for(var m = 0;m < currChecks.length;m++) {
+                          if(
+                            currChecks[m].destinationPosition[0] === currPosition[0] + 1 &&
+                            currChecks[m].destinationPosition[1] === currPosition[1] &&
+                            currChecks[m].destinationPosition[2] === currPosition[2] &&
+                            currChecks[m].destinationPosition[3] === currPosition[3]
+                          ) {
+                            inCheckHere = true;
+                          }
+                        }
+                        if(currChecks.length === 0 || !inCheckHere) {
+                          var betweenMove = {
+                            action: gameState.action,
+                            player: currPiece.player,
+                            pieceCapture: null,
+                            sourcePosition: currPosition,
+                            destinationPosition: [
+                              currPosition[0],
+                              currPosition[1],
+                              currPosition[2] + 1,
+                              currPosition[3]
+                            ],
+                            destinationPiece: null,
+                            additionalMoves: []
+                          };
+                          var currChecks = stateUtils.stateGetChecks(moveState.stateModify(gameState, betweenMove));
+                          var inCheckHere = false;
+                          for(var m = 0;m < currChecks.length;m++) {
+                            if(
+                              currChecks[m].destinationPosition[0] === currPosition[0] + 1 &&
+                              currChecks[m].destinationPosition[1] === currPosition[1] &&
+                              currChecks[m].destinationPosition[2] === currPosition[2] &&
+                              currChecks[m].destinationPosition[3] === currPosition[3]
+                            ) {
+                              inCheckHere = true;
+                            }
+                          }
+                          if(currChecks.length === 0 || !inCheckHere) {
+                            var currChecks = stateUtils.stateGetChecks(moveState.stateModify(gameState, baseMove));
+                            var inCheckHere = false;
+                            for(var m = 0;m < currChecks.length;m++) {
+                              if(
+                                currChecks[m].destinationPosition[0] === currPosition[0] + 1 &&
+                                currChecks[m].destinationPosition[1] === currPosition[1] &&
+                                currChecks[m].destinationPosition[2] === currPosition[2] &&
+                                currChecks[m].destinationPosition[3] === currPosition[3]
+                              ) {
+                                inCheckHere = true;
+                              }
+                            }
+                            if(currChecks.length === 0 || !inCheckHere) {
+                              res.push(baseMove);
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      return res;
+    }
   }
 ];

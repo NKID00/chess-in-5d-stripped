@@ -2,7 +2,7 @@ const vecGen = require('@local/engine/vecGen');
 const pieceDefs =  require('@local/engine/defs/pieceDefinitions').defs;
 const moveUtils = require('@local/engine/move/moveUtils');
 
-const pieceMoveGen = (gameState, currPosition, customPlayer, pieceStr, maxTurn, minTimeline, maxTimeline) => {
+const pieceMoveGen = (gameState, currPosition, pieceStr, maxTurn, minTimeline, maxTimeline) => {
   var res = [];
   var pieceDef = null;
   for(var i = 0;i < pieceDefs.length;i++) {
@@ -25,14 +25,14 @@ const pieceMoveGen = (gameState, currPosition, customPlayer, pieceStr, maxTurn, 
               if(moveUtils.checkPositionExists(gameState, newPosition, gameState.playerAction)) {
                 var newMove = {};
                 newMove.action = gameState.action;
-                newMove.player = customPlayer;
+                newMove.player = gameState.playerAction;
                 newMove.pieceCapture = null;
                 newMove.sourcePosition = currPosition.slice();
                 newMove.destinationPosition = newPosition.slice();
                 newMove.destinationPiece = null;
                 newMove.additionalMoves = [];
 
-                var pieceBlock = moveUtils.checkPieceBlock(gameState, newPosition, gameState.playerAction, customPlayer);
+                var pieceBlock = moveUtils.checkPieceBlock(gameState, newPosition, gameState.playerAction,  gameState.playerAction);
                 blocking = pieceBlock.isBlocking;
                 if(!blocking) {
                   res.push(newMove);
@@ -61,14 +61,14 @@ const pieceMoveGen = (gameState, currPosition, customPlayer, pieceStr, maxTurn, 
         if(moveUtils.checkPositionExists(gameState, newPosition, gameState.playerAction)) {
           var newMove = {};
           newMove.action = gameState.action;
-          newMove.player = customPlayer;
+          newMove.player = gameState.playerAction;
           newMove.pieceCapture = null;
           newMove.sourcePosition = currPosition.slice();
           newMove.destinationPosition = newPosition.slice();
           newMove.destinationPiece = null;
           newMove.additionalMoves = [];
 
-          var pieceBlock = moveUtils.checkPieceBlock(gameState, newPosition, gameState.playerAction, customPlayer);
+          var pieceBlock = moveUtils.checkPieceBlock(gameState, newPosition, gameState.playerAction,  gameState.playerAction);
           blocking = pieceBlock.isBlocking;
           if(!blocking) {
             res.push(newMove);
@@ -93,7 +93,7 @@ const pieceMoveGen = (gameState, currPosition, customPlayer, pieceStr, maxTurn, 
   return res;
 };
 
-const possibleMoveGen = (gameState, customPlayer = null) => {
+const possibleMoveGen = (gameState) => {
   var res = [];
   var minTimeline = 0;
   var maxTimeline = 0;
@@ -121,14 +121,13 @@ const possibleMoveGen = (gameState, customPlayer = null) => {
     if(highestCurrPlayerTurn > 0 && highestCurrPlayerTurn === highestTurn) {
       for(var k = 0;k < gameState.timelines[i].turns[highestCurrPlayerTurnIndex].pieces.length;k++) {
         var currPiece = gameState.timelines[i].turns[highestCurrPlayerTurnIndex].pieces[k];
-        if(currPiece.player === (customPlayer ? customPlayer : gameState.playerAction)) {
+        if(currPiece.player === gameState.playerAction) {
           var genMoves = pieceMoveGen(gameState, [
             gameState.timelines[i].turns[highestCurrPlayerTurnIndex].turn,
             gameState.timelines[i].timeline,
             currPiece.position[0],
             currPiece.position[1]
-          ], (customPlayer ? customPlayer : gameState.playerAction),
-          currPiece.type, highestCurrPlayerTurn, minTimeline, maxTimeline);
+          ], currPiece.type, highestCurrPlayerTurn, minTimeline, maxTimeline);
           for(var j = 0;j < genMoves.length;j++) {
             res.push(genMoves[j]);
           }
@@ -139,4 +138,5 @@ const possibleMoveGen = (gameState, customPlayer = null) => {
   return res;
 };
 
-exports.generatePossibleMoves = possibleMoveGen;
+exports.possibleMoveGen = possibleMoveGen;
+exports.pieceMoveGen = pieceMoveGen;
