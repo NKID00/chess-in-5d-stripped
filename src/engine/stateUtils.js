@@ -14,10 +14,10 @@ const stateActivateTimelines = (gameState) => {
     }
   }
   for(var i = 0;i < newGameState.timelines.length;i++) {
-    if(newGameState.timelines[i].timeline > (-1 * minTimeline)) {
+    if(newGameState.timelines[i].timeline > (-1 * minTimeline) + 1) {
       newGameState.timelines[i].active = false;
     }
-    else if(newGameState.timelines[i].timeline < (-1 * maxTimeline)) {
+    else if(newGameState.timelines[i].timeline < (-1 * maxTimeline) - 1) {
       newGameState.timelines[i].active = false;
     }
     else {
@@ -49,7 +49,7 @@ const stateAddTurnPass = (gameState) => {
       newTurn.playerTurn = 'white';
       newTurn.turn++;
     }
-    newGameState.timelines[arr[i]].push(newTurn);
+    newGameState.timelines[arr[i]].turns.push(newTurn);
   }
   return newGameState;
 }
@@ -60,33 +60,31 @@ const stateGetNeedMove = (gameState) => {
   var lowestTurn = -1;
   for(var i = 0;i < gameState.timelines.length;i++) {
     if(gameState.timelines[i].active) {
-      var currMax = 0;
+      var currMax = -1;
       var maxPlayer = '';
-      for(var j = 0;j < gameState.timelines[j].turns.length;j++) {
-        if(currMax < gameState.timelines[j].turns[j].turn) {
-          currMax = gameState.timelines[j].turns[j].turn;
-          maxPlayer = gameState.timelines[j].turns[j].playerTurn;
-        }
-        else if(currMax === gameState.timelines[j].turns[j].turn) {
-          if(maxPlayer === 'white' && gameState.timelines[j].turns[j].playerTurn === 'black') {
-            maxPlayer = gameState.timelines[j].turns[j].playerTurn;
-          }
+      for(var j = 0;j < gameState.timelines[i].turns.length;j++) {
+        if(currMax < gameState.timelines[i].turns[j].turn && gameState.timelines[i].turns[j].playerTurn === gameState.playerAction) {
+          currMax = gameState.timelines[i].turns[j].turn;
         }
       }
-      if(maxPlayer === gameState.playerAction && (currMax <= lowestTurn || lowestTurn === -1)) {
+      if(currMax <= lowestTurn || lowestTurn === -1) {
         lowestTurn = currMax;
       }
     }
   }
-  for(var i = 0;i < gameState.timelines.length;i++) {
-    if(gameState.timelines[i].active) {
-      if(gameState.playerAction === 'white') {
-        if(Math.floor(gameState.timelines[i].turns.length/2) + 1 === lowestTurn) {
-          res.push(i);
+  if(lowestTurn > 0) {
+    for(var i = 0;i < gameState.timelines.length;i++) {
+      if(gameState.timelines[i].active) {
+        var isHigher = false;
+        for(var j = 0;j < gameState.timelines[i].turns.length;j++) {
+          if(gameState.timelines[i].turns[j].turn > lowestTurn) {
+            isHigher = true;
+          }
+          if(gameState.playerAction === 'white' && gameState.timelines[i].turns[j].turn === lowestTurn && gameState.timelines[i].turns[j].playerTurn === 'black') {
+            isHigher = true;
+          }
         }
-      }
-      else {
-        if(Math.floor(gameState.timelines[i].turns.length/2) === lowestTurn) {
+        if(!isHigher) {
           res.push(i);
         }
       }
@@ -95,12 +93,12 @@ const stateGetNeedMove = (gameState) => {
   return res;
 }
 
-const stateGetChecks = (gameState) => {
+const stateGetChecks = (gameState, onlyActive = false, onlyPresent = false) => {
   //return moves of checks
   var res = [];
   var newGameState = deepcopy(gameState);
   newGameState = stateAddTurnPass(newGameState);
-  var possibleOpponentMoves = moveGen.generatePossibleMoves(newGameState);
+  var possibleOpponentMoves = moveGen.possibleMoveGen(newGameState, onlyActive, onlyPresent);
   for(var i = 0;i < possibleOpponentMoves.length;i++) {
     if(possibleOpponentMoves[i].pieceCapture !== null) {
       if(possibleOpponentMoves[i].pieceCapture.piece === 'king') {
@@ -111,6 +109,20 @@ const stateGetChecks = (gameState) => {
   return res;
 }
 
+const stateGetTurn = (gameState, currPosition, customPlayer = null) => {
+  for(var i = 0;i < gameState.timelines.length;i++) {
+    if(gameState.timelines[i].timeline === currPosition[1]) {
+      for(var j = 0;j < gameState.timelines[i].turns.length;j++) {
+        if(gameState.timelines[i].turns[j].turn === currPosition[0] && gameState.timelines[i].turns[j].playerTurn === (customPlayer ? customPlayer : gameState.playerAction)) {
+          return gameState.timelines[i].turns[j];
+        }
+      }
+    }
+  }
+  return {};
+}
+
 exports.stateActivateTimelines = stateActivateTimelines;
 exports.stateGetChecks = stateGetChecks;
 exports.stateGetNeedMove = stateGetNeedMove;
+exports.stateGetTurn = stateGetTurn;

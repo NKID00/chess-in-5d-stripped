@@ -1,12 +1,11 @@
 const deepcopy = require('deep-copy');
 const moveUtils = require('@local/engine/move/moveUtils');
 const stateUtils = require('@local/engine/stateUtils');
+//const moveState = require('@local/engine/move/moveState');
 
 exports.defs = [
   {
     name: 'pawn',
-    displayName: 'Pawn',
-    char: '',
     moveSpec: [],
     moveVec: [],
     moveGen: (gameState, currPosition) => {
@@ -27,7 +26,12 @@ exports.defs = [
                         currPosition[2],
                         currPosition[3] - 1
                       ], gameState.playerAction, 'white');
-                      if(!pieceBlock.isBlocking) {
+                      if(!pieceBlock.isBlocking && moveUtils.checkPositionExists(gameState, [
+                        currPosition[0],
+                        currPosition[1],
+                        currPosition[2],
+                        currPosition[3] - 1
+                      ], gameState.playerAction)) {
                         res.push({
                           action: gameState.action,
                           player: currPiece.player,
@@ -185,7 +189,12 @@ exports.defs = [
                         currPosition[2],
                         currPosition[3] - 1
                       ], gameState.playerAction, 'white');
-                      if(!pieceBlock.isBlocking) {
+                      if(!pieceBlock.isBlocking && moveUtils.checkPositionExists(gameState, [
+                        currPosition[0],
+                        currPosition[1],
+                        currPosition[2],
+                        currPosition[3] - 1
+                      ], gameState.playerAction)) {
                         var base = {
                           action: gameState.action,
                           player: currPiece.player,
@@ -277,14 +286,24 @@ exports.defs = [
                         currPosition[2],
                         currPosition[3] - 1
                       ], gameState.playerAction, 'white');
-                      if(!pieceBlock.isBlocking) {
+                      if(!pieceBlock.isBlocking && moveUtils.checkPositionExists(gameState, [
+                        currPosition[0],
+                        currPosition[1],
+                        currPosition[2],
+                        currPosition[3] - 1
+                      ], gameState.playerAction)) {
                         var pieceBlock = moveUtils.checkPieceBlock(gameState, [
                           currPosition[0],
                           currPosition[1],
                           currPosition[2],
                           currPosition[3] - 2
                         ], gameState.playerAction, 'white');
-                        if(!pieceBlock.isBlocking) {
+                        if(!pieceBlock.isBlocking && moveUtils.checkPositionExists(gameState, [
+                          currPosition[0],
+                          currPosition[1],
+                          currPosition[2],
+                          currPosition[3] - 2
+                        ], gameState.playerAction)) {
                           res.push({
                             action: gameState.action,
                             player: currPiece.player,
@@ -309,7 +328,12 @@ exports.defs = [
                       currPosition[2],
                       currPosition[3]
                     ], gameState.playerAction, 'white');
-                    if(!pieceBlock.isBlocking) {
+                    if(!pieceBlock.isBlocking && moveUtils.checkPositionExists(gameState, [
+                      currPosition[0],
+                      currPosition[1] - 1,
+                      currPosition[2],
+                      currPosition[3]
+                    ], gameState.playerAction)) {
                       res.push({
                         action: gameState.action,
                         player: currPiece.player,
@@ -387,7 +411,12 @@ exports.defs = [
                         currPosition[2],
                         currPosition[3] + 1
                       ], gameState.playerAction, 'black');
-                      if(!pieceBlock.isBlocking) {
+                      if(!pieceBlock.isBlocking && moveUtils.checkPositionExists(gameState, [
+                        currPosition[0],
+                        currPosition[1],
+                        currPosition[2],
+                        currPosition[3] + 1
+                      ], gameState.playerAction)) {
                         res.push({
                           action: gameState.action,
                           player: currPiece.player,
@@ -545,7 +574,12 @@ exports.defs = [
                         currPosition[2],
                         currPosition[3] + 1
                       ], gameState.playerAction, 'black');
-                      if(!pieceBlock.isBlocking) {
+                      if(!pieceBlock.isBlocking && moveUtils.checkPositionExists(gameState, [
+                        currPosition[0],
+                        currPosition[1],
+                        currPosition[2],
+                        currPosition[3] + 1
+                      ], gameState.playerAction)) {
                         var base = {
                           action: gameState.action,
                           player: currPiece.player,
@@ -637,14 +671,24 @@ exports.defs = [
                         currPosition[2],
                         currPosition[3] + 1
                       ], gameState.playerAction, 'black');
-                      if(!pieceBlock.isBlocking) {
+                      if(!pieceBlock.isBlocking && moveUtils.checkPositionExists(gameState, [
+                        currPosition[0],
+                        currPosition[1],
+                        currPosition[2],
+                        currPosition[3] + 1
+                      ], gameState.playerAction)) {
                         var pieceBlock = moveUtils.checkPieceBlock(gameState, [
                           currPosition[0],
                           currPosition[1],
                           currPosition[2],
                           currPosition[3] + 2
                         ], gameState.playerAction, 'black');
-                        if(!pieceBlock.isBlocking) {
+                        if(!pieceBlock.isBlocking && moveUtils.checkPositionExists(gameState, [
+                          currPosition[0],
+                          currPosition[1],
+                          currPosition[2],
+                          currPosition[3] + 2
+                        ], gameState.playerAction)) {
                           res.push({
                             action: gameState.action,
                             player: currPiece.player,
@@ -669,7 +713,12 @@ exports.defs = [
                       currPosition[2],
                       currPosition[3]
                     ], gameState.playerAction, 'black');
-                    if(!pieceBlock.isBlocking) {
+                    if(!pieceBlock.isBlocking && moveUtils.checkPositionExists(gameState, [
+                      currPosition[0],
+                      currPosition[1] + 1,
+                      currPosition[2],
+                      currPosition[3]
+                    ], gameState.playerAction)) {
                       res.push({
                         action: gameState.action,
                         player: currPiece.player,
@@ -750,7 +799,6 @@ exports.defs = [
   {
     name: 'bishop',
     displayName: 'Bishop',
-    char: 'B',
     moveSpec: [],
     moveVec: [
       //[Turn, Timeline, Rank, File]
@@ -783,8 +831,6 @@ exports.defs = [
   },
   {
     name: 'knight',
-    displayName: 'Knight',
-    char: 'N',
     moveSpec: [ //[Turn, Timeline, Rank, File]
       [ 0, 0, 1, 2],
       [ 0, 0, 1,-2],
@@ -845,8 +891,6 @@ exports.defs = [
   },
   {
     name: 'rook',
-    displayName: 'Rook',
-    char: 'R',
     moveSpec: [],
     moveVec: [
       //[Turn, Timeline, Rank, File]
@@ -863,8 +907,6 @@ exports.defs = [
   },
   {
     name: 'queen',
-    displayName: 'Queen',
-    char: 'Q',
     moveSpec: [],
     moveVec: [
       //[Turn, Timeline, Rank, File]
@@ -953,8 +995,6 @@ exports.defs = [
   },
   {
     name: 'king',
-    displayName: 'King',
-    char: 'K',
     moveSpec: [
       //[Turn, Timeline, Rank, File]
       [ 0, 0, 0, 1],
@@ -1105,21 +1145,36 @@ exports.defs = [
                       currPosition[2] - 1,
                       currPosition[3]
                     ], gameState.playerAction, currPiece.player);
-                    if(!pieceBlock.isBlocking) {
+                    if(!pieceBlock.isBlocking && moveUtils.checkPositionExists(gameState, [
+                      currPosition[0],
+                      currPosition[1],
+                      currPosition[2] - 1,
+                      currPosition[3]
+                    ], gameState.playerAction)) {
                       var pieceBlock = moveUtils.checkPieceBlock(gameState, [
                         currPosition[0],
                         currPosition[1],
                         currPosition[2] - 2,
                         currPosition[3]
                       ], gameState.playerAction, currPiece.player);
-                      if(!pieceBlock.isBlocking) {
+                      if(!pieceBlock.isBlocking && moveUtils.checkPositionExists(gameState, [
+                        currPosition[0],
+                        currPosition[1],
+                        currPosition[2] - 2,
+                        currPosition[3]
+                      ], gameState.playerAction)) {
                         var pieceBlock = moveUtils.checkPieceBlock(gameState, [
                           currPosition[0],
                           currPosition[1],
                           currPosition[2] - 3,
                           currPosition[3]
                         ], gameState.playerAction, currPiece.player);
-                        if(!pieceBlock.isBlocking) {
+                        if(!pieceBlock.isBlocking && moveUtils.checkPositionExists(gameState, [
+                          currPosition[0],
+                          currPosition[1],
+                          currPosition[2] - 3,
+                          currPosition[3]
+                        ], gameState.playerAction)) {
                           //Check King is not in attack
                           var currChecks = stateUtils.stateGetChecks(gameState);
                           var inCheckHere = false;
@@ -1223,14 +1278,24 @@ exports.defs = [
                       currPosition[2] + 1,
                       currPosition[3]
                     ], gameState.playerAction, currPiece.player);
-                    if(!pieceBlock.isBlocking) {
+                    if(!pieceBlock.isBlocking && moveUtils.checkPositionExists(gameState, [
+                      currPosition[0],
+                      currPosition[1],
+                      currPosition[2] + 1,
+                      currPosition[3]
+                    ], gameState.playerAction)) {
                       var pieceBlock = moveUtils.checkPieceBlock(gameState, [
                         currPosition[0],
                         currPosition[1],
                         currPosition[2] + 2,
                         currPosition[3]
                       ], gameState.playerAction, currPiece.player);
-                      if(!pieceBlock.isBlocking) {
+                      if(!pieceBlock.isBlocking && moveUtils.checkPositionExists(gameState, [
+                        currPosition[0],
+                        currPosition[1],
+                        currPosition[2] + 2,
+                        currPosition[3]
+                      ], gameState.playerAction)) {
                         //Check King is not in attack
                         var currChecks = stateUtils.stateGetChecks(gameState);
                         var inCheckHere = false;

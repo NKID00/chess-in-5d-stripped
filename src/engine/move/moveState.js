@@ -23,7 +23,7 @@ const stateModify = (gameState, move, allowNewTurns = true) => {
 
             var piece = turnUtils.turnGetPiece(newTurn, move.sourcePosition.slice(2));
             newTurn = turnUtils.turnRemovePiece(newTurn, move.sourcePosition.slice(2));
-            if(move.sourcePosition[0] === move.destinationPosition[0]) {
+            if(move.sourcePosition[0] === move.destinationPosition[0] && piece !== null) {
               newTurn = turnUtils.turnAddPiece(newTurn, move.destinationPosition.slice(2), move.destinationPiece ? move.destinationPiece : piece.type, move.player, true);
             }
             newGameState.timelines[i].turns.push(newTurn);
@@ -109,4 +109,4 @@ const stateModify = (gameState, move, allowNewTurns = true) => {
   return newGameState;
 };
 
-exports.modifyStateWithMove = stateModify;
+exports.stateModify = stateModify;
