@@ -73,7 +73,11 @@ export default class Piece extends React.Component {
   draw() {
     var x = this.props.x ? this.props.x : 0;
     var y = this.props.y ? this.props.y : 0;
-    var fill = this.props.player === 'black' ? 0x000000 : 0xffffff;
+    var fill = this.props.player === 'black' ? 
+      this.props.palette.blackPiece
+    :
+      this.props.palette.whitePiece
+    ;
     var graphics = this.pieceRef.current;
     graphics.clear();
     graphics.beginFill(fill);

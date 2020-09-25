@@ -11,7 +11,8 @@ export default class Timeline extends React.Component {
           return (
             <Turn
               app={this.props.app}
-              x={x + ((e.turn * 2) + (e.player === 'white' ? 0 : 1)) * 100 + 10}
+              palette={this.props.palette}
+              x={x + (((e.turn - 1) * 2) + (e.player === 'white' ? 0 : 1)) * 100 + 10}
               y={y + 10}
               turnObj={e}
               key={e.turn + ':' + e.player}
