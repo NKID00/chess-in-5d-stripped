@@ -30,7 +30,8 @@ build_react_app:
       - build
 
 build_electron_app:
-  image: training/node-windows
+  image: 
+    name: registry.hub.docker.com/training/node-windows
   stage: build
   needs:
     - job: install_dependencies
