@@ -9,8 +9,10 @@ const behavior = {
       worldWidth: props.worldWidth ? props.worldWidth : 1000,
       worldHeight: props.worldHeight ? props.worldHeight : 1000,
       ticker: props.app.ticker,
-      interaction: props.app.renderer.plugins.interaction
+      interaction: props.app.renderer.plugins.interaction,
+      stopPropagation: false
     });
+    viewport.interactive = true;
 
     if(props.drag) { viewport.drag(); }
     if(props.pinch) { viewport.pinch(); }

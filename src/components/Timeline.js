@@ -16,6 +16,11 @@ export default class Timeline extends React.Component {
               y={y + 10}
               turnObj={e}
               key={e.turn + ':' + e.player}
+              onPieceClick={(piece) => {
+                if(typeof this.props.onPieceClick) {
+                  this.props.onPieceClick(piece);
+                }
+              }}
             />
           );
         })

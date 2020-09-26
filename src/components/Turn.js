@@ -3,10 +3,7 @@ import { Graphics } from 'react-pixi-fiber';
 import Piece from 'components/Piece';
 
 export default class Turn extends React.Component {
-  constructor(props) {
-    super(props);
-    this.turnRef = React.createRef();
-  }
+  turnRef = React.createRef();
   draw() {
     var x = this.props.x ? this.props.x : 0;
     var y = this.props.y ? this.props.y : 0;
@@ -55,9 +52,13 @@ export default class Turn extends React.Component {
                 palette={this.props.palette}
                 x={x + (e.position.file - 1) * 10}
                 y={y + (8 - e.position.rank) * 10}
-                type={e.piece}
-                player={e.player}
+                pieceObj={e}
                 key={e.piece + e.position.coordinate}
+                onPieceClick={(piece) => {
+                  if(typeof this.props.onPieceClick) {
+                    this.props.onPieceClick(piece);
+                  }
+                }}
               />
             );
           })

@@ -45,6 +45,11 @@ export default class Board extends React.Component {
                       y={e.timeline * 100}
                       timelineObj={e}
                       key={e.timeline}
+                      onPieceClick={(piece) => {
+                        if(typeof this.props.onPieceClick) {
+                          this.props.onPieceClick(piece);
+                        }
+                      }}
                     />
                   );
                 })
