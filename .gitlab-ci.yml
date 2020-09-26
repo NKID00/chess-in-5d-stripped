@@ -39,6 +39,7 @@ pages:
       artifacts: true
   script:
     - ls -alh
+    - rm -rf public
     - mkdir public
     - cp build/* public
   artifacts:
@@ -53,8 +54,9 @@ upload_app:
     - job: build_app
       artifacts: true
   script:
+    - cd dist
     - ls -alh
-    - curl -T "$CI_PROJECT_DIR/dist/Chess In 5D Setup $NPM_PACKAGE_VERSION.exe" -ualexbay218:${BINTRAY_KEY} "https://api.bintray.com/content/alexbay218/chess-in-5d/chess-in-5d-electron/$NPM_PACKAGE_VERSION/Chess In 5D Setup $NPM_PACKAGE_VERSION.exe"
+    - curl -T "Chess In 5D Setup $NPM_PACKAGE_VERSION.exe" -ualexbay218:${BINTRAY_KEY} "https://api.bintray.com/content/alexbay218/chess-in-5d/chess-in-5d-electron/$NPM_PACKAGE_VERSION/Chess In 5D Setup $NPM_PACKAGE_VERSION.exe"
   only:
     - release
 
