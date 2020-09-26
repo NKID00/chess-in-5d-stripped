@@ -3,7 +3,11 @@ default:
   before_script:
     - NPM_PACKAGE_VERSION=$(node -p "require('./package.json').version")
 
-stages: build,test,deploy,release
+stages:
+  - build
+  - test
+  - deploy
+  - release
 
 install_dependencies:
   stage: build
