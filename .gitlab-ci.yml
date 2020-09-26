@@ -3,10 +3,15 @@ default:
   before_script:
     - NPM_PACKAGE_VERSION=$(node -p "require('./package.json').version")
 
-stages: build,test,deploy,release
+stages:
+  - install
+  - build
+  - test
+  - deploy
+  - release
 
 install_dependencies:
-  stage: build
+  stage: install
   script:
     - npm install --unsafe-perm
   artifacts:
@@ -25,7 +30,7 @@ build_app:
 test_app:
   stage: test
   script:
-    - npm test
+    - npm --passWithNoTests test
 
 pages:
   stage: deploy
@@ -42,8 +47,13 @@ pages:
 
 upload_app:
   stage: deploy
+  needs:
+    - job: build_app
+      artifacts: true
   script: 
-    - curl -T "./dist/Chess In 5D Setup ${NPM_VERSION}.exe" -ualexbay218:${BINTRAY_KEY} "https://api.bintray.com/content/alexbay218/chess-in-5d/chess-in-5d-electron/${NPM_VERSION}/Chess In 5D Setup ${NPM_VERSION}.exe"
+    - curl -T "dist/Chess In 5D Setup ${NPM_VERSION}.exe" -ualexbay218:${BINTRAY_KEY} "https://api.bintray.com/content/alexbay218/chess-in-5d/chess-in-5d-electron/${NPM_VERSION}/Chess In 5D Setup ${NPM_VERSION}.exe"
+  only:
+    - release
 
 release_app:
   image: registry.gitlab.com/gitlab-org/release-cli
