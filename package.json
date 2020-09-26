@@ -5,10 +5,81 @@
     "email": "alexbay218@gmail.com"
   },
   "version": "0.1.0",
+  "description": "Open source implementation of '5D Chess With Multiverse Time Travel' created by Conor Peterson.",
   "private": true,
+  "main": "public/electron.js",
+  "homepage": "./",
   "build": {
     "appId": "com.electron.chess-in-5d",
-    "productName": "Chess In 5D"
+    "productName": "Chess In 5D",
+    "files": [
+      "build/**/*",
+      "node_modules/**/*"
+    ],
+    "directories":{
+      "buildResources": "assets"
+    },
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    },
+    "linux": {
+      "target": [
+        {
+          "target": "AppImage",
+          "arch": [
+            "x64",
+            "ia32",
+            "armv7l",
+            "arm64"
+          ]
+        },
+        {
+          "target": "deb",
+          "arch": [
+            "x64",
+            "ia32",
+            "armv7l",
+            "arm64"
+          ]
+        },
+        {
+          "target": "rpm",
+          "arch": [
+            "x64",
+            "ia32",
+            "armv7l",
+            "arm64"
+          ]
+        },
+        {
+          "target": "pacman",
+          "arch": [
+            "x64",
+            "ia32",
+            "armv7l",
+            "arm64"
+          ]
+        },
+        {
+          "target": "tar.gz",
+          "arch": [
+            "x64",
+            "ia32",
+            "armv7l",
+            "arm64"
+          ]
+        }
+      ],
+      "category": "Game"
+    },
+    "copyright": "Created by Shaun Wu, source code released uner AGPL-v3.0. All other assets are released under CC BY-SA 4.0"
   },
   "dependencies": {
     "5d-chess-js": "^0.1.6",
@@ -34,10 +105,12 @@
     "wait-on": "^5.2.0"
   },
   "scripts": {
+    "postinstall": "electron-builder install-app-deps",
     "start": "react-scripts start",
-    "estart": "concurrently \"npm start\" \"wait-on http://localhost:3000 && electron ./public/electron.js\"",
+    "electron-start": "concurrently \"npm start\" \"wait-on http://localhost:3000 && electron .\"",
     "build": "react-scripts build",
-    "ebuild": "npm run build && electron-builder -m -l -w --x64 --ia32 --armv7l --arm64",
+    "preelectron-build": "npm run build  --em.main=build/electron.js",
+    "electron-build": "electron-builder -w",
     "test": "react-scripts test --passWithNoTests",
     "eject": "react-scripts eject"
   },
@@ -57,7 +130,7 @@
     ]
   },
   "devDependencies": {
-    "electron": "^9.0.4",
+    "electron": "^10.1.2",
     "electron-builder": "^22.8.0",
     "nodemon": "^2.0.4"
   }
