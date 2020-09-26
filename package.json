@@ -37,7 +37,7 @@
     "start": "react-scripts start",
     "estart": "concurrently \"npm start\" \"wait-on http://localhost:3000 && electron ./public/electron.js\"",
     "build": "react-scripts build",
-    "ebuild": "npm run build && electron-builder",
+    "ebuild": "npm run build && electron-builder -m -l -w --x64 --ia32 --armv7l --arm64",
     "test": "react-scripts test --passWithNoTests",
     "eject": "react-scripts eject"
   },

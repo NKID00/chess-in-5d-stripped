@@ -41,7 +41,7 @@ pages:
     - ls -alh
     - rm -rf public
     - mkdir public
-    - cp build/* public
+    - cp -r build/* public
   artifacts:
     paths:
       - public
