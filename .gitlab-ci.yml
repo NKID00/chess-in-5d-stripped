@@ -4,13 +4,14 @@ default:
     - NPM_PACKAGE_VERSION=$(node -p "require('./package.json').version")
 
 stages:
+  - install
   - build
   - test
   - deploy
   - release
 
 install_dependencies:
-  stage: build
+  stage: install
   script:
     - npm install --unsafe-perm
   artifacts:
