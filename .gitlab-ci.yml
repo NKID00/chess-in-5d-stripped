@@ -30,7 +30,7 @@ build_app:
 test_app:
   stage: test
   script:
-    - npm test
+    - npm --passWithNoTests test
 
 pages:
   stage: deploy
