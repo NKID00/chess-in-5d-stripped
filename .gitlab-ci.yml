@@ -38,10 +38,12 @@ pages:
     - job: build_app
       artifacts: true
   script:
-    - echo 'Grabbing React Bundle'
+    - ls -alh
+    - mkdir public
+    - cp build/* public
   artifacts:
     paths:
-      - build
+      - public
   only:
     - release
 
@@ -50,7 +52,8 @@ upload_app:
   needs:
     - job: build_app
       artifacts: true
-  script: 
+  script:
+    - ls -alh
     - curl -T "$CI_PROJECT_DIR/dist/Chess In 5D Setup $NPM_PACKAGE_VERSION.exe" -ualexbay218:${BINTRAY_KEY} "https://api.bintray.com/content/alexbay218/chess-in-5d/chess-in-5d-electron/$NPM_PACKAGE_VERSION/Chess In 5D Setup $NPM_PACKAGE_VERSION.exe"
   only:
     - release
