@@ -30,7 +30,7 @@ build_react_app:
       - build
 
 build_electron_app:
-  image: node-windows:latest
+  image: stefanscherer/node-windows:latest
   stage: build
   needs:
     - job: install_dependencies
