@@ -30,7 +30,7 @@ build_app:
 test_app:
   stage: test
   script:
-    - npm --passWithNoTests test
+    - npm test
 
 pages:
   stage: deploy
@@ -51,7 +51,7 @@ upload_app:
     - job: build_app
       artifacts: true
   script: 
-    - curl -T "dist/Chess In 5D Setup ${NPM_VERSION}.exe" -ualexbay218:${BINTRAY_KEY} "https://api.bintray.com/content/alexbay218/chess-in-5d/chess-in-5d-electron/${NPM_VERSION}/Chess In 5D Setup ${NPM_VERSION}.exe"
+    - curl -T "$CI_PROJECT_DIR/dist/Chess In 5D Setup ${NPM_VERSION}.exe" -ualexbay218:${BINTRAY_KEY} "https://api.bintray.com/content/alexbay218/chess-in-5d/chess-in-5d-electron/${NPM_VERSION}/Chess In 5D Setup ${NPM_VERSION}.exe"
   only:
     - release
 
