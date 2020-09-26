@@ -1,0 +1,64 @@
+default:
+  image: node:latest
+  before_script:
+    - NPM_PACKAGE_VERSION=$(node -p "require('./package.json').version")
+
+stages: build,test,deploy,release
+
+install_dependencies:
+  stage: build
+  script:
+    - npm install --unsafe-perm
+  artifacts:
+    paths:
+      - node_modules
+
+build_app:
+  stage: build
+  script:
+    - npm run ebuild
+  artifacts:
+    paths:
+      - build
+      - dist
+
+test_app:
+  stage: test
+  script:
+    - npm test
+
+pages:
+  stage: deploy
+  needs:
+    - job: build_app
+      artifacts: true
+  script:
+    - echo 'Grabbing React Bundle'
+  artifacts:
+    paths:
+      - build
+  only:
+    - release
+
+upload_app:
+  stage: deploy
+  script: 
+    - curl -T "./dist/Chess In 5D Setup ${NPM_VERSION}.exe" -ualexbay218:${BINTRAY_KEY} "https://api.bintray.com/content/alexbay218/chess-in-5d/chess-in-5d-electron/${NPM_VERSION}/Chess In 5D Setup ${NPM_VERSION}.exe"
+
+release_app:
+  image: registry.gitlab.com/gitlab-org/release-cli
+  stage: release
+  needs:
+    - job: build_app
+      artifacts: true
+  script:
+    - >
+      release-cli create 
+      --name="Auto Release v${NPM_PACKAGE_VERSION}"
+      --description="Automated Release Version ${NPM_PACKAGE_VERSION} $CI_COMMIT_REF_NAME-$CI_JOB_ID"
+      --tag-name job-$CI_JOB_ID
+      --ref $CI_COMMIT_SHA
+      --assets-link '{"name":"Chess In 5D Setup ${NPM_VERSION}.exe","url":"https://https://dl.bintray.com/alexbay218/chess-in-5d/chess-in-5d-electron/${NPM_VERSION}/Chess In 5D Setup ${NPM_VERSION}.exe"}'
+  only:
+    - release
+
