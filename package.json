@@ -38,7 +38,7 @@
     "estart": "concurrently \"npm start\" \"wait-on http://localhost:3000 && electron ./public/electron.js\"",
     "build": "react-scripts build",
     "ebuild": "npm run build && electron-builder",
-    "test": "react-scripts --passWithNoTests test",
+    "test": "react-scripts test --passWithNoTests",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
