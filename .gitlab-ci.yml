@@ -30,6 +30,8 @@ build_react_app:
       - build
 
 build_electron_app:
+  image: 
+    name: docker.io/training/node-windows:10.16
   stage: build
   needs:
     - job: install_dependencies
