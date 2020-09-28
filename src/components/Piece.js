@@ -1,6 +1,8 @@
 import React from 'react';
 import { Graphics } from 'react-pixi-fiber';
 
+const deepcompare = require('deep-compare');
+
 export default class Piece extends React.Component {
   piecePoly = {
     base: [
@@ -78,7 +80,7 @@ export default class Piece extends React.Component {
     var graphics = this.pieceRef.current;
     graphics.clear();
     graphics.beginFill(fill);
-    graphics.lineStyle(1, fill, 0);
+    graphics.lineStyle(1, this.props.palette.selectedPiece, this.props.selectedPiece ? 1 : 0);
     graphics.drawPolygon(this.piecePoly.base.map((e,i) => {
       return i % 2 === 0 ? e + x : e + y;
     }));
@@ -128,10 +130,11 @@ export default class Piece extends React.Component {
   }
   componentDidUpdate(prevProps) {
     if(
+      !deepcompare(prevProps.palette, this.props.palette) ||
+      !deepcompare(prevProps.pieceObj, this.props.pieceObj) ||
       prevProps.x !== this.props.x ||
       prevProps.y !== this.props.y ||
-      prevProps.player !== this.props.player ||
-      prevProps.type !== this.props.type
+      prevProps.selectedPiece !== this.props.selectedPiece
     ) {
       this.draw();
     }
@@ -140,7 +143,7 @@ export default class Piece extends React.Component {
     return (
       <Graphics ref={this.pieceRef}
         pointertap={(e) => {
-          if(typeof this.props.onPieceClick) {
+          if(typeof this.props.onPieceClick === 'function') {
             this.props.onPieceClick(this.props.pieceObj);
           }
         }}
