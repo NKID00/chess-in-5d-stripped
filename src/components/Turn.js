@@ -68,6 +68,16 @@ export default class Turn extends React.Component {
                     this.props.onHighlightClick(moveObj);
                   }
                 }}
+                isCapture={this.props.turnObj.pieces.filter((e2) => {
+                  return (
+                    e.player !== e2.player &&
+                    (e.enPassant === null ? 
+                      e.end.coordinate === e2.position.coordinate
+                    :
+                      e.enPassant.coordinate === e2.position.coordinate
+                    )
+                  );
+                }).length > 0}
               />
             );
           })

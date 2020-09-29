@@ -34,15 +34,23 @@ export default class Wrapper extends React.Component {
   }
   render() {
     return (
-      <Stage options={{
-        height: this.state.height,
-        width: this.state.width,
-        backgroundColor: (this.props.palette ?
-          this.props.palette.background
-        :
-          defaultPalette.background
-        )
-      }}>
+      <Stage
+        options={{
+          height: this.state.height,
+          width: this.state.width,
+          backgroundColor: (this.props.palette ?
+            this.props.palette.background
+          :
+            defaultPalette.background
+          )
+        }}
+        style={{
+          left: 0,
+          top: 0,
+          position: "absolute",
+          zIndex: -100
+        }}
+      >
         <AppContext.Consumer>
           {app =>
             <Viewport
