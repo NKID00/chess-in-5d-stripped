@@ -3,7 +3,7 @@ import { Viewport as PixiViewport} from 'pixi-viewport';
 
 const behavior = {
   customDisplayObject: (props) => {
-    const viewport = new PixiViewport({
+    var viewport = new PixiViewport({
       screenWidth: props.app.renderer.width,
       screenHeight: props.app.renderer.height,
       worldWidth: props.worldWidth ? props.worldWidth : 1000,
@@ -20,7 +20,9 @@ const behavior = {
     if(props.decelerate) { viewport.decelerate(); }
     viewport.zoomPercent(1.5, false);
     return viewport;
-  }
+  },
+  customApplyProps: (viewport, oldProps, newProps) => { return viewport; },
+  customWillDetach: (viewport) => { return viewport; }
 };
 
 const Viewport = CustomPIXIComponent(behavior, 'Viewport');

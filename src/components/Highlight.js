@@ -15,7 +15,7 @@ export default class Highlight extends React.Component {
     ;
     var graphics = this.highlightRef.current;
     graphics.clear();
-    graphics.beginFill(fill);
+    graphics.beginFill(fill, 0.5);
     graphics.lineStyle(1, fill, 0);
     graphics.drawCircle(x + 5,y + 5,4);
     graphics.endFill();

@@ -42,10 +42,34 @@ export default class Turn extends React.Component {
   render() {
     return (
       <>
-        <Graphics
-          app={this.props.app}
-          ref={this.turnRef}
-        />
+        <Graphics ref={this.turnRef} />
+        {typeof this.props.turnObj !== 'undefined' ?
+          this.props.turnObj.pieces.map((e) => {
+            var x = this.props.x ? this.props.x : 0;
+            var y = this.props.y ? this.props.y : 0;
+            return (
+              <Piece
+                app={this.props.app}
+                palette={this.props.palette}
+                x={x + (e.position.file - 1) * 10}
+                y={y + (8 - e.position.rank) * 10}
+                pieceObj={e}
+                key={e.piece + e.position.coordinate}
+                onPieceClick={(piece) => {
+                  if(typeof this.props.onPieceClick === 'function') {
+                    this.props.onPieceClick(piece);
+                  }
+                }}
+                selectedPiece={
+                  this.props.selectedPiece &&
+                  this.props.selectedPiece.piece + this.props.selectedPiece.position.coordinate === e.piece + e.position.coordinate
+                }
+              />
+            );
+          })
+        :
+          <></>
+        }
         {Array.isArray(this.props.highlights) && typeof this.props.turnObj !== 'undefined' ?
           this.props.highlights.filter((e) => {
             return (
@@ -71,40 +95,13 @@ export default class Turn extends React.Component {
                 isCapture={this.props.turnObj.pieces.filter((e2) => {
                   return (
                     e.player !== e2.player &&
-                    (e.enPassant === null ? 
+                    (e.enPassant === null ?
                       e.end.coordinate === e2.position.coordinate
                     :
                       e.enPassant.coordinate === e2.position.coordinate
                     )
                   );
                 }).length > 0}
-              />
-            );
-          })
-        :
-          <></>
-        }
-        {typeof this.props.turnObj !== 'undefined' ?
-          this.props.turnObj.pieces.map((e) => {
-            var x = this.props.x ? this.props.x : 0;
-            var y = this.props.y ? this.props.y : 0;
-            return (
-              <Piece
-                app={this.props.app}
-                palette={this.props.palette}
-                x={x + (e.position.file - 1) * 10}
-                y={y + (8 - e.position.rank) * 10}
-                pieceObj={e}
-                key={e.piece + e.position.coordinate}
-                onPieceClick={(piece) => {
-                  if(typeof this.props.onPieceClick === 'function') {
-                    this.props.onPieceClick(piece);
-                  }
-                }}
-                selectedPiece={
-                  this.props.selectedPiece && 
-                  this.props.selectedPiece.piece + this.props.selectedPiece.position.coordinate === e.piece + e.position.coordinate
-                }
               />
             );
           })
