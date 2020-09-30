@@ -82,7 +82,7 @@
     "copyright": "Created by Shaun Wu, source code released uner AGPL-v3.0. All other assets are released under CC BY-SA 4.0"
   },
   "dependencies": {
-    "5d-chess-js": "^0.1.8",
+    "5d-chess-js": "^0.2.0",
     "@rebass/forms": "^4.0.6",
     "@rebass/preset": "^4.0.5",
     "@testing-library/jest-dom": "^4.2.4",
@@ -112,7 +112,7 @@
     "start": "react-scripts start",
     "electron-start": "concurrently \"npm start\" \"wait-on http://localhost:3000 && electron .\"",
     "build": "react-scripts build",
-    "preelectron-build": "npm run build  --em.main=build/electron.js",
+    "preelectron-build": "npm run build --em.main=build/electron.js",
     "electron-build": "electron-builder -w",
     "test": "react-scripts test --passWithNoTests",
     "eject": "react-scripts eject"

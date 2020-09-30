@@ -11,7 +11,11 @@ const defaultPalette = {
   blackSquare: 0x555555,
   selectedPiece: 0x0000ff,
   moveHighlight: 0x00ff00,
-  captureHighlight: 0xff0000
+  captureHighlight: 0xff0000,
+  checkSourceHighlight: 0xff0000,
+  checkDestinationHighlight: 0xff0000,
+  whiteBoardOutline: 0xdddddd,
+  blackBoardOutline: 0x222222
 };
 
 export default class Board extends React.Component {
@@ -58,6 +62,24 @@ export default class Board extends React.Component {
               pinch
               wheel
               decelerate
+              worldHeight={typeof this.props.boardObj !== 'undefined' ?
+                this.props.boardObj.timelines.length * 100
+              :
+                1000
+              }
+              worldWidth={typeof this.props.boardObj !== 'undefined' ?
+                this.props.boardObj.timelines.map((e) => {
+                  var hasPresent = typeof this.props.boardObj.timelines.find((e2) => {return e2.present}) !== 'undefined';
+                  if(hasPresent) {
+                    return e.present ? e.turns.length * 100 : 0;
+                  }
+                  return e.turns.length * 100;
+                }).reduce((a, c) => {
+                  return a < c ? c : a;
+                })
+              :
+                1000
+              }
             >
               {typeof this.props.boardObj !== 'undefined' ?
                 this.props.boardObj.timelines.map((e) => {
@@ -81,6 +103,7 @@ export default class Board extends React.Component {
                       }}
                       selectedPiece={this.props.selectedPiece}
                       highlights={this.props.highlights}
+                      checks={this.props.checks}
                     />
                   );
                 })

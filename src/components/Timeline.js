@@ -18,6 +18,20 @@ export default class Timeline extends React.Component {
             :
               []
             }
+            checksS={Array.isArray(this.props.checks) ?
+              this.props.highlights.filter((e) => {
+                return e.start.timeline === this.props.timelineObj.timeline;
+              })
+            :
+              []
+            }
+            checksD={Array.isArray(this.props.checks) ?
+              this.props.highlights.filter((e) => {
+                return e.end.timeline === this.props.timelineObj.timeline;
+              })
+            :
+              []
+            }
             x={x + (((e.turn - 1) * 2) + (e.player === 'white' ? 0 : 1)) * 100 + 10}
             y={y + 10}
             turnObj={e}

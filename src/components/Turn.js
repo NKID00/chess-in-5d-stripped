@@ -12,6 +12,16 @@ export default class Turn extends React.Component {
     var y = this.props.y ? this.props.y : 0;
     var graphics = this.turnRef.current;
     graphics.clear();
+    graphics.beginFill(0x000000,0);
+    graphics.lineStyle(3,
+      this.props.turnObj.player === 'white' ?
+        this.props.palette.whiteBoardOutline
+      :
+        this.props.palette.blackBoardOutline,
+    1, 1);
+    graphics.drawRect(x, y, 80, 80);
+    graphics.endFill();
+    graphics.lineStyle(0);
     for(var i = 0;i < 8;i++) {
       for(var j = 0;j < 8;j++) {
         if((i + j) % 2 !== 0) {
@@ -64,6 +74,54 @@ export default class Turn extends React.Component {
                   this.props.selectedPiece &&
                   this.props.selectedPiece.piece + this.props.selectedPiece.position.coordinate === e.piece + e.position.coordinate
                 }
+              />
+            );
+          })
+        :
+          <></>
+        }
+        {Array.isArray(this.props.checksS) && typeof this.props.turnObj !== 'undefined' ?
+          this.props.checksS.filter((e) => {
+            return (
+              e.start.turn === this.props.turnObj.turn &&
+              e.start.player === this.props.turnObj.player
+            );
+          }).map((e) => {
+            var x = this.props.x ? this.props.x : 0;
+            var y = this.props.y ? this.props.y : 0;
+            return (
+              <Highlight
+                app={this.props.app}
+                palette={this.props.palette}
+                x={x + (e.start.file - 1) * 10}
+                y={y + (8 - e.start.rank) * 10}
+                moveObj={e}
+                key={e.start.coordinate}
+                isCheckSource
+              />
+            );
+          })
+        :
+          <></>
+        }
+        {Array.isArray(this.props.checksD) && typeof this.props.turnObj !== 'undefined' ?
+          this.props.checksD.filter((e) => {
+            return (
+              e.end.turn === this.props.turnObj.turn &&
+              e.end.player === this.props.turnObj.player
+            );
+          }).map((e) => {
+            var x = this.props.x ? this.props.x : 0;
+            var y = this.props.y ? this.props.y : 0;
+            return (
+              <Highlight
+                app={this.props.app}
+                palette={this.props.palette}
+                x={x + (e.end.file - 1) * 10}
+                y={y + (8 - e.end.rank) * 10}
+                moveObj={e}
+                key={e.end.coordinate}
+                isCheckDestination
               />
             );
           })

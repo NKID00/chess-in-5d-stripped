@@ -13,8 +13,13 @@ export default class Highlight extends React.Component {
     :
       this.props.palette.moveHighlight
     ;
+    if(this.props.isCheckSource) { fill = this.props.palette.checkSourceHighlight; }
+    if(this.props.isCheckDestination) { fill = this.props.palette.checkDestinationHighlight; }
     var graphics = this.highlightRef.current;
     graphics.clear();
+    graphics.beginFill(fill, 0);
+    graphics.drawRect(x, y, 10, 10);
+    graphics.endFill();
     graphics.beginFill(fill, 0.5);
     graphics.lineStyle(1, fill, 0);
     graphics.drawCircle(x + 5,y + 5,4);

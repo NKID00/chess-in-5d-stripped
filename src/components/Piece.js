@@ -72,13 +72,16 @@ export default class Piece extends React.Component {
   draw() {
     var x = this.props.x ? this.props.x : 0;
     var y = this.props.y ? this.props.y : 0;
-    var fill = this.props.pieceObj.player === 'black' ? 
+    var fill = this.props.pieceObj.player === 'black' ?
       this.props.palette.blackPiece
     :
       this.props.palette.whitePiece
     ;
     var graphics = this.pieceRef.current;
     graphics.clear();
+    graphics.beginFill(fill, 0);
+    graphics.drawRect(x, y, 10, 10);
+    graphics.endFill();
     graphics.beginFill(fill);
     graphics.lineStyle(1, this.props.palette.selectedPiece, this.props.selectedPiece ? 1 : 0);
     graphics.drawPolygon(this.piecePoly.base.map((e,i) => {

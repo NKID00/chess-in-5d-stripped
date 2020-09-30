@@ -4,8 +4,10 @@ import Chess from '5d-chess-js';
 import { Box, Flex, Text, Button } from 'rebass';
 
 import Board from 'components/Board';
+import NotationViewer from 'components/NotationViewer';
 
 const deepcompare = require('deep-compare');
+
 export default class GamePlayer extends React.Component {
   chess = new Chess();
   state = {
@@ -21,8 +23,10 @@ export default class GamePlayer extends React.Component {
       checkmate: this.chess.inCheckmate,
       stalemate: this.chess.inStalemate,
       check: this.chess.inCheck,
-      action: this.chess.actionNumber
-    })
+      action: this.chess.actionNumber,
+      notation: this.chess.export('notation_short'),
+      checks: this.chess.checks()
+    });
   }
   componentDidMount() {
     this.boardSync();
@@ -44,50 +48,66 @@ export default class GamePlayer extends React.Component {
       }
     }
   }
+  selectedPiece(piece) {
+    if(
+      (this.props.canControlWhite && this.state.player === 'white') ||
+      (this.props.canControlBlack && this.state.player === 'black')
+    ) {
+      if(
+        this.state.selectedPiece === null &&
+        this.state.player === piece.player
+      ) {
+        this.setState({selectedPiece: piece});
+      }
+      else if(
+        this.state.selectedPiece &&
+        this.state.selectedPiece.piece === piece.piece &&
+        this.state.selectedPiece.player === piece.player &&
+        this.state.selectedPiece.position.timeline === piece.position.timeline &&
+        this.state.selectedPiece.position.turn === piece.position.turn &&
+        this.state.selectedPiece.position.player === piece.position.player
+      ) {
+        this.setState({selectedPiece: null});
+      }
+    }
+  }
+  move(moveObj, unselectPiece = false) {
+    if(
+      (this.props.canControlWhite && this.state.player === 'white') ||
+      (this.props.canControlBlack && this.state.player === 'black')
+    ) {
+      this.chess.move(moveObj);
+      this.setState({highlights: []});
+      if(unselectPiece) { this.setState({selectedPiece: null}); }
+      this.boardSync();
+    }
+  }
   render() {
     return (
       <>
         <Flex
-          px={2}
+          p={2}
           color='white'
           bg='black'
           alignItems='center'
         >
           <Text p={2} fontWeight='bold'>Chess in 5D</Text>
           <Box mx='auto' />
+          <NotationViewer notation={this.state.notation} />
         </Flex>
         <Board
           boardObj={this.state.board}
           onPieceClick={(piece) => {
             if(piece) {
-              if(
-                this.state.selectedPiece === null &&
-                this.state.player === piece.player
-              ) {
-                this.setState({selectedPiece: piece});
-              }
-              else if(
-                this.state.selectedPiece &&
-                this.state.selectedPiece.piece === piece.piece &&
-                this.state.selectedPiece.player === piece.player &&
-                this.state.selectedPiece.position.timeline === piece.position.timeline &&
-                this.state.selectedPiece.position.turn === piece.position.turn &&
-                this.state.selectedPiece.position.player === piece.position.player
-              ) {
-                this.setState({selectedPiece: null});
-              }
+              this.selectPiece(piece);
             }
           }}
           onHighlightClick={(moveObj) => {
-            this.chess.move(moveObj);
-            this.setState({
-              highlights: [],
-              selectedPiece: null
-            });
-            this.boardSync();
+            this.move(moveObj, true);
           }}
           selectedPiece={this.state.selectedPiece}
           highlights={this.state.highlights}
+          checks={this.state.checks}
         />
         <Flex
           p={2}
@@ -143,12 +163,24 @@ export default class GamePlayer extends React.Component {
           :
             <></>
           }
+          {this.state.check ?
+            <Button
+              variant='primary'
+              disabled
+              color='white'
+              bg='red'
+              mr={2}
+            >
+              Check
+            </Button>
+          :
+            <></>
+          }
           <Box mx='auto' />
           <Button
             variant={this.state.undoable ? 'primary' : 'outline'}
             disabled={!this.state.undoable}
             onClick={() => {
-              console.log('clicked')
               this.chess.undo();
               this.boardSync();
             }}
