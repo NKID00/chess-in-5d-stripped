@@ -6,9 +6,8 @@ import { Box, Flex, Text, Button } from 'rebass';
 import Board from 'components/Board';
 
 const deepcompare = require('deep-compare');
-console.log(Chess.raw)
 export default class GamePlayer extends React.Component {
-  chess = new Chess('1w. 1:e2:e4\n1b. 1:Nb8:c6\n2w. 2:e4:e5');
+  chess = new Chess();
   state = {
     selectedPiece: null,
     highlights: []
@@ -19,9 +18,9 @@ export default class GamePlayer extends React.Component {
       submittable: this.chess.submittable(),
       undoable: this.chess.undoable(),
       player: this.chess.player,
-      checkmate: this.chess.checkmate,
-      stalemate: this.chess.stalemate,
-      check: this.chess.check,
+      checkmate: this.chess.inCheckmate,
+      stalemate: this.chess.inStalemate,
+      check: this.chess.inCheck,
       action: this.chess.actionNumber
     })
   }
@@ -56,7 +55,6 @@ export default class GamePlayer extends React.Component {
         >
           <Text p={2} fontWeight='bold'>Chess in 5D</Text>
           <Box mx='auto' />
-          <Text p={2} fontWeight='bold'>{'Action: ' + this.state.action}</Text>
         </Flex>
         <Board
           boardObj={this.state.board}
@@ -81,7 +79,6 @@ export default class GamePlayer extends React.Component {
             }
           }}
           onHighlightClick={(moveObj) => {
-            console.log(moveObj)
             this.chess.move(moveObj);
             this.setState({
               highlights: [],
