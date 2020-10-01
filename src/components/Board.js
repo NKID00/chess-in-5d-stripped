@@ -22,7 +22,10 @@ const defaultPalette = {
 export default class Board extends React.Component {
   state = {
     width: window.innerWidth,
-    height: window.innerHeight
+    height: window.innerHeight,
+    snapX: 50,
+    snapY: 50,
+    triggerDate: Date.now()
   }
   resizeListener = (() => {
     this.setState({
@@ -30,10 +33,10 @@ export default class Board extends React.Component {
       height: window.innerHeight
     });
   });
-  getFocusedBoard() {
+  recenter() {
     var res = {
-      x: 50,
-      y: 50
+      snapX: 50,
+      snapY: 50
     };
     if(typeof this.props.boardObj !== 'undefined') {
       var actives = this.props.boardObj.timelines.filter((e) => { return e.present; });
@@ -44,30 +47,32 @@ export default class Board extends React.Component {
         var lowestTurnLength = actives[0].length;
         var index = 0;
         for(var i = 0;i < actives.length;i++) {
-          if(lowestTurnLength > actives[i].length) {
-            lowestTurnLength = actives[i].length;
+          if(lowestTurnLength > actives[i].turns.length) {
+            lowestTurnLength = actives[i].turns.length;
             index = i;
           }
         }
         var highestTurn = 0;
         for(var i = 0;i < actives[index].turns.length;i++) { // eslint-disable-line no-redeclare
           if(highestTurn <
-            (actives[index].turns[i].turn + (actives[index].turns[i].player === 'white' ? 0 : 1))
+            (actives[index].turns[i].turn*2 + (actives[index].turns[i].player === 'white' ? 0 : 1))
           ) {
-            highestTurn = actives[index].turns[i].turn + (actives[index].turns[i].player === 'white' ? 0 : 1);
+            highestTurn = actives[index].turns[i].turn*2 + (actives[index].turns[i].player === 'white' ? 0 : 1);
           }
         }
-        res.x = (highestTurn - 1) * 100;
-        res.x += 50;
-        res.y = (actives[index].timeline - this.props.boardObj.timelines.reduce((a, c) => {
-          return a > c.timeline ? c.timeline : a;
+        res.snapX = (highestTurn - 1) * 100;
+        res.snapX -= 50;
+        res.snapY = (actives[index].timeline - this.props.boardObj.timelines.map((e) => { return e.timeline; }).reduce((a, c) => {
+          return a > c ? c : a;
         })) * 100;
-        res.y += 50;
+        res.snapY += 50;
       }
     }
-    return res;
+    this.setState(res);
+    this.setState({triggerDate: Date.now()})
   }
   componentDidMount() {
+    this.recenter();
     window.addEventListener('resize', this.resizeListener);
   }
   componentWillUnmount() {
@@ -107,26 +112,19 @@ export default class Board extends React.Component {
               }
               worldWidth={typeof this.props.boardObj !== 'undefined' ?
                 this.props.boardObj.timelines.map((e) => {
+                  if(e.turns.length <= 0) { return 0; }
                   return e.turns.reduce((a, c) => {
                     return a < c.turn + (c.player === 'white' ? 0 : 1) ? c.turn + (c.player === 'white' ? 0 : 1) : a;
-                  }) * 100;
+                  }, e.turns[0].turn + (e.turns[0].player === 'white' ? 0 : 1)) * 100;
                 }).reduce((a, c) => {
                   return a < c ? c : a;
                 })
               :
                 100
               }
-              snapX={typeof this.props.boardObj !== 'undefined' ?
-                this.getFocusedBoard().x
-              :
-                50
-              }
-              snapY={typeof this.props.boardObj !== 'undefined' ?
-                this.getFocusedBoard().y
-              :
-                50
-              }
-              zoomHeight={133}
+              snapX={this.state.snapX}
+              snapY={this.state.snapY}
+              triggerDate={this.state.triggerDate}
             >
               {typeof this.props.boardObj !== 'undefined' ?
                 this.props.boardObj.timelines.map((e) => {
@@ -137,8 +135,8 @@ export default class Board extends React.Component {
                       x={this.props.x ? this.props.x : 0}
                       y={
                         (this.props.x ? this.props.x : 0) +
-                        (e.timeline - this.props.boardObj.timelines.reduce((a, c) => {
-                          return a > c.timeline ? c.timeline : a;
+                        (e.timeline - this.props.boardObj.timelines.map((e) => { return e.timeline; }).reduce((a, c) => {
+                          return a > c ? c : a;
                         })) * 100
                       }
                       timelineObj={e}
@@ -148,12 +146,23 @@ export default class Board extends React.Component {
                           this.props.onPieceClick(piece);
                         }
                       }}
+                      onPieceOver={(piece) => {
+                        if(typeof this.props.onPieceOver === 'function') {
+                          this.props.onPieceOver(piece);
+                        }
+                      }}
+                      onPieceOut={(piece) => {
+                        if(typeof this.props.onPieceOut === 'function') {
+                          this.props.onPieceOut(piece);
+                        }
+                      }}
                       onHighlightClick={(moveObj) => {
                         if(typeof this.props.onHighlightClick === 'function') {
                           this.props.onHighlightClick(moveObj);
                         }
                       }}
                       selectedPiece={this.props.selectedPiece}
+                      hoverHighlights={this.props.hoverHighlights}
                       highlights={this.props.highlights}
                       checks={this.props.checks}
                     />

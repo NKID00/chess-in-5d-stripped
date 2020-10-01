@@ -17,12 +17,12 @@ export default class Highlight extends React.Component {
     if(this.props.isCheckDestination) { fill = this.props.palette.checkDestinationHighlight; }
     var graphics = this.highlightRef.current;
     graphics.clear();
-    graphics.beginFill(fill, 0.1);
+    graphics.beginFill(fill, 0.01);
     graphics.drawRect(x, y, 10, 10);
     graphics.endFill();
-    graphics.beginFill(fill, 0.5);
+    graphics.beginFill(fill, this.props.isHover ? 0.25 : 0.65);
     graphics.lineStyle(1, fill, 0);
-    graphics.drawCircle(x + 5,y + 5,4);
+    graphics.drawCircle(x + 5,y + 5,this.props.isHover ? 2.5 : 4);
     graphics.endFill();
   }
   componentDidMount() {

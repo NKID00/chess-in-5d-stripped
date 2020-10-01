@@ -3,7 +3,7 @@ import React from 'react';
 import Modal from 'react-modal';
 import { Box, Flex, Text, Button } from 'rebass';
 import { Textarea } from '@rebass/forms';
-import { FilePond, File, registerPlugin } from 'react-filepond';
+import { FilePond } from 'react-filepond';
 import 'filepond/dist/filepond.min.css'
 
 const fileDownload = require('js-file-download');

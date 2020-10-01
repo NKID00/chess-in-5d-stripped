@@ -81,6 +81,16 @@ export default class Turn extends React.Component {
                     this.props.onPieceClick(piece);
                   }
                 }}
+                onPieceOver={(piece) => {
+                  if(typeof this.props.onPieceOver === 'function') {
+                    this.props.onPieceOver(piece);
+                  }
+                }}
+                onPieceOut={(piece) => {
+                  if(typeof this.props.onPieceOut === 'function') {
+                    this.props.onPieceOut(piece);
+                  }
+                }}
                 selectedPiece={
                   this.props.selectedPiece &&
                   this.props.selectedPiece.piece + this.props.selectedPiece.position.coordinate === e.piece + e.position.coordinate
@@ -161,6 +171,40 @@ export default class Turn extends React.Component {
                     this.props.onHighlightClick(moveObj);
                   }
                 }}
+                isCapture={this.props.turnObj.pieces.filter((e2) => {
+                  return (
+                    e.player !== e2.player &&
+                    (e.enPassant === null ?
+                      e.end.coordinate === e2.position.coordinate
+                    :
+                      e.enPassant.coordinate === e2.position.coordinate
+                    )
+                  );
+                }).length > 0}
+              />
+            );
+          })
+        :
+          <></>
+        }
+        {Array.isArray(this.props.hoverHighlights) && typeof this.props.turnObj !== 'undefined' ?
+          this.props.hoverHighlights.filter((e) => {
+            return (
+              e.end.turn === this.props.turnObj.turn &&
+              e.end.player === this.props.turnObj.player
+            );
+          }).map((e) => {
+            var x = this.props.x ? this.props.x : 0;
+            var y = this.props.y ? this.props.y : 0;
+            return (
+              <Highlight
+                app={this.props.app}
+                palette={this.props.palette}
+                x={x + (e.end.file - 1) * 10}
+                y={y + (8 - e.end.rank) * 10}
+                moveObj={e}
+                key={e.end.coordinate + 'h'}
+                isHover
                 isCapture={this.props.turnObj.pieces.filter((e2) => {
                   return (
                     e.player !== e2.player &&

@@ -11,6 +11,13 @@ export default class Timeline extends React.Component {
           <Turn
             app={this.props.app}
             palette={this.props.palette}
+            hoverHighlights={Array.isArray(this.props.hoverHighlights) ?
+              this.props.hoverHighlights.filter((e) => {
+                return e.end.timeline === this.props.timelineObj.timeline;
+              })
+            :
+              []
+            }
             highlights={Array.isArray(this.props.highlights) ?
               this.props.highlights.filter((e) => {
                 return e.end.timeline === this.props.timelineObj.timeline;
@@ -39,6 +46,16 @@ export default class Timeline extends React.Component {
             onPieceClick={(piece) => {
               if(typeof this.props.onPieceClick === 'function') {
                 this.props.onPieceClick(piece);
+              }
+            }}
+            onPieceOver={(piece) => {
+              if(typeof this.props.onPieceOver === 'function') {
+                this.props.onPieceOver(piece);
+              }
+            }}
+            onPieceOut={(piece) => {
+              if(typeof this.props.onPieceOut === 'function') {
+                this.props.onPieceOut(piece);
               }
             }}
             onHighlightClick={(moveObj) => {

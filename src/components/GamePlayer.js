@@ -10,9 +10,12 @@ const deepcompare = require('deep-compare');
 
 export default class GamePlayer extends React.Component {
   chess = new Chess();
+  boardRef = React.createRef();
   state = {
     selectedPiece: null,
-    highlights: []
+    highlights: [],
+    hoverHighlights: [],
+    triggerDate: Date.now()
   }
   boardSync() {
     this.setState({
@@ -25,7 +28,8 @@ export default class GamePlayer extends React.Component {
       check: this.chess.inCheck,
       action: this.chess.actionNumber,
       notation: this.chess.export('notation_short'),
-      checks: this.chess.checks()
+      checks: this.chess.checks(),
+      triggerDate: Date.now()
     });
   }
   componentDidMount() {
@@ -47,6 +51,11 @@ export default class GamePlayer extends React.Component {
         });
       }
     }
+    if(prevState.triggerDate !== this.state.triggerDate) {
+      if(this.boardRef) {
+        this.boardRef.current.recenter();
+      }
+    }
   }
   selectPiece(piece) {
     if(
@@ -57,7 +66,7 @@ export default class GamePlayer extends React.Component {
         this.state.selectedPiece === null &&
         this.state.player === piece.player
       ) {
-        this.setState({selectedPiece: piece});
+        this.setState({selectedPiece: piece, hoverHighlights: []});
       }
       else if(
         this.state.selectedPiece &&
@@ -126,16 +135,32 @@ export default class GamePlayer extends React.Component {
           />
         </Flex>
         <Board
+          ref={this.boardRef}
           boardObj={this.state.board}
           onPieceClick={(piece) => {
             if(piece) {
               this.selectPiece(piece);
             }
           }}
+          onPieceOver={(piece) => {
+            this.setState({hoverHighlights:
+              this.chess.moves('object', false, false).filter((e) => {
+                return deepcompare(e.start, piece.position) && (this.state.selectedPiece ?
+                  !deepcompare(this.state.selectedPiece, piece)
+                :
+                  true
+                );
+              })
+            });
+          }}
+          onPieceOut={(piece) => {
+            this.setState({hoverHighlights: []});
+          }}
           onHighlightClick={(moveObj) => {
             this.move(moveObj, true);
           }}
           selectedPiece={this.state.selectedPiece}
+          hoverHighlights={this.state.hoverHighlights}
           highlights={this.state.highlights}
           checks={this.state.checks}
         />
@@ -207,6 +232,15 @@ export default class GamePlayer extends React.Component {
             <></>
           }
           <Box mx='auto' />
+          <Button
+            variant='secondary'
+            onClick={() => {
+              this.boardRef.current.recenter();
+            }}
+            mr={2}
+          >
+            Re-center View
+          </Button>
           <Button
             variant={this.state.undoable ? 'primary' : 'outline'}
             disabled={!this.state.undoable}

@@ -79,7 +79,7 @@ export default class Piece extends React.Component {
     ;
     var graphics = this.pieceRef.current;
     graphics.clear();
-    graphics.beginFill(fill, 0.1);
+    graphics.beginFill(fill, 0.01);
     graphics.drawRect(x, y, 10, 10);
     graphics.endFill();
     graphics.beginFill(fill);
@@ -148,6 +148,16 @@ export default class Piece extends React.Component {
         pointertap={(e) => {
           if(typeof this.props.onPieceClick === 'function') {
             this.props.onPieceClick(this.props.pieceObj);
+          }
+        }}
+        pointerover={(e) => {
+          if(typeof this.props.onPieceOver === 'function') {
+            this.props.onPieceOver(this.props.pieceObj);
+          }
+        }}
+        pointerout={(e) => {
+          if(typeof this.props.onPieceOut === 'function') {
+            this.props.onPieceOut(this.props.pieceObj);
           }
         }}
       />

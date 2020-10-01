@@ -24,7 +24,7 @@ const behavior = {
     viewport.fitHeight(133);
     viewport.snap(50, 50,
       {
-        time: 0,
+        time: 500,
         removeOnComplete: true,
         removeOnInterrupt: true
       }
@@ -51,8 +51,7 @@ const behavior = {
         });
       }
       if(
-        oldProps.snapX !== newProps.snapX ||
-        oldProps.snapY !== newProps.snapY
+        oldProps.triggerDate !== newProps.triggerDate
       ) {
         viewport.snap(
           (newProps.snapX ? newProps.snapX : 50),
