@@ -82,6 +82,30 @@ export default class GamePlayer extends React.Component {
       this.boardSync();
     }
   }
+  undo() {
+    if(
+      (this.props.canControlWhite && this.state.player === 'white') ||
+      (this.props.canControlBlack && this.state.player === 'black')
+    ) {
+      this.chess.undo();
+      this.boardSync();
+    }
+  }
+  submit() {
+    if(
+      (this.props.canControlWhite && this.state.player === 'white') ||
+      (this.props.canControlBlack && this.state.player === 'black')
+    ) {
+      this.chess.submit();
+      this.boardSync();
+    }
+  }
+  import(input) {
+    if(this.props.canImport) {
+      this.chess.import(input);
+      this.boardSync();
+    }
+  }
   render() {
     return (
       <>
@@ -90,10 +114,16 @@ export default class GamePlayer extends React.Component {
           color='white'
           bg='black'
           alignItems='center'
+          width={1}
         >
           <Text p={2} fontWeight='bold'>Chess in 5D</Text>
           <Box mx='auto' />
-          <NotationViewer notation={this.state.notation} />
+          {this.props.children}
+          <NotationViewer
+            canImport={this.props.canImport}
+            notation={this.state.notation}
+            onImport={(input) => { this.import(input); }}
+          />
         </Flex>
         <Board
           boardObj={this.state.board}
@@ -163,7 +193,7 @@ export default class GamePlayer extends React.Component {
           :
             <></>
           }
-          {this.state.check ?
+          {this.state.check && !this.state.checkmate ?
             <Button
               variant='primary'
               disabled
@@ -181,8 +211,7 @@ export default class GamePlayer extends React.Component {
             variant={this.state.undoable ? 'primary' : 'outline'}
             disabled={!this.state.undoable}
             onClick={() => {
-              this.chess.undo();
-              this.boardSync();
+              this.undo();
             }}
             mr={2}
           >
@@ -192,8 +221,7 @@ export default class GamePlayer extends React.Component {
             variant={this.state.submittable ? 'primary' : 'outline'}
             disabled={!this.state.submittable}
             onClick={() => {
-              this.chess.submit();
-              this.boardSync();
+              this.submit();
             }}
             mr={2}
           >

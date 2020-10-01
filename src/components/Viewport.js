@@ -10,15 +10,25 @@ const behavior = {
       worldHeight: props.worldHeight ? props.worldHeight : 1000,
       ticker: props.app.ticker,
       interaction: props.app.renderer.plugins.interaction,
-      stopPropagation: false
+      stopPropagation: false,
+      disableOnContextMenu: true
     });
     viewport.interactive = true;
 
     if(props.drag) { viewport.drag(); }
-    if(props.pinch) { viewport.pinch(); }
+    if(props.pinch) { viewport.pinch({
+      noDrag: false
+    }); }
     if(props.wheel) { viewport.wheel(); }
     if(props.decelerate) { viewport.decelerate(); }
     viewport.fitHeight(133);
+    viewport.snap(50, 50,
+      {
+        time: 0,
+        removeOnComplete: true,
+        removeOnInterrupt: true
+      }
+    );
     return viewport;
   },
   customApplyProps: (viewport, oldProps, newProps) => {
@@ -33,16 +43,29 @@ const behavior = {
           newProps.worldWidth,
           newProps.worldHeight
         );
+        viewport.clampZoom({
+          minWidth: 80,
+          minHeight: 80,
+          maxWidth: newProps.app.renderer.width * 2,
+          maxHeight: newProps.app.renderer.height * 2
+        });
+      }
+      if(
+        oldProps.snapX !== newProps.snapX ||
+        oldProps.snapY !== newProps.snapY
+      ) {
         viewport.snap(
-          (newProps.worldWidth ? newProps.worldWidth : 100) - 50,
-          (newProps.worldHeight ? newProps.worldHeight : 100)/2,
+          (newProps.snapX ? newProps.snapX : 50),
+          (newProps.snapY ? newProps.snapY : 50),
           {
             time: 500,
             removeOnComplete: true,
             removeOnInterrupt: true
           }
         );
-        var height = (newProps.worldHeight ? newProps.worldHeight : 100)*1.33;
+      }
+      if(oldProps.zoomHeight !== newProps.zoomHeight) {
+        var height = (newProps.zoomHeight ? newProps.zoomHeight : 133);
         if(viewport.worldScreenHeight < height) {
           viewport.snapZoom({
             height: height,

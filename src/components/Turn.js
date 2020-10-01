@@ -19,6 +19,17 @@ export default class Turn extends React.Component {
       :
         this.props.palette.blackBoardOutline,
     1, 1);
+    if(
+      Array.isArray(this.props.checksD) &&
+      this.props.checksD.filter((e) => {
+        return (
+          e.end.turn === this.props.turnObj.turn &&
+          e.end.player === this.props.turnObj.player
+        );
+      }).length > 0
+    ) {
+      graphics.lineStyle(3, this.props.palette.checkBoardOutline, 1, 1);
+    }
     graphics.drawRect(x, y, 80, 80);
     graphics.endFill();
     graphics.lineStyle(0);
