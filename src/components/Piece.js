@@ -79,7 +79,7 @@ export default class Piece extends React.Component {
     ;
     var graphics = this.pieceRef.current;
     graphics.clear();
-    graphics.beginFill(fill, 0);
+    graphics.beginFill(fill, 0.1);
     graphics.drawRect(x, y, 10, 10);
     graphics.endFill();
     graphics.beginFill(fill);

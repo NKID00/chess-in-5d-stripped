@@ -120,7 +120,7 @@ export default class Turn extends React.Component {
                 x={x + (e.end.file - 1) * 10}
                 y={y + (8 - e.end.rank) * 10}
                 moveObj={e}
-                key={e.end.coordinate}
+                key={e.end.coordinate + 'cd'}
                 isCheckDestination
               />
             );
@@ -144,7 +144,7 @@ export default class Turn extends React.Component {
                 x={x + (e.end.file - 1) * 10}
                 y={y + (8 - e.end.rank) * 10}
                 moveObj={e}
-                key={e.end.coordinate}
+                key={e.end.coordinate + 'cs'}
                 onHighlightClick={(moveObj) => {
                   if(typeof this.props.onHighlightClick === 'function') {
                     this.props.onHighlightClick(moveObj);

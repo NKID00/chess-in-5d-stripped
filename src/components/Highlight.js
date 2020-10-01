@@ -17,7 +17,7 @@ export default class Highlight extends React.Component {
     if(this.props.isCheckDestination) { fill = this.props.palette.checkDestinationHighlight; }
     var graphics = this.highlightRef.current;
     graphics.clear();
-    graphics.beginFill(fill, 0);
+    graphics.beginFill(fill, 0.1);
     graphics.drawRect(x, y, 10, 10);
     graphics.endFill();
     graphics.beginFill(fill, 0.5);

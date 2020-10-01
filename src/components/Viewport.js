@@ -18,6 +18,7 @@ const behavior = {
     if(props.pinch) { viewport.pinch(); }
     if(props.wheel) { viewport.wheel(); }
     if(props.decelerate) { viewport.decelerate(); }
+    viewport.fitHeight(133);
     return viewport;
   },
   customApplyProps: (viewport, oldProps, newProps) => {
@@ -36,11 +37,20 @@ const behavior = {
           (newProps.worldWidth ? newProps.worldWidth : 100) - 50,
           (newProps.worldHeight ? newProps.worldHeight : 100)/2,
           {
+            time: 500,
             removeOnComplete: true,
             removeOnInterrupt: true
           }
         );
-        viewport.fitHeight((newProps.worldHeight ? newProps.worldHeight : 100)*1.33);
+        var height = (newProps.worldHeight ? newProps.worldHeight : 100)*1.33;
+        if(viewport.worldScreenHeight < height) {
+          viewport.snapZoom({
+            height: height,
+            time: 500,
+            removeOnComplete: true,
+            removeOnInterrupt: true
+          });
+        }
       }
     }
   },

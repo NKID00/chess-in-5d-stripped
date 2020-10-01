@@ -75,7 +75,7 @@ export default class Board extends React.Component {
                   }
                   return e.turns.length * 100;
                 }).reduce((a, c) => {
-                  return a < c ? c : a;
+                  return a > c ? c : a;
                 })
               :
                 1000

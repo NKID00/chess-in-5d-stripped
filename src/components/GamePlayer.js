@@ -48,7 +48,7 @@ export default class GamePlayer extends React.Component {
       }
     }
   }
-  selectedPiece(piece) {
+  selectPiece(piece) {
     if(
       (this.props.canControlWhite && this.state.player === 'white') ||
       (this.props.canControlBlack && this.state.player === 'black')

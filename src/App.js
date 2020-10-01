@@ -11,7 +11,10 @@ export default class App extends React.Component {
   render() {
     return (
       <ThemeProvider theme={theme}>
-        <GamePlayer />
+        <GamePlayer
+          canControlWhite
+          canControlBlack
+        />
       </ThemeProvider>
     );
   }

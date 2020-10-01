@@ -19,14 +19,14 @@ export default class Timeline extends React.Component {
               []
             }
             checksS={Array.isArray(this.props.checks) ?
-              this.props.highlights.filter((e) => {
+              this.props.checks.filter((e) => {
                 return e.start.timeline === this.props.timelineObj.timeline;
               })
             :
               []
             }
             checksD={Array.isArray(this.props.checks) ?
-              this.props.highlights.filter((e) => {
+              this.props.checks.filter((e) => {
                 return e.end.timeline === this.props.timelineObj.timeline;
               })
             :
