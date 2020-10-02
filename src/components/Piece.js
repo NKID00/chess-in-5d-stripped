@@ -6,66 +6,66 @@ const deepcompare = require('deep-compare');
 export default class Piece extends React.Component {
   piecePoly = {
     base: [
-      1,9.5,
-      1,8.5,
-      2,7.5,
-      8,7.5,
-      9,8.5,
-      9,9.5
+      10,95,
+      10,85,
+      20,75,
+      80,75,
+      90,85,
+      90,95
     ],
     middle: [
-      3,7,
-      3,5,
-      7,5,
-      7,7
+      30,70,
+      30,50,
+      70,50,
+      70,70
     ],
     pawn: [
-      3,4.5,
-      2.5,3.5,
-      4,2.5,
-      6,2.5,
-      7.5,3.5,
-      7,4.5
+      30,45,
+      25,35,
+      40,25,
+      60,25,
+      75,35,
+      70,45
     ],
     bishop: [
-      3,4.5,
-      2,3.5,
-      5,1,
-      8,3.5,
-      7,4.5
+      30,45,
+      20,35,
+      50,10,
+      80,35,
+      70,45
     ],
     knight: [
-      3,4.5,
-      4.5,1,
-      8,3.5,
-      7,4.5
+      30,45,
+      45,10,
+      80,35,
+      70,45
     ],
     rook: [
-      3,4.5,
-      1.5,2.5,
-      8.5,2.5,
-      7,4.5
+      30,45,
+      15,25,
+      85,25,
+      70,45
     ],
     queen: [
-      3,4.5,
-      1.5,2,
-      5,1,
-      8.5,2,
-      7,4.5
+      30,45,
+      15,20,
+      50,10,
+      85,20,
+      70,45
     ],
     king: [
-      3,4.5,
-      3.5,3,
-      2,3,
-      1.5,1.75,
-      4,1.75,
-      3.5,0.25,
-      6.5,0.25,
-      6,1.75,
-      8.5,1.75,
-      8,3,
-      6.5,3,
-      7,4.5
+      30,45,
+      35,30,
+      20,30,
+      15,17.5,
+      40,17.5,
+      35,2.5,
+      65,2.5,
+      60,17.5,
+      85,17.5,
+      80,30,
+      65,30,
+      70,45
     ]
   };
   pieceRef = React.createRef();
@@ -80,10 +80,10 @@ export default class Piece extends React.Component {
     var graphics = this.pieceRef.current;
     graphics.clear();
     graphics.beginFill(fill, 0.01);
-    graphics.drawRect(x, y, 10, 10);
+    graphics.drawRect(x, y, 100, 100);
     graphics.endFill();
     graphics.beginFill(fill);
-    graphics.lineStyle(1, this.props.palette.selectedPiece, this.props.selectedPiece ? 1 : 0);
+    graphics.lineStyle(5, this.props.palette.selectedPiece, this.props.selectedPiece ? 1 : 0);
     graphics.drawPolygon(this.piecePoly.base.map((e,i) => {
       return i % 2 === 0 ? e + x : e + y;
     }));

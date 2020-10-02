@@ -21,8 +21,8 @@ const behavior = {
     }); }
     if(props.wheel) { viewport.wheel(); }
     if(props.decelerate) { viewport.decelerate(); }
-    viewport.fitHeight(133);
-    viewport.snap(50, 50,
+    viewport.fitHeight(1333);
+    viewport.snap(500, 500,
       {
         time: 500,
         removeOnComplete: true,
@@ -44,8 +44,8 @@ const behavior = {
           newProps.worldHeight
         );
         viewport.clampZoom({
-          minWidth: 80,
-          minHeight: 80,
+          minWidth: 800,
+          minHeight: 800,
           maxWidth: newProps.app.renderer.width * 2,
           maxHeight: newProps.app.renderer.height * 2
         });
@@ -54,8 +54,8 @@ const behavior = {
         oldProps.triggerDate !== newProps.triggerDate
       ) {
         viewport.snap(
-          (newProps.snapX ? newProps.snapX : 50),
-          (newProps.snapY ? newProps.snapY : 50),
+          (newProps.snapX ? newProps.snapX : 500),
+          (newProps.snapY ? newProps.snapY : 500),
           {
             time: 500,
             removeOnComplete: true,
