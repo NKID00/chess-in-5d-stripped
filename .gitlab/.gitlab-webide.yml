@@ -1,0 +1,5 @@
+
+terminal:
+  image:
+    name: node:12-alpine
+  script: sleep 60
