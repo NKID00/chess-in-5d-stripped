@@ -3,6 +3,7 @@ import React from 'react';
 import Modal from 'react-modal';
 import { Box, Flex, Text, Button } from 'rebass';
 import { Textarea } from '@rebass/forms';
+import copy from 'copy-to-clipboard';
 import { FilePond } from 'react-filepond';
 import 'filepond/dist/filepond.min.css'
 
@@ -50,6 +51,7 @@ export default class NotationViewer extends React.Component {
                     id='importBox'
                     width={1}
                     sx={{height: '100%'}}
+                    fontSize={[ 1, 2, 3 ]}
                   >
                   </Textarea>
                 </Box>
@@ -67,7 +69,7 @@ export default class NotationViewer extends React.Component {
                 </Box>
               </Flex>
             :
-              <Text as='pre'>
+              <Text as='pre' fontSize={[ 1, 2, 3 ]}>
                 {this.props.notation}
               </Text>
             }
@@ -79,6 +81,18 @@ export default class NotationViewer extends React.Component {
           >
             <Box mx='auto' />
             <Button m={1} variant='primary' onClick={() => { this.setState({openModal: false}); }}>Close</Button>
+            {this.state.modalMode === 'export' ?
+              <Button m={1} variant='primary'
+                onClick={() => {
+                  copy(this.props.notation);
+                  this.setState({openModal: false});
+                }}
+              >
+                Copy to clipboard
+              </Button>
+            :
+              <></>
+            }
             <Button m={1} variant='primary'
               onClick={() => {
                 if(this.state.modalMode === 'import') {

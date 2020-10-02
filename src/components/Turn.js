@@ -13,7 +13,7 @@ export default class Turn extends React.Component {
     var graphics = this.turnRef.current;
     graphics.clear();
     graphics.beginFill(0x000000,0);
-    graphics.lineStyle(3,
+    graphics.lineStyle(30,
       this.props.turnObj.player === 'white' ?
         this.props.palette.whiteBoardOutline
       :
@@ -28,21 +28,21 @@ export default class Turn extends React.Component {
         );
       }).length > 0
     ) {
-      graphics.lineStyle(3, this.props.palette.checkBoardOutline, 1, 1);
+      graphics.lineStyle(30, this.props.palette.checkBoardOutline, 1, 1);
     }
-    graphics.drawRect(x, y, 80, 80);
+    graphics.drawRect(x, y, 800, 800);
     graphics.endFill();
     graphics.lineStyle(0);
     for(var i = 0;i < 8;i++) {
       for(var j = 0;j < 8;j++) {
         if((i + j) % 2 !== 0) {
           graphics.beginFill(this.props.palette.whiteSquare);
-          graphics.drawRect(x + (i * 10), y + (j * 10), 10, 10);
+          graphics.drawRect(x + (i * 100), y + (j * 100), 100, 100);
           graphics.endFill();
         }
         else {
           graphics.beginFill(this.props.palette.blackSquare);
-          graphics.drawRect(x + (i * 10), y + (j * 10), 10, 10);
+          graphics.drawRect(x + (i * 100), y + (j * 100), 100, 100);
           graphics.endFill();
         }
       }
@@ -72,8 +72,8 @@ export default class Turn extends React.Component {
               <Piece
                 app={this.props.app}
                 palette={this.props.palette}
-                x={x + (e.position.file - 1) * 10}
-                y={y + (8 - e.position.rank) * 10}
+                x={x + (e.position.file - 1) * 100}
+                y={y + (8 - e.position.rank) * 100}
                 pieceObj={e}
                 key={e.piece + e.position.coordinate}
                 onPieceClick={(piece) => {
@@ -114,8 +114,8 @@ export default class Turn extends React.Component {
               <Highlight
                 app={this.props.app}
                 palette={this.props.palette}
-                x={x + (e.start.file - 1) * 10}
-                y={y + (8 - e.start.rank) * 10}
+                x={x + (e.start.file - 1) * 100}
+                y={y + (8 - e.start.rank) * 100}
                 moveObj={e}
                 key={e.start.coordinate}
                 isCheckSource
@@ -138,8 +138,8 @@ export default class Turn extends React.Component {
               <Highlight
                 app={this.props.app}
                 palette={this.props.palette}
-                x={x + (e.end.file - 1) * 10}
-                y={y + (8 - e.end.rank) * 10}
+                x={x + (e.end.file - 1) * 100}
+                y={y + (8 - e.end.rank) * 100}
                 moveObj={e}
                 key={e.end.coordinate + 'cd'}
                 isCheckDestination
@@ -162,8 +162,8 @@ export default class Turn extends React.Component {
               <Highlight
                 app={this.props.app}
                 palette={this.props.palette}
-                x={x + (e.end.file - 1) * 10}
-                y={y + (8 - e.end.rank) * 10}
+                x={x + (e.end.file - 1) * 100}
+                y={y + (8 - e.end.rank) * 100}
                 moveObj={e}
                 key={e.end.coordinate + 'cs'}
                 onHighlightClick={(moveObj) => {
@@ -200,8 +200,8 @@ export default class Turn extends React.Component {
               <Highlight
                 app={this.props.app}
                 palette={this.props.palette}
-                x={x + (e.end.file - 1) * 10}
-                y={y + (8 - e.end.rank) * 10}
+                x={x + (e.end.file - 1) * 100}
+                y={y + (8 - e.end.rank) * 100}
                 moveObj={e}
                 key={e.end.coordinate + 'h'}
                 isHover

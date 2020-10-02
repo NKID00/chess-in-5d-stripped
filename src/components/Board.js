@@ -23,8 +23,8 @@ export default class Board extends React.Component {
   state = {
     width: window.innerWidth,
     height: window.innerHeight,
-    snapX: 50,
-    snapY: 50,
+    snapX: 500,
+    snapY: 500,
     triggerDate: Date.now()
   }
   resizeListener = (() => {
@@ -35,8 +35,8 @@ export default class Board extends React.Component {
   });
   recenter() {
     var res = {
-      snapX: 50,
-      snapY: 50
+      snapX: 500,
+      snapY: 500
     };
     if(typeof this.props.boardObj !== 'undefined') {
       var actives = this.props.boardObj.timelines.filter((e) => { return e.present; });
@@ -60,12 +60,12 @@ export default class Board extends React.Component {
             highestTurn = actives[index].turns[i].turn*2 + (actives[index].turns[i].player === 'white' ? 0 : 1);
           }
         }
-        res.snapX = (highestTurn - 1) * 100;
-        res.snapX -= 50;
+        res.snapX = (highestTurn - 1) * 1000;
+        res.snapX -= 500;
         res.snapY = (actives[index].timeline - this.props.boardObj.timelines.map((e) => { return e.timeline; }).reduce((a, c) => {
           return a > c ? c : a;
-        })) * 100;
-        res.snapY += 50;
+        })) * 1000;
+        res.snapY += 500;
       }
     }
     this.setState(res);

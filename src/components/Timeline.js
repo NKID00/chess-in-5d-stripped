@@ -39,8 +39,8 @@ export default class Timeline extends React.Component {
             :
               []
             }
-            x={x + (((e.turn - 1) * 2) + (e.player === 'white' ? 0 : 1)) * 100 + 10}
-            y={y + 10}
+            x={x + (((e.turn - 1) * 2) + (e.player === 'white' ? 0 : 1)) * 1000 + 100}
+            y={y + 100}
             turnObj={e}
             key={e.turn + ':' + e.player}
             onPieceClick={(piece) => {

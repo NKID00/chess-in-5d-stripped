@@ -18,11 +18,11 @@ export default class Highlight extends React.Component {
     var graphics = this.highlightRef.current;
     graphics.clear();
     graphics.beginFill(fill, 0.01);
-    graphics.drawRect(x, y, 10, 10);
+    graphics.drawRect(x, y, 100, 100);
     graphics.endFill();
     graphics.beginFill(fill, this.props.isHover ? 0.25 : 0.65);
     graphics.lineStyle(1, fill, 0);
-    graphics.drawCircle(x + 5,y + 5,this.props.isHover ? 2.5 : 4);
+    graphics.drawCircle(x + 50,y + 50,this.props.isHover ? 25 : 40);
     graphics.endFill();
   }
   componentDidMount() {
