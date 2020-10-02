@@ -44,7 +44,7 @@ export default class Board extends React.Component {
         actives = this.props.boardObj.timelines.filter((e) => { return e.active; });
       }
       if(actives.length > 0) {
-        var lowestTurnLength = actives[0].length;
+        var lowestTurnLength = actives[0].turns.length;
         var index = 0;
         for(var i = 0;i < actives.length;i++) {
           if(lowestTurnLength > actives[i].turns.length) {

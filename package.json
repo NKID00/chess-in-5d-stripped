@@ -112,12 +112,11 @@
     "wait-on": "^5.2.0"
   },
   "scripts": {
-    "postinstall": "electron-builder install-app-deps",
     "start": "react-scripts start",
     "electron-start": "concurrently \"npm start\" \"wait-on http://localhost:3000 && electron .\"",
     "build": "react-scripts build",
     "preelectron-build": "npm run build --em.main=build/electron.js",
-    "electron-build": "electron-builder -w",
+    "electron-build": "electron-builder install-app-deps && electron-builder -w",
     "test": "react-scripts test --passWithNoTests",
     "eject": "react-scripts eject"
   },
