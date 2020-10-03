@@ -15,6 +15,7 @@ class UpdateToast extends React.Component {
     window.addEventListener('swupdateavailable', this.updateToast);
     window.addEventListener('swofflineready', this.offlineToast);
   }
+  render() { return <></>; }
 }
 
 export default withSnackbar(UpdateToast);
