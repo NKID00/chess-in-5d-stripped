@@ -37,4 +37,5 @@ Also of note is this article from the American Bar Association (https://www.amer
 ### Copyright
 
 All source code is released under AGPL v3.0 (license can be found under the LICENSE file).
-Any addition copyrightable material not covered under AGPL v3.0 is released under CC BY-SA.
+Chess piece images were derived from SVG files released under CC BY-SA v3.0 (license can be found under the PIECE_LICENSE file).
+Any addition copyrightable material not covered under AGPL v3.0 is released under CC BY-SA v3.0.
