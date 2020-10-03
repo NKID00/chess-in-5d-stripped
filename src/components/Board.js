@@ -25,6 +25,7 @@ export default class Board extends React.Component {
     height: window.innerHeight,
     snapX: 500,
     snapY: 500,
+    zoomHeight: 1333,
     triggerDate: Date.now()
   }
   resizeListener = (() => {
@@ -36,7 +37,8 @@ export default class Board extends React.Component {
   recenter() {
     var res = {
       snapX: 500,
-      snapY: 500
+      snapY: 500,
+      zoomHeight: 1333
     };
     if(typeof this.props.boardObj !== 'undefined') {
       var actives = this.props.boardObj.timelines.filter((e) => { return e.present; });
@@ -80,102 +82,105 @@ export default class Board extends React.Component {
   }
   render() {
     return (
-      <Stage
-        options={{
-          height: this.state.height,
-          width: this.state.width,
-          backgroundColor: (this.props.palette ?
-            this.props.palette.background
-          :
-            defaultPalette.background
-          )
-        }}
-        style={{
-          left: 0,
-          top: 0,
-          position: 'absolute',
-          zIndex: -100
-        }}
-      >
-        <AppContext.Consumer>
-          {app =>
-            <Viewport
-              app={app}
-              drag
-              pinch
-              wheel
-              decelerate
-              blur={this.props.blur}
-              worldHeight={typeof this.props.boardObj !== 'undefined' ?
-                this.props.boardObj.timelines.length * 100
-              :
-                100
-              }
-              worldWidth={typeof this.props.boardObj !== 'undefined' ?
-                this.props.boardObj.timelines.map((e) => {
-                  if(e.turns.length <= 0) { return 0; }
-                  return e.turns.reduce((a, c) => {
-                    return a < c.turn + (c.player === 'white' ? 0 : 1) ? c.turn + (c.player === 'white' ? 0 : 1) : a;
-                  }, e.turns[0].turn + (e.turns[0].player === 'white' ? 0 : 1)) * 100;
-                }).reduce((a, c) => {
-                  return a < c ? c : a;
-                })
-              :
-                100
-              }
-              snapX={this.state.snapX}
-              snapY={this.state.snapY}
-              triggerDate={this.state.triggerDate}
-            >
-              {typeof this.props.boardObj !== 'undefined' ?
-                this.props.boardObj.timelines.map((e) => {
-                  return (
-                    <Timeline
-                      app={app}
-                      palette={this.props.palette ? this.props.palette : defaultPalette}
-                      x={this.props.x ? this.props.x : 0}
-                      y={
-                        (this.props.x ? this.props.x : 0) +
-                        (e.timeline - this.props.boardObj.timelines.map((e) => { return e.timeline; }).reduce((a, c) => {
-                          return a > c ? c : a;
-                        })) * 100
-                      }
-                      timelineObj={e}
-                      key={e.timeline}
-                      onPieceClick={(piece) => {
-                        if(typeof this.props.onPieceClick === 'function') {
-                          this.props.onPieceClick(piece);
+      <>
+        <Stage
+          options={{
+            height: this.state.height,
+            width: this.state.width,
+            backgroundColor: (this.props.palette ?
+              this.props.palette.background
+            :
+              defaultPalette.background
+            )
+          }}
+          style={{
+            left: 0,
+            top: 0,
+            position: 'absolute',
+            zIndex: -100
+          }}
+        >
+          <AppContext.Consumer>
+            {app =>
+              <Viewport
+                app={app}
+                drag
+                pinch
+                wheel
+                decelerate
+                blur={this.props.blur}
+                worldHeight={typeof this.props.boardObj !== 'undefined' ?
+                  this.props.boardObj.timelines.length * 1000
+                :
+                  1000
+                }
+                worldWidth={typeof this.props.boardObj !== 'undefined' ?
+                  this.props.boardObj.timelines.map((e) => {
+                    if(e.turns.length <= 0) { return 0; }
+                    return e.turns.reduce((a, c) => {
+                      return a < c.turn + (c.player === 'white' ? 0 : 1) ? c.turn + (c.player === 'white' ? 0 : 1) : a;
+                    }, e.turns[0].turn + (e.turns[0].player === 'white' ? 0 : 1)) * 1000;
+                  }).reduce((a, c) => {
+                    return a < c ? c : a;
+                  })
+                :
+                  1000
+                }
+                snapX={this.state.snapX}
+                snapY={this.state.snapY}
+                zoomHeight={this.state.zoomHeight}
+                triggerDate={this.state.triggerDate}
+              >
+                {typeof this.props.boardObj !== 'undefined' ?
+                  this.props.boardObj.timelines.map((e) => {
+                    return (
+                      <Timeline
+                        app={app}
+                        palette={this.props.palette ? this.props.palette : defaultPalette}
+                        x={this.props.x ? this.props.x : 0}
+                        y={
+                          (this.props.x ? this.props.x : 0) +
+                          (e.timeline - this.props.boardObj.timelines.map((e) => { return e.timeline; }).reduce((a, c) => {
+                            return a > c ? c : a;
+                          })) * 1000
                         }
-                      }}
-                      onPieceOver={(piece) => {
-                        if(typeof this.props.onPieceOver === 'function') {
-                          this.props.onPieceOver(piece);
-                        }
-                      }}
-                      onPieceOut={(piece) => {
-                        if(typeof this.props.onPieceOut === 'function') {
-                          this.props.onPieceOut(piece);
-                        }
-                      }}
-                      onHighlightClick={(moveObj) => {
-                        if(typeof this.props.onHighlightClick === 'function') {
-                          this.props.onHighlightClick(moveObj);
-                        }
-                      }}
-                      selectedPiece={this.props.selectedPiece}
-                      hoverHighlights={this.props.hoverHighlights}
-                      highlights={this.props.highlights}
-                      checks={this.props.checks}
-                    />
-                  );
-                })
-              :
-                <></>
-              }
-            </Viewport>
-          }
-        </AppContext.Consumer>
-      </Stage>
+                        timelineObj={e}
+                        key={e.timeline}
+                        onPieceClick={(piece) => {
+                          if(typeof this.props.onPieceClick === 'function') {
+                            this.props.onPieceClick(piece);
+                          }
+                        }}
+                        onPieceOver={(piece) => {
+                          if(typeof this.props.onPieceOver === 'function') {
+                            this.props.onPieceOver(piece);
+                          }
+                        }}
+                        onPieceOut={(piece) => {
+                          if(typeof this.props.onPieceOut === 'function') {
+                            this.props.onPieceOut(piece);
+                          }
+                        }}
+                        onHighlightClick={(moveObj) => {
+                          if(typeof this.props.onHighlightClick === 'function') {
+                            this.props.onHighlightClick(moveObj);
+                          }
+                        }}
+                        selectedPiece={this.props.selectedPiece}
+                        hoverHighlights={this.props.hoverHighlights}
+                        highlights={this.props.highlights}
+                        checks={this.props.checks}
+                      />
+                    );
+                  })
+                :
+                  <></>
+                }
+              </Viewport>
+            }
+          </AppContext.Consumer>
+        </Stage>
+      </>
     );
   }
 }
