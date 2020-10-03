@@ -16,7 +16,7 @@ const behavior = {
     });
     viewport.interactive = true;
 
-    if(props.blur) { viewport.filters = [new PIXI.filters.BlurFilter()]; }
+    if(props.blur) { viewport.filters = [new PIXI.filters.BlurFilter(2,2)]; }
     if(props.drag) { viewport.drag(); }
     if(props.pinch) { viewport.pinch({
       noDrag: false
@@ -37,8 +37,8 @@ const behavior = {
       }
     );
     viewport.clampZoom({
-      minWidth: 800,
-      minHeight: 800,
+      minWidth: 1000,
+      minHeight: 1000,
       maxWidth: props.app.renderer.width * 2.2,
       maxHeight: props.app.renderer.height * 2.2
     });
@@ -50,6 +50,7 @@ const behavior = {
         oldProps.worldWidth !== newProps.worldWidth ||
         oldProps.worldHeight !== newProps.worldHeight
       ) {
+        console.log('resized')
         viewport.resize(
           newProps.app.renderer.width,
           newProps.app.renderer.height,
@@ -57,10 +58,10 @@ const behavior = {
           newProps.worldHeight
         );
         viewport.clampZoom({
-          minWidth: 800,
-          minHeight: 800,
-          maxWidth: newProps.app.renderer.width * 2,
-          maxHeight: newProps.app.renderer.height * 2
+          minWidth: 1000,
+          minHeight: 1000,
+          maxWidth: newProps.worldWidth * 2.2,
+          maxHeight: newProps.worldHeight * 2.2
         });
       }
       if(
@@ -75,9 +76,7 @@ const behavior = {
             removeOnInterrupt: true
           }
         );
-      }
-      if(oldProps.zoomHeight !== newProps.zoomHeight) {
-        var height = (newProps.zoomHeight ? newProps.zoomHeight : 133);
+        var height = (newProps.zoomHeight ? newProps.zoomHeight : 1333);
         if(viewport.worldScreenHeight < height) {
           viewport.snapZoom({
             height: height,

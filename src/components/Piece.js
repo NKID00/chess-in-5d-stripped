@@ -78,7 +78,7 @@ export default class Piece extends React.Component {
   componentDidMount() {
     this.pieceRef.current.buttonMode = true;
     this.pieceRef.current.interactive = true;
-    this.pieceRef.current.roundPixels = true;
+    this.pieceRef.current.roundPixels = false;
     this.highlightRef.current.buttonMode = true;
     this.highlightRef.current.interactive = true;
     this.draw();

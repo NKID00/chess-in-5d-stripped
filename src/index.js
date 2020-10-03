@@ -6,7 +6,7 @@ import 'index.css';
 import App from 'App';
 import * as serviceWorker from 'serviceWorker';
 
-Modal.setAppElement('#root')
+Modal.setAppElement('#root');
 
 ReactDOM.render(
   <React.StrictMode>
