@@ -1,8 +1,10 @@
 import React from 'react';
 import { ThemeProvider } from 'emotion-theming';
 import theme from '@rebass/preset';
+import { SnackbarProvider } from 'notistack';
 
 import GamePlayer from 'components/GamePlayer';
+import UpdateToast from 'components/UpdateToast';
 
 import 'fontsource-roboto';
 import 'App.css';
@@ -21,11 +23,14 @@ export default class App extends React.Component {
   render() {
     return (
       <ThemeProvider theme={theme}>
-        <GamePlayer
-          canControlWhite
-          canControlBlack
-          canImport
-        />
+        <SnackbarProvider maxSnack={2}>
+          <UpdateToast />
+          <GamePlayer
+            canControlWhite
+            canControlBlack
+            canImport
+          />
+        </SnackbarProvider>
       </ThemeProvider>
     );
   }

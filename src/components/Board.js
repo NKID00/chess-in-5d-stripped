@@ -105,6 +105,7 @@ export default class Board extends React.Component {
               pinch
               wheel
               decelerate
+              blur={this.props.blur}
               worldHeight={typeof this.props.boardObj !== 'undefined' ?
                 this.props.boardObj.timelines.length * 100
               :

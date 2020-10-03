@@ -1,5 +1,6 @@
 import { CustomPIXIComponent } from 'react-pixi-fiber';
 import { Viewport as PixiViewport} from 'pixi-viewport';
+import * as PIXI from 'pixi.js';
 
 const behavior = {
   customDisplayObject: (props) => {
@@ -15,6 +16,7 @@ const behavior = {
     });
     viewport.interactive = true;
 
+    if(props.blur) { viewport.filters = [new PIXI.filters.BlurFilter()]; }
     if(props.drag) { viewport.drag(); }
     if(props.pinch) { viewport.pinch({
       noDrag: false
@@ -85,6 +87,8 @@ const behavior = {
           });
         }
       }
+      if(newProps.blur) { viewport.filters = [new PIXI.filters.BlurFilter()]; }
+      else { viewport.filters = []; }
     }
   },
   customWillDetach: (viewport) => { return viewport; }

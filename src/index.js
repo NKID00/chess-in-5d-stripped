@@ -15,4 +15,9 @@ ReactDOM.render(
   document.getElementById('root')
 );
 
-serviceWorker.register();
+const swUpdateAvailable = new Event('swupdateavailable');
+const swOfflineReady = new Event('swofflineready');
+serviceWorker.register({
+  onUpdate: () => { window.dispatchEvent(swUpdateAvailable); },
+  onSuccess: () => { window.dispatchEvent(swOfflineReady); }
+});
