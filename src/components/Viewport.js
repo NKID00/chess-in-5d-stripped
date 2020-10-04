@@ -14,21 +14,33 @@ const behavior = {
       stopPropagation: false,
       disableOnContextMenu: true
     });
-    viewport.interactive = true;
+    
+    if(props.blur) {
+      viewport.fitHeight(3300);
+      viewport.stopPropagation = true;
+      viewport.filters = [new PIXI.filters.BlurFilter(2,2)];
+    }
+    else {
+      viewport.interactive = true;
 
-    if(props.blur) { viewport.filters = [new PIXI.filters.BlurFilter(2,2)]; }
-    if(props.drag) { viewport.drag(); }
-    if(props.pinch) { viewport.pinch({
-      noDrag: false
-    }); }
-    if(props.wheel) { viewport.wheel({
-      percent: 0.05,
-      smooth: 2
-    }); }
-    if(props.decelerate) { viewport.decelerate({
-      friction: 0.75
-    }); }
-    viewport.fitHeight(1333);
+      if(props.drag) { viewport.drag(); }
+      if(props.pinch) { viewport.pinch({
+        noDrag: false
+      }); }
+      if(props.wheel) { viewport.wheel({
+        percent: 0.05,
+        smooth: 2
+      }); }
+      if(props.decelerate) { viewport.decelerate({
+        friction: 0.75
+      }); }
+      viewport.fitHeight(1333);
+      viewport.clampZoom({
+        minWidth: 1000,
+        minHeight: 1000,
+        maxWidth: props.app.renderer.width * 2.2
+      });
+    }
     viewport.snap(500, 500,
       {
         time: 500,
@@ -36,12 +48,6 @@ const behavior = {
         removeOnInterrupt: true
       }
     );
-    viewport.clampZoom({
-      minWidth: 1000,
-      minHeight: 1000,
-      maxWidth: props.app.renderer.width * 2.2,
-      maxHeight: props.app.renderer.height * 2.2
-    });
     return viewport;
   },
   customApplyProps: (viewport, oldProps, newProps) => {
@@ -50,19 +56,19 @@ const behavior = {
         oldProps.worldWidth !== newProps.worldWidth ||
         oldProps.worldHeight !== newProps.worldHeight
       ) {
-        console.log('resized')
         viewport.resize(
           newProps.app.renderer.width,
           newProps.app.renderer.height,
           newProps.worldWidth,
           newProps.worldHeight
         );
-        viewport.clampZoom({
-          minWidth: 1000,
-          minHeight: 1000,
-          maxWidth: newProps.worldWidth * 2.2,
-          maxHeight: newProps.worldHeight * 2.2
-        });
+        if(!newProps.blur) {
+          viewport.clampZoom({
+            minWidth: 1000,
+            minHeight: 1000,
+            maxWidth: newProps.worldWidth * 2.2
+          });
+        }
       }
       if(
         oldProps.triggerDate !== newProps.triggerDate
