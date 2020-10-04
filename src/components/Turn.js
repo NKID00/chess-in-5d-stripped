@@ -13,12 +13,17 @@ export default class Turn extends React.Component {
     var graphics = this.turnRef.current;
     graphics.clear();
     graphics.beginFill(0x000000,0);
-    graphics.lineStyle(30,
-      this.props.turnObj.player === 'white' ?
-        this.props.palette.whiteBoardOutline
-      :
-        this.props.palette.blackBoardOutline,
-    1, 1);
+    if(this.props.active || this.props.present) {
+      graphics.lineStyle(this.props.present ? 50 : 30,
+        this.props.turnObj.player === 'white' ?
+          this.props.palette.whiteBoardOutline
+        :
+          this.props.palette.blackBoardOutline,
+      1, 1);
+    }
+    else {
+      graphics.lineStyle(10, this.props.palette.inactiveBoardOutline, 1, 1);
+    }
     if(
       Array.isArray(this.props.checksD) &&
       this.props.checksD.filter((e) => {
@@ -28,7 +33,7 @@ export default class Turn extends React.Component {
         );
       }).length > 0
     ) {
-      graphics.lineStyle(30, this.props.palette.checkBoardOutline, 1, 1);
+      graphics.lineStyle(this.props.present ? 50 : 30, this.props.palette.checkBoardOutline, 1, 1);
     }
     graphics.drawRect(x, y, 800, 800);
     graphics.endFill();

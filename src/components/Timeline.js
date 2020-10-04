@@ -42,7 +42,16 @@ export default class Timeline extends React.Component {
             x={x + (((e.turn - 1) * 2) + (e.player === 'white' ? 0 : 1)) * 1000 + 100}
             y={y + 100}
             turnObj={e}
-            key={e.turn + ':' + e.player}
+            active={this.props.timelineObj.active}
+            present={this.props.timelineObj.present}
+            key={
+              e.turn +
+              ':' +
+              e.player +
+              ':' +
+              (this.props.timelineObj.active ? 'A' : '') +
+              (this.props.timelineObj.present ? 'P' : '')
+            }
             onPieceClick={(piece) => {
               if(typeof this.props.onPieceClick === 'function') {
                 this.props.onPieceClick(piece);

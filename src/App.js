@@ -1,9 +1,12 @@
 import React from 'react';
+import { BrowserRouter } from 'react-router-dom';
+
 import { ThemeProvider } from 'emotion-theming';
 import theme from '@rebass/preset';
 import { SnackbarProvider } from 'notistack';
 
-import GamePlayer from 'components/GamePlayer';
+import Menu from 'uiTree/Menu';
+import Game from 'uiTree/Game';
 import UpdateToast from 'components/UpdateToast';
 
 import 'fontsource-roboto';
@@ -22,16 +25,20 @@ export default class App extends React.Component {
   }
   render() {
     return (
-      <ThemeProvider theme={theme}>
-        <SnackbarProvider maxSnack={2}>
-          <UpdateToast />
-          <GamePlayer
-            canControlWhite
-            canControlBlack
-            canImport
-          />
-        </SnackbarProvider>
-      </ThemeProvider>
+      <BrowserRouter basename={
+        window.location.hostname === 'alexbay218.gitlab.io' ?
+          '/chess-in-5d'
+        : 
+          '/'
+        } >
+        <ThemeProvider theme={theme}>
+          <SnackbarProvider maxSnack={2}>
+            <UpdateToast />
+            <Menu />
+            <Game />
+          </SnackbarProvider>
+        </ThemeProvider>
+      </BrowserRouter>
     );
   }
 }

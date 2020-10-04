@@ -29,7 +29,8 @@ export default class GamePlayer extends React.Component {
       action: this.chess.actionNumber,
       notation: this.chess.export('notation_short'),
       checks: this.chess.checks(),
-      triggerDate: Date.now()
+      triggerDate: Date.now(),
+      nextMoves: this.chess.moves('object', false, false)
     });
   }
   componentDidMount() {
@@ -45,7 +46,7 @@ export default class GamePlayer extends React.Component {
       }
       else {
         this.setState({highlights:
-          this.chess.moves('object', false, false).filter((e) => {
+          this.state.nextMoves.filter((e) => {
             return deepcompare(e.start, this.state.selectedPiece.position);
           })
         });
@@ -144,7 +145,7 @@ export default class GamePlayer extends React.Component {
           }}
           onPieceOver={(piece) => {
             this.setState({hoverHighlights:
-              this.chess.moves('object', false, false).filter((e) => {
+              this.state.nextMoves.filter((e) => {
                 return deepcompare(e.start, piece.position) && (this.state.selectedPiece ?
                   !deepcompare(this.state.selectedPiece, piece)
                 :

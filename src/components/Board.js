@@ -4,9 +4,7 @@ import { Stage, AppContext } from 'react-pixi-fiber';
 import Viewport from 'components/Viewport';
 
 const defaultPalette = {
-  background: 0xffffff,
-  whitePiece: 0xffffff,
-  blackPiece: 0x000000,
+  background: 0x000000,
   whiteSquare: 0xaaaaaa,
   blackSquare: 0x555555,
   selectedPiece: 0x0000ff,
@@ -16,7 +14,8 @@ const defaultPalette = {
   checkDestinationHighlight: 0xff0000,
   whiteBoardOutline: 0xdddddd,
   blackBoardOutline: 0x222222,
-  checkBoardOutline: 0xff0000
+  checkBoardOutline: 0xff0000,
+  inactiveBoardOutline: 0x777777
 };
 
 export default class Board extends React.Component {
@@ -91,7 +90,8 @@ export default class Board extends React.Component {
               this.props.palette.background
             :
               defaultPalette.background
-            )
+            ),
+            clearBeforeRender: true
           }}
           style={{
             left: 0,
