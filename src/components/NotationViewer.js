@@ -12,7 +12,7 @@ const fileDownload = require('js-file-download');
 export default class NotationViewer extends React.Component {
   buttonRef = React.createRef();
   boxRef = React.createRef();
-  state={
+  state = {
     open: false,
     openModal: false,
     modalMode: 'import'
@@ -38,7 +38,8 @@ export default class NotationViewer extends React.Component {
             color='white'
             bg='black'
             alignItems='center'
-            sx={{position: 'absolute', top: 0, width: '100%'}}
+            width={1}
+            sx={{position: 'absolute', top: 0}}
           >
             <Text p={2} fontWeight='bold'>{this.state.modalMode.substr(0,1).toUpperCase() + this.state.modalMode.substr(1)}</Text>
             <Box mx='auto' />
