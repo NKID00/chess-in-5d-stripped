@@ -6,6 +6,8 @@ export default class LocalHuman extends React.Component {
   render() {
     return (
       <GamePlayer
+        canImport
+        canAnalyze
         canControlWhite
         canControlBlack
       />
