@@ -26,6 +26,7 @@ class UpdateToast extends React.Component {
             });
           }
         }}>
+          Update
         </Button>
       )
     });

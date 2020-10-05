@@ -25,12 +25,7 @@ export default class App extends React.Component {
   }
   render() {
     return (
-      <HashRouter basename={
-        window.location.hostname === 'alexbay218.gitlab.io' ?
-          '/chess-in-5d'
-        :
-          '/'
-        } >
+      <HashRouter>
         <ThemeProvider theme={theme}>
           <SnackbarProvider maxSnack={2}>
             <UpdateToast />

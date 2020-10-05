@@ -2,9 +2,9 @@
 
 ## Introduction
 
-Open source implementation of '5D Chess With Multiverse Time Travel' created by Conor Peterson.
+Open source implementation of '5D Chess With Multiverse Time Travel'.
 
-Chess In 5D aims to reimplement the rules as found in the original. 
+Chess In 5D aims to reimplement the rules as found in the original.
 This project looks to implement additional features also not found in the game:
  - Standarized notation to record games in a text format
  - Save and analyze previous games
