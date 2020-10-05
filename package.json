@@ -4,7 +4,7 @@
     "name": "Shaun Wu",
     "email": "alexbay218@gmail.com"
   },
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Open source implementation of '5D Chess With Multiverse Time Travel' created by Conor Peterson.",
   "private": true,
   "main": "public/electron.js",
