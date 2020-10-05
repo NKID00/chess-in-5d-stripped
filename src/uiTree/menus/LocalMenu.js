@@ -2,6 +2,7 @@ import React from 'react';
 
 import { Box, Flex, Text } from 'rebass';
 import LinkButton from 'components/LinkButton';
+import LogoIcon from 'assets/logo.svg';
 
 export default class MainMenu extends React.Component {
   render() {
@@ -14,6 +15,7 @@ export default class MainMenu extends React.Component {
           alignItems='center'
           width={1}
         >
+          <img src={LogoIcon} alt='Logo' />
           <Text p={2} fontWeight='bold'>Chess in 5D</Text>
           <Box mx='auto' />
         </Flex>
@@ -46,7 +48,7 @@ export default class MainMenu extends React.Component {
               <del><i>Versus Computer</i></del>
             </LinkButton>
             <LinkButton
-              to='/main'
+              to='/'
               variant='secondary'
               width={1}
               my={3}
