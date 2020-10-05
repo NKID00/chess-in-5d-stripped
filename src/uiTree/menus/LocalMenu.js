@@ -22,6 +22,14 @@ export default class MainMenu extends React.Component {
           <Box width={1/3}></Box>
           <Box width={1/3}>
             <LinkButton
+              to='/local/game/analyze'
+              variant='primary'
+              width={1}
+              my={3}
+            >
+              Match Analyzer
+            </LinkButton>
+            <LinkButton
               to='/local/game/human'
               variant='primary'
               width={1}
