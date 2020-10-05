@@ -15,23 +15,34 @@ export default class GamePlayer extends React.Component {
     selectedPiece: null,
     highlights: [],
     hoverHighlights: [],
-    triggerDate: Date.now()
+    triggerDate: Date.now(),
+    importedHistory: [],
+    notation: ''
   }
   boardSync() {
+    var win = {
+      player: this.chess.player,
+      checkmate: this.chess.inCheckmate,
+      stalemate: this.chess.inStalemate
+    };
     this.setState({
       board: this.chess.board,
       submittable: this.chess.submittable(),
       undoable: this.chess.undoable(),
       player: this.chess.player,
-      checkmate: this.chess.inCheckmate,
-      stalemate: this.chess.inStalemate,
+      checkmate: win.checkmate,
+      stalemate: win.stalemate,
       check: this.chess.inCheck,
       action: this.chess.actionNumber,
-      notation: this.chess.export('notation_short'),
       checks: this.chess.checks(),
       triggerDate: Date.now(),
       nextMoves: this.chess.moves('object', false, false)
     });
+    if(typeof this.props.onEnd === 'function') {
+      if(win.checkmate || win.stalemate) {
+        this.props.onEnd(win);
+      }
+    }
   }
   componentDidMount() {
     this.boardSync();
@@ -56,6 +67,26 @@ export default class GamePlayer extends React.Component {
       if(this.boardRef) {
         this.boardRef.current.recenter();
       }
+    }
+  }
+  revert() {
+    if(this.props.canAnalyze) {
+      var newAction = this.state.action;
+      var newPlayer = this.state.player;
+      if(newPlayer === 'white') { newAction--; newPlayer = 'black'; }
+      else { newPlayer = 'white'; }
+      this.chess.import(this.state.importedHistory.filter((e) => {
+        return (e.action * 2 + (e.player === 'white' ? 0 : 1)) < (newAction * 2 + (newPlayer === 'white' ? 0 : 1));
+      }));
+      this.boardSync();
+    }
+  }
+  forward() {
+    if(this.props.canAnalyze) {
+      this.chess.import(this.state.importedHistory.filter((e) => {
+        return (e.action * 2 + (e.player === 'white' ? 0 : 1)) <= (this.state.action * 2 + (this.state.player === 'white' ? 0 : 1));
+      }));
+      this.boardSync();
     }
   }
   selectPiece(piece) {
@@ -107,12 +138,20 @@ export default class GamePlayer extends React.Component {
       (this.props.canControlBlack && this.state.player === 'black')
     ) {
       this.chess.submit();
+      this.setState({
+        importedHistory: this.chess.export('object'),
+        notation: this.chess.export('notation_short')
+      });
       this.boardSync();
     }
   }
   import(input) {
     if(this.props.canImport) {
       this.chess.import(input);
+      this.setState({
+        importedHistory: this.chess.export('object'),
+        notation: this.chess.export('notation_short')
+      });
       this.boardSync();
     }
   }
@@ -132,6 +171,8 @@ export default class GamePlayer extends React.Component {
           <NotationViewer
             canImport={this.props.canImport}
             notation={this.state.notation}
+            player={this.state.player}
+            action={this.state.action}
             onImport={(input) => { this.import(input); }}
           />
         </Flex>
@@ -170,10 +211,10 @@ export default class GamePlayer extends React.Component {
           color='white'
           bg='black'
           alignItems='center'
+          width={1}
           sx={{
             position: 'absolute',
-            bottom: 0,
-            width: '100%'
+            bottom: 0
           }}
         >
           {typeof this.state.player === 'string' && !this.state.checkmate ?
@@ -238,7 +279,7 @@ export default class GamePlayer extends React.Component {
             onClick={() => {
               this.boardRef.current.recenter();
             }}
-            mr={2}
+            mx={1}
           >
             Re-center View
           </Button>
@@ -248,7 +289,7 @@ export default class GamePlayer extends React.Component {
             onClick={() => {
               this.undo();
             }}
-            mr={2}
+            mx={1}
           >
             Undo
           </Button>
@@ -258,11 +299,49 @@ export default class GamePlayer extends React.Component {
             onClick={() => {
               this.submit();
             }}
-            mr={2}
+            mx={1}
           >
             Submit
           </Button>
         </Flex>
+        {this.props.canAnalyze ?
+          <Flex
+            p={2}
+            color='white'
+            bg='black'
+            alignItems='center'
+            justifyContent='center'
+            width={1}
+          >
+            <Button
+              variant={this.state.importedHistory.filter((e) => {
+                return (e.action * 2 + (e.player === 'white' ? 0 : 1)) < (this.state.action * 2 + (this.state.player === 'white' ? 0 : 1));
+              }).length <= 0 ? 'outline' : 'primary'}
+              disabled={this.state.importedHistory.filter((e) => {
+                return (e.action * 2 + (e.player === 'white' ? 0 : 1)) < (this.state.action * 2 + (this.state.player === 'white' ? 0 : 1));
+              }).length <= 0}
+              onClick={() => { this.revert(); }}
+              mx={1}
+            >
+              &lt;&lt;
+            </Button>
+            <Text p={2} fontWeight='bold'>{'Action: ' + this.state.action}</Text>
+            <Button
+              variant={this.state.importedHistory.filter((e) => {
+                return (e.action * 2 + (e.player === 'white' ? 0 : 1)) >= (this.state.action * 2 + (this.state.player === 'white' ? 0 : 1));
+              }).length <= 0 ? 'outline' : 'primary'}
+              disabled={this.state.importedHistory.filter((e) => {
+                return (e.action * 2 + (e.player === 'white' ? 0 : 1)) >= (this.state.action * 2 + (this.state.player === 'white' ? 0 : 1));
+              }).length <= 0}
+              onClick={() => { this.forward(); }}
+              mx={1}
+            >
+              &gt;&gt;
+            </Button>
+          </Flex>
+        :
+          <></>
+        }
       </>
     );
   }

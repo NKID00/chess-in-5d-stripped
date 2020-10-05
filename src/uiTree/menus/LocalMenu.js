@@ -13,7 +13,7 @@ export default class MainMenu extends React.Component {
           bg='black'
           alignItems='center'
           width={1}
-          mb={7}
+          mb='30vh'
         >
           <Text p={2} fontWeight='bold'>Chess in 5D</Text>
           <Box mx='auto' />

@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter } from 'react-router-dom';
+import { HashRouter } from 'react-router-dom';
 
 import { ThemeProvider } from 'emotion-theming';
 import theme from '@rebass/preset';
@@ -25,10 +25,10 @@ export default class App extends React.Component {
   }
   render() {
     return (
-      <BrowserRouter basename={
+      <HashRouter basename={
         window.location.hostname === 'alexbay218.gitlab.io' ?
           '/chess-in-5d'
-        : 
+        :
           '/'
         } >
         <ThemeProvider theme={theme}>
@@ -38,7 +38,7 @@ export default class App extends React.Component {
             <Game />
           </SnackbarProvider>
         </ThemeProvider>
-      </BrowserRouter>
+      </HashRouter>
     );
   }
 }

@@ -59,9 +59,10 @@ export default class NotationViewer extends React.Component {
                   <FilePond
                     onupdatefiles={(files) => {
                       if(files.length > 0) {
-                        var input = files[0].file.text();
-                        if(typeof this.props.onImport === 'function') { this.props.onImport(input); }
-                        this.setState({openModal: false});
+                        files[0].file.text().then((input) => {
+                          if(typeof this.props.onImport === 'function') { this.props.onImport(input); }
+                          this.setState({openModal: false});
+                        });
                       }
                     }}
                     maxFiles={1}
