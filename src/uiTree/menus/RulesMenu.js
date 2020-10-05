@@ -1,9 +1,12 @@
-import React from 'react';
+import React, {lazy, Suspense} from 'react';
 
 import Modal from 'react-modal';
 import { Box, Flex, Text, Button } from 'rebass';
 import LinkButton from 'components/LinkButton';
 import LogoIcon from 'assets/logo.svg';
+
+import { importMDX } from 'mdx.macro';
+const RulesText = lazy(() => importMDX('../../components/RulesText.mdx'));
 
 export default class RulesMenu extends React.Component {
   render() {
@@ -36,7 +39,9 @@ export default class RulesMenu extends React.Component {
             <Box mx='auto' />
           </Flex>
           <Flex width={1} px={2} py={5} sx={{height: '100%'}}>
-            <Text>Work in progress</Text>
+            <Suspense fallback={<div>Loading...</div>}>
+              <RulesText />
+            </Suspense>
           </Flex>
           <Flex
             p={2}
