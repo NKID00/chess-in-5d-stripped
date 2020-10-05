@@ -39,6 +39,14 @@ export default class MainMenu extends React.Component {
               <del><i>Network Game</i></del>
             </LinkButton>
             <LinkButton
+              to='/rules'
+              variant='primary'
+              width={1}
+              my={3}
+            >
+              Rules
+            </LinkButton>
+            <LinkButton
               bg='grey'
               disabled
               width={1}

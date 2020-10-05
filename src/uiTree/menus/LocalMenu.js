@@ -4,7 +4,7 @@ import { Box, Flex, Text } from 'rebass';
 import LinkButton from 'components/LinkButton';
 import LogoIcon from 'assets/logo.svg';
 
-export default class MainMenu extends React.Component {
+export default class LocalMenu extends React.Component {
   render() {
     return (
       <>
