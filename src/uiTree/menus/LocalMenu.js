@@ -13,7 +13,6 @@ export default class MainMenu extends React.Component {
           bg='black'
           alignItems='center'
           width={1}
-          mb='30vh'
         >
           <Text p={2} fontWeight='bold'>Chess in 5D</Text>
           <Box mx='auto' />
@@ -44,7 +43,7 @@ export default class MainMenu extends React.Component {
               width={1}
               my={3}
             >
-              Versus Computer (WIP)
+              <del><i>Versus Computer</i></del>
             </LinkButton>
             <LinkButton
               to='/main'
