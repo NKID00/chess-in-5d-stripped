@@ -39,13 +39,12 @@ export default class LocalMenu extends React.Component {
               Versus Human
             </LinkButton>
             <LinkButton
+              to='/local/game/computer'
               variant='primary'
-              bg='grey'
-              disabled
               width={1}
               my={3}
             >
-              <del><i>Versus Computer</i></del>
+              Versus Computer
             </LinkButton>
             <LinkButton
               to='/'

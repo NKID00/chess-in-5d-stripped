@@ -37,7 +37,7 @@ export default class GamePlayer extends React.Component {
       action: this.chess.actionNumber,
       checks: this.chess.checks(),
       triggerDate: Date.now(),
-      nextMoves: this.chess.moves('object', false, false)
+      nextMoves: this.chess.moves('object', false, false, true)
     });
     if(typeof this.props.onEnd === 'function') {
       if(win.checkmate || win.stalemate) {
@@ -92,59 +92,42 @@ export default class GamePlayer extends React.Component {
   }
   selectPiece(piece) {
     if(
-      (this.props.canControlWhite && this.state.player === 'white') ||
-      (this.props.canControlBlack && this.state.player === 'black')
+      this.state.selectedPiece === null &&
+      this.state.player === piece.player
     ) {
-      if(
-        this.state.selectedPiece === null &&
-        this.state.player === piece.player
-      ) {
-        this.setState({selectedPiece: piece, hoverHighlights: []});
-      }
-      else if(
-        this.state.selectedPiece &&
-        this.state.selectedPiece.piece === piece.piece &&
-        this.state.selectedPiece.player === piece.player &&
-        this.state.selectedPiece.position.timeline === piece.position.timeline &&
-        this.state.selectedPiece.position.turn === piece.position.turn &&
-        this.state.selectedPiece.position.player === piece.position.player
-      ) {
-        this.setState({selectedPiece: null});
-      }
+      this.setState({selectedPiece: piece, hoverHighlights: []});
+    }
+    else if(
+      this.state.selectedPiece &&
+      this.state.selectedPiece.piece === piece.piece &&
+      this.state.selectedPiece.player === piece.player &&
+      this.state.selectedPiece.position.timeline === piece.position.timeline &&
+      this.state.selectedPiece.position.turn === piece.position.turn &&
+      this.state.selectedPiece.position.player === piece.position.player
+    ) {
+      this.setState({selectedPiece: null});
     }
   }
   move(moveObj, unselectPiece = false) {
-    if(
-      (this.props.canControlWhite && this.state.player === 'white') ||
-      (this.props.canControlBlack && this.state.player === 'black')
-    ) {
-      this.chess.move(moveObj);
-      this.setState({highlights: []});
-      if(unselectPiece) { this.setState({selectedPiece: null}); }
-      this.boardSync();
-    }
+    this.chess.move(moveObj);
+    this.setState({highlights: []});
+    if(unselectPiece) { this.setState({selectedPiece: null}); }
+    this.boardSync();
+    if(typeof this.props.onMove === 'function') { this.props.onMove(); }
   }
   undo() {
-    if(
-      (this.props.canControlWhite && this.state.player === 'white') ||
-      (this.props.canControlBlack && this.state.player === 'black')
-    ) {
-      this.chess.undo();
-      this.boardSync();
-    }
+    this.chess.undo();
+    this.boardSync();
+    if(typeof this.props.onUndo === 'function') { this.props.onUndo(); }
   }
   submit() {
-    if(
-      (this.props.canControlWhite && this.state.player === 'white') ||
-      (this.props.canControlBlack && this.state.player === 'black')
-    ) {
-      this.chess.submit();
-      this.setState({
-        importedHistory: this.chess.export('object'),
-        notation: this.chess.export('notation_short')
-      });
-      this.boardSync();
-    }
+    this.chess.submit(true);
+    this.setState({
+      importedHistory: this.chess.export('object'),
+      notation: this.chess.export('notation_short')
+    });
+    this.boardSync();
+    if(typeof this.props.onSubmit === 'function') { this.props.onSubmit(); }
   }
   import(input) {
     if(this.props.canImport) {
@@ -154,6 +137,7 @@ export default class GamePlayer extends React.Component {
         notation: this.chess.export('notation_short')
       });
       this.boardSync();
+      if(typeof this.props.onImport === 'function') { this.props.onImport(); }
     }
   }
   render() {
@@ -183,7 +167,7 @@ export default class GamePlayer extends React.Component {
           boardObj={this.state.board}
           onPieceClick={(piece) => {
             if(piece) {
-              this.selectPiece(piece);
+              if((this.props.canControlWhite && this.state.player === 'white') || (this.props.canControlBlack && this.state.player === 'black')) { this.selectPiece(piece); }
             }
           }}
           onPieceOver={(piece) => {
@@ -201,7 +185,7 @@ export default class GamePlayer extends React.Component {
             this.setState({hoverHighlights: []});
           }}
           onHighlightClick={(moveObj) => {
-            this.move(moveObj, true);
+            if((this.props.canControlWhite && this.state.player === 'white') || (this.props.canControlBlack && this.state.player === 'black')) { this.move(moveObj, true); }
           }}
           selectedPiece={this.state.selectedPiece}
           hoverHighlights={this.state.hoverHighlights}
@@ -219,7 +203,7 @@ export default class GamePlayer extends React.Component {
             bottom: 0
           }}
         >
-          {typeof this.state.player === 'string' && !this.state.checkmate ?
+          {typeof this.state.player === 'string' && !this.state.checkmate && !(typeof this.props.winner === 'string' && this.props.winner !== '') ?
             <Button
               variant='primary'
               disabled
@@ -232,7 +216,17 @@ export default class GamePlayer extends React.Component {
           :
             <></>
           }
-          {this.state.checkmate ?
+          {typeof this.props.winner === 'string' && this.props.winner !== '' ?
+            <Button
+              variant='primary'
+              disabled
+              color={this.props.winner !== 'white'? 'white' : 'black'}
+              bg={this.props.winner !== 'white'? 'black' : 'white'}
+              mr={2}
+            >
+              {this.props.winner !== 'white' ? 'Black Wins' : 'White Wins'}
+            </Button>
+          : this.state.checkmate ?
             <Button
               variant='primary'
               disabled
@@ -240,11 +234,7 @@ export default class GamePlayer extends React.Component {
               bg={this.state.player === 'white'? 'black' : 'white'}
               mr={2}
             >
-              {this.state.player === 'white' ?
-                'Black Wins'
-              :
-                'White Wins'
-              }
+              {this.state.player === 'white' ? 'Black Wins' : 'White Wins'}
             </Button>
           :
             <></>
@@ -289,7 +279,7 @@ export default class GamePlayer extends React.Component {
             variant={this.state.undoable ? 'primary' : 'outline'}
             disabled={!this.state.undoable}
             onClick={() => {
-              this.undo();
+              if((this.props.canControlWhite && this.state.player === 'white') || (this.props.canControlBlack && this.state.player === 'black')) { this.undo(); }
             }}
             mx={1}
           >
@@ -299,7 +289,7 @@ export default class GamePlayer extends React.Component {
             variant={this.state.submittable ? 'primary' : 'outline'}
             disabled={!this.state.submittable}
             onClick={() => {
-              this.submit();
+              if((this.props.canControlWhite && this.state.player === 'white') || (this.props.canControlBlack && this.state.player === 'black')) { this.submit(); }
             }}
             mx={1}
           >

@@ -2,18 +2,31 @@ import React from 'react';
 
 import Modal from 'react-modal';
 import { Box, Flex, Text, Button } from 'rebass';
+import { withSnackbar } from 'notistack';
+import Chess from '5d-chess-js';
 import TextField from '@material-ui/core/TextField';
 import Checkbox from '@material-ui/core/Checkbox';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
 
+import BotImport from 'components/BotImport';
 import LinkButton from 'components/LinkButton';
 import GamePlayer from 'components/GamePlayer';
+import RandomBot from 'components/RandomBot';
+import BotWorker from 'workerize-loader!uiTree/games/BotWorker'; // eslint-disable-line import/no-webpack-loader-syntax
 
-export default class LocalHuman extends React.Component {
+var bw = new BotWorker();
+
+class LocalComputer extends React.Component {
   gameRef = React.createRef();
   state = {
     start: false,
     ended: false,
-    timed: true,
+    timed: false,
+    debug: false,
+    computer: 'white',
+    selectedComputer: 'white',
+    botFunc: RandomBot.toString(),
     startingDuration: 10*60,
     perActionFlatIncrement: 0,
     perActionTimelineIncrement: 5,
@@ -38,8 +51,53 @@ export default class LocalHuman extends React.Component {
       window.setTimeout(this.update.bind(this), 1000);
     }
   }
+  compute() {
+    if(this.state.debug) {
+      try {
+        var botFunc = new Function('Chess', 'chessInstance', 'return ' + this.state.botFunc)(); // eslint-disable-line no-new-func
+        var action = botFunc(Chess, new Chess(this.gameRef.current.chess.export()));
+        for(var i = 0;i < action.moves.length;i++) {
+          this.gameRef.current.move(action.moves[i]);
+        }
+        this.gameRef.current.submit();
+      }
+      catch(err) {
+        this.props.enqueueSnackbar('Bot Error, see console for details', {variant: 'error'});
+        console.log('Bot encountered error:');
+        console.error(err);
+      }
+    }
+    else {
+      bw.compute(this.gameRef.current.chess.export('notation'), this.state.botFunc).then((action) => {
+        if(!this.state.ended) {
+          for(var i = 0;i < action.moves.length;i++) {
+            this.gameRef.current.move(action.moves[i]);
+          }
+          window.setTimeout(() => {
+            this.gameRef.current.submit();
+          }, 500);
+        }
+      }).catch((err) => {
+        this.props.enqueueSnackbar('Bot Error, see console for details', {variant: 'error'});
+        console.log('Not in debug mode! Error may be cryptic due to web worker processing!');
+        console.log('Bot encountered error:');
+        console.error(err);
+      });
+    }
+  }
   componentDidUpdate(prevProps, prevState) {
+    if(prevState.selectedComputer !== this.state.selectedComputer) {
+      if(this.state.selectedComputer === 'random') {
+        this.setState({computer: Math.random > 0.5 ? 'white' : 'black'});
+      }
+      else {
+        this.setState({computer: this.state.selectedComputer});
+      }
+    }
     if(!prevState.start && this.state.start) {
+      if(this.gameRef.current.chess.player === this.state.computer) {
+        this.compute();
+      }
       this.lastUpdate = Date.now();
       this.update();
     }
@@ -84,6 +142,21 @@ export default class LocalHuman extends React.Component {
             <Flex>
               <Text p={2} fontWeight='bold'>Timed Game</Text>
               <Checkbox color='primary' checked={this.state.timed} onChange={(e) => { this.setState({timed: e.target.checked}); }} />
+            </Flex>
+            <Flex>
+              <Text p={2} fontWeight='bold'>Bot Side</Text>
+              <Select
+                value={this.state.selectedComputer}
+                onChange={(e) => { this.setState({selectedComputer: e.target.value}); }}
+              >
+                <MenuItem value='white'>White</MenuItem>
+                <MenuItem value='black'>Black</MenuItem>
+                <MenuItem value='random'>Random</MenuItem>
+              </Select>
+            </Flex>
+            <Flex>
+              <Text p={2} fontWeight='bold'>Debug Mode</Text>
+              <Checkbox color='primary' checked={this.state.debug} onChange={(e) => { this.setState({debug: e.target.checked}); }} />
             </Flex>
             {this.state.timed ?
               <>
@@ -193,8 +266,8 @@ export default class LocalHuman extends React.Component {
         </Modal>
         <GamePlayer
           ref={this.gameRef}
-          canControlWhite={!this.state.ended}
-          canControlBlack={!this.state.ended}
+          canControlWhite={this.state.computer !== 'white' && !this.state.ended}
+          canControlBlack={this.state.computer === 'white' && !this.state.ended}
           winner={this.state.winner}
           onEnd={(win) => {
             this.setState({ start: false, ended: true });
@@ -213,6 +286,9 @@ export default class LocalHuman extends React.Component {
                 this.state.perActionFlatIncrement +
                 this.state.perActionTimelineIncrement * this.gameRef.current.chess.board.timelines.filter((e) => { return e.present; }).length
               });
+            }
+            if(this.gameRef.current.chess.player === this.state.computer) {
+              this.compute();
             }
           }}
         >
@@ -245,7 +321,15 @@ export default class LocalHuman extends React.Component {
             <></>
           }
         </GamePlayer>
+        <BotImport
+          value={this.state.botFunc}
+          onImport={(text) => {
+            this.setState({botFunc: text});
+          }}
+        />
       </>
     );
   }
 }
+
+export default withSnackbar(LocalComputer);

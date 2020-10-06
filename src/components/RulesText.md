@@ -1,5 +1,9 @@
 # Chess in 5D Rules
 
+## Work In Progress
+
+This section is still a work in progress.
+
 ## Introduction
 
 When looking at the name Chess in 5D, it sounds just like any other multidimensional chess variant using an increasing amount of spatial dimensions.

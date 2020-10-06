@@ -5,7 +5,18 @@ import { Box, Flex, Text } from 'rebass';
 import LinkButton from 'components/LinkButton';
 import LogoIcon from 'assets/logo.svg';
 
+import ReactMarkdown from 'react-markdown';
+import RulesText from 'components/RulesText.md';
+
 export default class RulesMenu extends React.Component {
+  state = {
+    text: '### Loading...'
+  };
+  componentDidMount() {
+    fetch(RulesText)
+    .then((res) => { return res.text(); })
+    .then((text) => { console.log(text); this.setState({text: text}); });
+  }
   render() {
     return (
       <>
@@ -35,13 +46,15 @@ export default class RulesMenu extends React.Component {
             <Text p={2} fontWeight='bold'>Rules</Text>
             <Box mx='auto' />
           </Flex>
-          <Flex width={1} px={2} py={5} sx={{height: '100%'}}>
-            
-          </Flex>
+          <Box width={1} px={2} py={5} sx={{overflowY: 'auto', height: '100%'}}>
+            <ReactMarkdown source={this.state.text} />
+          </Box>
           <Flex
             p={2}
             alignItems='center'
-            sx={{position: 'absolute', bottom: 0, width: '100%'}}
+            bg='white'
+            width={1}
+            sx={{position: 'absolute', bottom: 0}}
           >
             <Box mx='auto' />
             <LinkButton

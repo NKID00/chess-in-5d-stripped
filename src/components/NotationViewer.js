@@ -56,7 +56,7 @@ export default class NotationViewer extends React.Component {
                   >
                   </Textarea>
                 </Box>
-                <Box width={1/2} height={1} px={2}>
+                <Box width={1/2} sx={{height: '100%'}} px={2}>
                   <FilePond
                     onupdatefiles={(files) => {
                       if(files.length > 0) {
@@ -79,7 +79,8 @@ export default class NotationViewer extends React.Component {
           <Flex
             p={2}
             alignItems='center'
-            sx={{position: 'absolute', bottom: 0, width: '100%'}}
+            width={1}
+            sx={{position: 'absolute', bottom: 0}}
           >
             <Box mx='auto' />
             <Button m={1} variant='primary' onClick={() => { this.setState({openModal: false}); }}>Close</Button>

@@ -55,9 +55,14 @@ export default class MainMenu extends React.Component {
               <del><i>Options</i></del>
             </LinkButton>
             <Button
-              bg='light_blue'
+              variant='primary'
+              color='white'
+              bg='#7289da'
+              width={1}
+              my={3}
+              onClick={() => { window.open('https://discord.gg/KP5vApW'); }}
             >
-              <a href='https://discord.gg/KP5vApW'>Discord</a>
+              Discord
             </Button>
           </Box>
           <Box width={1/3}></Box>
