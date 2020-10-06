@@ -4,7 +4,7 @@
     "name": "Shaun Wu",
     "email": "alexbay218@gmail.com"
   },
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Open source implementation of '5D Chess With Multiverse Time Travel'.",
   "private": true,
   "main": "public/electron.js",
@@ -82,7 +82,7 @@
     "copyright": "Created by Shaun Wu, source code released uner AGPL-v3.0. All other assets are released under CC BY-SA 4.0"
   },
   "dependencies": {
-    "5d-chess-js": "^0.2.4",
+    "5d-chess-js": "^0.2.5",
     "@material-ui/core": "^4.11.0",
     "@rebass/forms": "^4.0.6",
     "@rebass/preset": "^4.0.5",
@@ -99,13 +99,16 @@
     "fontsource-roboto": "^3.0.3",
     "js-file-download": "^0.4.12",
     "notistack": "^1.0.0",
+    "paralleljs": "^1.1.0",
     "peerjs": "^1.3.1",
     "pixi-viewport": "^4.14.0",
     "pixi.js": "^5.3.3",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-duration-picker": "^1.1.1",
     "react-filepond": "^7.1.0",
     "react-icons": "^3.11.0",
+    "react-markdown": "^4.3.1",
     "react-modal": "^3.11.2",
     "react-pixi-fiber": "^1.0.0-beta.4",
     "react-redux": "^7.2.1",
@@ -144,6 +147,7 @@
     "electron": "^10.1.2",
     "electron-builder": "^22.8.0",
     "nodemon": "^2.0.4",
-    "source-map-explorer": "^2.5.0"
+    "source-map-explorer": "^2.5.0",
+    "workerize-loader": "^1.3.0"
   }
 }

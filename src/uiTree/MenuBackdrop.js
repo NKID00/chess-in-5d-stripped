@@ -19,7 +19,7 @@ export default class MenuBackdrop extends React.Component {
   }
   next() {
     try {
-      var moves = this.chess.moves();
+      var moves = this.chess.moves('object', true, true, true);
       if(moves.length > 0) {
         this.chess.move(moves[Math.floor(Math.random() * moves.length)]);
         if(this.chess.submittable()) {

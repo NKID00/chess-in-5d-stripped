@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Box, Flex, Text } from 'rebass';
+import { Box, Flex, Text, Button } from 'rebass';
 import LinkButton from 'components/LinkButton';
 import LogoIcon from 'assets/logo.svg';
 
@@ -39,6 +39,14 @@ export default class MainMenu extends React.Component {
               <del><i>Network Game</i></del>
             </LinkButton>
             <LinkButton
+              to='/rules'
+              variant='primary'
+              width={1}
+              my={3}
+            >
+              Rules
+            </LinkButton>
+            <LinkButton
               bg='grey'
               disabled
               width={1}
@@ -46,6 +54,16 @@ export default class MainMenu extends React.Component {
             >
               <del><i>Options</i></del>
             </LinkButton>
+            <Button
+              variant='primary'
+              color='white'
+              bg='#7289da'
+              width={1}
+              my={3}
+              onClick={() => { window.open('https://discord.gg/KP5vApW'); }}
+            >
+              Discord
+            </Button>
           </Box>
           <Box width={1/3}></Box>
         </Flex>

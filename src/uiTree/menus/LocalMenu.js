@@ -4,7 +4,7 @@ import { Box, Flex, Text } from 'rebass';
 import LinkButton from 'components/LinkButton';
 import LogoIcon from 'assets/logo.svg';
 
-export default class MainMenu extends React.Component {
+export default class LocalMenu extends React.Component {
   render() {
     return (
       <>
@@ -39,13 +39,12 @@ export default class MainMenu extends React.Component {
               Versus Human
             </LinkButton>
             <LinkButton
+              to='/local/game/computer'
               variant='primary'
-              bg='grey'
-              disabled
               width={1}
               my={3}
             >
-              <del><i>Versus Computer</i></del>
+              Versus Computer
             </LinkButton>
             <LinkButton
               to='/'
