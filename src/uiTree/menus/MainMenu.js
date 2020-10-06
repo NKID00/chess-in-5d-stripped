@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Box, Flex, Text } from 'rebass';
+import { Box, Flex, Text, Button } from 'rebass';
 import LinkButton from 'components/LinkButton';
 import LogoIcon from 'assets/logo.svg';
 
@@ -54,6 +54,11 @@ export default class MainMenu extends React.Component {
             >
               <del><i>Options</i></del>
             </LinkButton>
+            <Button
+              bg='light_blue'
+            >
+              <a href='https://discord.gg/KP5vApW'>Discord</a>
+            </Button>
           </Box>
           <Box width={1/3}></Box>
         </Flex>
