@@ -1,11 +1,12 @@
 import React from 'react';
 
 import Modal from 'react-modal';
+import { AiOutlineOrderedList } from 'react-icons/ai';
 import { Box, Flex, Text, Button } from 'rebass';
 import { Textarea } from '@rebass/forms';
 import copy from 'copy-to-clipboard';
 import { FilePond } from 'react-filepond';
-import 'filepond/dist/filepond.min.css'
+import 'filepond/dist/filepond.min.css';
 
 const fileDownload = require('js-file-download');
 
@@ -21,7 +22,7 @@ export default class NotationViewer extends React.Component {
     if(prevState.open !== this.state.open) {
       if(this.boxRef.current !== null && this.buttonRef.current !== null) {
         this.boxRef.current.style.position = 'absolute';
-        this.boxRef.current.style.left = this.buttonRef.current.getBoundingClientRect().right - this.boxRef.current.getBoundingClientRect().width + 'px';
+        this.boxRef.current.style.left = window.innerWidth - 13 - this.boxRef.current.getBoundingClientRect().width + 'px';
         this.boxRef.current.style.top = this.buttonRef.current.getBoundingClientRect().bottom + 13 + 'px';
       }
     }
@@ -118,17 +119,18 @@ export default class NotationViewer extends React.Component {
           onClick={() => {
             this.setState({open: !this.state.open});
           }}
+          px={2}
         >
-          View Notation
+          <AiOutlineOrderedList size={20} />
         </Button>
         {typeof this.props.notation === 'string' && this.state.open ?
           <Box
             ref={this.boxRef}
             p={2}
-            width={[1/2,1/3,1/4,1/5]}
+            width={[1/2,1/3,1/4]}
             bg='grey'
           >
-            <Box sx={{maxHeight: '65vh'}}>
+            <Box sx={{maxHeight: '65vh', overflowY: 'auto'}}>
               {this.props.notation.replace(/\r\n/g, '\n').split('\n').map((e) => {
                 return (e.length > 0 ?
                   <Box

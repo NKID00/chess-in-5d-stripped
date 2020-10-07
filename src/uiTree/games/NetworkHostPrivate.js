@@ -3,31 +3,31 @@ import React from 'react';
 import Modal from 'react-modal';
 import { Box, Flex, Text, Button } from 'rebass';
 import { withSnackbar } from 'notistack';
-import Chess from '5d-chess-js';
 import TextField from '@material-ui/core/TextField';
 import Checkbox from '@material-ui/core/Checkbox';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
+import copy from 'copy-to-clipboard';
+import Peer from 'peerjs';
 
-import BotImport from 'components/BotImport';
 import ClockDisplay from 'components/ClockDisplay';
 import LinkButton from 'components/LinkButton';
 import GamePlayer from 'components/GamePlayer';
-import RandomBot from 'components/RandomBot';
-import BotWorker from 'workerize-loader!uiTree/games/BotWorker'; // eslint-disable-line import/no-webpack-loader-syntax
 
-var bw = new BotWorker();
-
-class LocalComputer extends React.Component {
+class NetworkHostPrivate extends React.Component {
+  hostConnector = null;
   gameRef = React.createRef();
   state = {
     start: false,
     ended: false,
-    timed: false,
-    debug: false,
-    computer: 'white',
-    selectedComputer: 'white',
-    botFunc: RandomBot.toString(),
+    timed: true,
+    hostId: '',
+    host: 'white',
+    hostName: 'Player 1',
+    hostConnection: null,
+    selectedHost: 'white',
+    clientId: '',
+    clientName: '',
     startingDuration: 10*60,
     perActionFlatIncrement: 0,
     perActionTimelineIncrement: 5,
@@ -52,55 +52,93 @@ class LocalComputer extends React.Component {
       window.setTimeout(this.update.bind(this), 1000);
     }
   }
-  compute() {
-    if(this.state.debug) {
-      try {
-        var botFunc = new Function('Chess', 'chessInstance', 'return ' + this.state.botFunc)(); // eslint-disable-line no-new-func
-        var action = botFunc(Chess, new Chess(this.gameRef.current.chess.export()));
-        for(var i = 0;i < action.moves.length;i++) {
-          this.gameRef.current.move(action.moves[i]);
-        }
-        this.gameRef.current.submit();
+  sync() {
+    this.state.hostConnection.send({
+      type: 'sync',
+      state: {
+        start: this.state.start,
+        ended: this.state.ended,
+        timed: this.state.timed,
+        host: this.state.host,
+        hostName: this.state.hostName,
+        startingDuration: this.state.startingDuration,
+        perActionFlatIncrement: this.state.perActionFlatIncrement,
+        perActionTimelineIncrement: this.state.perActionTimelineIncrement,
+        whiteDurationLeft: this.state.whiteDurationLeft,
+        blackDurationLeft: this.state.blackDurationLeft,
       }
-      catch(err) {
-        this.props.enqueueSnackbar('Bot Error, see console for details', {variant: 'error'});
-        console.log('Bot encountered error:');
-        console.error(err);
+    });
+  }
+  initListener() {
+    this.state.hostConnection.on('data', (data) => {
+      if(data.type === 'name') {
+        this.setState({clientName: data.name});
       }
-    }
-    else {
-      bw.compute(this.gameRef.current.chess.export('notation'), this.state.botFunc).then((action) => {
-        if(!this.state.ended) {
-          for(var i = 0;i < action.moves.length;i++) {
-            this.gameRef.current.move(action.moves[i]);
+      if(this.gameRef.current.chess.player !== this.state.host) {
+        try {
+          if(data.type === 'move') {
+            this.gameRef.current.move(data.move, true);
           }
-          window.setTimeout(() => {
+          else if(data.type === 'undo') {
+            this.gameRef.current.undo();
+          }
+          else if(data.type === 'submit') {
             this.gameRef.current.submit();
-          }, 500);
+          }
         }
-      }).catch((err) => {
-        this.props.enqueueSnackbar('Bot Error, see console for details', {variant: 'error'});
-        console.log('Not in debug mode! Error may be cryptic due to web worker processing!');
-        console.log('Bot encountered error:');
-        console.error(err);
+        catch(err) {
+          this.props.enqueueSnackbar('Error occurred, client performed invalid action!', {variant: 'error', persist: true});
+          console.error(err);
+        }
+      }
+      this.sync();
+    });
+    this.sync();
+  }
+  initConnector() {
+    if(this.state.hostId === '') {
+      this.hostConnector = new Peer();
+      this.hostConnector.on('open', (id) => {
+        this.setState({hostId: id});
       });
+      this.hostConnector.on('connection', (conn) => {
+        conn.on('open', () => {
+          this.setState({hostConnection: conn, clientId: conn.peer});
+        });
+        conn.on('close', () => {
+          if(!this.state.ended) {
+            this.props.enqueueSnackbar('Network error occurred, client disconnected!', {variant: 'error', persist: true});
+          }
+        });
+      });
+      window.setTimeout(() => {
+        if(this.state.hostId === '') {
+          this.hostConnector.destroy();
+          this.initConnector();
+        }
+      }, 10000);
     }
   }
+  componentDidMount() {
+    this.initConnector();
+  }
   componentDidUpdate(prevProps, prevState) {
-    if(prevState.selectedComputer !== this.state.selectedComputer) {
-      if(this.state.selectedComputer === 'random') {
-        this.setState({computer: Math.random > 0.5 ? 'white' : 'black'});
+    if(prevState.selectedHost !== this.state.selectedHost) {
+      if(this.state.selectedHost === 'random') {
+        this.setState({host: Math.random > 0.5 ? 'white' : 'black'});
       }
       else {
-        this.setState({computer: this.state.selectedComputer});
+        this.setState({host: this.state.selectedHost});
       }
+      this.sync();
     }
     if(!prevState.start && this.state.start) {
-      if(this.gameRef.current.chess.player === this.state.computer) {
-        this.compute();
-      }
+      this.sync();
       this.lastUpdate = Date.now();
       this.update();
+    }
+    if(!prevState.ended && this.state.ended) {
+      this.state.hostConnection.close();
     }
     if(this.state.start) {
       if(this.state.whiteDurationLeft <= 0) {
@@ -119,6 +157,9 @@ class LocalComputer extends React.Component {
           blackDurationLeft: 0
         });
       }
+    }
+    if(prevState.hostConnection === null && this.state.hostConnection !== null) {
+      this.initListener();
     }
   }
   render() {
@@ -140,24 +181,67 @@ class LocalComputer extends React.Component {
             <Box mx='auto' />
           </Flex>
           <Box width={1} px={2} py={5} sx={{overflowY: 'auto', height: '100%'}}>
+            {this.state.hostConnection === null ?
+              <></>
+            :
+              <Text p={2}><b>Connected to Client ID: {this.state.clientName}</b> ({this.state.clientId})</Text>
+            }
+            {this.state.hostId === '' ?
+              <Text p={2} fontWeight='bold'>Creating Host ID...</Text>
+            :
+              <>
+                <Flex>
+                  <Text p={2} fontWeight='bold'>Host ID: </Text>
+                  <Text
+                    p={2}
+                    sx={{
+                      WebkitTouchCallout: 'all',
+                      WebkitUserSelect: 'all',
+                      KhtmlUserSelect: 'all',
+                      MozUserSelect: 'all',
+                      MsUserSelect: 'all',
+                      userSelect: 'all'
+                    }}
+                  >
+                    {this.state.hostId}
+                  </Text>
+                </Flex>
+                <Text p={2} fontWeight='bold'>Link</Text>
+                <Text p={2}>
+                  <a
+                    target='_blank'
+                    href={window.location.origin + '/#/network/game/client?hostid=' + this.state.hostId}
+                    rel='noopener noreferrer'
+                  >
+                    {window.location.origin + '/#/network/game/client?hostid=' + this.state.hostId}
+                  </a>
+                </Text>
+              </>
+            }
+            <Text p={2} fontWeight='bold'>Player Name</Text>
+            <Box p={2}>
+              <TextField
+                fullWidth
+                value={this.state.hostName}
+                onChange={(e) => {
+                  this.setState({ hostName: e.target.value });
+                }}
+              />
+            </Box>
             <Flex>
               <Text p={2} fontWeight='bold'>Timed Game</Text>
               <Checkbox color='primary' checked={this.state.timed} onChange={(e) => { this.setState({timed: e.target.checked}); }} />
             </Flex>
             <Flex>
-              <Text p={2} fontWeight='bold'>Bot Side</Text>
+              <Text p={2} fontWeight='bold'>Host Side</Text>
               <Select
-                value={this.state.selectedComputer}
-                onChange={(e) => { this.setState({selectedComputer: e.target.value}); }}
+                value={this.state.selectedHost}
+                onChange={(e) => { this.setState({selectedHost: e.target.value}); }}
               >
                 <MenuItem value='white'>White</MenuItem>
                 <MenuItem value='black'>Black</MenuItem>
                 <MenuItem value='random'>Random</MenuItem>
               </Select>
-            </Flex>
-            <Flex>
-              <Text p={2} fontWeight='bold'>Debug Mode</Text>
-              <Checkbox color='primary' checked={this.state.debug} onChange={(e) => { this.setState({debug: e.target.checked}); }} />
             </Flex>
             {this.state.timed ?
               <>
@@ -250,34 +334,55 @@ class LocalComputer extends React.Component {
           >
             <Box mx='auto' />
             <LinkButton
-              to='/local'
+              to='/network'
               variant='secondary'
               m={1}
             >
               Back
             </LinkButton>
-            <Button m={1} variant='primary' onClick={() => {
-              this.setState({
-                start: true,
-                whiteDurationLeft: this.state.startingDuration + this.state.perActionFlatIncrement + this.state.perActionTimelineIncrement,
-                blackDurationLeft: this.state.startingDuration
-              });
-            }}>Start</Button>
+            <Button m={1} variant='primary'
+              disabled={this.state.hostId === ''}
+              bg={this.state.hostId === '' ? 'grey' : 'blue'}
+              onClick={() => {
+                copy(window.location.origin + '/#/network/game/client?hostid=' + this.state.hostId);
+              }}
+            >
+              Copy link to clipboard
+            </Button>
+            <Button m={1} variant='primary'
+              disabled={this.state.hostConnection === null}
+              bg={this.state.hostConnection === null ? 'grey' : 'blue'}
+              onClick={() => {
+                this.setState({
+                  start: true,
+                  whiteDurationLeft: this.state.startingDuration + this.state.perActionFlatIncrement + this.state.perActionTimelineIncrement,
+                  blackDurationLeft: this.state.startingDuration
+                });
+              }
+            }>Start</Button>
           </Flex>
         </Modal>
-        <BotImport
-          value={this.state.botFunc}
-          onImport={(text) => {
-            this.setState({botFunc: text});
-          }}
-        />
         <GamePlayer
           ref={this.gameRef}
-          canControlWhite={this.state.computer !== 'white' && !this.state.ended}
-          canControlBlack={this.state.computer === 'white' && !this.state.ended}
+          canImport
+          canControlWhite={this.state.host === 'white' && !this.state.ended}
+          canControlBlack={this.state.host !== 'white' && !this.state.ended}
           winner={this.state.winner}
-          onEnd={(win) => {
-            this.setState({ start: false, ended: true });
+          onImport={(input) => {
+            this.state.hostConnection.send({type: 'import', input: input});
+            this.sync();
+          }}
+          onMove={(moveObj) => {
+            if(this.gameRef.current.chess.player === this.state.host) {
+              this.state.hostConnection.send({type: 'move', move: moveObj});
+            }
+            this.sync();
+          }}
+          onUndo={() => {
+            if(this.gameRef.current.chess.player === this.state.host) {
+              this.state.hostConnection.send({type: 'undo'});
+            }
+            this.sync();
           }}
           onSubmit={() => {
             if(this.gameRef.current.chess.player === 'white') {
@@ -294,9 +399,13 @@ class LocalComputer extends React.Component {
                 this.state.perActionTimelineIncrement * this.gameRef.current.chess.board.timelines.filter((e) => { return e.present; }).length
               });
             }
-            if(this.gameRef.current.chess.player === this.state.computer) {
-              this.compute();
+            if(this.gameRef.current.chess.player !== this.state.host) {
+              this.state.hostConnection.send({type: 'submit'});
             }
+            this.sync();
+          }}
+          onEnd={(win) => {
+            this.setState({ start: false, ended: true });
           }}
         >
           {this.state.timed ?
@@ -313,4 +422,4 @@ class LocalComputer extends React.Component {
   }
 }
 
-export default withSnackbar(LocalComputer);
+export default withSnackbar(NetworkHostPrivate);

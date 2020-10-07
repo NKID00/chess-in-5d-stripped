@@ -4,7 +4,15 @@ import Turn from 'components/Turn';
 export default class Timeline extends React.Component {
   render() {
     return (typeof this.props.timelineObj !== 'undefined' ?
-      this.props.timelineObj.turns.map((e) => {
+      this.props.timelineObj.turns.filter((e) => {
+        if(this.props.onlyBlack) {
+          return e.player === 'black';
+        }
+        else if(this.props.onlyWhite) {
+          return e.player === 'white';
+        }
+        return true;
+      }).map((e) => {
         var x = this.props.x ? this.props.x : 0;
         var y = this.props.y ? this.props.y : 0;
         return (
@@ -39,7 +47,11 @@ export default class Timeline extends React.Component {
             :
               []
             }
-            x={x + (((e.turn - 1) * 2) + (e.player === 'white' ? 0 : 1)) * 1000 + 100}
+            x={this.props.onlyBlack || this.props.onlyWhite ?
+              x + (e.turn - 1) * 1000 + 100
+            :
+              x + (((e.turn - 1) * 2) + (e.player === 'white' ? 0 : 1)) * 1000 + 100
+            }
             y={y + 100}
             turnObj={e}
             active={this.props.timelineObj.active}

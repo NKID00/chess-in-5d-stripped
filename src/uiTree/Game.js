@@ -4,6 +4,8 @@ import { Switch, Route } from 'react-router-dom';
 import LocalAnalyzer from 'uiTree/games/LocalAnalyzer';
 import LocalHuman from 'uiTree/games/LocalHuman';
 import LocalComputer from 'uiTree/games/LocalComputer';
+import NetworkHostPrivate from 'uiTree/games/NetworkHostPrivate';
+import NetworkClientPrivate from 'uiTree/games/NetworkClientPrivate';
 
 export default class Menu extends React.Component {
   render() {
@@ -18,6 +20,12 @@ export default class Menu extends React.Component {
           </Route>
           <Route exact path='/local/game/computer'>
             <LocalComputer />
+          </Route>
+          <Route exact path='/network/game/host'>
+            <NetworkHostPrivate />
+          </Route>
+          <Route exact path='/network/game/client'>
+            <NetworkClientPrivate />
           </Route>
         </Switch>
       </>

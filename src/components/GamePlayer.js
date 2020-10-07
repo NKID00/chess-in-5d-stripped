@@ -5,6 +5,7 @@ import { Box, Flex, Text, Button } from 'rebass';
 
 import Board from 'components/Board';
 import NotationViewer from 'components/NotationViewer';
+import Settings from 'components/Settings';
 import LogoIcon from 'assets/logo.svg';
 
 const deepcompare = require('deep-compare');
@@ -18,8 +19,12 @@ export default class GamePlayer extends React.Component {
     hoverHighlights: [],
     triggerDate: Date.now(),
     importedHistory: [],
-    notation: ''
-  }
+    notation: '',
+    settings: {
+      boardShow: 'both',
+      allowRecenter: true
+    }
+  };
   boardSync() {
     var win = {
       player: this.chess.player,
@@ -113,7 +118,7 @@ export default class GamePlayer extends React.Component {
     this.setState({highlights: []});
     if(unselectPiece) { this.setState({selectedPiece: null}); }
     this.boardSync();
-    if(typeof this.props.onMove === 'function') { this.props.onMove(); }
+    if(typeof this.props.onMove === 'function') { this.props.onMove(moveObj); }
   }
   undo() {
     this.chess.undo();
@@ -137,7 +142,7 @@ export default class GamePlayer extends React.Component {
         notation: this.chess.export('notation_short')
       });
       this.boardSync();
-      if(typeof this.props.onImport === 'function') { this.props.onImport(); }
+      if(typeof this.props.onImport === 'function') { this.props.onImport(input); }
     }
   }
   render() {
@@ -161,9 +166,11 @@ export default class GamePlayer extends React.Component {
             action={this.state.action}
             onImport={(input) => { this.import(input); }}
           />
+          <Settings onChange={(e) => { this.setState({settings: e}); }}/>
         </Flex>
         <Board
           ref={this.boardRef}
+          palette={this.state.settings.palette}
           boardObj={this.state.board}
           onPieceClick={(piece) => {
             if(piece) {
@@ -191,6 +198,9 @@ export default class GamePlayer extends React.Component {
           hoverHighlights={this.state.hoverHighlights}
           highlights={this.state.highlights}
           checks={this.state.checks}
+          onlyBlack={this.state.settings.boardShow === 'black'}
+          onlyWhite={this.state.settings.boardShow === 'white'}
+          allowRecenter={this.state.settings.allowRecenter}
         />
         <Flex
           p={2}
