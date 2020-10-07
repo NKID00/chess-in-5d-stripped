@@ -4,6 +4,7 @@ import { Switch, Route } from 'react-router-dom';
 import MenuBackdrop from 'uiTree/MenuBackdrop';
 import MainMenu from 'uiTree/menus/MainMenu';
 import LocalMenu from 'uiTree/menus/LocalMenu';
+import NetworkMenu from 'uiTree/menus/NetworkMenu';
 import RulesMenu from 'uiTree/menus/RulesMenu';
 
 export default class Menu extends React.Component {
@@ -17,6 +18,9 @@ export default class Menu extends React.Component {
           <Route exact path='/local'>
             <LocalMenu />
           </Route>
+          <Route exact path='/network'>
+            <NetworkMenu />
+          </Route>
           <Route exact path='/rules'>
             <RulesMenu />
           </Route>
@@ -24,6 +28,7 @@ export default class Menu extends React.Component {
         <Route exact path={[
           '/',
           '/local',
+          '/network',
           '/rules'
         ]}>
           <MenuBackdrop />

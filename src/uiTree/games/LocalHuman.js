@@ -5,6 +5,7 @@ import { Box, Flex, Text, Button } from 'rebass';
 import TextField from '@material-ui/core/TextField';
 import Checkbox from '@material-ui/core/Checkbox';
 
+import ClockDisplay from 'components/ClockDisplay';
 import LinkButton from 'components/LinkButton';
 import GamePlayer from 'components/GamePlayer';
 
@@ -217,30 +218,10 @@ export default class LocalHuman extends React.Component {
           }}
         >
           {this.state.timed ?
-            <>
-              <Button
-                bg='white'
-                color='black'
-                mx={1}
-              >
-                {
-                  Math.floor(this.state.whiteDurationLeft / 60).toFixed().padStart(2, '0') +
-                  ':' +
-                  (this.state.whiteDurationLeft % 60).toFixed().padStart(2, '0')
-                }
-              </Button>
-              <Button
-                bg='black'
-                color='white'
-                mx={1}
-              >
-                {
-                  Math.floor(this.state.blackDurationLeft / 60).toFixed().padStart(2, '0') +
-                  ':' +
-                  (this.state.blackDurationLeft % 60).toFixed().padStart(2, '0')
-                }
-              </Button>
-            </>
+            <ClockDisplay
+              whiteDurationLeft={this.state.whiteDurationLeft}
+              blackDurationLeft={this.state.blackDurationLeft}
+            />
           :
             <></>
           }

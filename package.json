@@ -116,6 +116,7 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.3",
     "rebass": "^4.0.7",
+    "store": "^2.0.12",
     "wait-on": "^5.2.0"
   },
   "scripts": {

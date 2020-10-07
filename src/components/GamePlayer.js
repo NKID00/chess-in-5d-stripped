@@ -113,7 +113,7 @@ export default class GamePlayer extends React.Component {
     this.setState({highlights: []});
     if(unselectPiece) { this.setState({selectedPiece: null}); }
     this.boardSync();
-    if(typeof this.props.onMove === 'function') { this.props.onMove(); }
+    if(typeof this.props.onMove === 'function') { this.props.onMove(moveObj); }
   }
   undo() {
     this.chess.undo();

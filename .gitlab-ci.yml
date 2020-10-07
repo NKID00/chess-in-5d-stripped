@@ -24,7 +24,7 @@ build_react_app:
     - job: install_dependencies
       artifacts: true
   script:
-    - npm run build
+    - CI=false npm run build
   artifacts:
     paths:
       - build
