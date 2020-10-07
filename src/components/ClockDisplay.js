@@ -12,9 +12,10 @@ export default class LocalComputer extends React.Component {
           mx={1}
         >
           {
-            Math.floor(this.props.whiteDurationLeft / 60).toFixed().padStart(2, '0') +
+            ((this.props.whiteDurationLeft > 3600) ? (Math.floor(this.props.whiteDurationLeft / 3600).toFixed() + ':') : '') +
+            Math.floor((this.props.whiteDurationLeft / 60) % 60).toFixed().padStart(2, '0') +
             ':' +
-            Math.floor(this.props.whiteDurationLeft % 60).toFixed().padStart(2, '0')
+            Math.floor(this.props.whiteDurationLeft % 60 % 3600).toFixed().padStart(2, '0')
           }
         </Button>
         <Button
@@ -23,9 +24,10 @@ export default class LocalComputer extends React.Component {
           mx={1}
         >
           {
-            Math.floor(this.props.blackDurationLeft / 60).toFixed().padStart(2, '0') +
+            ((this.props.blackDurationLeft > 3600) ? (Math.floor(this.props.blackDurationLeft / 3600).toFixed() + ':') : '') +
+            Math.floor((this.props.blackDurationLeft / 60) % 60).toFixed().padStart(2, '0') +
             ':' +
-            Math.floor(this.props.blackDurationLeft % 60).toFixed().padStart(2, '0')
+            Math.floor(this.props.blackDurationLeft % 60 % 3600).toFixed().padStart(2, '0')
           }
         </Button>
       </>

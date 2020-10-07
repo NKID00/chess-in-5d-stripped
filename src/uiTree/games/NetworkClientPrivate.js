@@ -3,6 +3,7 @@ import { withRouter } from 'react-router';
 
 import Modal from 'react-modal';
 import { Box, Flex, Text, Button } from 'rebass';
+import { withSnackbar } from 'notistack';
 import TextField from '@material-ui/core/TextField';
 import Peer from 'peerjs';
 
@@ -10,7 +11,7 @@ import ClockDisplay from 'components/ClockDisplay';
 import LinkButton from 'components/LinkButton';
 import GamePlayer from 'components/GamePlayer';
 
-class NetworkClientHuman extends React.Component {
+class NetworkClientPrivate extends React.Component {
   clientConnector = null;
   gameRef = React.createRef();
   state = {
@@ -62,16 +63,19 @@ class NetworkClientHuman extends React.Component {
         }
       });
       conn.on('error', (err) => {
+        this.props.enqueueSnackbar('Network error occurred, connection failed! (Retry to continue)', {variant: 'error', persist: true});
         console.error(err);
         this.setState({connecting: false});
       });
       window.setTimeout(() => {
         if(this.state.connecting && this.state.clientConnection === null) {
+          this.props.enqueueSnackbar('Network error occurred, connection attempt timed out! (Retry to continue)', {variant: 'error', persist: true});
           this.setState({connecting: false});
         }
       }, 10000);
     }
     catch(err) {
+      this.props.enqueueSnackbar('Network error occurred, could not create connection! (Refresh to continue)', {variant: 'error', persist: true});
       console.error(err);
       this.setState({connecting: false});
     }
@@ -90,6 +94,9 @@ class NetworkClientHuman extends React.Component {
         }
         else if(data.type === 'submit') {
           this.gameRef.current.submit();
+        }
+        else if(data.type === 'import') {
+          this.gameRef.current.import(data.import);
         }
       }
     });
@@ -168,7 +175,7 @@ class NetworkClientHuman extends React.Component {
           <Box width={1} px={2} py={5} sx={{overflowY: 'auto', height: '100%'}}>
             {this.state.clientConnection === null ?
               this.state.connecting ?
-                <Text p={2}><b>Attempting to connect to Host:</b> {this.state.hostId}</Text>
+                <Text p={2}><b>Attempting to connect to Host ID:</b> {this.state.hostId}</Text>
               :
                 <>
                   <Text p={2} fontWeight='bold'>Host ID</Text>
@@ -285,5 +292,5 @@ class NetworkClientHuman extends React.Component {
   }
 }
 
-const NetworkClientHumanWithRouter = withRouter(NetworkClientHuman);
-export default NetworkClientHumanWithRouter;
+const NetworkClientPrivateWithRouter = withRouter(NetworkClientPrivate);
+export default withSnackbar(NetworkClientPrivateWithRouter);

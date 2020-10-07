@@ -69,8 +69,10 @@ export default class Board extends React.Component {
         res.snapY += 500;
       }
     }
-    this.setState(res);
-    this.setState({triggerDate: Date.now()})
+    if(typeof this.props.allowRecenter === 'undefined' || this.props.allowRecenter) {
+      this.setState(res);
+      this.setState({triggerDate: Date.now()});
+    }
   }
   componentDidMount() {
     this.recenter();
@@ -170,6 +172,8 @@ export default class Board extends React.Component {
                         hoverHighlights={this.props.hoverHighlights}
                         highlights={this.props.highlights}
                         checks={this.props.checks}
+                        onlyBlack={this.props.onlyBlack}
+                        onlyWhite={this.props.onlyWhite}
                       />
                     );
                   })

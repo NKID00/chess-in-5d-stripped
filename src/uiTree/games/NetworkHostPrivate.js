@@ -7,13 +7,14 @@ import TextField from '@material-ui/core/TextField';
 import Checkbox from '@material-ui/core/Checkbox';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
+import copy from 'copy-to-clipboard';
 import Peer from 'peerjs';
 
 import ClockDisplay from 'components/ClockDisplay';
 import LinkButton from 'components/LinkButton';
 import GamePlayer from 'components/GamePlayer';
 
-class NetworkHostHuman extends React.Component {
+class NetworkHostPrivate extends React.Component {
   hostConnector = null;
   gameRef = React.createRef();
   state = {
@@ -74,14 +75,20 @@ class NetworkHostHuman extends React.Component {
         this.setState({clientName: data.name});
       }
       if(this.gameRef.current.chess.player !== this.state.host) {
-        if(data.type === 'move') {
-          this.gameRef.current.move(data.move, true);
+        try {
+          if(data.type === 'move') {
+            this.gameRef.current.move(data.move, true);
+          }
+          else if(data.type === 'undo') {
+            this.gameRef.current.undo();
+          }
+          else if(data.type === 'submit') {
+            this.gameRef.current.submit();
+          }
         }
-        else if(data.type === 'undo') {
-          this.gameRef.current.undo();
-        }
-        else if(data.type === 'submit') {
-          this.gameRef.current.submit();
+        catch(err) {
+          this.props.enqueueSnackbar('Error occurred, client performed invalid action!', {variant: 'error', persist: true});
+          console.error(err);
         }
       }
       this.sync();
@@ -99,7 +106,9 @@ class NetworkHostHuman extends React.Component {
           this.setState({hostConnection: conn, clientId: conn.peer});
         });
         conn.on('close', () => {
-          this.props.enqueueSnackbar('Client disconnected!', {variant: 'error', persist: true});
+          if(!this.state.ended) {
+            this.props.enqueueSnackbar('Network error occurred, client disconnected!', {variant: 'error', persist: true});
+          }
         });
       });
       window.setTimeout(() => {
@@ -175,7 +184,7 @@ class NetworkHostHuman extends React.Component {
             {this.state.hostConnection === null ?
               <></>
             :
-              <Text p={2}><b>Connected to Client: {this.state.clientName}</b> ({this.state.clientId})</Text>
+              <Text p={2}><b>Connected to Client ID: {this.state.clientName}</b> ({this.state.clientId})</Text>
             }
             {this.state.hostId === '' ?
               <Text p={2} fontWeight='bold'>Creating Host ID...</Text>
@@ -185,7 +194,14 @@ class NetworkHostHuman extends React.Component {
                   <Text p={2} fontWeight='bold'>Host ID: </Text>
                   <Text
                     p={2}
-                    sx={{userSelect: 'all'}}
+                    sx={{
+                      WebkitTouchCallout: 'all',
+                      WebkitUserSelect: 'all',
+                      KhtmlUserSelect: 'all',
+                      MozUserSelect: 'all',
+                      MsUserSelect: 'all',
+                      userSelect: 'all'
+                    }}
                   >
                     {this.state.hostId}
                   </Text>
@@ -325,6 +341,15 @@ class NetworkHostHuman extends React.Component {
               Back
             </LinkButton>
             <Button m={1} variant='primary'
+              disabled={this.state.hostId === ''}
+              bg={this.state.hostId === '' ? 'grey' : 'blue'}
+              onClick={() => {
+                copy(window.location.origin + '/#/network/game/client?hostid=' + this.state.hostId);
+              }}
+            >
+              Copy link to clipboard
+            </Button>
+            <Button m={1} variant='primary'
               disabled={this.state.hostConnection === null}
               bg={this.state.hostConnection === null ? 'grey' : 'blue'}
               onClick={() => {
@@ -339,9 +364,14 @@ class NetworkHostHuman extends React.Component {
         </Modal>
         <GamePlayer
           ref={this.gameRef}
+          canImport
           canControlWhite={this.state.host === 'white' && !this.state.ended}
           canControlBlack={this.state.host !== 'white' && !this.state.ended}
           winner={this.state.winner}
+          onImport={(input) => {
+            this.state.hostConnection.send({type: 'import', input: input});
+            this.sync();
+          }}
           onMove={(moveObj) => {
             if(this.gameRef.current.chess.player === this.state.host) {
               this.state.hostConnection.send({type: 'move', move: moveObj});
@@ -392,4 +422,4 @@ class NetworkHostHuman extends React.Component {
   }
 }
 
-export default withSnackbar(NetworkHostHuman);
+export default withSnackbar(NetworkHostPrivate);
