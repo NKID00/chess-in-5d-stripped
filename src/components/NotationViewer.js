@@ -128,7 +128,7 @@ export default class NotationViewer extends React.Component {
             width={[1/2,1/3,1/4,1/5]}
             bg='grey'
           >
-            <Box sx={{maxHeight: '65vh'}}>
+            <Box sx={{maxHeight: '65vh', overflowY: 'auto'}}>
               {this.props.notation.replace(/\r\n/g, '\n').split('\n').map((e) => {
                 return (e.length > 0 ?
                   <Box
