@@ -43,7 +43,8 @@ class UpdateToast extends React.Component {
       onUpdate: (reg) => { this.reg = reg; window.dispatchEvent(swUpdateAvailable); },
       onSuccess: () => { window.dispatchEvent(swOfflineReady); },
       onReady: (reg) => { if(reg.waiting !== null) {
-        this.reg = reg; window.dispatchEvent(swUpdateAvailable);
+        this.reg = reg;
+        window.dispatchEvent(swUpdateAvailable);
       }}
     });
   }
