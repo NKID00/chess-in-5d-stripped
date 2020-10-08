@@ -41,7 +41,10 @@ class UpdateToast extends React.Component {
     window.addEventListener('swofflineready', this.offlineToast);
     serviceWorker.register({
       onUpdate: (reg) => { this.reg = reg; window.dispatchEvent(swUpdateAvailable); },
-      onSuccess: () => { window.dispatchEvent(swOfflineReady); }
+      onSuccess: () => { window.dispatchEvent(swOfflineReady); },
+      onReady: (reg) => { if(reg.installed !== null) {
+        this.reg = reg; window.dispatchEvent(swUpdateAvailable);
+      }}
     });
   }
   componentWillUnmount() {

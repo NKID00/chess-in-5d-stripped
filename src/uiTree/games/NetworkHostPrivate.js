@@ -97,7 +97,11 @@ class NetworkHostPrivate extends React.Component {
   }
   initConnector() {
     if(this.state.hostId === '') {
-      this.hostConnector = new Peer();
+      this.hostConnector = new Peer('', {
+        host: '35.238.158.96',
+        port: 8000,
+        path: '/'
+      });
       this.hostConnector.on('open', (id) => {
         this.setState({hostId: id});
       });
@@ -114,9 +118,9 @@ class NetworkHostPrivate extends React.Component {
       window.setTimeout(() => {
         if(this.state.hostId === '') {
           this.hostConnector.destroy();
-          this.initConnector();
+          this.props.enqueueSnackbar('Network error occurred, could not contact server! (Refresh to retry)', {variant: 'error', persist: true});
         }
-      }, 10000);
+      }, 60000);
     }
   }
   componentDidMount() {

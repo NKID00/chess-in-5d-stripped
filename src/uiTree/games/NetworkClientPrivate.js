@@ -104,16 +104,26 @@ class NetworkClientPrivate extends React.Component {
   }
   initConnector() {
     if(this.state.clientId === '') {
-      this.clientConnector = new Peer();
-      this.clientConnector.on('open', (id) => {
-        this.setState({clientId: id});
-      });
-      window.setTimeout(() => {
-        if(this.state.clientId === '') {
-          this.clientConnector.destroy();
-          this.initConnector();
-        }
-      }, 10000);
+      try {
+        this.clientConnector = new Peer('', {
+          host: '35.238.158.96',
+          port: 8000,
+          path: '/'
+        });
+        this.clientConnector.on('open', (id) => {
+          this.setState({clientId: id});
+        });
+        window.setTimeout(() => {
+          if(this.state.clientId === '') {
+            this.clientConnector.destroy();
+            this.props.enqueueSnackbar('Network error occurred, could not contact server! (Refresh to retry)', {variant: 'error', persist: true});
+          }
+        }, 60000);
+      }
+      catch(err) {
+        this.props.enqueueSnackbar('Network error occurred, could not contact server! (Refresh to retry)', {variant: 'error', persist: true});
+        console.error(err);
+      }
     }
   }
   componentDidMount() {
