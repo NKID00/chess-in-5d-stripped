@@ -98,7 +98,7 @@ class NetworkHostPrivate extends React.Component {
   initConnector() {
     if(this.state.hostId === '') {
       this.hostConnector = new Peer('', {
-        host: '35.238.158.96',
+        host: 'peer.chessin5d.net',
         port: 8000,
         path: '/'
       });
