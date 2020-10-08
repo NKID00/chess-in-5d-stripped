@@ -106,7 +106,7 @@ class NetworkClientPrivate extends React.Component {
     if(this.state.clientId === '') {
       try {
         this.clientConnector = new Peer('', {
-          host: 'peer.chessin5d.net',
+          host: '35.238.158.96',
           port: 8000,
           path: '/'
         });
