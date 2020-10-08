@@ -42,7 +42,7 @@ class UpdateToast extends React.Component {
     serviceWorker.register({
       onUpdate: (reg) => { this.reg = reg; window.dispatchEvent(swUpdateAvailable); },
       onSuccess: () => { window.dispatchEvent(swOfflineReady); },
-      onReady: (reg) => { if(reg.installed !== null) {
+      onReady: (reg) => { if(reg.waiting !== null) {
         this.reg = reg; window.dispatchEvent(swUpdateAvailable);
       }}
     });
