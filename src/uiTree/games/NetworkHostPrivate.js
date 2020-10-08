@@ -9,6 +9,7 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import copy from 'copy-to-clipboard';
 import Peer from 'peerjs';
+import Options from 'Options';
 
 import ClockDisplay from 'components/ClockDisplay';
 import LinkButton from 'components/LinkButton';
@@ -97,11 +98,7 @@ class NetworkHostPrivate extends React.Component {
   }
   initConnector() {
     if(this.state.hostId === '') {
-      this.hostConnector = new Peer('', {
-        host: '35.238.158.96',
-        port: 8000,
-        path: '/'
-      });
+      this.hostConnector = new Peer('', Options.get('peerjs'));
       this.hostConnector.on('open', (id) => {
         this.setState({hostId: id});
       });

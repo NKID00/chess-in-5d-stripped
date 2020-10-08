@@ -67,12 +67,12 @@ export default class MainMenu extends React.Component {
               Rules
             </LinkButton>
             <LinkButton
-              bg='grey'
-              disabled
+              to='/options'
+              variant='primary'
               width={1}
               my={3}
             >
-              <del><i>Options</i></del>
+              Options
             </LinkButton>
             <Button
               variant='primary'
