@@ -1,22 +1,10 @@
 import React from 'react';
+
 import Timeline from 'components/Timeline';
+import Arrow from 'components/Arrow';
 import { Stage, AppContext } from 'react-pixi-fiber';
 import Viewport from 'components/Viewport';
-
-const defaultPalette = {
-  background: 0x000000,
-  whiteSquare: 0xaaaaaa,
-  blackSquare: 0x555555,
-  selectedPiece: 0x0000ff,
-  moveHighlight: 0x00ff00,
-  captureHighlight: 0xff0000,
-  checkSourceHighlight: 0xff0000,
-  checkDestinationHighlight: 0xff0000,
-  whiteBoardOutline: 0xdddddd,
-  blackBoardOutline: 0x222222,
-  checkBoardOutline: 0xff0000,
-  inactiveBoardOutline: 0x777777
-};
+import Options from 'Options';
 
 export default class Board extends React.Component {
   state = {
@@ -88,11 +76,7 @@ export default class Board extends React.Component {
           options={{
             height: this.state.height,
             width: this.state.width,
-            backgroundColor: (this.props.palette ?
-              this.props.palette.background
-            :
-              defaultPalette.background
-            ),
+            backgroundColor: Options.get('palette').background,
             clearBeforeRender: true
           }}
           style={{
@@ -138,11 +122,15 @@ export default class Board extends React.Component {
                     return (
                       <Timeline
                         app={app}
-                        palette={this.props.palette ? this.props.palette : defaultPalette}
+                        palette={Options.get('palette')}
                         x={this.props.x ? this.props.x : 0}
                         y={
                           (this.props.x ? this.props.x : 0) +
-                          (e.timeline - this.props.boardObj.timelines.map((e) => { return e.timeline; }).reduce((a, c) => {
+                          (e.timeline - this.props.boardObj.timelines.filter((e) => {
+                            return e.turns.filter((e2) => {
+                              return (this.props.onlyWhite && e2.player === 'white') || (this.props.onlyBlack && e2.player === 'black') || (!this.props.onlyWhite && !this.props.onlyBlack);
+                            }).length > 0;
+                          }).map((e) => { return e.timeline; }).reduce((a, c) => {
                             return a > c ? c : a;
                           })) * 1000
                         }
@@ -174,6 +162,39 @@ export default class Board extends React.Component {
                         checks={this.props.checks}
                         onlyBlack={this.props.onlyBlack}
                         onlyWhite={this.props.onlyWhite}
+                      />
+                    );
+                  })
+                :
+                  <></>
+                }
+                {Array.isArray(this.props.realActions) ?
+                  this.props.realActions.map((e) => {
+                    var r = e.moves.filter((e2) => {
+                      if(e2.start.timeline !== e2.end.timeline && this.props.moveShow !== 'none') { return true; }
+                      return this.props.moveShow === 'all';
+                    }).filter((e2) => {
+                      return (this.props.onlyWhite && e2.player === 'white') || (this.props.onlyBlack && e2.player === 'black') || (!this.props.onlyWhite && !this.props.onlyBlack);
+                    });
+                    return r;
+                  }).flat().map((e) => {
+                    var lowestTimeline = this.props.boardObj.timelines.filter((e) => {
+                      return e.turns.filter((e2) => {
+                        return (this.props.onlyWhite && e2.player === 'white') || (this.props.onlyBlack && e2.player === 'black') || (!this.props.onlyWhite && !this.props.onlyBlack);
+                      }).length > 0;
+                    }).map((e) => { return e.timeline; }).reduce((a, c) => {
+                      return a > c ? c : a;
+                    });
+                    var onlyOne = (this.props.onlyWhite || this.props.onlyBlack);
+                    return (
+                      <Arrow
+                        palette={Options.get('palette')}
+                        sx={(e.start.turn - 1) * (onlyOne ? 1000 : 2000) + (e.player === 'white' ? 0 : 1000) + 150 + (onlyOne ? (e.player === 'white' ? 0 : -1000) : 0) + (e.start.file - 1) * 100}
+                        sy={(e.start.timeline - lowestTimeline) * 1000 + 150 + (8 - e.start.rank) * 100}
+                        tx={(e.end.turn - 1) * (onlyOne ? 1000 : 2000) + (e.player === 'white' ? 0 : 1000) + 150 + (onlyOne ? (e.player === 'white' ? 0 : -1000) : 1000) + (e.end.file - 1) * 100}
+                        ty={(e.end.timeline - lowestTimeline) * 1000 + 150 + (8 - e.end.rank) * 100}
+                        moveObj={e}
+                        key={JSON.stringify(e)}
                       />
                     );
                   })

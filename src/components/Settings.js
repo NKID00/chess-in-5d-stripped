@@ -6,28 +6,14 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Checkbox from '@material-ui/core/Checkbox';
 import { BsGear } from 'react-icons/bs';
 
-const defaultPalette = {
-  background: 0x000000,
-  whiteSquare: 0xaaaaaa,
-  blackSquare: 0x555555,
-  selectedPiece: 0x0000ff,
-  moveHighlight: 0x00ff00,
-  captureHighlight: 0xff0000,
-  checkSourceHighlight: 0xff0000,
-  checkDestinationHighlight: 0xff0000,
-  whiteBoardOutline: 0xdddddd,
-  blackBoardOutline: 0x222222,
-  checkBoardOutline: 0xff0000,
-  inactiveBoardOutline: 0x777777
-};
-
 export default class Settings extends React.Component {
   buttonRef = React.createRef();
   boxRef = React.createRef();
   state = {
     open: false,
     boardShow: 'both',
-    allowRecenter: true
+    allowRecenter: true,
+    moveShow: 'all'
   };
   componentDidUpdate(prevProps, prevState) {
     if(prevState.open !== this.state.open) {
@@ -37,14 +23,16 @@ export default class Settings extends React.Component {
         this.boxRef.current.style.top = this.buttonRef.current.getBoundingClientRect().bottom + 13 + 'px';
       }
     }
-    if(prevState.boardShow !== this.state.boardShow) {
+    if(
+      prevState.boardShow !== this.state.boardShow ||
+      prevState.allowRecenter !== this.state.allowRecenter ||
+      prevState.moveShow !== this.state.moveShow
+    ) {
       if(typeof this.props.onChange === 'function') {
         this.props.onChange({
           boardShow: this.state.boardShow,
-          palette: Object.assign(Object.assign({}, defaultPalette), {
-
-          }),
-          allowRecenter: this.state.allowRecenter
+          allowRecenter: this.state.allowRecenter,
+          moveShow: this.state.moveShow
         });
       }
     }
@@ -91,7 +79,23 @@ export default class Settings extends React.Component {
           </Flex>
           <Flex>
             <Text p={2} fontWeight='bold'>Automatic Recenter</Text>
-            <Checkbox color='primary' checked={this.state.allowRecenter} onChange={(e) => { this.setState({allowRecenter: e.target.checked}); }} />
+            <Checkbox
+              color='primary'
+              checked={this.state.allowRecenter}
+              disabled={this.state.boardShow !== 'both'}
+              onChange={(e) => { this.setState({allowRecenter: e.target.checked}); }}
+            />
+          </Flex>
+          <Flex>
+            <Text p={2} fontWeight='bold'>Show Move</Text>
+            <Select
+              value={this.state.moveShow}
+              onChange={(e) => { this.setState({moveShow: e.target.value}); }}
+            >
+              <MenuItem value='all'>All</MenuItem>
+              <MenuItem value='timeline'>Timeline Only</MenuItem>
+              <MenuItem value='none'>None</MenuItem>
+            </Select>
           </Flex>
         </Box>
       </>

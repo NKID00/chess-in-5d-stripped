@@ -6,6 +6,7 @@ import { Box, Flex, Text, Button } from 'rebass';
 import { withSnackbar } from 'notistack';
 import TextField from '@material-ui/core/TextField';
 import Peer from 'peerjs';
+import Options from 'Options';
 
 import ClockDisplay from 'components/ClockDisplay';
 import LinkButton from 'components/LinkButton';
@@ -105,11 +106,7 @@ class NetworkClientPrivate extends React.Component {
   initConnector() {
     if(this.state.clientId === '') {
       try {
-        this.clientConnector = new Peer('', {
-          host: '35.238.158.96',
-          port: 8000,
-          path: '/'
-        });
+        this.clientConnector = new Peer('', Options.get('peerjs'));
         this.clientConnector.on('open', (id) => {
           this.setState({clientId: id});
         });

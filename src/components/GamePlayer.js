@@ -9,6 +9,7 @@ import Settings from 'components/Settings';
 import LogoIcon from 'assets/logo.svg';
 
 const deepcompare = require('deep-compare');
+const deepcopy = require('deep-copy');
 
 export default class GamePlayer extends React.Component {
   chess = new Chess();
@@ -22,9 +23,39 @@ export default class GamePlayer extends React.Component {
     notation: '',
     settings: {
       boardShow: 'both',
-      allowRecenter: true
+      allowRecenter: true,
+      moveShow: 'all'
     }
   };
+  realActionCalc() {
+    var actions = deepcopy(this.chess.actionHistory);
+    var chess = new Chess();
+    var realActions = [];
+    for(var i = 0;i < actions.length;i++) {
+      var currAction = actions[i];
+      var newAction = {
+        action: currAction.action,
+        player: currAction.player,
+        moves: []
+      };
+      for(var j = 0;j < currAction.moves.length;j++) {
+        var currMove = currAction.moves[j];
+        var prevTimelines = deepcopy(chess.board.timelines);
+        chess.move(currMove);
+        var newTimelines = deepcopy(chess.board.timelines);
+        if(prevTimelines.length !== newTimelines.length) {
+          var newTimeline = newTimelines.filter((e) => { // eslint-disable-line no-loop-func
+            return !prevTimelines.map((e2) => { return e2.timeline}).includes(e.timeline);
+          })[0].timeline;
+          currMove.end.timeline = newTimeline;
+        }
+        newAction.moves.push(currMove);
+      }
+      chess.submit();
+      realActions.push(newAction);
+    }
+    return realActions;
+  }
   boardSync() {
     var win = {
       player: this.chess.player,
@@ -42,7 +73,8 @@ export default class GamePlayer extends React.Component {
       action: this.chess.actionNumber,
       checks: this.chess.checks(),
       triggerDate: Date.now(),
-      nextMoves: this.chess.moves('object', false, false, true)
+      nextMoves: this.chess.moves('object', false, false, true),
+      realActions: this.realActionCalc()
     });
     if(typeof this.props.onEnd === 'function') {
       if(win.checkmate || win.stalemate) {
@@ -170,8 +202,8 @@ export default class GamePlayer extends React.Component {
         </Flex>
         <Board
           ref={this.boardRef}
-          palette={this.state.settings.palette}
           boardObj={this.state.board}
+          realActions={this.state.realActions}
           onPieceClick={(piece) => {
             if(piece) {
               if((this.props.canControlWhite && this.state.player === 'white') || (this.props.canControlBlack && this.state.player === 'black')) { this.selectPiece(piece); }
@@ -201,6 +233,7 @@ export default class GamePlayer extends React.Component {
           onlyBlack={this.state.settings.boardShow === 'black'}
           onlyWhite={this.state.settings.boardShow === 'white'}
           allowRecenter={this.state.settings.allowRecenter}
+          moveShow={this.state.settings.moveShow}
         />
         <Flex
           p={2}

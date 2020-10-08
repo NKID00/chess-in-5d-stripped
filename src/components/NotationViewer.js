@@ -54,8 +54,7 @@ export default class NotationViewer extends React.Component {
                     width={1}
                     sx={{height: '100%'}}
                     fontSize={[ 1, 2, 3 ]}
-                  >
-                  </Textarea>
+                  />
                 </Box>
                 <Box width={1/2} sx={{height: '100%'}} px={2}>
                   <FilePond
