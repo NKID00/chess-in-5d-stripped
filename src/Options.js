@@ -8,7 +8,8 @@ const get = (str) => {
     defaultObj = {
       host: 'peer.chessin5d.net',
       port: 8000,
-      path: '/'
+      path: '/',
+      secure: true
     };
   }
   else if(str === 'palette') {
@@ -34,6 +35,9 @@ const get = (str) => {
   }
   if(res) {
     res = Object.assign(defaultObj, res);
+  }
+  else {
+    res = defaultObj;
   }
   store.set(str, res);
   return res;
