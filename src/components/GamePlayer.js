@@ -24,7 +24,7 @@ export default class GamePlayer extends React.Component {
     settings: {
       boardShow: 'both',
       allowRecenter: true,
-      moveShow: 'all'
+      moveShow: 'timeline'
     }
   };
   realActionCalc() {

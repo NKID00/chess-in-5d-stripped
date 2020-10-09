@@ -16,14 +16,16 @@ export default class OptionsMenu extends React.Component {
     peerjs: Options.get('peerjs'),
     peerjsTmp: JSON.stringify(Options.get('peerjs'), null, 2),
     palette: Options.get('palette'),
-    paletteTmp: JSON.stringify(Options.get('palette'), null, 2)
+    paletteTmp: JSON.stringify(Options.get('palette'), null, 2),
+    playerName: Options.get('name').username
   };
   sync() {
     this.setState({
       peerjs: Options.get('peerjs'),
       peerjsTmp: JSON.stringify(Options.get('peerjs'), null, 2),
       palette: Options.get('palette'),
-      paletteTmp: JSON.stringify(Options.get('palette'), null, 2)
+      paletteTmp: JSON.stringify(Options.get('palette'), null, 2),
+      playerName: Options.get('name').username
     });
   }
   render() {
@@ -56,6 +58,15 @@ export default class OptionsMenu extends React.Component {
             <Box mx='auto' />
           </Flex>
           <Box width={1} px={3} py={5} sx={{overflowY: 'auto', height: '100%'}}>
+            <Text py={2} fontWeight='bold'>Player Name</Text>
+            <TextField
+              fullWidth
+              value={this.state.playerName}
+              onChange={(e) => {
+                this.setState({playerName: e.target.value});
+                Options.set('name', {username: e.target.value});
+              }}
+            />
             <Text py={2} fontWeight='bold'>PeerJS Server Config</Text>
             <TextField
               fullWidth

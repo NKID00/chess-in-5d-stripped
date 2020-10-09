@@ -13,7 +13,7 @@ export default class Settings extends React.Component {
     open: false,
     boardShow: 'both',
     allowRecenter: true,
-    moveShow: 'all'
+    moveShow: 'timeline'
   };
   componentDidUpdate(prevProps, prevState) {
     if(prevState.open !== this.state.open) {

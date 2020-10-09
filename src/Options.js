@@ -33,6 +33,11 @@ const get = (str) => {
       blackArrowOutline: 0x000000
     };
   }
+  else if(str === 'name') {
+    defaultObj = {
+      username: 'Player ' + Math.round(Math.random() * 9999).toFixed()
+    };
+  }
   if(res) {
     res = Object.assign(defaultObj, res);
   }
