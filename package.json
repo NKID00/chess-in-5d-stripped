@@ -4,7 +4,7 @@
     "name": "Shaun Wu",
     "email": "alexbay218@gmail.com"
   },
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "Open source implementation of '5D Chess With Multiverse Time Travel'.",
   "private": true,
   "main": "public/electron.js",
@@ -20,6 +20,7 @@
       "buildResources": "assets"
     },
     "win": {
+      "icon": "public/favicon.ico",
       "target": [
         {
           "target": "nsis",
@@ -30,7 +31,7 @@
       ]
     },
     "linux": {
-      "icon": "favicon-32x32.png",
+      "icon": "public/favicon-32x32.png",
       "target": [
         {
           "target": "AppImage",

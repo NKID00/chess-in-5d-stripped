@@ -40,6 +40,8 @@ build_electron_app:
   artifacts:
     paths:
       - dist
+  only:
+    - release-desktop
 
 test_app:
   stage: test
@@ -61,6 +63,7 @@ pages:
       - public
   only:
     - release
+    - release-desktop
 
 upload_app:
   stage: deploy
@@ -72,7 +75,7 @@ upload_app:
     - ls -alh
     - curl -T "Chess In 5D Setup $NPM_PACKAGE_VERSION.exe" -ualexbay218:${BINTRAY_KEY} "https://api.bintray.com/content/alexbay218/chess-in-5d/chess-in-5d-win-x64/$NPM_PACKAGE_VERSION/Chess In 5D Setup $NPM_PACKAGE_VERSION.exe"
   only:
-    - release
+    - release-desktop
 
 release_app:
   image: registry.gitlab.com/gitlab-org/release-cli
@@ -89,5 +92,5 @@ release_app:
       --ref $CI_COMMIT_SHA
       --assets-link '{"name":"Chess In 5D Setup $NPM_PACKAGE_VERSION.exe","url":"https://https://dl.bintray.com/alexbay218/chess-in-5d/chess-in-5d-win-x64/$NPM_PACKAGE_VERSION/Chess In 5D Setup $NPM_PACKAGE_VERSION.exe"}'
   only:
-    - release
+    - release-desktop
 
