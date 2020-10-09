@@ -126,7 +126,7 @@
     "electron-start": "concurrently \"npm start\" \"wait-on http://localhost:3000 && electron .\"",
     "build": "react-scripts build",
     "preelectron-build": "npm run build --em.main=build/electron.js",
-    "electron-build": "electron-builder install-app-deps && electron-builder -w",
+    "electron-build": "electron-builder install-app-deps && electron-builder -wl",
     "test": "react-scripts test --passWithNoTests",
     "eject": "react-scripts eject"
   },

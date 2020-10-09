@@ -36,7 +36,6 @@ build_electron_app:
     - job: install_dependencies
       artifacts: true
   script:
-    - sudo apt-get install --no-install-recommends -y libopenjp2-tools rpm
     - npm run electron-build
   artifacts:
     paths:
