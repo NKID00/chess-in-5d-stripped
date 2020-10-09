@@ -13,7 +13,8 @@ export default class Settings extends React.Component {
     open: false,
     boardShow: 'both',
     allowRecenter: true,
-    moveShow: 'timeline'
+    moveShow: 'timeline',
+    flip: false
   };
   componentDidUpdate(prevProps, prevState) {
     if(prevState.open !== this.state.open) {
@@ -26,13 +27,15 @@ export default class Settings extends React.Component {
     if(
       prevState.boardShow !== this.state.boardShow ||
       prevState.allowRecenter !== this.state.allowRecenter ||
-      prevState.moveShow !== this.state.moveShow
+      prevState.moveShow !== this.state.moveShow ||
+      prevState.flip !== this.state.flip
     ) {
       if(typeof this.props.onChange === 'function') {
         this.props.onChange({
           boardShow: this.state.boardShow,
           allowRecenter: this.state.allowRecenter,
-          moveShow: this.state.moveShow
+          moveShow: this.state.moveShow,
+          flip: this.state.flip
         });
       }
     }
@@ -96,6 +99,14 @@ export default class Settings extends React.Component {
               <MenuItem value='timeline'>Timeline Only</MenuItem>
               <MenuItem value='none'>None</MenuItem>
             </Select>
+          </Flex>
+          <Flex>
+            <Text p={2} fontWeight='bold'>Flip Board</Text>
+            <Checkbox
+              color='primary'
+              checked={this.state.flip}
+              onChange={(e) => { this.setState({flip: e.target.checked}); }}
+            />
           </Flex>
         </Box>
       </>

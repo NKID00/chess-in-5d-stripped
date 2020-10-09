@@ -11,6 +11,7 @@ import Options from 'Options';
 import ClockDisplay from 'components/ClockDisplay';
 import LinkButton from 'components/LinkButton';
 import GamePlayer from 'components/GamePlayer';
+import Chat from 'components/Chat';
 
 class NetworkClientPrivate extends React.Component {
   clientConnector = null;
@@ -32,7 +33,8 @@ class NetworkClientPrivate extends React.Component {
     perActionTimelineIncrement: 5,
     whiteDurationLeft: 0,
     blackDurationLeft: 0,
-    winner: ''
+    winner: '',
+    chat: []
   };
   lastUpdate = Date.now();
   update() {
@@ -51,6 +53,17 @@ class NetworkClientPrivate extends React.Component {
       window.setTimeout(this.update.bind(this), 1000);
     }
   }
+  sendChat(str) {
+    if(this.state.hostConnection !== null) {
+      this.state.hostConnection.send({type: 'chat', string: str});
+      var chat = this.state.chat;
+      chat.push({
+        source: 'client',
+        string: str
+      });
+      this.setState({chat: chat});
+    }
+  }
   connectToHost() {
     this.setState({connecting: true});
     try {
@@ -64,13 +77,13 @@ class NetworkClientPrivate extends React.Component {
         }
       });
       conn.on('error', (err) => {
-        this.props.enqueueSnackbar('Network error occurred, connection failed! (Retry to continue)', {variant: 'error', persist: true});
+        this.props.enqueueSnackbar('Network error occurred, connection failed! (Retry to continue)', {variant: 'error'});
         console.error(err);
         this.setState({connecting: false});
       });
       window.setTimeout(() => {
         if(this.state.connecting && this.state.clientConnection === null) {
-          this.props.enqueueSnackbar('Network error occurred, connection attempt timed out! (Retry to continue)', {variant: 'error', persist: true});
+          this.props.enqueueSnackbar('Network error occurred, connection attempt timed out! (Retry to continue)', {variant: 'error'});
           this.setState({connecting: false});
         }
       }, 10000);
@@ -98,6 +111,14 @@ class NetworkClientPrivate extends React.Component {
         }
         else if(data.type === 'import') {
           this.gameRef.current.import(data.import);
+        }
+        else if(data.type === 'chat') {
+          var chat = this.state.chat;
+          chat.push({
+            source: 'host',
+            string: data.string
+          });
+          this.setState({chat: chat});
         }
       }
     });
@@ -293,6 +314,12 @@ class NetworkClientPrivate extends React.Component {
           :
             <></>
           }
+          <Chat
+            sendChat={(str) => { this.sendChat(str); }}
+            chat={this.state.chat}
+            hostName={this.state.hostName}
+            clientName={this.state.clientName}
+          />
         </GamePlayer>
       </>
     );

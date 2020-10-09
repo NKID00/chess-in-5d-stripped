@@ -14,7 +14,7 @@ const behavior = {
       stopPropagation: false,
       disableOnContextMenu: true
     });
-    
+
     if(props.blur) {
       viewport.fitHeight(3300);
       viewport.stopPropagation = true;
@@ -38,12 +38,12 @@ const behavior = {
       viewport.clampZoom({
         minWidth: 1000,
         minHeight: 1000,
-        maxWidth: props.app.renderer.width * 2.2
+        maxWidth: props.worldWidth * 2.2
       });
     }
     viewport.snap(500, 500,
       {
-        time: 500,
+        time: 750,
         removeOnComplete: true,
         removeOnInterrupt: true
       }
@@ -77,7 +77,7 @@ const behavior = {
           (newProps.snapX ? newProps.snapX : 500),
           (newProps.snapY ? newProps.snapY : 500),
           {
-            time: 500,
+            time: 750,
             removeOnComplete: true,
             removeOnInterrupt: true
           }
@@ -86,7 +86,7 @@ const behavior = {
         if(viewport.worldScreenHeight < height) {
           viewport.snapZoom({
             height: height,
-            time: 500,
+            time: 750,
             removeOnComplete: true,
             removeOnInterrupt: true
           });

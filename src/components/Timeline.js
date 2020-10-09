@@ -52,7 +52,7 @@ export default class Timeline extends React.Component {
             :
               x + (((e.turn - 1) * 2) + (e.player === 'white' ? 0 : 1)) * 1000 + 100
             }
-            y={y + 100}
+            y={(y + (this.props.flip ? -100 : 100))}
             turnObj={e}
             active={this.props.timelineObj.active}
             present={this.props.timelineObj.present}
@@ -93,6 +93,7 @@ export default class Timeline extends React.Component {
               :
                 null
             }
+            flip={this.props.flip}
           />
         );
       })

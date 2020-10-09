@@ -14,6 +14,7 @@ import Options from 'Options';
 import ClockDisplay from 'components/ClockDisplay';
 import LinkButton from 'components/LinkButton';
 import GamePlayer from 'components/GamePlayer';
+import Chat from 'components/Chat';
 
 class NetworkHostPrivate extends React.Component {
   hostConnector = null;
@@ -34,7 +35,8 @@ class NetworkHostPrivate extends React.Component {
     perActionTimelineIncrement: 5,
     whiteDurationLeft: 0,
     blackDurationLeft: 0,
-    winner: ''
+    winner: '',
+    chat: []
   };
   lastUpdate = Date.now();
   update() {
@@ -51,6 +53,17 @@ class NetworkHostPrivate extends React.Component {
       }
       this.lastUpdate = Date.now();
       window.setTimeout(this.update.bind(this), 1000);
+    }
+  }
+  sendChat(str) {
+    if(this.state.hostConnection !== null) {
+      this.state.hostConnection.send({type: 'chat', string: str});
+      var chat = this.state.chat;
+      chat.push({
+        source: 'host',
+        string: str
+      });
+      this.setState({chat: chat});
     }
   }
   sync() {
@@ -86,9 +99,17 @@ class NetworkHostPrivate extends React.Component {
           else if(data.type === 'submit') {
             this.gameRef.current.submit();
           }
+          else if(data.type === 'chat') {
+            var chat = this.state.chat;
+            chat.push({
+              source: 'client',
+              string: data.string
+            });
+            this.setState({chat: chat});
+          }
         }
         catch(err) {
-          this.props.enqueueSnackbar('Error occurred, client performed invalid action!', {variant: 'error', persist: true});
+          this.props.enqueueSnackbar('Error occurred, client performed invalid action!', {variant: 'error'});
           console.error(err);
         }
       }
@@ -417,6 +438,12 @@ class NetworkHostPrivate extends React.Component {
           :
             <></>
           }
+          <Chat
+            sendChat={(str) => { this.sendChat(str); }}
+            chat={this.state.chat}
+            hostName={this.state.hostName}
+            clientName={this.state.clientName}
+          />
         </GamePlayer>
       </>
     );
