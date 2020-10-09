@@ -30,14 +30,13 @@
       ]
     },
     "linux": {
+      "icon": "favicon-32x32.png",
       "target": [
         {
           "target": "AppImage",
           "arch": [
             "x64",
-            "ia32",
-            "armv7l",
-            "arm64"
+            "ia32"
           ]
         },
         {
@@ -53,9 +52,7 @@
           "target": "rpm",
           "arch": [
             "x64",
-            "ia32",
-            "armv7l",
-            "arm64"
+            "ia32"
           ]
         },
         {

@@ -36,7 +36,7 @@ build_electron_app:
     - job: install_dependencies
       artifacts: true
   script:
-    - npm run electron-build
+    - CI=false npm run electron-build
   artifacts:
     paths:
       - dist
