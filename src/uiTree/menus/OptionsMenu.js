@@ -73,7 +73,12 @@ export default class OptionsMenu extends React.Component {
               multiline
               rows={5}
               defaultValue={this.state.peerjsTmp}
-              error={!deepcompare(this.state.peerjs, JSON.parse(this.state.peerjsTmp))}
+              error={!deepcompare(this.state.peerjs, (() => {
+                try {
+                  return JSON.parse(this.state.peerjsTmp);
+                }
+                catch(err) { return {}; }
+              })())}
               onChange={(e) => {
                 this.setState({peerjsTmp: e.target.value});
                 try {
@@ -119,7 +124,12 @@ export default class OptionsMenu extends React.Component {
               multiline
               rows={8+6}
               defaultValue={this.state.paletteTmp}
-              error={!deepcompare(this.state.palette, JSON.parse(this.state.paletteTmp))}
+              error={!deepcompare(this.state.palette, (() => {
+                try {
+                  return JSON.parse(this.state.paletteTmp);
+                }
+                catch(err) { return {}; }
+              })())}
               onChange={(e) => {
                 this.setState({paletteTmp: e.target.value});
                 try {

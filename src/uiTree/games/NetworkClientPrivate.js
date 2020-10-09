@@ -11,6 +11,7 @@ import Options from 'Options';
 import ClockDisplay from 'components/ClockDisplay';
 import LinkButton from 'components/LinkButton';
 import GamePlayer from 'components/GamePlayer';
+import Chat from 'components/Chat';
 
 class NetworkClientPrivate extends React.Component {
   clientConnector = null;
@@ -32,7 +33,8 @@ class NetworkClientPrivate extends React.Component {
     perActionTimelineIncrement: 5,
     whiteDurationLeft: 0,
     blackDurationLeft: 0,
-    winner: ''
+    winner: '',
+    chat: []
   };
   lastUpdate = Date.now();
   update() {
@@ -51,6 +53,17 @@ class NetworkClientPrivate extends React.Component {
       window.setTimeout(this.update.bind(this), 1000);
     }
   }
+  sendChat(str) {
+    if(this.state.clientConnection !== null) {
+      this.state.clientConnection.send({type: 'chat', string: str});
+      var chat = this.state.chat;
+      chat.push({
+        source: 'client',
+        string: str
+      });
+      this.setState({chat: chat});
+    }
+  }
   connectToHost() {
     this.setState({connecting: true});
     try {
@@ -64,13 +77,13 @@ class NetworkClientPrivate extends React.Component {
         }
       });
       conn.on('error', (err) => {
-        this.props.enqueueSnackbar('Network error occurred, connection failed! (Retry to continue)', {variant: 'error', persist: true});
+        this.props.enqueueSnackbar('Network error occurred, connection failed! (Retry to continue)', {variant: 'error'});
         console.error(err);
         this.setState({connecting: false});
       });
       window.setTimeout(() => {
         if(this.state.connecting && this.state.clientConnection === null) {
-          this.props.enqueueSnackbar('Network error occurred, connection attempt timed out! (Retry to continue)', {variant: 'error', persist: true});
+          this.props.enqueueSnackbar('Network error occurred, connection attempt timed out! (Retry to continue)', {variant: 'error'});
           this.setState({connecting: false});
         }
       }, 10000);
@@ -85,6 +98,14 @@ class NetworkClientPrivate extends React.Component {
     this.state.clientConnection.on('data', (data) => {
       if(data.type === 'sync') {
         this.setState(data.state);
+      }
+      else if(data.type === 'chat') {
+        var chat = this.state.chat;
+        chat.push({
+          source: 'host',
+          string: data.string
+        });
+        this.setState({chat: chat});
       }
       if(this.gameRef.current.chess.player === this.state.host) {
         if(data.type === 'move') {
@@ -101,6 +122,12 @@ class NetworkClientPrivate extends React.Component {
         }
       }
     });
+    this.state.clientConnection.on('close', () => {
+      if(!this.state.ended) {
+        this.props.enqueueSnackbar('Network error occurred, host disconnected!', {variant: 'error', persist: true});
+        this.setState({clientConnection: null});
+      }
+    });
     this.state.clientConnection.send({type: 'name', name: this.state.clientName});
   }
   initConnector() {
@@ -109,6 +136,12 @@ class NetworkClientPrivate extends React.Component {
         this.clientConnector = new Peer('', Options.get('peerjs'));
         this.clientConnector.on('open', (id) => {
           this.setState({clientId: id});
+        });
+        this.clientConnector.on('error', () => {
+          if(!this.state.ended) {
+            this.props.enqueueSnackbar('Network error occurred, could not connect to server!', {variant: 'error', persist: true});
+            this.clientConnector.destroy();
+          }
         });
         window.setTimeout(() => {
           if(this.state.clientId === '') {
@@ -233,6 +266,14 @@ class NetworkClientPrivate extends React.Component {
               to='/network'
               variant='secondary'
               m={1}
+              onClick={() => {
+                if(this.state.clientConnection !== null) {
+                  this.state.clientConnection.close();
+                }
+                if(this.clientConnector !== null) {
+                  this.clientConnector.destroy();
+                }
+              }}
             >
               Back
             </LinkButton>
@@ -293,6 +334,12 @@ class NetworkClientPrivate extends React.Component {
           :
             <></>
           }
+          <Chat
+            sendChat={(str) => { this.sendChat(str); }}
+            chat={this.state.chat}
+            hostName={this.state.hostName}
+            clientName={this.state.clientName}
+          />
         </GamePlayer>
       </>
     );

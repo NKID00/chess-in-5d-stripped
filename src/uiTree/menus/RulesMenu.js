@@ -47,7 +47,7 @@ export default class RulesMenu extends React.Component {
             <Box mx='auto' />
           </Flex>
           <Box width={1} px={2} py={5} sx={{overflowY: 'auto', height: '100%'}}>
-            <ReactMarkdown source={this.state.text} />
+            <ReactMarkdown linkTarget='_blank' source={this.state.text} />
           </Box>
           <Flex
             p={2}

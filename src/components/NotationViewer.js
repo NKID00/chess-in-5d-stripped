@@ -118,59 +118,68 @@ export default class NotationViewer extends React.Component {
           onClick={() => {
             this.setState({open: !this.state.open});
           }}
+          ml={2}
           px={2}
         >
           <AiOutlineOrderedList size={20} />
         </Button>
-        {typeof this.props.notation === 'string' && this.state.open ?
-          <Box
-            ref={this.boxRef}
-            p={2}
-            width={[1/2,1/3,1/4]}
-            bg='grey'
+        <Box
+          ref={this.boxRef}
+          p={2}
+          width={[1/2,1/3,1/4]}
+          bg='grey'
+          sx={{display: this.state.open ? 'block' : 'none', maxHeight: '65vh', overflowY: 'auto'}}
+        >
+          <Box 
+            sx={{
+              maxHeight: '65vh',
+              overflowY: 'auto',
+              WebkitTouchCallout: 'all',
+              WebkitUserSelect: 'all',
+              KhtmlUserSelect: 'all',
+              MozUserSelect: 'all',
+              MsUserSelect: 'all',
+              userSelect: 'all'
+            }}
           >
-            <Box sx={{maxHeight: '65vh', overflowY: 'auto'}}>
-              {this.props.notation.replace(/\r\n/g, '\n').split('\n').map((e) => {
-                return (e.length > 0 ?
-                  <Box
-                    p={2}
-                    m={2}
-                    color={e.includes('w.') ? 'black' : 'white'}
-                    bg={e.includes('w.') ? 'white' : 'black'}
-                    key={e}
-                  >
-                    <Text p={1} fontWeight='bold'>{e}</Text>
-                  </Box>
-                :
-                  null
-                );
-              })}
-            </Box>
-            <Flex>
-              <Box mx='auto' />
-              {this.props.canImport ?
-                <Button
-                  variant='primary'
-                  m={1}
-                  onClick={() => { this.setState({openModal: true, modalMode: 'import'}); }}
+            {this.props.notation.replace(/\r\n/g, '\n').split('\n').map((e) => {
+              return (e.length > 0 ?
+                <Box
+                  p={2}
+                  m={2}
+                  color={e.includes('w.') ? 'black' : 'white'}
+                  bg={e.includes('w.') ? 'white' : 'black'}
+                  key={e}
                 >
-                  Import
-                </Button>
+                  <Text p={1} fontWeight='bold'>{e}</Text>
+                </Box>
               :
-                <></>
-              }
+                null
+              );
+            })}
+          </Box>
+          <Flex>
+            <Box mx='auto' />
+            {this.props.canImport ?
               <Button
                 variant='primary'
                 m={1}
-                onClick={() => { this.setState({openModal: true, modalMode: 'export'}); }}
+                onClick={() => { this.setState({openModal: true, modalMode: 'import'}); }}
               >
-                Export
+                Import
               </Button>
-            </Flex>
-          </Box>
-        :
-          <></>
-        }
+            :
+              <></>
+            }
+            <Button
+              variant='primary'
+              m={1}
+              onClick={() => { this.setState({openModal: true, modalMode: 'export'}); }}
+            >
+              Export
+            </Button>
+          </Flex>
+        </Box>
       </>
     );
   }
