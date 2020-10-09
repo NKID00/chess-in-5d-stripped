@@ -15,7 +15,7 @@ export default class RulesMenu extends React.Component {
   componentDidMount() {
     fetch(RulesText)
     .then((res) => { return res.text(); })
-    .then((text) => { console.log(text); this.setState({text: text}); });
+    .then((text) => { this.setState({text: text}); });
   }
   render() {
     return (

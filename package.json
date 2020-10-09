@@ -4,7 +4,7 @@
     "name": "Shaun Wu",
     "email": "alexbay218@gmail.com"
   },
-  "version": "0.1.7",
+  "version": "0.1.9",
   "description": "Open source implementation of '5D Chess With Multiverse Time Travel'.",
   "private": true,
   "main": "public/electron.js",
@@ -20,6 +20,7 @@
       "buildResources": "assets"
     },
     "win": {
+      "icon": "public/favicon.ico",
       "target": [
         {
           "target": "nsis",
@@ -30,14 +31,13 @@
       ]
     },
     "linux": {
+      "icon": "public/favicon-32x32.png",
       "target": [
         {
           "target": "AppImage",
           "arch": [
             "x64",
-            "ia32",
-            "armv7l",
-            "arm64"
+            "ia32"
           ]
         },
         {
@@ -53,9 +53,7 @@
           "target": "rpm",
           "arch": [
             "x64",
-            "ia32",
-            "armv7l",
-            "arm64"
+            "ia32"
           ]
         },
         {
@@ -126,7 +124,7 @@
     "electron-start": "concurrently \"npm start\" \"wait-on http://localhost:3000 && electron .\"",
     "build": "react-scripts build",
     "preelectron-build": "npm run build --em.main=build/electron.js",
-    "electron-build": "electron-builder install-app-deps && electron-builder -w",
+    "electron-build": "electron-builder install-app-deps && electron-builder -wl",
     "test": "react-scripts test --passWithNoTests",
     "eject": "react-scripts eject"
   },

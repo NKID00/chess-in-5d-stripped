@@ -25,7 +25,7 @@ class NetworkClientPrivate extends React.Component {
     hostName: '',
     selectedHost: 'white',
     clientId: '',
-    clientName: 'Player 2',
+    clientName: Options.get('name').username,
     clientConnection: null,
     startingDuration: 10*60,
     perActionFlatIncrement: 0,

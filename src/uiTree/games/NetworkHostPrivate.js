@@ -24,7 +24,7 @@ class NetworkHostPrivate extends React.Component {
     timed: true,
     hostId: '',
     host: 'white',
-    hostName: 'Player 1',
+    hostName: Options.get('name').username,
     hostConnection: null,
     selectedHost: 'white',
     clientId: '',
