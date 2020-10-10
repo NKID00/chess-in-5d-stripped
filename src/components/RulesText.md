@@ -30,7 +30,7 @@ Let's make the first move: `1w. 1:e2:e3` (regular chess equivalent is `e3`). To 
 
 *We'll go over the notation later*
 
-### ! Example image with move 1w. 1:e2:e3 (not submitted)
+![1w. 1:e2:e3](/assets/1w1e2e3.gif)
 
 Here, notice two boards have been created. The first original board is unchanged and the new board has the pawn moved. This represents a timeline, with boards on the left representing the past.
 
@@ -38,13 +38,15 @@ Also, notice that the two boards have two different outlines, one white and one 
 
 In order to finish white's turn, click on the 'Submit' button.
 
-### ! Example image with move 1w. 1:e2:e3 (submitted)
+![Submitting 1w. 1:e2:e3](/assets/1w1e2e3submit.gif)
+
+Notice the board outlines changing from thin to thick. Boards with a thick border indicates that a move still needs to be played.
 
 Doing the similar process above, let's play the move: `1b. 1:e7:e6` (regular chess equivalent is `e6`).
 
 After moving the pawn, press the submit button.
 
-### ! Example image with moves 1w. 1:e2:e3, 1b. 1:e7:e6
+![1b. 1:e7:e6](/assets/1b1e7e6.gif)
 
 By now, you can see more and more boards get created every move that gets played.
 
@@ -54,7 +56,7 @@ We are going to play this move: `2w. 2:Nb1<+1>1:b3` (no regular chess equivalent
 
 To play this move, select the knight on `b1` on the right most board. Then select the `b3` square on the left most board. Submit when done.
 
-### ! Example image with moves 1w. 1:e2:e3, 1b. 1:e7:e6, 2w. 2:Nb1<+1>1:b3
+![2w. 2:Nb1<+1>1:b3](/assets/2w2Nb1+1+1b3.gif)
 
 What is happening here?!?
 
@@ -65,3 +67,7 @@ This new timeline is the board below the four other boards.
 Here in this move, the knight moved two turns into the past. Because you cannot have a paradox, a new timeline is spawned. This timeline now has the new knight, where as the original timeline has the knight missing.
 
 We'll go over how the pieces can move along the Turn / Timeline dimension later, for now assume this is a legal move.
+
+Play these two moves: `2b. 1+1:e7:e6` and `3w. 2+1:e2:e3`
+
+![3w. 2+1:e2:e3](/assets/3w2+1e2e3.gif)

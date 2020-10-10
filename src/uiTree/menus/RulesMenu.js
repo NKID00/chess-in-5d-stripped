@@ -46,8 +46,14 @@ export default class RulesMenu extends React.Component {
             <Text p={2} fontWeight='bold'>Rules</Text>
             <Box mx='auto' />
           </Flex>
-          <Box width={1} px={2} py={5} sx={{overflowY: 'auto', height: '100%'}}>
-            <ReactMarkdown linkTarget='_blank' source={this.state.text} />
+          <Box id='markdown-container' width={1} px={2} py={5} sx={{overflowY: 'auto', height: '100%'}}>
+            <ReactMarkdown 
+              linkTarget='_blank'
+              source={this.state.text}
+              transformImageUri={(uri) => {
+                return uri.startsWith('http') ? uri : `http://localhost:3000${uri}`;
+              }}
+            />
           </Box>
           <Flex
             p={2}
