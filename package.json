@@ -19,6 +19,11 @@
     "directories": {
       "buildResources": "assets"
     },
+    "publish": {
+      "provider": "bintray",
+      "package": "chess-in-5d",
+      "repo": "chess-in-5d"
+    },
     "win": {
       "icon": "public/android-chrome-512x512.png",
       "target": [
