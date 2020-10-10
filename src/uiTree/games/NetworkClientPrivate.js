@@ -54,8 +54,8 @@ class NetworkClientPrivate extends React.Component {
     }
   }
   sendChat(str) {
-    if(this.state.hostConnection !== null) {
-      this.state.hostConnection.send({type: 'chat', string: str});
+    if(this.state.clientConnection !== null) {
+      this.state.clientConnection.send({type: 'chat', string: str});
       var chat = this.state.chat;
       chat.push({
         source: 'client',
@@ -99,6 +99,14 @@ class NetworkClientPrivate extends React.Component {
       if(data.type === 'sync') {
         this.setState(data.state);
       }
+      else if(data.type === 'chat') {
+        var chat = this.state.chat;
+        chat.push({
+          source: 'host',
+          string: data.string
+        });
+        this.setState({chat: chat});
+      }
       if(this.gameRef.current.chess.player === this.state.host) {
         if(data.type === 'move') {
           this.gameRef.current.move(data.move, true);
@@ -112,14 +120,12 @@ class NetworkClientPrivate extends React.Component {
         else if(data.type === 'import') {
           this.gameRef.current.import(data.import);
         }
-        else if(data.type === 'chat') {
-          var chat = this.state.chat;
-          chat.push({
-            source: 'host',
-            string: data.string
-          });
-          this.setState({chat: chat});
-        }
+      }
+    });
+    this.state.clientConnection.on('close', () => {
+      if(!this.state.ended) {
+        this.props.enqueueSnackbar('Network error occurred, host disconnected!', {variant: 'error', persist: true});
+        this.setState({clientConnection: null});
       }
     });
     this.state.clientConnection.send({type: 'name', name: this.state.clientName});
@@ -130,6 +136,12 @@ class NetworkClientPrivate extends React.Component {
         this.clientConnector = new Peer('', Options.get('peerjs'));
         this.clientConnector.on('open', (id) => {
           this.setState({clientId: id});
+        });
+        this.clientConnector.on('error', () => {
+          if(!this.state.ended) {
+            this.props.enqueueSnackbar('Network error occurred, could not connect to server!', {variant: 'error', persist: true});
+            this.clientConnector.destroy();
+          }
         });
         window.setTimeout(() => {
           if(this.state.clientId === '') {
@@ -254,6 +266,14 @@ class NetworkClientPrivate extends React.Component {
               to='/network'
               variant='secondary'
               m={1}
+              onClick={() => {
+                if(this.state.clientConnection !== null) {
+                  this.state.clientConnection.close();
+                }
+                if(this.clientConnector !== null) {
+                  this.clientConnector.destroy();
+                }
+              }}
             >
               Back
             </LinkButton>

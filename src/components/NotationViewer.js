@@ -118,6 +118,7 @@ export default class NotationViewer extends React.Component {
           onClick={() => {
             this.setState({open: !this.state.open});
           }}
+          ml={2}
           px={2}
         >
           <AiOutlineOrderedList size={20} />
@@ -129,7 +130,18 @@ export default class NotationViewer extends React.Component {
           bg='grey'
           sx={{display: this.state.open ? 'block' : 'none', maxHeight: '65vh', overflowY: 'auto'}}
         >
-          <Box sx={{maxHeight: '65vh', overflowY: 'auto'}}>
+          <Box 
+            sx={{
+              maxHeight: '65vh',
+              overflowY: 'auto',
+              WebkitTouchCallout: 'all',
+              WebkitUserSelect: 'all',
+              KhtmlUserSelect: 'all',
+              MozUserSelect: 'all',
+              MsUserSelect: 'all',
+              userSelect: 'all'
+            }}
+          >
             {this.props.notation.replace(/\r\n/g, '\n').split('\n').map((e) => {
               return (e.length > 0 ?
                 <Box

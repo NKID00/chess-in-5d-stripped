@@ -88,6 +88,14 @@ class NetworkHostPrivate extends React.Component {
       if(data.type === 'name') {
         this.setState({clientName: data.name});
       }
+      else if(data.type === 'chat') {
+        var chat = this.state.chat;
+        chat.push({
+          source: 'client',
+          string: data.string
+        });
+        this.setState({chat: chat});
+      }
       if(this.gameRef.current.chess.player !== this.state.host) {
         try {
           if(data.type === 'move') {
@@ -99,14 +107,6 @@ class NetworkHostPrivate extends React.Component {
           else if(data.type === 'submit') {
             this.gameRef.current.submit();
           }
-          else if(data.type === 'chat') {
-            var chat = this.state.chat;
-            chat.push({
-              source: 'client',
-              string: data.string
-            });
-            this.setState({chat: chat});
-          }
         }
         catch(err) {
           this.props.enqueueSnackbar('Error occurred, client performed invalid action!', {variant: 'error'});
@@ -114,6 +114,12 @@ class NetworkHostPrivate extends React.Component {
         }
       }
       this.sync();
+    });
+    this.state.hostConnection.on('close', () => {
+      if(!this.state.ended) {
+        this.props.enqueueSnackbar('Network error occurred, client disconnected!', {variant: 'error', persist: true});
+        this.setState({hostConnection: null});
+      }
     });
     this.sync();
   }
@@ -127,11 +133,12 @@ class NetworkHostPrivate extends React.Component {
         conn.on('open', () => {
           this.setState({hostConnection: conn, clientId: conn.peer});
         });
-        conn.on('close', () => {
-          if(!this.state.ended) {
-            this.props.enqueueSnackbar('Network error occurred, client disconnected!', {variant: 'error', persist: true});
-          }
-        });
+      });
+      this.hostConnector.on('error', () => {
+        if(!this.state.ended) {
+          this.props.enqueueSnackbar('Network error occurred, could not connect to server!', {variant: 'error', persist: true});
+          this.hostConnector.destroy();
+        }
       });
       window.setTimeout(() => {
         if(this.state.hostId === '') {
@@ -359,6 +366,14 @@ class NetworkHostPrivate extends React.Component {
               to='/network'
               variant='secondary'
               m={1}
+              onClick={() => {
+                if(this.state.hostConnection !== null) {
+                  this.state.hostConnection.close();
+                }
+                if(this.hostConnector !== null) {
+                  this.hostConnector.destroy();
+                }
+              }}
             >
               Back
             </LinkButton>

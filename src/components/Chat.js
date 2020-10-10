@@ -45,29 +45,27 @@ export default class Settings extends React.Component {
         <Box
           ref={this.boxRef}
           p={2}
-          width={[1/2,1/3,1/4]}
+          width={[1/2,1/3]}
           bg='white'
           color='black'
           sx={{display: this.state.open ? 'block' : 'none', maxHeight: '65vh', overflowY: 'auto'}}
         >
-          {this.props.chat.map((e) => {
+          {this.props.chat.map((e, i) => {
             return (
-              <Text p={2} width={1}>
+              <Text p={2} width={1} key={i}>
                 <b>{e.source === 'host' ? this.props.hostName : this.props.clientName}:</b> {e.string}
               </Text>
             );
           })}
-          <Flex width={1}>
+          <Flex width={1} p={2}>
             <TextField
               fullWidth
-              value={this.state.playerName}
+              value={this.state.chatStr}
+              onKeyPress={(e) => {
+                if(e.key === 'Enter') { this.sendChat(); }
+              }}
               onChange={(e) => {
-                if(e.keyCode === 13) {
-                  this.sendChat();
-                }
-                else {
-                  this.setState({chatStr: e.target.value});
-                }
+                this.setState({chatStr: e.target.value.replace(/\n/g, '')});
               }}
             />
             <Button
@@ -77,6 +75,7 @@ export default class Settings extends React.Component {
               justifyContent='center'
               alignItems='center'
               px={2}
+              ml={1}
               onClick={() => {
                 this.sendChat();
               }}
