@@ -140,20 +140,9 @@ export default class GamePlayer extends React.Component {
   }
   selectPiece(piece) {
     if(
-      this.state.selectedPiece === null &&
       this.state.player === piece.player
     ) {
       this.setState({selectedPiece: piece, hoverHighlights: []});
-    }
-    else if(
-      this.state.selectedPiece &&
-      this.state.selectedPiece.piece === piece.piece &&
-      this.state.selectedPiece.player === piece.player &&
-      this.state.selectedPiece.position.timeline === piece.position.timeline &&
-      this.state.selectedPiece.position.turn === piece.position.turn &&
-      this.state.selectedPiece.position.player === piece.position.player
-    ) {
-      this.setState({selectedPiece: null});
     }
   }
   move(moveObj, unselectPiece = false) {

@@ -22,7 +22,7 @@ This may look confusing at first, so an example game may help explain.
 
 Open another tab to follow along [https://chessin5d.net/#/local/game/human](https://chessin5d.net/#/local/game/human). Uncheck the 'Timed Game' checkbox and click on the 'Start' button.
 
-### ! Example image with starting board
+![Starting Board](/assets/start.gif)
 
 Here is the starting board of Chess in 5D. This is the exact same starting board as regular chess. In fact, when not utilizing the temporal dimensions, Chess in 5D pieces move along the Rank / File dimension in the same way as regular chess.
 
@@ -40,7 +40,7 @@ In order to finish white's turn, click on the 'Submit' button.
 
 ![Submitting 1w. 1:e2:e3](/assets/1w1e2e3submit.gif)
 
-Notice the board outlines changing from thin to thick. Boards with a thick border indicates that a move still needs to be played.
+Notice the board outlines changing from thin to thick. Boards with a thick border indicates that a move still needs to be played (this is called the "Present", which is an important term).
 
 Doing the similar process above, let's play the move: `1b. 1:e7:e6` (regular chess equivalent is `e6`).
 
@@ -70,4 +70,31 @@ We'll go over how the pieces can move along the Turn / Timeline dimension later,
 
 Play these two moves: `2b. 1+1:e7:e6` and `3w. 2+1:e2:e3`
 
+These are the chess equivalent of `e6` and `e3` on the lower board.
+
 ![3w. 2+1:e2:e3](/assets/3w2+1e2e3.gif)
+
+What is going on now?!?
+
+There are now two boards on the top and bottom with thick borders. This means you need to make a move on each board.
+
+Let's play two more pawn moves: `3b. 2+1:a7:a6` and `3b. 2:a7:a6`
+
+These are the chess equivalent of `a6` on the two boards on the right.
+
+![3b. 2:a7:a6](/assets/3b2a7a6.gif)
+
+Now let's play our first timeline traveling move: `4w. 3+1:Nb3<>+0:b5` (no regular)
+
+![4w. 3+1:Nb3<>+0:b5](/assets/4w3+1Nb3+0b5.gif)
+
+This move represents our first piece traveling across timelines.
+
+This is the crux of what makes Chess in 5D complicated.
+
+# Piece Movements
+
+## Pawn
+
+Pawns are the most complicated piece in terms of movement.
+

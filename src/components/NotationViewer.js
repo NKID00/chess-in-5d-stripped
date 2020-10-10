@@ -71,7 +71,18 @@ export default class NotationViewer extends React.Component {
                 </Box>
               </Flex>
             :
-              <Text as='pre' fontSize={[ 1, 2, 3 ]}>
+              <Text
+                as='pre'
+                fontSize={[ 1, 2, 3 ]}
+                sx={{
+                  WebkitTouchCallout: 'text',
+                  WebkitUserSelect: 'text',
+                  KhtmlUserSelect: 'text',
+                  MozUserSelect: 'text',
+                  MsUserSelect: 'text',
+                  userSelect: 'text'
+                }}
+              >
                 {this.props.notation}
               </Text>
             }
@@ -128,18 +139,18 @@ export default class NotationViewer extends React.Component {
           p={2}
           width={[1/2,1/3,1/4]}
           bg='grey'
-          sx={{display: this.state.open ? 'block' : 'none', maxHeight: '65vh', overflowY: 'auto'}}
+          sx={{display: this.state.open ? 'block' : 'none', maxHeight: '75vh', overflowY: 'auto'}}
         >
           <Box 
             sx={{
               maxHeight: '65vh',
               overflowY: 'auto',
-              WebkitTouchCallout: 'all',
-              WebkitUserSelect: 'all',
-              KhtmlUserSelect: 'all',
-              MozUserSelect: 'all',
-              MsUserSelect: 'all',
-              userSelect: 'all'
+              WebkitTouchCallout: 'text',
+              WebkitUserSelect: 'text',
+              KhtmlUserSelect: 'text',
+              MozUserSelect: 'text',
+              MsUserSelect: 'text',
+              userSelect: 'text'
             }}
           >
             {this.props.notation.replace(/\r\n/g, '\n').split('\n').map((e) => {

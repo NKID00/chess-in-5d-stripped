@@ -80,7 +80,7 @@ export default class MainMenu extends React.Component {
               bg='#7289da'
               width={1}
               my={3}
-              onClick={() => { window.open('https://discord.gg/KP5vApW'); }}
+              onClick={() => { window.open('https://discord.gg/Df44sHt'); }}
             >
               Discord
             </Button>

@@ -9,7 +9,8 @@ export default class Settings extends React.Component {
   boxRef = React.createRef();
   state = {
     open: false,
-    chatStr: ''
+    chatStr: '',
+    chatNotifyNumber: 0
   };
   sendChat() {
     if(typeof this.props.sendChat === 'function') {
@@ -23,6 +24,15 @@ export default class Settings extends React.Component {
         this.boxRef.current.style.position = 'absolute';
         this.boxRef.current.style.left = window.innerWidth - 13 - this.boxRef.current.getBoundingClientRect().width + 'px';
         this.boxRef.current.style.top = this.buttonRef.current.getBoundingClientRect().bottom + 13 + 'px';
+        this.setState({chatNotifyNumber: 0});
+      }
+    }
+    if(!Array.isArray(prevProps.chat) && Array.isArray(this.props.chat)) {
+      this.setState({chatNotifyNumber: this.props.chat.length});
+    }
+    else if(Array.isArray(prevProps.chat) && Array.isArray(this.props.chat) && prevProps.chat.length < this.props.chat.length) {
+      if(!this.state.open) {
+        this.setState({chatNotifyNumber: prevProps.chat.length - this.props.chat.length});
       }
     }
   }
