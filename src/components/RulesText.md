@@ -6,13 +6,15 @@ These rules are still a work in progress.
 
 ## Introduction
 
+The game of Chess in 5D looks to faithfully implement the original rules of Standard in the game '5D Chess with Multidimensional Time Travel' as created by Connor Peterson. These rules below attempt to explain it.
+
 When looking at the name Chess in 5D, it sounds just like any other multidimensional chess variant using an increasing amount of spatial dimensions.
 However, in this variant, there are three spatial dimensions and two temporal dimensions instead.
 
 Here are the dimensions listed:
  - Rank - The vertical axis same as regular chess
  - File - The horizontal axis same as regular chess
- - Height - Third spatial dimension that is unused within the game
+ - Height - Third spatial dimension that is not used within the game
  - Turn - The first temporal (time-based) dimension, in which pieces travel back in time
  - Timeline - The second temporal dimension in which pieces travel across separate timelines
 
@@ -90,11 +92,48 @@ Now let's play our first timeline traveling move: `4w. 3+1:Nb3<>+0:b5` (no regul
 
 This move represents our first piece traveling across timelines.
 
+Because piece can move across both time and timelines, pieces can attack into the past and across different timelines. Furthermore, since timelines are created by attempts to travel to the past, things get problematic fast.
+
 This is the crux of what makes Chess in 5D complicated.
 
 # Piece Movements
 
+Chess in 5D piece have the same Rank / File movement as regular chess pieces. Castling and En Passant in the Rank / File dimension is the same (though when looking for if a square is under attack for castling, Turn / Timeline movements attacking a square is still part of the calculation).
+
+We'll look at how pieces move / capture from the easiest piece to understand to the hardest.
+
+## Rooks
+
+The rook is the easiest piece to understand.
+
+In the regular game of chess, the rook can move as many squares along one dimension.
+
+This means that when extended to Chess in 5D, the rook can only move:
+ - Left or Right along the File dimension
+ - Up or Down along the Rank dimension
+ - Forward or Back along the Turn dimension (realistically, the rook can only move back in time)
+ - Across timelines in the Timeline dimension
+
+Capturing is the same as normal chess, if you can move to the same location as an opponent piece, you can capture that piece.
+
+## Bishops
+
+Bishops in the regular game of chess moves along two dimensions an equal amount of squares.
+
+For example, a `Ba3c5` move results in moving 2 squares to the right (from White's perspective) and 2 squares up.
+
+When extending to Chess in 5D, the bishop can still only move along two dimensions, but it can chose any of the two dimensions.
+
+This means bishops can do moves like this:
+ - Move 1 square up and 1 square to the right
+ - Move back in time 2 turns and 2 squares to the left
+ - Move across 5 timelines towards the opponent's backline and 5 turns into the past.
+
 ## Pawn
 
 Pawns are the most complicated piece in terms of movement.
+
+When trying to move across the Turn / Timeline dimension, pawns can only move forward across the opponents timelines.
+
+What does this mean? 
 

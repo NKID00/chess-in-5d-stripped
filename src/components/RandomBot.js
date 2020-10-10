@@ -1,4 +1,13 @@
 const BotFunc = (Chess, chessInstance) => {
+  /*
+    Notice: This bot/engine does not play competitively and is only here for demonstration purposes
+
+    This bot picks a random valid action and plays it.
+
+    Go to https://gitlab.com/alexbay218/chess-in-5d for more information on how to create your own bot
+
+    In the future, a better default bot will replace this one.
+  */
   var action = {
     action: chessInstance.actionNumber,
     player: chessInstance.player,
