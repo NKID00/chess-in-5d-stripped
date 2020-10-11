@@ -25,7 +25,7 @@ To use the bot api, please express the bot as a javascript function.
 
 Here is the unminified code from the default ('Random Bot')
 
-```
+``` js
 const BotFunc = (Chess, chessInstance) => {
   /*
     Notice: This bot/engine does not play competitively and is only here for demonstration purposes
