@@ -72,6 +72,10 @@ Here the function has two parameters: `Chess` and `chessInstance`
  - `Chess` - This is the Chess class found in https://gitlab.com/alexbay218/5d-chess-js
  - `chessInstance` - This is the instance of the Chess class representing the current game
 
+To be an actual bot, you then need to return an `Action` object as described here https://gitlab.com/alexbay218/5d-chess-js#schemas
+
+The debug mode will run the function in the main thread, otherwise it will run it as web worker to prevent hanging.
+
 ## FAQ
 
 ### Is it any good?
