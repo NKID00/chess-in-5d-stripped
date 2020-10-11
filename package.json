@@ -82,6 +82,7 @@
     "emotion-theming": "^10.0.27",
     "filepond": "^4.20.1",
     "fontsource-roboto": "^3.0.3",
+    "gpu.js": "^2.10.4",
     "js-file-download": "^0.4.12",
     "notistack": "^1.0.0",
     "paralleljs": "^1.1.0",
