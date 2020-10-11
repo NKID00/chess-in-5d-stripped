@@ -6,12 +6,18 @@ Open source implementation of '5D Chess With Multiverse Time Travel'.
 
 Chess In 5D aims to reimplement the rules as found in the original.
 This project looks to implement additional features also not found in the game:
- - Standarized notation to record games in a text format
- - Save and analyze previous games
- - Add both P2P and Server based multiplayer options
- - Timed games
- - Bot API
- - And possibly more!
+
+### Standarized notation to record games in a text format
+
+![Import Feature](/public/assets/import_feature.gif)
+
+### Save and analyze previous games
+
+![Analyze Feature](/public/assets/analyze_feature.gif)
+
+### Bot API
+
+![Bot Feature](/public/assets/bot_feature.gif)
 
 ## FAQ
 
