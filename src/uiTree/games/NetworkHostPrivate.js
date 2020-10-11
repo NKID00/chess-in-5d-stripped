@@ -36,7 +36,8 @@ class NetworkHostPrivate extends React.Component {
     whiteDurationLeft: 0,
     blackDurationLeft: 0,
     winner: '',
-    chat: []
+    chat: [],
+    heartbeat: 0
   };
   lastUpdate = Date.now();
   update() {
@@ -74,6 +75,8 @@ class NetworkHostPrivate extends React.Component {
         ended: this.state.ended,
         timed: this.state.timed,
         host: this.state.host,
+        selectedHost: this.state.selectedHost,
+        clientName: this.state.clientName,
         hostName: this.state.hostName,
         startingDuration: this.state.startingDuration,
         perActionFlatIncrement: this.state.perActionFlatIncrement,
@@ -95,6 +98,9 @@ class NetworkHostPrivate extends React.Component {
           string: data.string
         });
         this.setState({chat: chat});
+      }
+      else if(data.type === 'heartbeat') {
+        this.setState({heartbeat: Date.now()});
       }
       if(this.gameRef.current.chess.player !== this.state.host) {
         try {
@@ -122,6 +128,18 @@ class NetworkHostPrivate extends React.Component {
       }
     });
     this.sync();
+    window.setInterval(() => {
+      if(Date.now() - this.state.heartbeat > 3000 && !this.state.ended && this.state.hostConnection !== null) {
+        this.props.enqueueSnackbar('Network error occurred, client disconnected!', {variant: 'error', persist: true});
+        this.hostConnector.destroy();
+        this.setState({hostConnection: null});
+      }
+    }, 3000);
+    window.setInterval(() => {
+      if(this.state.hostConnection !== null) {
+        this.state.hostConnection.send({type: 'heartbeat'});
+      }
+    }, 1000);
   }
   initConnector() {
     if(this.state.hostId === '') {
@@ -190,6 +208,13 @@ class NetworkHostPrivate extends React.Component {
     if(prevState.hostConnection === null && this.state.hostConnection !== null) {
       this.initListener();
     }
+    if(prevState.timed !== this.state.timed ||
+      prevState.startingDuration !== this.state.startingDuration ||
+      prevState.perActionFlatIncrement !== this.state.perActionFlatIncrement ||
+      prevState.perActionTimelineIncrement !== this.state.perActionTimelineIncrement
+    ) {
+      this.sync();
+    }
   }
   render() {
     return (
@@ -235,16 +260,18 @@ class NetworkHostPrivate extends React.Component {
                     {this.state.hostId}
                   </Text>
                 </Flex>
-                <Text p={2} fontWeight='bold'>Link</Text>
-                <Text p={2}>
-                  <a
-                    target='_blank'
-                    href={window.location.origin + '/#/network/game/client?hostid=' + this.state.hostId}
-                    rel='noopener noreferrer'
-                  >
-                    {window.location.origin + '/#/network/game/client?hostid=' + this.state.hostId}
-                  </a>
-                </Text>
+                <Flex>
+                  <Text p={2} fontWeight='bold'>Link: </Text>
+                  <Text p={2}>
+                    <a
+                      target='_blank'
+                      href={window.location.origin + '/#/network/game/client?hostid=' + this.state.hostId}
+                      rel='noopener noreferrer'
+                    >
+                      {window.location.origin + '/#/network/game/client?hostid=' + this.state.hostId}
+                    </a>
+                  </Text>
+                </Flex>
               </>
             }
             <Text p={2} fontWeight='bold'>Player Name</Text>
@@ -254,13 +281,10 @@ class NetworkHostPrivate extends React.Component {
                 value={this.state.hostName}
                 onChange={(e) => {
                   this.setState({ hostName: e.target.value });
+                  Options.set('name', {username: e.target.value});
                 }}
               />
             </Box>
-            <Flex>
-              <Text p={2} fontWeight='bold'>Timed Game</Text>
-              <Checkbox color='primary' checked={this.state.timed} onChange={(e) => { this.setState({timed: e.target.checked}); }} />
-            </Flex>
             <Flex>
               <Text p={2} fontWeight='bold'>Host Side</Text>
               <Select
@@ -271,6 +295,10 @@ class NetworkHostPrivate extends React.Component {
                 <MenuItem value='black'>Black</MenuItem>
                 <MenuItem value='random'>Random</MenuItem>
               </Select>
+            </Flex>
+            <Flex>
+              <Text p={2} fontWeight='bold'>Timed Game</Text>
+              <Checkbox color='primary' checked={this.state.timed} onChange={(e) => { this.setState({timed: e.target.checked}); }} />
             </Flex>
             {this.state.timed ?
               <>
@@ -404,6 +432,9 @@ class NetworkHostPrivate extends React.Component {
           canImport
           canControlWhite={this.state.host === 'white' && !this.state.ended}
           canControlBlack={this.state.host !== 'white' && !this.state.ended}
+          whiteName={this.state.host === 'white' ? this.state.hostName : this.state.clientName}
+          blackName={this.state.host !== 'white' ? this.state.hostName : this.state.clientName}
+          flip={this.state.host !== 'white'}
           winner={this.state.winner}
           onImport={(input) => {
             this.state.hostConnection.send({type: 'import', input: input});

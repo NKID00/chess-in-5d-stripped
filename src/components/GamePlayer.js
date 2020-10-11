@@ -25,7 +25,7 @@ export default class GamePlayer extends React.Component {
       boardShow: 'both',
       allowRecenter: true,
       moveShow: 'timeline',
-      flip: false
+      flip: this.props.flip ? this.props.flip : false
     }
   };
   moveArrowCalc() {
@@ -208,7 +208,7 @@ export default class GamePlayer extends React.Component {
             action={this.state.action}
             onImport={(input) => { this.import(input); }}
           />
-          <Settings onChange={(e) => { this.setState({settings: e}); }}/>
+          <Settings value={this.state.settings} onChange={(e) => { this.setState({settings: e}); }}/>
         </Flex>
         <Board
           ref={this.boardRef}
@@ -265,7 +265,12 @@ export default class GamePlayer extends React.Component {
               bg={this.state.player === 'white'? 'white' : 'black'}
               mr={2}
             >
-              {this.state.player.substr(0,1).toUpperCase() + this.state.player.substr(1) + '\'s Turn'}
+              {this.state.player === 'white' && this.props.whiteName ?
+                this.props.whiteName + '\'s Turn'
+              : this.state.player === 'black' && this.props.blackName ?
+                this.props.blackName + '\'s Turn'
+              :
+                this.state.player.substr(0,1).toUpperCase() + this.state.player.substr(1) + '\'s Turn'}
             </Button>
           :
             <></>
@@ -278,7 +283,12 @@ export default class GamePlayer extends React.Component {
               bg={this.props.winner !== 'white'? 'black' : 'white'}
               mr={2}
             >
-              {this.props.winner !== 'white' ? 'Black Wins' : 'White Wins'}
+              {this.state.player === 'white' && this.props.whiteName ?
+                this.props.whiteName + ' Wins'
+              : this.state.player === 'black' && this.props.blackName ?
+                this.props.blackName + ' Wins'
+              :
+                this.state.player.substr(0,1).toUpperCase() + this.state.player.substr(1) + ' Wins'}
             </Button>
           : this.state.checkmate ?
             <Button
