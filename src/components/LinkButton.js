@@ -19,7 +19,12 @@ export default class SectionLink extends React.Component {
         }
         <Button
           {...this.props}
-          onClick={() => { this.setState({redirect: true}) }}
+          onClick={(e) => {
+            if(typeof this.props.onClick === 'function') {
+              this.props.onClick(e);
+            }
+            this.setState({redirect: true});
+          }}
         >
           {this.props.children}
         </Button>

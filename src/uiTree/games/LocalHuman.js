@@ -194,8 +194,8 @@ export default class LocalHuman extends React.Component {
         </Modal>
         <GamePlayer
           ref={this.gameRef}
-          canControlWhite={!this.state.ended}
-          canControlBlack={!this.state.ended}
+          canControlWhite
+          canControlBlack
           winner={this.state.winner}
           onEnd={(win) => {
             this.setState({ start: false, ended: true });

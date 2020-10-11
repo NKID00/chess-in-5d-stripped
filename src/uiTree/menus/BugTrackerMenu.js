@@ -1,19 +1,21 @@
 import React from 'react';
 
 import Modal from 'react-modal';
-import { Box, Flex, Text } from 'rebass';
+import { Box, Flex, Text, Button } from 'rebass';
 import LinkButton from 'components/LinkButton';
 import LogoIcon from 'assets/logo.svg';
+import copy from 'copy-to-clipboard';
 
 import ReactMarkdown from 'react-markdown';
-import RulesText from 'components/RulesText.md';
+import BugTrackerText from 'components/BugTrackerText.md';
 
 export default class RulesMenu extends React.Component {
   state = {
+    debug: navigator.userAgent,
     text: '### Loading...'
   };
   componentDidMount() {
-    fetch(RulesText)
+    fetch(BugTrackerText)
     .then((res) => { return res.text(); })
     .then((text) => { this.setState({text: text}); });
   }
@@ -43,10 +45,23 @@ export default class RulesMenu extends React.Component {
             width={1}
             sx={{position: 'absolute', top: 0}}
           >
-            <Text p={2} fontWeight='bold'>Rules</Text>
+            <Text p={2} fontWeight='bold'>Bug Reporter</Text>
             <Box mx='auto' />
           </Flex>
           <Box id='markdown-container' width={1} px={2} py={5} sx={{overflowY: 'auto', height: '100%'}}>
+            <Text
+              p={2}
+              sx={{
+                WebkitTouchCallout: 'all',
+                WebkitUserSelect: 'all',
+                KhtmlUserSelect: 'all',
+                MozUserSelect: 'all',
+                MsUserSelect: 'all',
+                userSelect: 'all'
+              }}
+            >
+              {this.state.debug}
+            </Text>
             <ReactMarkdown 
               linkTarget='_blank'
               source={this.state.text}
@@ -70,6 +85,13 @@ export default class RulesMenu extends React.Component {
             >
               Back
             </LinkButton>
+            <Button m={1} variant='primary'
+              onClick={() => {
+                copy(this.state.debug);
+              }}
+            >
+              Copy to clipboard
+            </Button>
           </Flex>
         </Modal>
       </>

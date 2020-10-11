@@ -29,6 +29,20 @@ build_react_app:
     paths:
       - build
 
+build_electron_app:
+  image: electronuserland/builder:wine
+  stage: build
+  needs:
+    - job: install_dependencies
+      artifacts: true
+  script:
+    - CI=false npm run electron-build
+  artifacts:
+    paths:
+      - dist
+  only:
+    - release-desktop
+
 test_app:
   stage: test
   script:
@@ -49,3 +63,4 @@ pages:
       - public
   only:
     - release
+    - release-desktop

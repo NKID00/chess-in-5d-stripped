@@ -18,11 +18,11 @@ const get = (str) => {
       whiteSquare: 0xaaaaaa,
       blackSquare: 0x555555,
       selectedPiece: 0x0000ff,
-      moveArrow: 0x00ff00,
+      moveArrow: 0x00aa00,
       moveHighlight: 0x00ff00,
-      captureArrow: 0xff0000,
+      captureArrow: 0xaa0000,
       captureHighlight: 0xff0000,
-      checkArrow: 0xff0000,
+      checkArrow: 0xaa0000,
       checkSourceHighlight: 0xff0000,
       checkDestinationHighlight: 0xff0000,
       whiteBoardOutline: 0xdddddd,
@@ -31,6 +31,11 @@ const get = (str) => {
       inactiveBoardOutline: 0x777777,
       whiteArrowOutline: 0xffffff,
       blackArrowOutline: 0x000000
+    };
+  }
+  else if(str === 'name') {
+    defaultObj = {
+      username: 'Player ' + Math.round(Math.random() * 9999).toFixed()
     };
   }
   if(res) {

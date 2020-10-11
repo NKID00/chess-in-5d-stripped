@@ -19,10 +19,10 @@ export default class Turn extends React.Component {
           this.props.palette.whiteBoardOutline
         :
           this.props.palette.blackBoardOutline,
-      1, 1);
+      1, (this.props.flip ? 0 : 1));
     }
     else {
-      graphics.lineStyle(10, this.props.palette.inactiveBoardOutline, 1, 1);
+      graphics.lineStyle(10, this.props.palette.inactiveBoardOutline, 1, (this.props.flip ? 0 : 1));
     }
     if(
       Array.isArray(this.props.checksD) &&
@@ -33,21 +33,21 @@ export default class Turn extends React.Component {
         );
       }).length > 0
     ) {
-      graphics.lineStyle(this.props.present ? 50 : 30, this.props.palette.checkBoardOutline, 1, 1);
+      graphics.lineStyle(this.props.present ? 50 : 30, this.props.palette.checkBoardOutline, 1, (this.props.flip ? 0 : 1));
     }
-    graphics.drawRect(x, y, 800, 800);
+    graphics.drawRect(x, y, 800, 800 * (this.props.flip ? -1 : 1));
     graphics.endFill();
     graphics.lineStyle(0);
     for(var i = 0;i < 8;i++) {
       for(var j = 0;j < 8;j++) {
         if((i + j) % 2 !== 0) {
           graphics.beginFill(this.props.palette.whiteSquare);
-          graphics.drawRect(x + (i * 100), y + (j * 100), 100, 100);
+          graphics.drawRect(x + (i * 100), y + (j * 100) * (this.props.flip ? -1 : 1), 100, 100 * (this.props.flip ? -1 : 1));
           graphics.endFill();
         }
         else {
           graphics.beginFill(this.props.palette.blackSquare);
-          graphics.drawRect(x + (i * 100), y + (j * 100), 100, 100);
+          graphics.drawRect(x + (i * 100), y + (j * 100) * (this.props.flip ? -1 : 1), 100, 100 * (this.props.flip ? -1 : 1));
           graphics.endFill();
         }
       }
@@ -78,7 +78,7 @@ export default class Turn extends React.Component {
                 app={this.props.app}
                 palette={this.props.palette}
                 x={x + (e.position.file - 1) * 100}
-                y={y + (8 - e.position.rank) * 100}
+                y={y + ((8 - e.position.rank) * 100) * (this.props.flip ? -1 : 1) + (this.props.flip ? -100 : 0)}
                 pieceObj={e}
                 key={e.piece + e.position.coordinate}
                 onPieceClick={(piece) => {
@@ -120,7 +120,7 @@ export default class Turn extends React.Component {
                 app={this.props.app}
                 palette={this.props.palette}
                 x={x + (e.start.file - 1) * 100}
-                y={y + (8 - e.start.rank) * 100}
+                y={y + ((8 - e.start.rank) * 100) * (this.props.flip ? -1 : 1) + (this.props.flip ? -100 : 0)}
                 moveObj={e}
                 key={e.start.coordinate}
                 isCheckSource
@@ -144,7 +144,7 @@ export default class Turn extends React.Component {
                 app={this.props.app}
                 palette={this.props.palette}
                 x={x + (e.end.file - 1) * 100}
-                y={y + (8 - e.end.rank) * 100}
+                y={y + ((8 - e.end.rank) * 100) * (this.props.flip ? -1 : 1) + (this.props.flip ? -100 : 0)}
                 moveObj={e}
                 key={e.end.coordinate + 'cd'}
                 isCheckDestination
@@ -168,7 +168,7 @@ export default class Turn extends React.Component {
                 app={this.props.app}
                 palette={this.props.palette}
                 x={x + (e.end.file - 1) * 100}
-                y={y + (8 - e.end.rank) * 100}
+                y={y + ((8 - e.end.rank) * 100) * (this.props.flip ? -1 : 1) + (this.props.flip ? -100 : 0)}
                 moveObj={e}
                 key={e.end.coordinate + 'cs'}
                 onHighlightClick={(moveObj) => {
@@ -206,7 +206,7 @@ export default class Turn extends React.Component {
                 app={this.props.app}
                 palette={this.props.palette}
                 x={x + (e.end.file - 1) * 100}
-                y={y + (8 - e.end.rank) * 100}
+                y={y + ((8 - e.end.rank) * 100) * (this.props.flip ? -1 : 1) + (this.props.flip ? -100 : 0)}
                 moveObj={e}
                 key={e.end.coordinate + 'h'}
                 isHover

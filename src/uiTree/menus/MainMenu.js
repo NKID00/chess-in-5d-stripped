@@ -74,13 +74,21 @@ export default class MainMenu extends React.Component {
             >
               Options
             </LinkButton>
+            <LinkButton
+              to='/bugs'
+              variant='secondary'
+              width={1}
+              my={3}
+            >
+              Report Bugs
+            </LinkButton>
             <Button
               variant='primary'
               color='white'
               bg='#7289da'
               width={1}
               my={3}
-              onClick={() => { window.open('https://discord.gg/KP5vApW'); }}
+              onClick={() => { window.open('https://discord.gg/Df44sHt'); }}
             >
               Discord
             </Button>

@@ -24,37 +24,45 @@ export default class GamePlayer extends React.Component {
     settings: {
       boardShow: 'both',
       allowRecenter: true,
-      moveShow: 'all'
+      moveShow: 'timeline',
+      flip: false
     }
   };
-  realActionCalc() {
+  moveArrowCalc() {
     var actions = deepcopy(this.chess.actionHistory);
     var chess = new Chess();
-    var realActions = [];
+    var res = [];
+    var newMoveArrow = (currMove) => {
+      var prevTimelines = deepcopy(chess.board.timelines);
+      chess.move(currMove);
+      var newTimelines = deepcopy(chess.board.timelines);
+      if(prevTimelines.length !== newTimelines.length) {
+        var newTimeline = newTimelines.filter((e) => { // eslint-disable-line no-loop-func
+          return !prevTimelines.map((e2) => { return e2.timeline}).includes(e.timeline);
+        })[0].timeline;
+        var newMove = deepcopy(currMove);
+        newMove.start = deepcopy(newMove.end);
+        newMove.end.timeline = newTimeline;
+        newMove.isNew = true;
+        res.push(newMove);
+      }
+    };
     for(var i = 0;i < actions.length;i++) {
       var currAction = actions[i];
-      var newAction = {
-        action: currAction.action,
-        player: currAction.player,
-        moves: []
-      };
       for(var j = 0;j < currAction.moves.length;j++) {
         var currMove = currAction.moves[j];
-        var prevTimelines = deepcopy(chess.board.timelines);
-        chess.move(currMove);
-        var newTimelines = deepcopy(chess.board.timelines);
-        if(prevTimelines.length !== newTimelines.length) {
-          var newTimeline = newTimelines.filter((e) => { // eslint-disable-line no-loop-func
-            return !prevTimelines.map((e2) => { return e2.timeline}).includes(e.timeline);
-          })[0].timeline;
-          currMove.end.timeline = newTimeline;
-        }
-        newAction.moves.push(currMove);
+        newMoveArrow(currMove);
+        res.push(currMove);
       }
       chess.submit();
-      realActions.push(newAction);
     }
-    return realActions;
+    var moveBuffer = deepcopy(this.chess.moveBuffer);
+    for(var i = 0;i < moveBuffer.length;i++) { // eslint-disable-line no-redeclare
+      var currMove = moveBuffer[i]; // eslint-disable-line no-redeclare
+      newMoveArrow(currMove);
+      res.push(currMove);
+    }
+    return res;
   }
   boardSync() {
     var win = {
@@ -73,8 +81,18 @@ export default class GamePlayer extends React.Component {
       action: this.chess.actionNumber,
       checks: this.chess.checks(),
       triggerDate: Date.now(),
-      nextMoves: this.chess.moves('object', false, false, true),
-      realActions: this.realActionCalc()
+      nextMoves: this.chess.moves('object', false, false, true).filter((e) => {
+        if(e.promotion !== '' && e.promotion !== null) {
+          if(e.promotion === 'K') { return true; }
+          if(e.promotion === 'R' && !(
+            (e.player === 'white' && e.end.rank === 8 && e.start.rank === 7) ||
+            (e.player === 'black' && e.end.rank === 2 && e.start.rank === 1)
+          )) { return true; }
+          return e.promotion === 'Q';
+        }
+        return true;
+      }),
+      moveArrows: this.moveArrowCalc()
     });
     if(typeof this.props.onEnd === 'function') {
       if(win.checkmate || win.stalemate) {
@@ -101,7 +119,10 @@ export default class GamePlayer extends React.Component {
         });
       }
     }
-    if(prevState.triggerDate !== this.state.triggerDate) {
+    if(
+      prevState.triggerDate !== this.state.triggerDate ||
+      prevState.settings.flip !== this.state.settings.flip
+    ) {
       if(this.boardRef) {
         this.boardRef.current.recenter();
       }
@@ -129,20 +150,9 @@ export default class GamePlayer extends React.Component {
   }
   selectPiece(piece) {
     if(
-      this.state.selectedPiece === null &&
       this.state.player === piece.player
     ) {
       this.setState({selectedPiece: piece, hoverHighlights: []});
-    }
-    else if(
-      this.state.selectedPiece &&
-      this.state.selectedPiece.piece === piece.piece &&
-      this.state.selectedPiece.player === piece.player &&
-      this.state.selectedPiece.position.timeline === piece.position.timeline &&
-      this.state.selectedPiece.position.turn === piece.position.turn &&
-      this.state.selectedPiece.position.player === piece.position.player
-    ) {
-      this.setState({selectedPiece: null});
     }
   }
   move(moveObj, unselectPiece = false) {
@@ -203,7 +213,7 @@ export default class GamePlayer extends React.Component {
         <Board
           ref={this.boardRef}
           boardObj={this.state.board}
-          realActions={this.state.realActions}
+          moveArrows={this.state.moveArrows}
           onPieceClick={(piece) => {
             if(piece) {
               if((this.props.canControlWhite && this.state.player === 'white') || (this.props.canControlBlack && this.state.player === 'black')) { this.selectPiece(piece); }
@@ -234,6 +244,7 @@ export default class GamePlayer extends React.Component {
           onlyWhite={this.state.settings.boardShow === 'white'}
           allowRecenter={this.state.settings.allowRecenter}
           moveShow={this.state.settings.moveShow}
+          flip={this.state.settings.flip}
         />
         <Flex
           p={2}

@@ -8,6 +8,7 @@ import LocalMenu from 'uiTree/menus/LocalMenu';
 import NetworkMenu from 'uiTree/menus/NetworkMenu';
 import RulesMenu from 'uiTree/menus/RulesMenu';
 import OptionsMenu from 'uiTree/menus/OptionsMenu';
+import BugTrackerMenu from 'uiTree/menus/BugTrackerMenu';
 
 class Menu extends React.Component {
   state = {
@@ -39,13 +40,17 @@ class Menu extends React.Component {
           <Route exact path='/options'>
             <OptionsMenu />
           </Route>
+          <Route exact path='/bugs'>
+            <BugTrackerMenu />
+          </Route>
         </Switch>
         <Route exact path={[
           '/',
           '/local',
           '/network',
           '/rules',
-          '/options'
+          '/options',
+          '/bugs'
         ]}>
           {!this.state.noBlur ?
             <MenuBackdrop />

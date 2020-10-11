@@ -16,14 +16,16 @@ export default class OptionsMenu extends React.Component {
     peerjs: Options.get('peerjs'),
     peerjsTmp: JSON.stringify(Options.get('peerjs'), null, 2),
     palette: Options.get('palette'),
-    paletteTmp: JSON.stringify(Options.get('palette'), null, 2)
+    paletteTmp: JSON.stringify(Options.get('palette'), null, 2),
+    playerName: Options.get('name').username
   };
   sync() {
     this.setState({
       peerjs: Options.get('peerjs'),
       peerjsTmp: JSON.stringify(Options.get('peerjs'), null, 2),
       palette: Options.get('palette'),
-      paletteTmp: JSON.stringify(Options.get('palette'), null, 2)
+      paletteTmp: JSON.stringify(Options.get('palette'), null, 2),
+      playerName: Options.get('name').username
     });
   }
   render() {
@@ -56,13 +58,27 @@ export default class OptionsMenu extends React.Component {
             <Box mx='auto' />
           </Flex>
           <Box width={1} px={3} py={5} sx={{overflowY: 'auto', height: '100%'}}>
+            <Text py={2} fontWeight='bold'>Player Name</Text>
+            <TextField
+              fullWidth
+              value={this.state.playerName}
+              onChange={(e) => {
+                this.setState({playerName: e.target.value});
+                Options.set('name', {username: e.target.value});
+              }}
+            />
             <Text py={2} fontWeight='bold'>PeerJS Server Config</Text>
             <TextField
               fullWidth
               multiline
               rows={5}
               defaultValue={this.state.peerjsTmp}
-              error={!deepcompare(this.state.peerjs, JSON.parse(this.state.peerjsTmp))}
+              error={!deepcompare(this.state.peerjs, (() => {
+                try {
+                  return JSON.parse(this.state.peerjsTmp);
+                }
+                catch(err) { return {}; }
+              })())}
               onChange={(e) => {
                 this.setState({peerjsTmp: e.target.value});
                 try {
@@ -108,7 +124,12 @@ export default class OptionsMenu extends React.Component {
               multiline
               rows={8+6}
               defaultValue={this.state.paletteTmp}
-              error={!deepcompare(this.state.palette, JSON.parse(this.state.paletteTmp))}
+              error={!deepcompare(this.state.palette, (() => {
+                try {
+                  return JSON.parse(this.state.paletteTmp);
+                }
+                catch(err) { return {}; }
+              })())}
               onChange={(e) => {
                 this.setState({paletteTmp: e.target.value});
                 try {
