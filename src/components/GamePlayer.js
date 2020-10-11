@@ -81,7 +81,17 @@ export default class GamePlayer extends React.Component {
       action: this.chess.actionNumber,
       checks: this.chess.checks(),
       triggerDate: Date.now(),
-      nextMoves: this.chess.moves('object', false, false, true),
+      nextMoves: this.chess.moves('object', false, false, true).filter((e) => {
+        if(e.promotion !== '' && e.promotion !== null) {
+          if(e.promotion === 'K') { return true; }
+          if(e.promotion === 'R' && !(
+            (e.player === 'white' && e.end.rank === 8 && e.start.rank === 7) ||
+            (e.player === 'black' && e.end.rank === 2 && e.start.rank === 1)
+          )) { return true; }
+          return e.promotion === 'Q';
+        }
+        return true;
+      }),
       moveArrows: this.moveArrowCalc()
     });
     if(typeof this.props.onEnd === 'function') {

@@ -74,6 +74,14 @@ export default class MainMenu extends React.Component {
             >
               Options
             </LinkButton>
+            <LinkButton
+              to='/bugs'
+              variant='secondary'
+              width={1}
+              my={3}
+            >
+              Report Bugs
+            </LinkButton>
             <Button
               variant='primary'
               color='white'

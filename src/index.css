@@ -24,4 +24,5 @@ body > * {
 
 #markdown-container img {
   width: 100%;
+  max-width: 900px;
 }
