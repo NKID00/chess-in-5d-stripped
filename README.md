@@ -9,21 +9,21 @@ This project looks to implement additional features also not found in the game:
 
 ### Standarized notation to record games in a text format
 
-![Import Feature](/public/assets/import_feature.gif)
+![Import Feature](/src/assets/rules/import_feature.gif)
 
 ### Save and analyze previous games
 
-![Analyze Feature](/public/assets/analyze_feature.gif)
+![Analyze Feature](/src/assets/rules/analyze_feature.gif)
 
 ### Bot API
 
-![Bot Feature](/public/assets/bot_feature.gif)
+![Bot Feature](/src/assets/rules/bot_feature.gif)
 
 ## Bot API usage
 
 To use the bot api, please express the bot as a javascript function.
 
-Here is the unminified code from the default ('Random Bot')
+Here is the code from the default 'Random Bot'
 
 ``` js
 const BotFunc = (Chess, chessInstance) => {
@@ -32,7 +32,7 @@ const BotFunc = (Chess, chessInstance) => {
 
     This bot picks a random valid action and plays it.
 
-    Go to https://gitlab.com/alexbay218/chess-in-5d for more information on how to create your own bot
+    Go to https://gitlab.com/alexbay218/chess-in-5d#bot-api-usage for more information on how to create your own bot
 
     In the future, a better default bot will replace this one.
   */
@@ -68,13 +68,14 @@ const BotFunc = (Chess, chessInstance) => {
 }
 ```
 
-Here the function has two parameters: `Chess` and `chessInstance`
+Here the function has three parameters: `Chess`, `chessInstance`, and `GPU`
  - `Chess` - This is the Chess class found in https://gitlab.com/alexbay218/5d-chess-js
  - `chessInstance` - This is the instance of the Chess class representing the current game
+ - `GPU` - This is the GPU library from https://gpu.rocks for GPGPU purposes. Only works in Debug / GPU mode
 
 To be an actual bot, you then need to return an `Action` object as described here https://gitlab.com/alexbay218/5d-chess-js#schemas
 
-The debug mode will run the function in the main thread, otherwise it will run it as web worker to prevent hanging.
+The Debug / GPU mode will run the function in the main thread, otherwise it will run it as web worker to prevent hanging.
 
 ## FAQ
 

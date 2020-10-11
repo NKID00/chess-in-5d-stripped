@@ -24,7 +24,7 @@ This may look confusing at first, so an example game may help explain.
 
 Open another tab to follow along [https://chessin5d.net/#/local/game/human](https://chessin5d.net/#/local/game/human). Uncheck the 'Timed Game' checkbox and click on the 'Start' button.
 
-![Starting Board](/assets/start.gif)
+![Starting Board](start.gif)
 
 Here is the starting board of Chess in 5D. This is the exact same starting board as regular chess. In fact, when not utilizing the temporal dimensions, Chess in 5D pieces move along the Rank / File dimension in the same way as regular chess.
 
@@ -32,7 +32,7 @@ Let's make the first move: `1w. 1:e2:e3` (regular chess equivalent is `e3`). To 
 
 *We'll go over the notation later*
 
-![1w. 1:e2:e3](/assets/1w1e2e3.gif)
+![1w. 1:e2:e3](1w1e2e3.gif)
 
 Here, notice two boards have been created. The first original board is unchanged and the new board has the pawn moved. This represents a timeline, with boards on the left representing the past.
 
@@ -40,7 +40,7 @@ Also, notice that the two boards have two different outlines, one white and one 
 
 In order to finish white's turn, click on the 'Submit' button.
 
-![Submitting 1w. 1:e2:e3](/assets/1w1e2e3submit.gif)
+![Submitting 1w. 1:e2:e3](1w1e2e3submit.gif)
 
 Notice the board outlines changing from thin to thick. Boards with a thick border indicates that a move still needs to be played (this is called the "Present", which is an important term).
 
@@ -48,7 +48,7 @@ Doing the similar process above, let's play the move: `1b. 1:e7:e6` (regular che
 
 After moving the pawn, press the submit button.
 
-![1b. 1:e7:e6](/assets/1b1e7e6.gif)
+![1b. 1:e7:e6](1b1e7e6.gif)
 
 By now, you can see more and more boards get created every move that gets played.
 
@@ -58,7 +58,7 @@ We are going to play this move: `2w. 2:Nb1<+1>1:b3` (no regular chess equivalent
 
 To play this move, select the knight on `b1` on the right most board. Then select the `b3` square on the left most board. Submit when done.
 
-![2w. 2:Nb1<+1>1:b3](/assets/2w2Nb1+1+1b3.gif)
+![2w. 2:Nb1<+1>1:b3](2w2Nb1+1+1b3.gif)
 
 What is happening here?!?
 
@@ -74,7 +74,7 @@ Play these two moves: `2b. 1+1:e7:e6` and `3w. 2+1:e2:e3`
 
 These are the chess equivalent of `e6` and `e3` on the lower board.
 
-![3w. 2+1:e2:e3](/assets/3w2+1e2e3.gif)
+![3w. 2+1:e2:e3](3w2+1e2e3.gif)
 
 What is going on now?!?
 
@@ -84,11 +84,11 @@ Let's play two more pawn moves: `3b. 2+1:a7:a6` and `3b. 2:a7:a6`
 
 These are the chess equivalent of `a6` on the two boards on the right.
 
-![3b. 2:a7:a6](/assets/3b2a7a6.gif)
+![3b. 2:a7:a6](3b2a7a6.gif)
 
 Now let's play our first timeline traveling move: `4w. 3+1:Nb3<>+0:b5` (no regular)
 
-![4w. 3+1:Nb3<>+0:b5](/assets/4w3+1Nb3+0b5.gif)
+![4w. 3+1:Nb3<>+0:b5](4w3+1Nb3+0b5.gif)
 
 This move represents our first piece traveling across timelines.
 
@@ -119,7 +119,7 @@ We'll look at how pieces move / capture from the easiest piece to understand to 
 
 ### Rooks
 
-![Rook Move](/assets/rook_move.png)
+![Rook Move](rook_move.png)
 
 The rook is the easiest piece to understand.
 
@@ -135,7 +135,7 @@ Capturing is the same as normal chess, if you can move to the same location as a
 
 ### Bishops
 
-![Bishop Move](/assets/bishop_move.png)
+![Bishop Move](bishop_move.png)
 
 Bishops in the regular game of chess moves along two dimensions an equal amount of squares.
 
@@ -150,7 +150,7 @@ This means bishops can do moves like this:
 
 ### Queens
 
-![Queen Move](/assets/queen_move.png)
+![Queen Move](queen_move.png)
 
 Queens in the regular game of chess can move up to two dimensions and an equal amount of squares along the selected dimensions.
 
@@ -163,7 +163,7 @@ This means queens can do moves like this:
 
 ### Kings
 
-![King Move](/assets/king_move.png)
+![King Move](king_move.png)
 
 Follows the same movement directions as the queen, but can only do 1 square instead.
 
@@ -174,7 +174,7 @@ This means kings can do moves like this:
 
 ### Knights
 
-![Knight Move](/assets/knight_move.png)
+![Knight Move](knight_move.png)
 
 Knights work in regular chess by moving 2 squares in one dimension and 1 in another.
 
@@ -187,9 +187,9 @@ This means knights can do moves like this:
 
 ### Pawn
 
-![Pawn Move](/assets/pawn_move.png)
+![Pawn Move](pawn_move.png)
 
-![Pawn Capture](/assets/pawn_capture.png)
+![Pawn Capture](pawn_capture.png)
 
 Pawns are the most complicated piece in terms of movement.
 
@@ -199,19 +199,19 @@ When trying to capture across the Turn / Timeline dimension, pawns can only move
 
 ### En Passant
 
-![Pawn En Passang](/assets/pawn_en_passant.png)
+![Pawn En Passang](pawn_en_passant.png)
 
 Currently En Passant is only possible via the regular chess move. Extending this into Chess in 5D is unclear at this time.
 
 ### Castling
 
-![Castling](/assets/castling.png)
+![Castling](castling.png)
 
 Currently Castling is only possible via the regular chess move. Extending this into Chess in 5D is unclear at this time.
 
 ### Promotion
 
-![Castling](/assets/pawn_promote.gif)
+![Promotion](pawn_promote.gif)
 
 Currently Promotion is only possible via the regular chess move. Extending this into Chess in 5D is unclear at this time.
 

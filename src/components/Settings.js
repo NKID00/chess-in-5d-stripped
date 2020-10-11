@@ -6,6 +6,8 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Checkbox from '@material-ui/core/Checkbox';
 import { BsGear } from 'react-icons/bs';
 
+const deepcompare = require('deep-compare');
+
 export default class Settings extends React.Component {
   buttonRef = React.createRef();
   boxRef = React.createRef();
@@ -38,6 +40,9 @@ export default class Settings extends React.Component {
           flip: this.state.flip
         });
       }
+    }
+    if(!deepcompare(prevProps.value, this.props.value)) {
+      this.setState(this.props.value);
     }
   }
   render() {

@@ -60,7 +60,8 @@ export default class Turn extends React.Component {
     if(
       !deepcompare(prevProps.palette, this.props.palette) ||
       prevProps.x !== this.props.x ||
-      prevProps.y !== this.props.y
+      prevProps.y !== this.props.y ||
+      !deepcompare(prevProps.checksD, this.props.checksD)
     ) {
       this.draw();
     }
