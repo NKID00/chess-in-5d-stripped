@@ -23,9 +23,9 @@ export default class LocalHuman extends React.Component {
     winner: ''
   };
   lastUpdate = Date.now();
-  update() {
+  async update() {
     if(this.state.start && this.gameRef.current) {
-      if(this.gameRef.current.chess.player === 'white') {
+      if(await this.gameRef.current.chess.player() === 'white') {
         this.setState({
           whiteDurationLeft: this.state.whiteDurationLeft - (Date.now() - this.lastUpdate)/1000
         });
@@ -200,20 +200,23 @@ export default class LocalHuman extends React.Component {
           onEnd={(win) => {
             this.setState({ start: false, ended: true });
           }}
-          onSubmit={() => {
-            if(this.gameRef.current.chess.player === 'white') {
+          onSubmit={async () => {
+            if(await this.gameRef.current.chess.player() === 'white') {
               this.setState({
                 whiteDurationLeft: this.state.whiteDurationLeft +
                 this.state.perActionFlatIncrement +
-                this.state.perActionTimelineIncrement * this.gameRef.current.chess.board.timelines.filter((e) => { return e.present; }).length
+                this.state.perActionTimelineIncrement * (await this.gameRef.current.chess.board()).timelines.filter((e) => { return e.present; }).length
               });
             }
             else {
               this.setState({
                 blackDurationLeft: this.state.blackDurationLeft +
                 this.state.perActionFlatIncrement +
-                this.state.perActionTimelineIncrement * this.gameRef.current.chess.board.timelines.filter((e) => { return e.present; }).length
+                this.state.perActionTimelineIncrement * (await this.gameRef.current.chess.board()).timelines.filter((e) => { return e.present; }).length
               });
+            }
+            if(await this.gameRef.current.chess.player() === this.state.computer) {
+              this.compute();
             }
           }}
         >

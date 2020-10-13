@@ -1,6 +1,7 @@
 import React from 'react';
-import Chess from '5d-chess-js';
+import ChessWorker from 'workerize-loader!components/ChessWorker'; // eslint-disable-line import/no-webpack-loader-syntax
 
+import LinearProgress from '@material-ui/core/LinearProgress';
 import { Box, Flex, Text, Button } from 'rebass';
 
 import Board from 'components/Board';
@@ -12,7 +13,7 @@ const deepcompare = require('deep-compare');
 const deepcopy = require('deep-copy');
 
 export default class GamePlayer extends React.Component {
-  chess = new Chess();
+  chess = new ChessWorker();
   boardRef = React.createRef();
   state = {
     selectedPiece: null,
@@ -21,6 +22,8 @@ export default class GamePlayer extends React.Component {
     triggerDate: Date.now(),
     importedHistory: [],
     notation: '',
+    loading: false,
+    action: 0,
     settings: {
       boardShow: 'both',
       allowRecenter: true,
@@ -28,14 +31,14 @@ export default class GamePlayer extends React.Component {
       flip: this.props.flip ? this.props.flip : false
     }
   };
-  moveArrowCalc() {
-    var actions = deepcopy(this.chess.actionHistory);
-    var chess = new Chess();
+  async moveArrowCalc() {
+    var actions = deepcopy(await this.chess.actionHistory());
+    var chess = new ChessWorker();
     var res = [];
-    var newMoveArrow = (currMove) => {
-      var prevTimelines = deepcopy(chess.board.timelines);
-      chess.move(currMove);
-      var newTimelines = deepcopy(chess.board.timelines);
+    var newMoveArrow = async (currMove) => {
+      var prevTimelines = deepcopy((await chess.board()).timelines);
+      await chess.move(currMove);
+      var newTimelines = deepcopy((await chess.board()).timelines);
       if(prevTimelines.length !== newTimelines.length) {
         var newTimeline = newTimelines.filter((e) => { // eslint-disable-line no-loop-func
           return !prevTimelines.map((e2) => { return e2.timeline}).includes(e.timeline);
@@ -51,49 +54,49 @@ export default class GamePlayer extends React.Component {
       var currAction = actions[i];
       for(var j = 0;j < currAction.moves.length;j++) {
         var currMove = currAction.moves[j];
-        newMoveArrow(currMove);
+        await newMoveArrow(currMove);
         res.push(currMove);
       }
-      chess.submit();
+      await chess.submit();
     }
-    var moveBuffer = deepcopy(this.chess.moveBuffer);
+    var moveBuffer = deepcopy(await this.chess.moveBuffer());
     for(var i = 0;i < moveBuffer.length;i++) { // eslint-disable-line no-redeclare
       var currMove = moveBuffer[i]; // eslint-disable-line no-redeclare
-      newMoveArrow(currMove);
+      await newMoveArrow(currMove);
       res.push(currMove);
     }
     return res;
   }
-  boardSync() {
+  async boardSync() {
     var win = {
-      player: this.chess.player,
-      checkmate: this.chess.inCheckmate,
-      stalemate: this.chess.inStalemate
+      player: await this.chess.player(),
+      checkmate: await this.chess.inCheckmate(),
+      stalemate: await this.chess.inStalemate()
     };
-    this.setState({
-      board: this.chess.board,
-      submittable: this.chess.submittable(),
-      undoable: this.chess.undoable(),
-      player: this.chess.player,
-      checkmate: win.checkmate,
-      stalemate: win.stalemate,
-      check: this.chess.inCheck,
-      action: this.chess.actionNumber,
-      checks: this.chess.checks(),
-      triggerDate: Date.now(),
-      nextMoves: this.chess.moves('object', false, false, true).filter((e) => {
-        if(e.promotion !== '' && e.promotion !== null) {
-          if(e.promotion === 'K') { return true; }
-          if(e.promotion === 'R' && !(
-            (e.player === 'white' && e.end.rank === 8 && e.start.rank === 7) ||
-            (e.player === 'black' && e.end.rank === 2 && e.start.rank === 1)
-          )) { return true; }
-          return e.promotion === 'Q';
-        }
-        return true;
-      }),
-      moveArrows: this.moveArrowCalc()
+    var obj = {};
+    obj.board = await this.chess.board();
+    obj.submittable = await this.chess.submittable();
+    obj.undoable = await this.chess.undoable();
+    obj.player = await this.chess.player();
+    obj.checkmate = win.checkmate;
+    obj.stalemate = win.stalemate;
+    obj.check = await this.chess.inCheck();
+    obj.action = await this.chess.actionNumber();
+    obj.checks = await this.chess.checks();
+    obj.triggerDate = Date.now();
+    obj.nextMoves = (await this.chess.moves('object', false, false, true)).filter((e) => {
+      if(e.promotion !== '' && e.promotion !== null) {
+        if(e.promotion === 'K') { return true; }
+        if(e.promotion === 'R' && !(
+          (e.player === 'white' && e.end.rank === 8 && e.start.rank === 7) ||
+          (e.player === 'black' && e.end.rank === 2 && e.start.rank === 1)
+        )) { return true; }
+        return e.promotion === 'Q';
+      }
+      return true;
     });
+    obj.moveArrows = await this.moveArrowCalc();
+    this.setState(obj);
     if(typeof this.props.onEnd === 'function') {
       if(win.checkmate || win.stalemate) {
         this.props.onEnd(win);
@@ -128,24 +131,28 @@ export default class GamePlayer extends React.Component {
       }
     }
   }
-  revert() {
+  async revert() {
     if(this.props.canAnalyze) {
+      this.setState({loading: true});
       var newAction = this.state.action;
       var newPlayer = this.state.player;
       if(newPlayer === 'white') { newAction--; newPlayer = 'black'; }
       else { newPlayer = 'white'; }
-      this.chess.import(this.state.importedHistory.filter((e) => {
+      await this.chess.importFunc(this.state.importedHistory.filter((e) => {
         return (e.action * 2 + (e.player === 'white' ? 0 : 1)) < (newAction * 2 + (newPlayer === 'white' ? 0 : 1));
       }));
-      this.boardSync();
+      await this.boardSync();
+      this.setState({loading: false});
     }
   }
-  forward() {
+  async forward() {
     if(this.props.canAnalyze) {
-      this.chess.import(this.state.importedHistory.filter((e) => {
+      this.setState({loading: true});
+      await this.chess.importFunc(this.state.importedHistory.filter((e) => {
         return (e.action * 2 + (e.player === 'white' ? 0 : 1)) <= (this.state.action * 2 + (this.state.player === 'white' ? 0 : 1));
       }));
-      this.boardSync();
+      await this.boardSync();
+      this.setState({loading: false});
     }
   }
   selectPiece(piece) {
@@ -155,36 +162,44 @@ export default class GamePlayer extends React.Component {
       this.setState({selectedPiece: piece, hoverHighlights: []});
     }
   }
-  move(moveObj, unselectPiece = false) {
-    this.chess.move(moveObj);
+  async move(moveObj, unselectPiece = false) {
+    this.setState({loading: true});
+    await this.chess.move(moveObj);
     this.setState({highlights: []});
     if(unselectPiece) { this.setState({selectedPiece: null}); }
-    this.boardSync();
+    await this.boardSync();
     if(typeof this.props.onMove === 'function') { this.props.onMove(moveObj); }
+    this.setState({loading: false});
   }
-  undo() {
-    this.chess.undo();
-    this.boardSync();
+  async undo() {
+    this.setState({loading: true});
+    await this.chess.undo();
+    await this.boardSync();
     if(typeof this.props.onUndo === 'function') { this.props.onUndo(); }
+    this.setState({loading: false});
   }
-  submit() {
-    this.chess.submit(true);
+  async submit() {
+    this.setState({loading: true});
+    await this.chess.submit(true);
     this.setState({
-      importedHistory: this.chess.export('object'),
-      notation: this.chess.export('notation_short')
+      importedHistory: await this.chess.exportFunc('object'),
+      notation: await this.chess.exportFunc('notation_short')
     });
-    this.boardSync();
+    await this.boardSync();
     if(typeof this.props.onSubmit === 'function') { this.props.onSubmit(); }
+    this.setState({loading: false});
   }
-  import(input) {
+  async import(input) {
     if(this.props.canImport) {
-      this.chess.import(input);
+      this.setState({loading: true});
+      await this.chess.importFunc(input);
       this.setState({
-        importedHistory: this.chess.export('object'),
-        notation: this.chess.export('notation_short')
+        importedHistory: await this.chess.exportFunc('object'),
+        notation: await this.chess.exportFunc('notation_short')
       });
-      this.boardSync();
+      await this.boardSync();
       if(typeof this.props.onImport === 'function') { this.props.onImport(input); }
+      this.setState({loading: false});
     }
   }
   render() {
@@ -210,6 +225,14 @@ export default class GamePlayer extends React.Component {
           />
           <Settings value={this.state.settings} onChange={(e) => { this.setState({settings: e}); }}/>
         </Flex>
+        {this.state.loading ?
+          <LinearProgress
+            variant='indeterminate'
+            color='primary'
+          />
+        :
+          <></>
+        }
         <Board
           ref={this.boardRef}
           boardObj={this.state.board}

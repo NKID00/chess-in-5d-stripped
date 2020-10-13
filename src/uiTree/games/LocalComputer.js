@@ -79,9 +79,9 @@ class LocalComputer extends React.Component {
     winner: ''
   };
   lastUpdate = Date.now();
-  update() {
+  async update() {
     if(this.state.start && this.gameRef.current) {
-      if(this.gameRef.current.chess.player === 'white') {
+      if((await this.gameRef.current.chess.player()) === 'white') {
         this.setState({
           whiteDurationLeft: this.state.whiteDurationLeft - (Date.now() - this.lastUpdate)/1000
         });
@@ -95,15 +95,17 @@ class LocalComputer extends React.Component {
       window.setTimeout(this.update.bind(this), 1000);
     }
   }
-  compute() {
+  async compute() {
     if(this.state.debug) {
       try {
         var botFunc = new Function('Chess', 'chessInstance', 'GPU', 'return ' + this.state.botFunc)(); // eslint-disable-line no-new-func
-        var action = botFunc(Chess, new Chess(this.gameRef.current.chess.export()), GPU);
+        var action = botFunc(Chess, new Chess(await this.gameRef.current.chess.exportFunc()), GPU);
         for(var i = 0;i < action.moves.length;i++) {
-          this.gameRef.current.move(action.moves[i]);
+          await this.gameRef.current.move(action.moves[i]);
         }
-        this.gameRef.current.submit();
+        window.setTimeout(() => {
+          this.gameRef.current.submit();
+        }, 250);
       }
       catch(err) {
         this.props.enqueueSnackbar('Bot Error, see console for details', {variant: 'error'});
@@ -112,14 +114,14 @@ class LocalComputer extends React.Component {
       }
     }
     else {
-      bw.compute(this.gameRef.current.chess.export('notation'), this.state.botFunc).then((action) => {
+      bw.compute(await this.gameRef.current.chess.exportFunc('notation'), this.state.botFunc).then(async (action) => {
         if(!this.state.ended) {
           for(var i = 0;i < action.moves.length;i++) {
-            this.gameRef.current.move(action.moves[i]);
+            await this.gameRef.current.move(action.moves[i]);
           }
           window.setTimeout(() => {
             this.gameRef.current.submit();
-          }, 500);
+          }, 250);
         }
       }).catch((err) => {
         this.props.enqueueSnackbar('Bot Error, see console for details', {variant: 'error'});
@@ -129,7 +131,7 @@ class LocalComputer extends React.Component {
       });
     }
   }
-  componentDidUpdate(prevProps, prevState) {
+  async componentDidUpdate(prevProps, prevState) {
     if(prevState.selectedComputer !== this.state.selectedComputer) {
       if(this.state.selectedComputer === 'random') {
         this.setState({computer: Math.random > 0.5 ? 'white' : 'black'});
@@ -139,8 +141,8 @@ class LocalComputer extends React.Component {
       }
     }
     if(!prevState.start && this.state.start) {
-      if(this.gameRef.current.chess.player === this.state.computer) {
-        this.compute();
+      if(await this.gameRef.current.chess.player() === this.state.computer) {
+        await this.compute();
       }
       this.lastUpdate = Date.now();
       this.update();
@@ -322,22 +324,22 @@ class LocalComputer extends React.Component {
           onEnd={(win) => {
             this.setState({ start: false, ended: true });
           }}
-          onSubmit={() => {
-            if(this.gameRef.current.chess.player === 'white') {
+          onSubmit={async () => {
+            if(await this.gameRef.current.chess.player() === 'white') {
               this.setState({
                 whiteDurationLeft: this.state.whiteDurationLeft +
                 this.state.perActionFlatIncrement +
-                this.state.perActionTimelineIncrement * this.gameRef.current.chess.board.timelines.filter((e) => { return e.present; }).length
+                this.state.perActionTimelineIncrement * (await this.gameRef.current.chess.board()).timelines.filter((e) => { return e.present; }).length
               });
             }
             else {
               this.setState({
                 blackDurationLeft: this.state.blackDurationLeft +
                 this.state.perActionFlatIncrement +
-                this.state.perActionTimelineIncrement * this.gameRef.current.chess.board.timelines.filter((e) => { return e.present; }).length
+                this.state.perActionTimelineIncrement * (await this.gameRef.current.chess.board()).timelines.filter((e) => { return e.present; }).length
               });
             }
-            if(this.gameRef.current.chess.player === this.state.computer) {
+            if(await this.gameRef.current.chess.player() === this.state.computer) {
               this.compute();
             }
           }}

@@ -41,9 +41,9 @@ class NetworkClientPrivate extends React.Component {
     heartbeat: 0
   };
   lastUpdate = Date.now();
-  update() {
+  async update() {
     if(this.state.start && this.gameRef.current) {
-      if(this.gameRef.current.chess.player === 'white') {
+      if(await this.gameRef.current.chess.player() === 'white') {
         this.setState({
           whiteDurationLeft: this.state.whiteDurationLeft - (Date.now() - this.lastUpdate)/1000
         });
@@ -99,7 +99,7 @@ class NetworkClientPrivate extends React.Component {
     }
   }
   initListener() {
-    this.state.clientConnection.on('data', (data) => {
+    this.state.clientConnection.on('data', async (data) => {
       if(data.type === 'sync') {
         if(this.state.clientName !== data.state.clientName) {
           this.state.clientConnection.send({type: 'name', name: this.state.clientName});
@@ -117,7 +117,7 @@ class NetworkClientPrivate extends React.Component {
       else if(data.type === 'heartbeat') {
         this.setState({heartbeat: Date.now()});
       }
-      if(this.gameRef.current.chess.player === this.state.host) {
+      if(await this.gameRef.current.chess.player() === this.state.host) {
         if(data.type === 'move') {
           this.gameRef.current.move(data.move, true);
         }
@@ -128,7 +128,7 @@ class NetworkClientPrivate extends React.Component {
           this.gameRef.current.submit();
         }
         else if(data.type === 'import') {
-          this.gameRef.current.import(data.import);
+          this.gameRef.current.importFunct(data.import);
         }
       }
     });
@@ -409,32 +409,32 @@ class NetworkClientPrivate extends React.Component {
           blackName={this.state.host !== 'white' ? this.state.hostName : this.state.clientName}
           flip={this.state.host === 'white'}
           winner={this.state.winner}
-          onMove={(moveObj) => {
-            if(this.gameRef.current.chess.player !== this.state.host) {
+          onMove={async (moveObj) => {
+            if(await this.gameRef.current.chess.player() !== this.state.host) {
               this.state.clientConnection.send({type: 'move', move: moveObj});
             }
           }}
-          onUndo={() => {
-            if(this.gameRef.current.chess.player !== this.state.host) {
+          onUndo={async () => {
+            if(await this.gameRef.current.chess.player() !== this.state.host) {
               this.state.clientConnection.send({type: 'undo'});
             }
           }}
-          onSubmit={() => {
-            if(this.gameRef.current.chess.player === 'white') {
+          onSubmit={async () => {
+            if(await this.gameRef.current.chess.player() === 'white') {
               this.setState({
                 whiteDurationLeft: this.state.whiteDurationLeft +
                 this.state.perActionFlatIncrement +
-                this.state.perActionTimelineIncrement * this.gameRef.current.chess.board.timelines.filter((e) => { return e.present; }).length
+                this.state.perActionTimelineIncrement * (await this.gameRef.current.chess.board()).timelines.filter((e) => { return e.present; }).length
               });
             }
             else {
               this.setState({
                 blackDurationLeft: this.state.blackDurationLeft +
                 this.state.perActionFlatIncrement +
-                this.state.perActionTimelineIncrement * this.gameRef.current.chess.board.timelines.filter((e) => { return e.present; }).length
+                this.state.perActionTimelineIncrement * (await this.gameRef.current.chess.board()).timelines.filter((e) => { return e.present; }).length
               });
             }
-            if(this.gameRef.current.chess.player === this.state.host) {
+            if(await this.gameRef.current.chess.player() === this.state.host) {
               this.state.clientConnection.send({type: 'submit'});
             }
           }}

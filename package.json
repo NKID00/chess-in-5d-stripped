@@ -4,7 +4,7 @@
     "name": "Shaun Wu",
     "email": "alexbay218@gmail.com"
   },
-  "version": "0.1.13",
+  "version": "0.1.14",
   "description": "Open source implementation of '5D Chess With Multiverse Time Travel'.",
   "private": true,
   "main": "public/electron.js",
@@ -67,7 +67,7 @@
     "copyright": "Created by Shaun Wu, source code released uner AGPL-v3.0. All other assets are released under CC BY-SA 4.0"
   },
   "dependencies": {
-    "5d-chess-js": "^0.2.15",
+    "5d-chess-js": "^0.2.17",
     "@material-ui/core": "^4.11.0",
     "@rebass/forms": "^4.0.6",
     "@rebass/preset": "^4.0.5",

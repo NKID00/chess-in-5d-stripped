@@ -108,7 +108,7 @@ Let's get a few definitions out of the way:
  - File - A movable dimension within the game. Same as standard chess.
  - Full Board - A full board is considered as the full board state between actions. Contains all timelines, turns, and singular boards with all pieces.
  - Backline: Each player has a backline, which is the latest timeline create by each opponent.
- 
+
 *Notice: the previous example did not use these terms for the sake of easier introduction, as explaining terms before context would not make sense*
 
 ## Piece Movements
@@ -221,7 +221,7 @@ As of right now, pawns only promote to queens. In the future, this will change.
 
 Notation used: `(Action #)(Color). (Turn #)[+/- Line #]:[Piece](Coord)[<+/- New Line #>][Dest Turn #][Dest +/- Line #]:[Capture][Promotion Piece](Dest Coord)[En Passant][Check/Checkmate/Stalemate]`
 
-This is the notation for a single move. It should exist as its own separate line. Multiple lines of moves are grouped together as actions
+This is the notation for a single move. To delimit between moves, either a newline or semicolon is acceptable.
 
   - `(Action #)` - **\[Required\]** Action Number, the all moves within the referred action are required to indicate which action the move is a part of. Formatted as an integer starting from 1.
   - `(Color). ` - **\[Required\]** Lowercase character indicating player color (`b` or `w`) of the player that made the move. A `.` and space is required after the character.
