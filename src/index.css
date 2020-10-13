@@ -26,3 +26,11 @@ body > * {
   width: 100%;
   max-width: 900px;
 }
+
+.MuiLinearProgress-barColorPrimary {
+  background-color: black !important;
+}
+
+.MuiLinearProgress-colorPrimary {
+  background-color: white !important;
+}
