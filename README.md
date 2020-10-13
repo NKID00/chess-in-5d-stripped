@@ -68,14 +68,15 @@ const BotFunc = (Chess, chessInstance) => {
 }
 ```
 
-Here the function has three parameters: `Chess`, `chessInstance`, and `GPU`
+Here the function has three parameters: `Chess`, `chessInstance`, `GPU`, and `global`
  - `Chess` - This is the Chess class found in https://gitlab.com/alexbay218/5d-chess-js
  - `chessInstance` - This is the instance of the Chess class representing the current game
- - `GPU` - This is the GPU library from https://gpu.rocks for GPGPU purposes. Only works in Debug / GPU mode
+ - `GPU` - This is the GPU library from https://gpu.rocks for GPGPU purposes. Exposed in both Web Worker mode and Debug / GPU mode, though real GPGPU support only works in Debug / GPU mode for now.
+- `global` - This is a persistent empty object that allows for saving of data between function calls.
 
 To be an actual bot, you then need to return an `Action` object as described here https://gitlab.com/alexbay218/5d-chess-js#schemas
 
-The Debug / GPU mode will run the function in the main thread, otherwise it will run it as web worker to prevent hanging.
+The Debug / GPU mode will run the function in the main thread, otherwise it will run it as a Web Worker to prevent hanging.
 
 ## FAQ
 

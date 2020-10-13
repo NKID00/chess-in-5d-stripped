@@ -63,6 +63,7 @@ const defaultBot = '' +
 
 class LocalComputer extends React.Component {
   gameRef = React.createRef();
+  botGlobal = {};
   state = {
     start: false,
     ended: false,
@@ -98,8 +99,8 @@ class LocalComputer extends React.Component {
   async compute() {
     if(this.state.debug) {
       try {
-        var botFunc = new Function('Chess', 'chessInstance', 'GPU', 'return ' + this.state.botFunc)(); // eslint-disable-line no-new-func
-        var action = botFunc(Chess, new Chess(await this.gameRef.current.chess.exportFunc()), GPU);
+        var botFunc = new Function('Chess', 'chessInstance', 'GPU', 'global', 'return ' + this.state.botFunc)(); // eslint-disable-line no-new-func
+        var action = botFunc(Chess, new Chess(await this.gameRef.current.chess.exportFunc()), GPU, this.botGlobal);
         for(var i = 0;i < action.moves.length;i++) {
           await this.gameRef.current.move(action.moves[i]);
         }
