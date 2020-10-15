@@ -24,7 +24,7 @@ export default class LocalHuman extends React.Component {
   };
   lastUpdate = Date.now();
   async update() {
-    if(this.state.start && this.gameRef.current) {
+    if(this.state.start && this.gameRef.current && this.state.timed) {
       if(await this.gameRef.current.chess.player() === 'white') {
         this.setState({
           whiteDurationLeft: this.state.whiteDurationLeft - (Date.now() - this.lastUpdate)/1000
@@ -44,7 +44,7 @@ export default class LocalHuman extends React.Component {
       this.lastUpdate = Date.now();
       this.update();
     }
-    if(this.state.start) {
+    if(this.state.start && this.state.timed) {
       if(this.state.whiteDurationLeft <= 0) {
         this.setState({
           start: false,
