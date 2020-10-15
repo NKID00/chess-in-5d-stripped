@@ -321,6 +321,8 @@ class LocalComputer extends React.Component {
           ref={this.gameRef}
           canControlWhite={this.state.computer !== 'white' && !this.state.ended}
           canControlBlack={this.state.computer === 'white' && !this.state.ended}
+          whiteName={this.state.computer === 'white' ? 'Computer' : 'Human'}
+          blackName={this.state.computer !== 'white' ? 'Computer' : 'Human'}
           winner={this.state.winner}
           onEnd={(win) => {
             this.setState({ start: false, ended: true });

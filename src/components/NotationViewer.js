@@ -80,7 +80,10 @@ export default class NotationViewer extends React.Component {
                   KhtmlUserSelect: 'text',
                   MozUserSelect: 'text',
                   MsUserSelect: 'text',
-                  userSelect: 'text'
+                  userSelect: 'text',
+                  overflowY: 'auto',
+                  height: '100%',
+                  width: '100%'
                 }}
               >
                 {this.props.notation}
