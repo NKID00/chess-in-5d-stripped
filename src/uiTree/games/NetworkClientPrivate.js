@@ -42,7 +42,7 @@ class NetworkClientPrivate extends React.Component {
   };
   lastUpdate = Date.now();
   async update() {
-    if(this.state.start && this.gameRef.current) {
+    if(this.state.start && this.gameRef.current && this.state.timed) {
       if(await this.gameRef.current.chess.player() === 'white') {
         this.setState({
           whiteDurationLeft: this.state.whiteDurationLeft - (Date.now() - this.lastUpdate)/1000
