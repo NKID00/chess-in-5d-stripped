@@ -1,6 +1,7 @@
 import Chess from '5d-chess-js';
 
 var chess = new Chess();
+chess.checkmateTimeout = 10000;
 
 export const reset = () => {
   return chess.reset();

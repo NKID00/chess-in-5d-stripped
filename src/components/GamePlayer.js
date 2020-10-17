@@ -75,7 +75,7 @@ export default class GamePlayer extends React.Component {
     };
     var obj = {};
     obj.board = await this.chess.board();
-    obj.submittable = await this.chess.submittable();
+    obj.submittable = await this.chess.submittable(true);
     obj.undoable = await this.chess.undoable();
     obj.player = await this.chess.player();
     obj.checkmate = win.checkmate;
@@ -140,7 +140,7 @@ export default class GamePlayer extends React.Component {
       else { newPlayer = 'white'; }
       await this.chess.importFunc(this.state.importedHistory.filter((e) => {
         return (e.action * 2 + (e.player === 'white' ? 0 : 1)) < (newAction * 2 + (newPlayer === 'white' ? 0 : 1));
-      }));
+      }), true);
       await this.boardSync();
       this.setState({loading: false});
     }
@@ -150,7 +150,7 @@ export default class GamePlayer extends React.Component {
       this.setState({loading: true});
       await this.chess.importFunc(this.state.importedHistory.filter((e) => {
         return (e.action * 2 + (e.player === 'white' ? 0 : 1)) <= (this.state.action * 2 + (this.state.player === 'white' ? 0 : 1));
-      }));
+      }), true);
       await this.boardSync();
       this.setState({loading: false});
     }
@@ -164,7 +164,7 @@ export default class GamePlayer extends React.Component {
   }
   async move(moveObj, unselectPiece = false) {
     this.setState({loading: true});
-    await this.chess.move(moveObj);
+    await this.chess.move(moveObj, true);
     this.setState({highlights: []});
     if(unselectPiece) { this.setState({selectedPiece: null}); }
     await this.boardSync();
@@ -192,7 +192,7 @@ export default class GamePlayer extends React.Component {
   async import(input) {
     if(this.props.canImport) {
       this.setState({loading: true});
-      await this.chess.importFunc(input);
+      await this.chess.importFunc(input, true);
       this.setState({
         importedHistory: await this.chess.exportFunc('object'),
         notation: await this.chess.exportFunc('notation_short')

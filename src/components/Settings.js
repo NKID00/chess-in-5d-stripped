@@ -90,7 +90,6 @@ export default class Settings extends React.Component {
             <Checkbox
               color='primary'
               checked={this.state.allowRecenter}
-              disabled={this.state.boardShow !== 'both'}
               onChange={(e) => { this.setState({allowRecenter: e.target.checked}); }}
             />
           </Flex>
