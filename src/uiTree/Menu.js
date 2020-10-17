@@ -2,6 +2,7 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import { withRouter } from 'react-router';
 
+import { Flex } from 'rebass';
 import MenuBackdrop from 'uiTree/MenuBackdrop';
 import MainMenu from 'uiTree/menus/MainMenu';
 import LocalMenu from 'uiTree/menus/LocalMenu';
@@ -65,6 +66,18 @@ class Menu extends React.Component {
               backgroundColor: 'black'
             }}></div>
           }
+          <Flex
+            width={1}
+            sx={{
+              position: 'absolute',
+              bottom: '0px'
+            }}
+            justifyContent='center'
+            color='white'
+            bg='black'
+          >
+            {'Version ' + process.env.REACT_APP_VERSION}
+          </Flex>
         </Route>
       </>
     );

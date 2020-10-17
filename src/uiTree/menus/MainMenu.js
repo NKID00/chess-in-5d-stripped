@@ -95,18 +95,6 @@ export default class MainMenu extends React.Component {
           </Box>
           <Box width={1/3}></Box>
         </Flex>
-        <Flex
-          width={1}
-          sx={{
-            position: 'absolute',
-            bottom: '0px'
-          }}
-          justifyContent='center'
-          color='white'
-          bg='black'
-        >
-          {'Version ' + process.env.REACT_APP_VERSION}
-        </Flex>
       </>
     );
   }

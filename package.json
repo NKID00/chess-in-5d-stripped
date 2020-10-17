@@ -67,7 +67,7 @@
     "copyright": "Created by Shaun Wu, source code released uner AGPL-v3.0. All other assets are released under CC BY-SA 4.0"
   },
   "dependencies": {
-    "5d-chess-js": "^0.2.19",
+    "5d-chess-js": "^0.2.21",
     "@material-ui/core": "^4.11.0",
     "@rebass/forms": "^4.0.6",
     "@rebass/preset": "^4.0.5",
@@ -83,6 +83,7 @@
     "filepond": "^4.20.1",
     "fontsource-roboto": "^3.0.3",
     "gpu.js": "^2.10.4",
+    "howler": "^2.2.0",
     "js-file-download": "^0.4.12",
     "notistack": "^1.0.0",
     "paralleljs": "^1.1.0",
