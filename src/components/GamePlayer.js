@@ -111,7 +111,8 @@ export default class GamePlayer extends React.Component {
     }
     if(
       prevState.triggerDate !== this.state.triggerDate ||
-      prevState.settings.flip !== this.state.settings.flip
+      prevState.settings.flip !== this.state.settings.flip ||
+      prevState.settings.boardShow !== this.state.settings.boardShow
     ) {
       if(this.boardRef) {
         this.boardRef.current.recenter();

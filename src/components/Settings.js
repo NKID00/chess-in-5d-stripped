@@ -69,9 +69,6 @@ export default class Settings extends React.Component {
             <Select
               value={this.state.boardShow}
               onChange={(e) => {
-                if(e.target.value !== 'both') {
-                  this.setState({allowRecenter: false});
-                }
                 this.setState({boardShow: e.target.value});
               }}
             >
