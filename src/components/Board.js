@@ -33,20 +33,28 @@ export default class Board extends React.Component {
         actives = this.props.boardObj.timelines.filter((e) => { return e.active; });
       }
       if(actives.length > 0) {
-        var lowestTurnLength = actives[0].turns.length;
+        var lowestTurnLength = actives[0].turns.filter((e) => {
+          return (this.props.onlyBlack && e.player === 'black') || (this.props.onlyWhite && e.player === 'white')
+        }).length;
         var index = 0;
         for(var i = 0;i < actives.length;i++) {
-          if(lowestTurnLength > actives[i].turns.length) {
-            lowestTurnLength = actives[i].turns.length;
+          var currActiveTurns = actives[i].turns.filter((e) => {
+            return (this.props.onlyBlack && e.player === 'black') || (this.props.onlyWhite && e.player === 'white')
+          });
+          if(lowestTurnLength > currActiveTurns.length) {
+            lowestTurnLength = currActiveTurns.length;
             index = i;
           }
         }
         var highestTurn = 0;
-        for(var i = 0;i < actives[index].turns.length;i++) { // eslint-disable-line no-redeclare
+        var currActiveTurns = actives[index].turns.filter((e) => { // eslint-disable-line no-redeclare
+          return (this.props.onlyBlack && e.player === 'black') || (this.props.onlyWhite && e.player === 'white')
+        });
+        for(var i = 0;i < currActiveTurns.length;i++) { // eslint-disable-line no-redeclare
           if(highestTurn <
-            (actives[index].turns[i].turn*2 + (actives[index].turns[i].player === 'white' ? 0 : 1))
+            (currActiveTurns[i].turn*2 + (currActiveTurns[i].player === 'white' ? 0 : 1))
           ) {
-            highestTurn = actives[index].turns[i].turn*2 + (actives[index].turns[i].player === 'white' ? 0 : 1);
+            highestTurn = currActiveTurns[i].turn*2 + (currActiveTurns[i].player === 'white' ? 0 : 1);
           }
         }
         res.snapX = (highestTurn - 1) * 1000;
