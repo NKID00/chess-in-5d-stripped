@@ -9,6 +9,7 @@ export default class LocalComputer extends React.Component {
         <Button
           bg='white'
           color='black'
+          disabled
           mx={1}
         >
           {
@@ -21,6 +22,8 @@ export default class LocalComputer extends React.Component {
         <Button
           bg='black'
           color='white'
+          variant='outline'
+          disabled
           mx={1}
         >
           {

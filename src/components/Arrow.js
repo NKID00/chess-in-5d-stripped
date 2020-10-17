@@ -34,13 +34,7 @@ export default class Arrow extends React.Component {
       graphics.lineTo(tx - headlen * Math.cos(angle + Math.PI / 6), ty - headlen * Math.sin(angle + Math.PI / 6));
       graphics.closePath();
     }
-    graphics.lineStyle(20, (this.props.moveObj.player === 'white' ?
-      this.props.palette.whiteArrowOutline
-    :
-      this.props.palette.blackArrowOutline
-    ), 1, 0.5);
-    arrow();
-    graphics.lineStyle(10, line, 1, 0.5);
+    graphics.lineStyle(15, line, 1, 0.5);
     arrow();
   }
   componentDidMount() {

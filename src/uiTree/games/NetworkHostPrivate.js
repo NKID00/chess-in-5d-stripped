@@ -36,12 +36,13 @@ class NetworkHostPrivate extends React.Component {
     whiteDurationLeft: 0,
     blackDurationLeft: 0,
     winner: '',
-    chat: []
+    chat: [],
+    heartbeat: 0
   };
   lastUpdate = Date.now();
-  update() {
-    if(this.state.start && this.gameRef.current) {
-      if(this.gameRef.current.chess.player === 'white') {
+  async update() {
+    if(this.state.start && this.gameRef.current && this.state.timed) {
+      if(await this.gameRef.current.chess.player() === 'white') {
         this.setState({
           whiteDurationLeft: this.state.whiteDurationLeft - (Date.now() - this.lastUpdate)/1000
         });
@@ -74,6 +75,8 @@ class NetworkHostPrivate extends React.Component {
         ended: this.state.ended,
         timed: this.state.timed,
         host: this.state.host,
+        selectedHost: this.state.selectedHost,
+        clientName: this.state.clientName,
         hostName: this.state.hostName,
         startingDuration: this.state.startingDuration,
         perActionFlatIncrement: this.state.perActionFlatIncrement,
@@ -84,7 +87,7 @@ class NetworkHostPrivate extends React.Component {
     });
   }
   initListener() {
-    this.state.hostConnection.on('data', (data) => {
+    this.state.hostConnection.on('data', async (data) => {
       if(data.type === 'name') {
         this.setState({clientName: data.name});
       }
@@ -96,7 +99,10 @@ class NetworkHostPrivate extends React.Component {
         });
         this.setState({chat: chat});
       }
-      if(this.gameRef.current.chess.player !== this.state.host) {
+      else if(data.type === 'heartbeat') {
+        this.setState({heartbeat: Date.now()});
+      }
+      if(await this.gameRef.current.chess.player() !== this.state.host) {
         try {
           if(data.type === 'move') {
             this.gameRef.current.move(data.move, true);
@@ -122,6 +128,18 @@ class NetworkHostPrivate extends React.Component {
       }
     });
     this.sync();
+    window.setInterval(() => {
+      if(Date.now() - this.state.heartbeat > 3000 && !this.state.ended && this.state.hostConnection !== null) {
+        this.props.enqueueSnackbar('Network error occurred, client disconnected!', {variant: 'error', persist: true});
+        this.hostConnector.destroy();
+        this.setState({hostConnection: null});
+      }
+    }, 3000);
+    window.setInterval(() => {
+      if(this.state.hostConnection !== null) {
+        this.state.hostConnection.send({type: 'heartbeat'});
+      }
+    }, 1000);
   }
   initConnector() {
     if(this.state.hostId === '') {
@@ -169,7 +187,7 @@ class NetworkHostPrivate extends React.Component {
     if(!prevState.ended && this.state.ended) {
       this.state.hostConnection.close();
     }
-    if(this.state.start) {
+    if(this.state.start && this.state.timed) {
       if(this.state.whiteDurationLeft <= 0) {
         this.setState({
           start: false,
@@ -189,6 +207,13 @@ class NetworkHostPrivate extends React.Component {
     }
     if(prevState.hostConnection === null && this.state.hostConnection !== null) {
       this.initListener();
+    }
+    if(prevState.timed !== this.state.timed ||
+      prevState.startingDuration !== this.state.startingDuration ||
+      prevState.perActionFlatIncrement !== this.state.perActionFlatIncrement ||
+      prevState.perActionTimelineIncrement !== this.state.perActionTimelineIncrement
+    ) {
+      this.sync();
     }
   }
   render() {
@@ -235,16 +260,18 @@ class NetworkHostPrivate extends React.Component {
                     {this.state.hostId}
                   </Text>
                 </Flex>
-                <Text p={2} fontWeight='bold'>Link</Text>
-                <Text p={2}>
-                  <a
-                    target='_blank'
-                    href={window.location.origin + '/#/network/game/client?hostid=' + this.state.hostId}
-                    rel='noopener noreferrer'
-                  >
-                    {window.location.origin + '/#/network/game/client?hostid=' + this.state.hostId}
-                  </a>
-                </Text>
+                <Flex>
+                  <Text p={2} fontWeight='bold'>Link: </Text>
+                  <Text p={2}>
+                    <a
+                      target='_blank'
+                      href={window.location.origin + '/#/network/game/client?hostid=' + this.state.hostId}
+                      rel='noopener noreferrer'
+                    >
+                      {window.location.origin + '/#/network/game/client?hostid=' + this.state.hostId}
+                    </a>
+                  </Text>
+                </Flex>
               </>
             }
             <Text p={2} fontWeight='bold'>Player Name</Text>
@@ -254,13 +281,10 @@ class NetworkHostPrivate extends React.Component {
                 value={this.state.hostName}
                 onChange={(e) => {
                   this.setState({ hostName: e.target.value });
+                  Options.set('name', {username: e.target.value});
                 }}
               />
             </Box>
-            <Flex>
-              <Text p={2} fontWeight='bold'>Timed Game</Text>
-              <Checkbox color='primary' checked={this.state.timed} onChange={(e) => { this.setState({timed: e.target.checked}); }} />
-            </Flex>
             <Flex>
               <Text p={2} fontWeight='bold'>Host Side</Text>
               <Select
@@ -271,6 +295,10 @@ class NetworkHostPrivate extends React.Component {
                 <MenuItem value='black'>Black</MenuItem>
                 <MenuItem value='random'>Random</MenuItem>
               </Select>
+            </Flex>
+            <Flex>
+              <Text p={2} fontWeight='bold'>Timed Game</Text>
+              <Checkbox color='primary' checked={this.state.timed} onChange={(e) => { this.setState({timed: e.target.checked}); }} />
             </Flex>
             {this.state.timed ?
               <>
@@ -404,39 +432,42 @@ class NetworkHostPrivate extends React.Component {
           canImport
           canControlWhite={this.state.host === 'white' && !this.state.ended}
           canControlBlack={this.state.host !== 'white' && !this.state.ended}
+          whiteName={this.state.host === 'white' ? this.state.hostName : this.state.clientName}
+          blackName={this.state.host !== 'white' ? this.state.hostName : this.state.clientName}
+          flip={this.state.host !== 'white'}
           winner={this.state.winner}
           onImport={(input) => {
             this.state.hostConnection.send({type: 'import', input: input});
             this.sync();
           }}
-          onMove={(moveObj) => {
-            if(this.gameRef.current.chess.player === this.state.host) {
+          onMove={async (moveObj) => {
+            if(await this.gameRef.current.chess.player() === this.state.host) {
               this.state.hostConnection.send({type: 'move', move: moveObj});
             }
             this.sync();
           }}
-          onUndo={() => {
-            if(this.gameRef.current.chess.player === this.state.host) {
+          onUndo={async () => {
+            if(await this.gameRef.current.chess.player() === this.state.host) {
               this.state.hostConnection.send({type: 'undo'});
             }
             this.sync();
           }}
-          onSubmit={() => {
-            if(this.gameRef.current.chess.player === 'white') {
+          onSubmit={async () => {
+            if(await this.gameRef.current.chess.player() === 'white') {
               this.setState({
                 whiteDurationLeft: this.state.whiteDurationLeft +
                 this.state.perActionFlatIncrement +
-                this.state.perActionTimelineIncrement * this.gameRef.current.chess.board.timelines.filter((e) => { return e.present; }).length
+                this.state.perActionTimelineIncrement * (await this.gameRef.current.chess.board()).timelines.filter((e) => { return e.present; }).length
               });
             }
             else {
               this.setState({
                 blackDurationLeft: this.state.blackDurationLeft +
                 this.state.perActionFlatIncrement +
-                this.state.perActionTimelineIncrement * this.gameRef.current.chess.board.timelines.filter((e) => { return e.present; }).length
+                this.state.perActionTimelineIncrement * (await this.gameRef.current.chess.board()).timelines.filter((e) => { return e.present; }).length
               });
             }
-            if(this.gameRef.current.chess.player !== this.state.host) {
+            if(await this.gameRef.current.chess.player() !== this.state.host) {
               this.state.hostConnection.send({type: 'submit'});
             }
             this.sync();

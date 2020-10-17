@@ -2,12 +2,14 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import { withRouter } from 'react-router';
 
+import { Flex } from 'rebass';
 import MenuBackdrop from 'uiTree/MenuBackdrop';
 import MainMenu from 'uiTree/menus/MainMenu';
 import LocalMenu from 'uiTree/menus/LocalMenu';
 import NetworkMenu from 'uiTree/menus/NetworkMenu';
 import RulesMenu from 'uiTree/menus/RulesMenu';
 import OptionsMenu from 'uiTree/menus/OptionsMenu';
+import BugTrackerMenu from 'uiTree/menus/BugTrackerMenu';
 
 class Menu extends React.Component {
   state = {
@@ -39,13 +41,17 @@ class Menu extends React.Component {
           <Route exact path='/options'>
             <OptionsMenu />
           </Route>
+          <Route exact path='/bugs'>
+            <BugTrackerMenu />
+          </Route>
         </Switch>
         <Route exact path={[
           '/',
           '/local',
           '/network',
           '/rules',
-          '/options'
+          '/options',
+          '/bugs'
         ]}>
           {!this.state.noBlur ?
             <MenuBackdrop />
@@ -60,6 +66,18 @@ class Menu extends React.Component {
               backgroundColor: 'black'
             }}></div>
           }
+          <Flex
+            width={1}
+            sx={{
+              position: 'absolute',
+              bottom: '0px'
+            }}
+            justifyContent='center'
+            color='white'
+            bg='black'
+          >
+            {'Version ' + process.env.REACT_APP_VERSION}
+          </Flex>
         </Route>
       </>
     );

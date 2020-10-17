@@ -40,7 +40,7 @@ export default class Turn extends React.Component {
     graphics.lineStyle(0);
     for(var i = 0;i < 8;i++) {
       for(var j = 0;j < 8;j++) {
-        if((i + j) % 2 !== 0) {
+        if((i + j) % 2 === 0) {
           graphics.beginFill(this.props.palette.whiteSquare);
           graphics.drawRect(x + (i * 100), y + (j * 100) * (this.props.flip ? -1 : 1), 100, 100 * (this.props.flip ? -1 : 1));
           graphics.endFill();
@@ -60,7 +60,8 @@ export default class Turn extends React.Component {
     if(
       !deepcompare(prevProps.palette, this.props.palette) ||
       prevProps.x !== this.props.x ||
-      prevProps.y !== this.props.y
+      prevProps.y !== this.props.y ||
+      !deepcompare(prevProps.checksD, this.props.checksD)
     ) {
       this.draw();
     }

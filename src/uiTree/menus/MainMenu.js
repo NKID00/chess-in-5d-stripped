@@ -74,6 +74,14 @@ export default class MainMenu extends React.Component {
             >
               Options
             </LinkButton>
+            <LinkButton
+              to='/bugs'
+              variant='secondary'
+              width={1}
+              my={3}
+            >
+              Report Bugs
+            </LinkButton>
             <Button
               variant='primary'
               color='white'
@@ -86,18 +94,6 @@ export default class MainMenu extends React.Component {
             </Button>
           </Box>
           <Box width={1/3}></Box>
-        </Flex>
-        <Flex
-          width={1}
-          sx={{
-            position: 'absolute',
-            bottom: '0px'
-          }}
-          justifyContent='center'
-          color='white'
-          bg='black'
-        >
-          {'Version ' + process.env.REACT_APP_VERSION}
         </Flex>
       </>
     );

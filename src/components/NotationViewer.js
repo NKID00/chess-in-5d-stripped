@@ -80,7 +80,10 @@ export default class NotationViewer extends React.Component {
                   KhtmlUserSelect: 'text',
                   MozUserSelect: 'text',
                   MsUserSelect: 'text',
-                  userSelect: 'text'
+                  userSelect: 'text',
+                  overflowY: 'auto',
+                  height: '100%',
+                  width: '100%'
                 }}
               >
                 {this.props.notation}
@@ -141,7 +144,7 @@ export default class NotationViewer extends React.Component {
           bg='grey'
           sx={{display: this.state.open ? 'block' : 'none', maxHeight: '75vh', overflowY: 'auto'}}
         >
-          <Box 
+          <Box
             sx={{
               maxHeight: '65vh',
               overflowY: 'auto',
@@ -153,7 +156,7 @@ export default class NotationViewer extends React.Component {
               userSelect: 'text'
             }}
           >
-            {this.props.notation.replace(/\r\n/g, '\n').split('\n').map((e) => {
+            {this.props.notation.replace(/\r\n/g, '\n').replace(/\s*;\s*/g, '\n').split('\n').map((e) => {
               return (e.length > 0 ?
                 <Box
                   p={2}

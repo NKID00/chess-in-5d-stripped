@@ -1,6 +1,9 @@
 const store = require('store');
 
 const reset = () => { store.clearAll(); }
+const resetPalette = () => {
+  
+}
 const get = (str) => {
   var res = store.get(str);
   var defaultObj = {};
@@ -18,7 +21,7 @@ const get = (str) => {
       whiteSquare: 0xaaaaaa,
       blackSquare: 0x555555,
       selectedPiece: 0x0000ff,
-      moveArrow: 0x00aa00,
+      moveArrow: 0xd3a026,
       moveHighlight: 0x00ff00,
       captureArrow: 0xaa0000,
       captureHighlight: 0xff0000,
@@ -28,9 +31,7 @@ const get = (str) => {
       whiteBoardOutline: 0xdddddd,
       blackBoardOutline: 0x222222,
       checkBoardOutline: 0xff0000,
-      inactiveBoardOutline: 0x777777,
-      whiteArrowOutline: 0xffffff,
-      blackArrowOutline: 0x000000
+      inactiveBoardOutline: 0x777777
     };
   }
   else if(str === 'name') {
@@ -54,6 +55,7 @@ const set = (str, data) => {
 
 export default {
   reset: reset,
+  resetPalette: resetPalette,
   get: get,
   set: set
 };
