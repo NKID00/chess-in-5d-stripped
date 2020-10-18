@@ -45,7 +45,7 @@ export default class NotationViewer extends React.Component {
             <Text p={2} fontWeight='bold'>{this.state.modalMode.substr(0,1).toUpperCase() + this.state.modalMode.substr(1)}</Text>
             <Box mx='auto' />
           </Flex>
-          <Flex width={1} px={2} py={5} sx={{height: '100%'}}>
+          <Box width={1} px={2} py={5} sx={{height: '100%'}}>
             {this.state.modalMode === 'import' ?
               <Flex width={1} sx={{height: '100%'}}>
                 <Box width={1/2} px={2} sx={{height: '100%'}}>
@@ -71,25 +71,37 @@ export default class NotationViewer extends React.Component {
                 </Box>
               </Flex>
             :
-              <Text
-                as='pre'
-                fontSize={[ 1, 2, 3 ]}
-                sx={{
-                  WebkitTouchCallout: 'text',
-                  WebkitUserSelect: 'text',
-                  KhtmlUserSelect: 'text',
-                  MozUserSelect: 'text',
-                  MsUserSelect: 'text',
-                  userSelect: 'text',
-                  overflowY: 'auto',
-                  height: '100%',
-                  width: '100%'
-                }}
-              >
-                {this.props.notation}
-              </Text>
+              <Box sx={{height: '100%'}}>
+                {typeof this.props.notation === 'string' && this.props.notation.length > 0 ?
+                  <>
+                    <Text p={2} fontWeight='bold'>Link</Text>
+                    <a href={window.location.origin + '/#/local/game/analyze?import=' + this.props.notation.replace(/\n/g, ';').replace(/\s/g, '%20')} target='_blank' rel='noopener noreferrer'>
+                      {window.location.origin + '/#/local/game/analyze?import=' + this.props.notation.replace(/\n/g, ';').replace(/\s/g, '%20')}
+                    </a>
+                    <Box my={1} />
+                  </>
+                :
+                  <></>
+                }
+                <Text
+                  as='pre'
+                  fontSize={[ 1, 2, 3 ]}
+                  sx={{
+                    WebkitTouchCallout: 'text',
+                    WebkitUserSelect: 'text',
+                    KhtmlUserSelect: 'text',
+                    MozUserSelect: 'text',
+                    MsUserSelect: 'text',
+                    userSelect: 'text',
+                    overflowY: 'auto',
+                    width: '100%'
+                  }}
+                >
+                  {this.props.notation}
+                </Text>
+              </Box>
             }
-          </Flex>
+          </Box>
           <Flex
             p={2}
             alignItems='center'
@@ -97,16 +109,26 @@ export default class NotationViewer extends React.Component {
             sx={{position: 'absolute', bottom: 0}}
           >
             <Box mx='auto' />
-            <Button m={1} variant='primary' onClick={() => { this.setState({openModal: false}); }}>Close</Button>
+            <Button m={1} variant='secondary' onClick={() => { this.setState({openModal: false}); }}>Close</Button>
             {this.state.modalMode === 'export' ?
-              <Button m={1} variant='primary'
-                onClick={() => {
-                  copy(this.props.notation);
-                  this.setState({openModal: false});
-                }}
-              >
-                Copy to clipboard
-              </Button>
+              <>
+                <Button m={1} variant='secondary'
+                  onClick={() => {
+                    copy(window.location.origin + '/#/local/game/analyze?import=' + this.props.notation.replace(/\n/g, ';').replace(/\s/g, '%20'));
+                    this.setState({openModal: false});
+                  }}
+                >
+                  Copy link to clipboard
+                </Button>
+                <Button m={1} variant='primary'
+                  onClick={() => {
+                    copy(this.props.notation);
+                    this.setState({openModal: false});
+                  }}
+                >
+                  Copy to clipboard
+                </Button>
+              </>
             :
               <></>
             }

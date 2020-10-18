@@ -17,7 +17,8 @@ import BotWorker from 'workerize-loader!uiTree/games/BotWorker'; // eslint-disab
 
 const { GPU } = require('gpu.js');
 
-var bw = new BotWorker();
+var bw1 = new BotWorker();
+var bw2 = new BotWorker();
 
 const defaultBot = '' +
 '(Chess, chessInstance) => {\n' +
@@ -61,17 +62,17 @@ const defaultBot = '' +
 '  return action;\n' +
 '};';
 
-class LocalComputer extends React.Component {
+class LocalComputerOnly extends React.Component {
   gameRef = React.createRef();
-  botGlobal = {};
+  bot1Global = {};
+  bot2Global = {};
   state = {
     start: false,
     ended: false,
     timed: false,
     debug: false,
-    computer: 'white',
-    selectedComputer: 'white',
-    botFunc: defaultBot,
+    botFunc1: defaultBot,
+    botFunc2: defaultBot,
     startingDuration: 10*60,
     perActionFlatIncrement: 0,
     perActionTimelineIncrement: 5,
@@ -99,8 +100,8 @@ class LocalComputer extends React.Component {
   async compute() {
     if(this.state.debug) {
       try {
-        var botFunc = new Function('Chess', 'chessInstance', 'GPU', 'global', 'return ' + this.state.botFunc)(); // eslint-disable-line no-new-func
-        var action = botFunc(Chess, new Chess(await this.gameRef.current.chess.exportFunc()), GPU, this.botGlobal);
+        var botFunc = new Function('Chess', 'chessInstance', 'GPU', 'global', 'return ' + (await this.gameRef.current.chess.player === 'white' ? this.state.botFunc1 : this.state.botFunc2))(); // eslint-disable-line no-new-func
+        var action = botFunc(Chess, new Chess(await this.gameRef.current.chess.exportFunc()), GPU, (await this.gameRef.current.chess.player === 'white' ? this.bot1Global : this.bot2Global));
         for(var i = 0;i < action.moves.length;i++) {
           await this.gameRef.current.move(action.moves[i]);
         }
@@ -109,42 +110,56 @@ class LocalComputer extends React.Component {
         }, 250);
       }
       catch(err) {
-        this.props.enqueueSnackbar('Bot Error, see console for details', {variant: 'error'});
+        if(await this.gameRef.current.chess.player === 'white') {
+          this.props.enqueueSnackbar('White Bot Error, see console for details', {variant: 'error'});
+        }
+        else {
+          this.props.enqueueSnackbar('Black Bot Error, see console for details', {variant: 'error'});
+        }
         console.log('Bot encountered error:');
         console.error(err);
       }
     }
     else {
-      bw.compute(await this.gameRef.current.chess.exportFunc('notation'), this.state.botFunc).then(async (action) => {
-        if(!this.state.ended) {
-          for(var i = 0;i < action.moves.length;i++) {
-            await this.gameRef.current.move(action.moves[i]);
+      if(await this.gameRef.current.chess.player === 'white') {
+        bw1.compute(await this.gameRef.current.chess.exportFunc('notation'), this.state.botFunc1).then(async (action) => {
+          if(!this.state.ended) {
+            for(var i = 0;i < action.moves.length;i++) {
+              await this.gameRef.current.move(action.moves[i]);
+            }
+            window.setTimeout(() => {
+              this.gameRef.current.submit();
+            }, 250);
           }
-          window.setTimeout(() => {
-            this.gameRef.current.submit();
-          }, 250);
-        }
-      }).catch((err) => {
-        this.props.enqueueSnackbar('Bot Error, see console for details', {variant: 'error'});
-        console.log('Not in debug mode! Error may be cryptic due to web worker processing!');
-        console.log('Bot encountered error:');
-        console.error(err);
-      });
+        }).catch((err) => {
+          this.props.enqueueSnackbar('White Bot Error, see console for details', {variant: 'error'});
+          console.log('Not in debug mode! Error may be cryptic due to web worker processing!');
+          console.log('Bot encountered error:');
+          console.error(err);
+        });
+      }
+      else {
+        bw2.compute(await this.gameRef.current.chess.exportFunc('notation'), this.state.botFunc2).then(async (action) => {
+          if(!this.state.ended) {
+            for(var i = 0;i < action.moves.length;i++) {
+              await this.gameRef.current.move(action.moves[i]);
+            }
+            window.setTimeout(() => {
+              this.gameRef.current.submit();
+            }, 250);
+          }
+        }).catch((err) => {
+          this.props.enqueueSnackbar('Black Bot Error, see console for details', {variant: 'error'});
+          console.log('Not in debug mode! Error may be cryptic due to web worker processing!');
+          console.log('Bot encountered error:');
+          console.error(err);
+        });
+      }
     }
   }
   async componentDidUpdate(prevProps, prevState) {
-    if(prevState.selectedComputer !== this.state.selectedComputer) {
-      if(this.state.selectedComputer === 'random') {
-        this.setState({computer: Math.random > 0.5 ? 'white' : 'black'});
-      }
-      else {
-        this.setState({computer: this.state.selectedComputer});
-      }
-    }
     if(!prevState.start && this.state.start) {
-      if(await this.gameRef.current.chess.player() === this.state.computer) {
-        this.compute();
-      }
+      this.compute();
       this.lastUpdate = Date.now();
       this.update();
     }
@@ -312,18 +327,23 @@ class LocalComputer extends React.Component {
           </Flex>
         </Modal>
         <BotImport
-          value={this.state.botFunc}
+          title='Import Bot for Black'
+          value={this.state.botFunc2}
           onImport={(text) => {
-            this.setState({botFunc: text});
+            this.setState({botFunc2: text});
+          }}
+        />
+        <BotImport
+          title='Import Bot for White'
+          value={this.state.botFunc1}
+          onImport={(text) => {
+            this.setState({botFunc1: text});
           }}
         />
         <GamePlayer
           ref={this.gameRef}
-          canControlWhite={this.state.computer !== 'white' && !this.state.ended}
-          canControlBlack={this.state.computer === 'white' && !this.state.ended}
-          whiteName={this.state.computer === 'white' ? 'Computer' : 'Human'}
-          blackName={this.state.computer !== 'white' ? 'Computer' : 'Human'}
-          flip={this.state.computer === 'white'}
+          canControlWhite={false}
+          canControlBlack={false}
           winner={this.state.winner}
           onEnd={(win) => {
             this.setState({ start: false, ended: true });
@@ -343,9 +363,7 @@ class LocalComputer extends React.Component {
                 this.state.perActionTimelineIncrement * (await this.gameRef.current.chess.board()).timelines.filter((e) => { return e.present; }).length
               });
             }
-            if(await this.gameRef.current.chess.player() === this.state.computer) {
-              this.compute();
-            }
+            this.compute();
           }}
         >
           {this.state.timed ?
@@ -362,4 +380,4 @@ class LocalComputer extends React.Component {
   }
 }
 
-export default withSnackbar(LocalComputer);
+export default withSnackbar(LocalComputerOnly);

@@ -28,8 +28,12 @@ export default class GamePlayer extends React.Component {
       boardShow: 'both',
       allowRecenter: true,
       moveShow: 'timeline',
-      flip: this.props.flip ? this.props.flip : false
-    }
+      flip: this.props.flip ? this.props.flip : false,
+      timelineLabel: true,
+      turnLabel: true,
+      boardLabel: false
+    },
+    ended: false
   };
   async moveArrowCalc() {
     var actions = deepcopy(await this.chess.actionHistory());
@@ -78,8 +82,10 @@ export default class GamePlayer extends React.Component {
     obj.submittable = await this.chess.submittable(true);
     obj.undoable = await this.chess.undoable();
     obj.player = await this.chess.player();
-    obj.checkmate = win.checkmate;
-    obj.stalemate = win.stalemate;
+    if(!this.state.ended) {
+      obj.checkmate = win.checkmate;
+      obj.stalemate = win.stalemate;
+    }
     obj.check = await this.chess.inCheck();
     obj.action = await this.chess.actionNumber();
     obj.checks = await this.chess.checks();
@@ -97,13 +103,17 @@ export default class GamePlayer extends React.Component {
     });
     obj.moveArrows = await this.moveArrowCalc();
     this.setState(obj);
-    if(typeof this.props.onEnd === 'function') {
-      if(win.checkmate || win.stalemate) {
+    if(win.checkmate || win.stalemate) {
+      this.setState({ended: true});
+      if(typeof this.props.onEnd === 'function') {
         this.props.onEnd(win);
       }
     }
   }
   componentDidMount() {
+    if((typeof this.props.defaultImport === 'string') && this.props.defaultImport.length > 0) {
+      this.import(this.props.defaultImport);
+    }
     this.boardSync();
   }
   componentDidUpdate(prevProps, prevState) {
@@ -130,6 +140,10 @@ export default class GamePlayer extends React.Component {
       if(this.boardRef) {
         this.boardRef.current.recenter();
       }
+    }
+    
+    if((prevProps.defaultImport !== this.props.defaultImport) && (typeof this.props.defaultImport === 'string') && this.props.defaultImport.length > 0) {
+      this.import(this.props.defaultImport);
     }
   }
   async revert() {
@@ -269,6 +283,9 @@ export default class GamePlayer extends React.Component {
           allowRecenter={this.state.settings.allowRecenter}
           moveShow={this.state.settings.moveShow}
           flip={this.state.settings.flip}
+          timelineLabel={this.state.settings.timelineLabel}
+          turnLabel={this.state.settings.turnLabel}
+          boardLabel={this.state.settings.boardLabel}
         />
         <Flex
           p={2}
