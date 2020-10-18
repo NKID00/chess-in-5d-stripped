@@ -143,7 +143,7 @@ class LocalComputer extends React.Component {
     }
     if(!prevState.start && this.state.start) {
       if(await this.gameRef.current.chess.player() === this.state.computer) {
-        await this.compute();
+        this.compute();
       }
       this.lastUpdate = Date.now();
       this.update();
@@ -323,6 +323,7 @@ class LocalComputer extends React.Component {
           canControlBlack={this.state.computer === 'white' && !this.state.ended}
           whiteName={this.state.computer === 'white' ? 'Computer' : 'Human'}
           blackName={this.state.computer !== 'white' ? 'Computer' : 'Human'}
+          flip={this.state.computer === 'white'}
           winner={this.state.winner}
           onEnd={(win) => {
             this.setState({ start: false, ended: true });

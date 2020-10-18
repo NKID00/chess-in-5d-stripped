@@ -1,6 +1,7 @@
 import Chess from '5d-chess-js';
 
 var chess = new Chess();
+chess.checkmateTimeout = 10000;
 
 export const reset = () => {
   return chess.reset();
@@ -14,11 +15,11 @@ export const convertable = (input) => {
   return chess.convertable(input);
 };
 
-export const importFunc = (input, skipDetection = false) => {
+export const importFunc = (input, skipDetection = true) => {
   return chess.import(input, skipDetection);
 };
 
-export const importable = (input, skipDetection = false) => {
+export const importable = (input, skipDetection = true) => {
   return chess.importable(input, skipDetection);
 };
 
@@ -34,7 +35,7 @@ export const actionable = (input, skipDetection = false) => {
   return chess.actionable(input, skipDetection);
 };
 
-export const move = (input, skipDetection = false) => {
+export const move = (input, skipDetection = true) => {
   return chess.move(input, skipDetection);
 };
 
@@ -42,15 +43,15 @@ export const moves = (format = 'object', activeOnly = true, presentOnly = true, 
   return chess.moves(format, activeOnly, presentOnly, skipDetection);
 };
 
-export const moveable = (input, skipDetection = false, moveGen = []) => {
+export const moveable = (input, skipDetection = true, moveGen = []) => {
   return chess.moveable(input, skipDetection, moveGen);
 };
 
-export const submit = (skipDetection = false) => {
+export const submit = (skipDetection = true) => {
   return chess.submit(skipDetection);
 };
 
-export const submittable = (skipDetection = false) => {
+export const submittable = (skipDetection = true) => {
   return chess.submittable(skipDetection);
 };
 

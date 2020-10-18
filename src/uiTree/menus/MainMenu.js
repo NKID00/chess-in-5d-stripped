@@ -8,26 +8,6 @@ export default class MainMenu extends React.Component {
   render() {
     return (
       <>
-        <a href="https://gitlab.com/alexbay218/chess-in-5d">
-          <span
-            style={{
-              fontFamily: 'tahoma',
-              fontSize: '20px',
-              position: 'fixed',
-              top: '50px',
-              right: '-45px',
-              display: 'block',
-              WebkitTransform: 'rotate(45deg)',
-              MozTransform: 'rotate(45deg)',
-              backgroundColor: '#fc6d27',
-              color: 'white',
-              padding: '4px 30px 4px 30px',
-              zIndex: '999'
-            }}
-          >
-            Fork Me On GitLab
-          </span>
-        </a>
         <Flex
           p={2}
           color='white'
@@ -85,6 +65,16 @@ export default class MainMenu extends React.Component {
             <Button
               variant='primary'
               color='white'
+              bg='#fc6d27'
+              width={1}
+              my={3}
+              onClick={() => { window.open('https://gitlab.com/alexbay218/chess-in-5d'); }}
+            >
+              GitLab
+            </Button>
+            <Button
+              variant='primary'
+              color='white'
               bg='#7289da'
               width={1}
               my={3}
@@ -94,18 +84,6 @@ export default class MainMenu extends React.Component {
             </Button>
           </Box>
           <Box width={1/3}></Box>
-        </Flex>
-        <Flex
-          width={1}
-          sx={{
-            position: 'absolute',
-            bottom: '0px'
-          }}
-          justifyContent='center'
-          color='white'
-          bg='black'
-        >
-          {'Version ' + process.env.REACT_APP_VERSION}
         </Flex>
       </>
     );
