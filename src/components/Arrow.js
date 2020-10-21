@@ -18,7 +18,7 @@ export default class Arrow extends React.Component {
     :
       this.props.palette.moveArrow
     ;
-    var headlen = 50;
+    var headlen = 40;
     var dx = tx - sx;
     var dy = ty - sy;
     var angle = Math.atan2(dy, dx);
@@ -34,7 +34,7 @@ export default class Arrow extends React.Component {
         cap: PIXI.LINE_CAP.ROUND,
         join: PIXI.LINE_JOIN.ROUND
       });
-      graphics.moveTo(sx, sy);
+      graphics.moveTo(sx - (size - 10) / 2 * Math.cos(angle), sy - (size - 10) / 2 * Math.sin(angle));
       graphics.lineTo(tx - headlen / 2 * Math.cos(angle), ty - headlen / 2 * Math.sin(angle));
       graphics.closePath();
       graphics.lineStyle({
