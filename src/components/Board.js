@@ -219,10 +219,10 @@ export default class Board extends React.Component {
                 {Array.isArray(this.props.checks) ?
                   this.props.checks.filter((e2) => {
                     return this.props.boardObj.timelines.filter((e) => { return e.timeline === e2.start.timeline; }).filter((e3) => {
-                      return e3.turns.filter((e4) => { return e4.turn === e2.start.turn; }).length > 0;
+                      return e3.turns.filter((e4) => { return e4.turn === e2.start.turn && e4.player === e2.start.player; }).length > 0;
                     }).length > 0 &&
                     this.props.boardObj.timelines.filter((e) => { return e.timeline === e2.end.timeline; }).filter((e3) => {
-                      return e3.turns.filter((e4) => { return e4.turn === e2.end.turn; }).length > 0;
+                      return e3.turns.filter((e4) => { return e4.turn === e2.end.turn && e4.player === e2.start.player; }).length > 0;
                     }).length > 0;
                   }).filter((e2) => {
                     return (this.props.onlyWhite && e2.player === 'white') || (this.props.onlyBlack && e2.player === 'black') || (!this.props.onlyWhite && !this.props.onlyBlack);
@@ -235,7 +235,6 @@ export default class Board extends React.Component {
                       return a > c ? c : a;
                     });
                     var onlyOne = (this.props.onlyWhite || this.props.onlyBlack);
-                    if(e.isNew && onlyOne) { return <></>; }
                     return (
                       <Arrow
                         palette={Options.get('palette')}

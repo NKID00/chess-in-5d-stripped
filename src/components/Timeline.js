@@ -117,21 +117,24 @@ export default class Timeline extends React.Component {
                   fontSize: 60
                 }}
                 rotation={Math.PI/2}
-                x={((this.props.timelineObj.turns.filter((e) => {
-                  if(this.props.onlyBlack) { return e.player === 'black'; }
-                  else if(this.props.onlyWhite) { return e.player === 'white'; }
-                  return true;
-                }).sort((e2, e1) => {
-                  return (e2.turn*2 + (e2.player === 'white' ? 0 : 1)) - (e1.turn*2 + (e1.player === 'white' ? 0 : 1));
-                })[0].turn-1)*2 +
-                (this.props.timelineObj.turns.filter((e) => {
-                  if(this.props.onlyBlack) { return e.player === 'black'; }
-                  else if(this.props.onlyWhite) { return e.player === 'white'; }
-                  return true;
-                }).sort((e2, e1) => {
-                  return (e2.turn*2 + (e2.player === 'white' ? 0 : 1)) - (e1.turn*2 + (e1.player === 'white' ? 0 : 1));
-                })[0].player === 'white' ? 0 : 1) 
-                )*1000 + (this.props.x ? this.props.x + 40 : 40)}
+                x={(() => {
+                  var turns = this.props.timelineObj.turns.filter((e) => {
+                    if(this.props.onlyBlack) { return e.player === 'black'; }
+                    else if(this.props.onlyWhite) { return e.player === 'white'; }
+                    return true;
+                  }).sort((e2, e1) => {
+                    return (e2.turn*2 + (e2.player === 'white' ? 0 : 1)) - (e1.turn*2 + (e1.player === 'white' ? 0 : 1));
+                  });
+
+                  if(Array.isArray(turns) && turns.length > 0) {
+                    var firstTurn = turns[0];
+                    var onlyOne = (this.props.onlyWhite || this.props.onlyBlack);
+                    if(onlyOne) {
+                      return (firstTurn.turn-1)*1000 + (this.props.x ? this.props.x + 40 : 40);
+                    }
+                    return ((firstTurn.turn-1)*2 + (firstTurn.player === 'white' ? 0 : 1))*1000 + (this.props.x ? this.props.x + 40 : 40);
+                  }
+                })()}
                 y={(this.props.y ? this.props.y : 0) + (this.props.flip ? -900 : 100)}
               />
               <Text
@@ -150,21 +153,24 @@ export default class Timeline extends React.Component {
                   fontSize: 60
                 }}
                 rotation={-Math.PI/2}
-                x={((this.props.timelineObj.turns.filter((e) => {
-                  if(this.props.onlyBlack) { return e.player === 'black'; }
-                  else if(this.props.onlyWhite) { return e.player === 'white'; }
-                  return true;
-                }).sort((e1, e2) => {
-                  return (e2.turn*2 + (e2.player === 'white' ? 0 : 1)) - (e1.turn*2 + (e1.player === 'white' ? 0 : 1));
-                })[0].turn-1)*2 +
-                (this.props.timelineObj.turns.filter((e) => {
-                  if(this.props.onlyBlack) { return e.player === 'black'; }
-                  else if(this.props.onlyWhite) { return e.player === 'white'; }
-                  return true;
-                }).sort((e1, e2) => {
-                  return (e2.turn*2 + (e2.player === 'white' ? 0 : 1)) - (e1.turn*2 + (e1.player === 'white' ? 0 : 1));
-                })[0].player === 'white' ? 0 : 1) 
-                )*1000 + (this.props.x ? this.props.x + 960 : 960)}
+                x={(() => {
+                  var turns = this.props.timelineObj.turns.filter((e) => {
+                    if(this.props.onlyBlack) { return e.player === 'black'; }
+                    else if(this.props.onlyWhite) { return e.player === 'white'; }
+                    return true;
+                  }).sort((e1, e2) => {
+                    return (e2.turn*2 + (e2.player === 'white' ? 0 : 1)) - (e1.turn*2 + (e1.player === 'white' ? 0 : 1));
+                  });
+
+                  if(Array.isArray(turns) && turns.length > 0) {
+                    var lastTurn = turns[0];
+                    var onlyOne = (this.props.onlyWhite || this.props.onlyBlack);
+                    if(onlyOne) {
+                      return (lastTurn.turn-1)*1000 + (this.props.x ? this.props.x + 960 : 960);
+                    }
+                    return ((lastTurn.turn-1)*2 + (lastTurn.player === 'white' ? 0 : 1))*1000 + (this.props.x ? this.props.x + 960 : 960);
+                  }
+                })()}
                 y={(this.props.y ? this.props.y : 0) + (this.props.flip ? -100 : 900)}
               />
             </>
