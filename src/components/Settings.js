@@ -21,6 +21,11 @@ export default class Settings extends React.Component {
     turnLabel: true,
     boardLabel: false
   };
+  componentDidMount() {
+    if(typeof this.props.value === 'object') {
+      this.setState(this.props.value);
+    }
+  }
   componentDidUpdate(prevProps, prevState) {
     if(prevState.open !== this.state.open) {
       if(this.boxRef.current !== null && this.buttonRef.current !== null) {

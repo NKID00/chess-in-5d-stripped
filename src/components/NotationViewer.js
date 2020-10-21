@@ -2,6 +2,7 @@ import React from 'react';
 
 import Modal from 'react-modal';
 import { AiOutlineOrderedList } from 'react-icons/ai';
+import { FaArrowLeft } from 'react-icons/fa';
 import { Box, Flex, Text, Button } from 'rebass';
 import { Textarea } from '@rebass/forms';
 import copy from 'copy-to-clipboard';
@@ -139,7 +140,7 @@ export default class NotationViewer extends React.Component {
                   if(typeof this.props.onImport === 'function') { this.props.onImport(input); }
                 }
                 else {
-                  fileDownload(this.props.notation, '5d-chess-' + (Date.now()) + '.txt');
+                  fileDownload(this.props.notation, 'chessin5d-' + (Date.now()) + '.c5d');
                 }
                 this.setState({openModal: false});
               }}
@@ -180,15 +181,45 @@ export default class NotationViewer extends React.Component {
           >
             {this.props.notation.replace(/\r\n/g, '\n').replace(/\s*;\s*/g, '\n').split('\n').map((e) => {
               return (e.length > 0 ?
-                <Box
+                <Flex
                   p={2}
                   m={2}
                   color={e.includes('w.') ? 'black' : 'white'}
                   bg={e.includes('w.') ? 'white' : 'black'}
                   key={e}
+                  onClick={() => {
+                    var str = '';
+                    var notation = this.props.notation.replace(/\r\n/g, '\n').replace(/\s*;\s*/g, '\n').split('\n');
+                    for(var i = 0;i < notation.length;i++) {
+                      str += notation[i] + '\n';
+                      if(e === notation[i] && typeof this.props.onNotationClick === 'function') {
+                        this.props.onNotationClick(str);
+                      }
+                    }
+                  }}
+                  alignItems='center'
                 >
                   <Text p={1} fontWeight='bold'>{e}</Text>
-                </Box>
+                  <Box mx='auto' />
+                  {(() => {
+                    var currentNotation = this.props.currentNotation.replace(/\r\n/g, '\n').replace(/\s*;\s*/g, '\n').split('\n');
+                    if(currentNotation.length > 0) {
+                      if(currentNotation[currentNotation.length - 1] === e) {
+                        return true;
+                      }
+                      else if(currentNotation.length > 1 && currentNotation[currentNotation.length - 1].length === 0 && currentNotation[currentNotation.length - 2] === e) {
+                        return true;
+                      }
+                    }
+                    return false;
+                  })() ?
+                    <FaArrowLeft style={{
+                      color: (e.includes('w.') ? 'black' : 'white')
+                    }} />
+                  :
+                    <></>
+                  }
+                </Flex>
               :
                 null
               );

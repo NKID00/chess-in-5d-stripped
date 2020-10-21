@@ -43,7 +43,7 @@ export default class Turn extends React.Component {
     graphics.lineStyle(0);
     for(var i = 0;i < 8;i++) {
       for(var j = 0;j < 8;j++) {
-        if((i + j) % 2 === 0) {
+        if(((i + j) % 2 === 0 && !this.props.flip) || ((i + j) % 2 !== 0 && this.props.flip)) {
           graphics.beginFill(this.props.palette.whiteSquare);
           graphics.drawRect(x + (i * 100), y + (j * 100) * (this.props.flip ? -1 : 1), 100, 100 * (this.props.flip ? -1 : 1));
           graphics.endFill();
@@ -83,7 +83,7 @@ export default class Turn extends React.Component {
               <Piece
                 app={this.props.app}
                 palette={this.props.palette}
-                x={x + (e.position.file - 1) * 100}
+                x={x + (this.props.flip ? 8 - e.position.file : e.position.file - 1) * 100}
                 y={y + ((8 - e.position.rank) * 100) * (this.props.flip ? -1 : 1) + (this.props.flip ? -100 : 0)}
                 pieceObj={e}
                 key={e.piece + e.position.coordinate}
@@ -125,7 +125,7 @@ export default class Turn extends React.Component {
               <Highlight
                 app={this.props.app}
                 palette={this.props.palette}
-                x={x + (e.end.file - 1) * 100}
+                x={x + (this.props.flip ? 8 - e.end.file : e.end.file - 1) * 100}
                 y={y + ((8 - e.end.rank) * 100) * (this.props.flip ? -1 : 1) + (this.props.flip ? -100 : 0)}
                 moveObj={e}
                 key={e.end.coordinate + 'cs'}
@@ -163,7 +163,7 @@ export default class Turn extends React.Component {
               <Highlight
                 app={this.props.app}
                 palette={this.props.palette}
-                x={x + (e.end.file - 1) * 100}
+                x={x + (this.props.flip ? 8 - e.end.file : e.end.file - 1) * 100}
                 y={y + ((8 - e.end.rank) * 100) * (this.props.flip ? -1 : 1) + (this.props.flip ? -100 : 0)}
                 moveObj={e}
                 key={e.end.coordinate + 'h'}
@@ -228,8 +228,8 @@ export default class Turn extends React.Component {
                     fontSize: 40
                   }}
                   key={e + 'f'}
-                  x={this.props.x ? this.props.x + e*100 : e*100}
-                  y={this.props.y ? 
+                  x={(this.props.x ? this.props.x : 0) + ((this.props.flip ? 7 - e : e))*100}
+                  y={this.props.y ?
                     this.props.y + 800 * (this.props.flip ? -1 : 1) + (this.props.flip ? -50 : 0)
                   :
                     800 * (this.props.flip ? -1 : 1) + (this.props.flip ? -50 : 0)
@@ -260,7 +260,7 @@ export default class Turn extends React.Component {
                   }}
                   key={e + 'r'}
                   x={this.props.x ? this.props.x - 30 : -30}
-                  y={this.props.y ? 
+                  y={this.props.y ?
                     this.props.y + (700 - e*100) * (this.props.flip ? -1 : 1) + (this.props.flip ? -100 : 0)
                   :
                     (700 - e*100) * (this.props.flip ? -1 : 1) + (this.props.flip ? -100 : 0)

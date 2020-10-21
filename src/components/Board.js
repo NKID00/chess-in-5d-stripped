@@ -204,9 +204,9 @@ export default class Board extends React.Component {
                     return (
                       <Arrow
                         palette={Options.get('palette')}
-                        sx={(e.start.turn - 1) * (onlyOne ? 1000 : 2000) + (e.player === 'white' ? 0 : 1000) + 150 + (onlyOne ? (e.player === 'white' ? 0 : -1000) : 0) + (e.start.file - 1) * 100}
+                        sx={(e.start.turn - 1) * (onlyOne ? 1000 : 2000) + (e.player === 'white' ? 0 : 1000) + 150 + (onlyOne ? (e.player === 'white' ? 0 : -1000) : 0) + (this.props.flip ? 8 - e.start.file : e.start.file - 1) * 100}
                         sy={((e.start.timeline - lowestTimeline) * 1000 + 150 + (8 - e.start.rank) * 100) * (this.props.flip ? -1 : 1)}
-                        tx={(e.end.turn - 1) * (onlyOne ? 1000 : 2000) + (e.player === 'white' ? 0 : 1000) + 150 + (onlyOne ? (e.player === 'white' ? 0 : -1000) : 0) + (e.isNew ? 1000 : 0) + (e.end.file - 1) * 100}
+                        tx={(e.end.turn - 1) * (onlyOne ? 1000 : 2000) + (e.player === 'white' ? 0 : 1000) + 150 + (onlyOne ? (e.player === 'white' ? 0 : -1000) : 0) + (e.isNew ? 1000 : 0) + (this.props.flip ? 8 - e.end.file : e.end.file - 1) * 100}
                         ty={((e.end.timeline - lowestTimeline) * 1000 + 150 + (8 - e.end.rank) * 100) * (this.props.flip ? -1 : 1)}
                         moveObj={e}
                         key={JSON.stringify(e)}
@@ -219,10 +219,10 @@ export default class Board extends React.Component {
                 {Array.isArray(this.props.checks) ?
                   this.props.checks.filter((e2) => {
                     return this.props.boardObj.timelines.filter((e) => { return e.timeline === e2.start.timeline; }).filter((e3) => {
-                      return e3.turns.filter((e4) => { return e4.turn === e2.start.turn; }).length > 0;
+                      return e3.turns.filter((e4) => { return e4.turn === e2.start.turn && e4.player === e2.start.player; }).length > 0;
                     }).length > 0 &&
                     this.props.boardObj.timelines.filter((e) => { return e.timeline === e2.end.timeline; }).filter((e3) => {
-                      return e3.turns.filter((e4) => { return e4.turn === e2.end.turn; }).length > 0;
+                      return e3.turns.filter((e4) => { return e4.turn === e2.end.turn && e4.player === e2.start.player; }).length > 0;
                     }).length > 0;
                   }).filter((e2) => {
                     return (this.props.onlyWhite && e2.player === 'white') || (this.props.onlyBlack && e2.player === 'black') || (!this.props.onlyWhite && !this.props.onlyBlack);
@@ -235,13 +235,12 @@ export default class Board extends React.Component {
                       return a > c ? c : a;
                     });
                     var onlyOne = (this.props.onlyWhite || this.props.onlyBlack);
-                    if(e.isNew && onlyOne) { return <></>; }
                     return (
                       <Arrow
                         palette={Options.get('palette')}
-                        sx={(e.start.turn - 1) * (onlyOne ? 1000 : 2000) + (e.player === 'white' ? 0 : 1000) + 150 + (onlyOne ? (e.player === 'white' ? 0 : -1000) : 0) + (e.start.file - 1) * 100}
+                        sx={(e.start.turn - 1) * (onlyOne ? 1000 : 2000) + (e.player === 'white' ? 0 : 1000) + 150 + (onlyOne ? (e.player === 'white' ? 0 : -1000) : 0) + (this.props.flip ? 8 - e.start.file : e.start.file - 1) * 100}
                         sy={((e.start.timeline - lowestTimeline) * 1000 + 150 + (8 - e.start.rank) * 100) * (this.props.flip ? -1 : 1)}
-                        tx={(e.end.turn - 1) * (onlyOne ? 1000 : 2000) + (e.player === 'white' ? 0 : 1000) + 150 + (onlyOne ? (e.player === 'white' ? 0 : -1000) : 0) + (e.isNew ? 1000 : 0) + (e.end.file - 1) * 100}
+                        tx={(e.end.turn - 1) * (onlyOne ? 1000 : 2000) + (e.player === 'white' ? 0 : 1000) + 150 + (onlyOne ? (e.player === 'white' ? 0 : -1000) : 0) + (e.isNew ? 1000 : 0) + (this.props.flip ? 8 - e.end.file : e.end.file - 1) * 100}
                         ty={((e.end.timeline - lowestTimeline) * 1000 + 150 + (8 - e.end.rank) * 100) * (this.props.flip ? -1 : 1)}
                         moveObj={e}
                         key={JSON.stringify(e)}

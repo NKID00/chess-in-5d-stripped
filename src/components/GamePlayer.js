@@ -28,7 +28,7 @@ export default class GamePlayer extends React.Component {
       boardShow: 'both',
       allowRecenter: true,
       moveShow: 'timeline',
-      flip: this.props.flip ? this.props.flip : false,
+      flip: typeof this.props.flip === 'boolean' ? this.props.flip : false,
       timelineLabel: true,
       turnLabel: true,
       boardLabel: false
@@ -102,6 +102,7 @@ export default class GamePlayer extends React.Component {
       return true;
     });
     obj.moveArrows = await this.moveArrowCalc();
+    obj.currentNotation = await this.chess.exportFunc('notation_short');
     this.setState(obj);
     if(win.checkmate || win.stalemate) {
       this.setState({ended: true});
@@ -141,7 +142,12 @@ export default class GamePlayer extends React.Component {
         this.boardRef.current.recenter();
       }
     }
-    
+    if(prevProps.flip !== this.props.flip) {
+      var settings = Object.assign({}, this.state.settings);
+      settings.flip = this.props.flip;
+      this.setState({settings: settings});
+    }
+
     if((prevProps.defaultImport !== this.props.defaultImport) && (typeof this.props.defaultImport === 'string') && this.props.defaultImport.length > 0) {
       this.import(this.props.defaultImport);
     }
@@ -234,9 +240,18 @@ export default class GamePlayer extends React.Component {
           <NotationViewer
             canImport={this.props.canImport}
             notation={this.state.notation}
+            currentNotation={this.state.currentNotation}
             player={this.state.player}
             action={this.state.action}
             onImport={(input) => { this.import(input); }}
+            onNotationClick={async (input) => {
+              if(this.props.canAnalyze) {
+                this.setState({loading: true});
+                await this.chess.importFunc(input, true);
+                await this.boardSync();
+                this.setState({loading: false});
+              }
+            }}
           />
           <Settings value={this.state.settings} onChange={(e) => { this.setState({settings: e}); }}/>
         </Flex>
