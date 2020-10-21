@@ -1,7 +1,8 @@
 import React from 'react';
 
 import Modal from 'react-modal';
-import { AiOutlineOrderedList, AiOutlineArrowLeft } from 'react-icons/ai';
+import { AiOutlineOrderedList } from 'react-icons/ai';
+import { FaArrowLeft } from 'react-icons/fa';
 import { Box, Flex, Text, Button } from 'rebass';
 import { Textarea } from '@rebass/forms';
 import copy from 'copy-to-clipboard';
@@ -212,7 +213,9 @@ export default class NotationViewer extends React.Component {
                     }
                     return false;
                   })() ?
-                    <AiOutlineArrowLeft />
+                    <FaArrowLeft style={{
+                      color: (e.includes('w.') ? 'black' : 'white')
+                    }} />
                   :
                     <></>
                   }

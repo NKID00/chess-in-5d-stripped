@@ -204,9 +204,9 @@ export default class Board extends React.Component {
                     return (
                       <Arrow
                         palette={Options.get('palette')}
-                        sx={(e.start.turn - 1) * (onlyOne ? 1000 : 2000) + (e.player === 'white' ? 0 : 1000) + 150 + (onlyOne ? (e.player === 'white' ? 0 : -1000) : 0) + (e.start.file - 1) * 100}
+                        sx={(e.start.turn - 1) * (onlyOne ? 1000 : 2000) + (e.player === 'white' ? 0 : 1000) + 150 + (onlyOne ? (e.player === 'white' ? 0 : -1000) : 0) + (this.props.flip ? 8 - e.start.file : e.start.file - 1) * 100}
                         sy={((e.start.timeline - lowestTimeline) * 1000 + 150 + (8 - e.start.rank) * 100) * (this.props.flip ? -1 : 1)}
-                        tx={(e.end.turn - 1) * (onlyOne ? 1000 : 2000) + (e.player === 'white' ? 0 : 1000) + 150 + (onlyOne ? (e.player === 'white' ? 0 : -1000) : 0) + (e.isNew ? 1000 : 0) + (e.end.file - 1) * 100}
+                        tx={(e.end.turn - 1) * (onlyOne ? 1000 : 2000) + (e.player === 'white' ? 0 : 1000) + 150 + (onlyOne ? (e.player === 'white' ? 0 : -1000) : 0) + (e.isNew ? 1000 : 0) + (this.props.flip ? 8 - e.end.file : e.end.file - 1) * 100}
                         ty={((e.end.timeline - lowestTimeline) * 1000 + 150 + (8 - e.end.rank) * 100) * (this.props.flip ? -1 : 1)}
                         moveObj={e}
                         key={JSON.stringify(e)}
@@ -238,9 +238,9 @@ export default class Board extends React.Component {
                     return (
                       <Arrow
                         palette={Options.get('palette')}
-                        sx={(e.start.turn - 1) * (onlyOne ? 1000 : 2000) + (e.player === 'white' ? 0 : 1000) + 150 + (onlyOne ? (e.player === 'white' ? 0 : -1000) : 0) + (e.start.file - 1) * 100}
+                        sx={(e.start.turn - 1) * (onlyOne ? 1000 : 2000) + (e.player === 'white' ? 0 : 1000) + 150 + (onlyOne ? (e.player === 'white' ? 0 : -1000) : 0) + (this.props.flip ? 8 - e.start.file : e.start.file - 1) * 100}
                         sy={((e.start.timeline - lowestTimeline) * 1000 + 150 + (8 - e.start.rank) * 100) * (this.props.flip ? -1 : 1)}
-                        tx={(e.end.turn - 1) * (onlyOne ? 1000 : 2000) + (e.player === 'white' ? 0 : 1000) + 150 + (onlyOne ? (e.player === 'white' ? 0 : -1000) : 0) + (e.isNew ? 1000 : 0) + (e.end.file - 1) * 100}
+                        tx={(e.end.turn - 1) * (onlyOne ? 1000 : 2000) + (e.player === 'white' ? 0 : 1000) + 150 + (onlyOne ? (e.player === 'white' ? 0 : -1000) : 0) + (e.isNew ? 1000 : 0) + (this.props.flip ? 8 - e.end.file : e.end.file - 1) * 100}
                         ty={((e.end.timeline - lowestTimeline) * 1000 + 150 + (8 - e.end.rank) * 100) * (this.props.flip ? -1 : 1)}
                         moveObj={e}
                         key={JSON.stringify(e)}

@@ -28,7 +28,7 @@ export default class GamePlayer extends React.Component {
       boardShow: 'both',
       allowRecenter: true,
       moveShow: 'timeline',
-      flip: this.props.flip ? this.props.flip : false,
+      flip: typeof this.props.flip === 'boolean' ? this.props.flip : false,
       timelineLabel: true,
       turnLabel: true,
       boardLabel: false
@@ -141,6 +141,11 @@ export default class GamePlayer extends React.Component {
       if(this.boardRef) {
         this.boardRef.current.recenter();
       }
+    }
+    if(prevProps.flip !== this.props.flip) {
+      var settings = Object.assign({}, this.state.settings);
+      settings.flip = this.props.flip;
+      this.setState({settings: settings});
     }
 
     if((prevProps.defaultImport !== this.props.defaultImport) && (typeof this.props.defaultImport === 'string') && this.props.defaultImport.length > 0) {
