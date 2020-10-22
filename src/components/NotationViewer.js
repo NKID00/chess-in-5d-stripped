@@ -179,7 +179,7 @@ export default class NotationViewer extends React.Component {
               userSelect: 'text'
             }}
           >
-            {this.props.notation.replace(/\r\n/g, '\n').replace(/\s*;\s*/g, '\n').split('\n').map((e) => {
+            {this.props.notation.replace(/\r\n/g, '\n').replace(/\s*;\s*/g, '\n').split('\n').filter(e => !e.includes('[') && e !== '').map((e) => {
               return (e.length > 0 ?
                 <Flex
                   p={2}
@@ -189,7 +189,7 @@ export default class NotationViewer extends React.Component {
                   key={e}
                   onClick={() => {
                     var str = '';
-                    var notation = this.props.notation.replace(/\r\n/g, '\n').replace(/\s*;\s*/g, '\n').split('\n');
+                    var notation = this.props.notation.replace(/\r\n/g, '\n').replace(/\s*;\s*/g, '\n').split('\n').filter(e => !e.includes('[') && e !== '');
                     for(var i = 0;i < notation.length;i++) {
                       str += notation[i] + '\n';
                       if(e === notation[i] && typeof this.props.onNotationClick === 'function') {
@@ -202,12 +202,9 @@ export default class NotationViewer extends React.Component {
                   <Text p={1} fontWeight='bold'>{e}</Text>
                   <Box mx='auto' />
                   {(() => {
-                    var currentNotation = this.props.currentNotation.replace(/\r\n/g, '\n').replace(/\s*;\s*/g, '\n').split('\n');
+                    var currentNotation = this.props.currentNotation.replace(/\r\n/g, '\n').replace(/\s*;\s*/g, '\n').split('\n').filter(e => !e.includes('[') && e !== '');
                     if(currentNotation.length > 0) {
                       if(currentNotation[currentNotation.length - 1] === e) {
-                        return true;
-                      }
-                      else if(currentNotation.length > 1 && currentNotation[currentNotation.length - 1].length === 0 && currentNotation[currentNotation.length - 2] === e) {
                         return true;
                       }
                     }
@@ -221,7 +218,7 @@ export default class NotationViewer extends React.Component {
                   }
                 </Flex>
               :
-                null
+                <></>
               );
             })}
           </Box>

@@ -13,7 +13,7 @@ import * as PIXI from 'pixi.js';
 const deepcompare = require('deep-compare');
 
 export default class OptionsMenu extends React.Component {
-  state={
+  state = {
     peerjs: Options.get('peerjs'),
     peerjsTmp: JSON.stringify(Options.get('peerjs'), null, 2),
     palette: Options.get('palette'),

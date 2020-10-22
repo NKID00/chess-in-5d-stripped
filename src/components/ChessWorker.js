@@ -3,6 +3,16 @@ import Chess from '5d-chess-js';
 var chess = new Chess();
 chess.checkmateTimeout = 10000;
 
+export const metadata = (metadata = {}) => {
+  Object.assign(chess.metadata, metadata);
+  return chess.metadata;
+};
+
+export const variant = (variant) => {
+  chess.metadata.variant = variant;
+  return chess.reset();
+};
+
 export const reset = () => {
   return chess.reset();
 };

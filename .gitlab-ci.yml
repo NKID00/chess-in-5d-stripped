@@ -1,5 +1,5 @@
 default:
-  image: node:latest
+  image: node:14-buster
   before_script:
     - NPM_PACKAGE_VERSION=$(node -p "require('./package.json').version")
 
