@@ -22,7 +22,8 @@ export default class LocalHuman extends React.Component {
     perActionTimelineIncrement: 5,
     whiteDurationLeft: 0,
     blackDurationLeft: 0,
-    winner: ''
+    winner: '',
+    variant: 'standard'
   };
   lastUpdate = Date.now();
   async update() {

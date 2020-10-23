@@ -33,7 +33,8 @@ export default class GamePlayer extends React.Component {
       turnLabel: true,
       boardLabel: false
     },
-    ended: false
+    ended: false,
+    variant: 'standard'
   };
   async moveArrowCalc() {
     var actions = deepcopy(await this.chess.actionHistory());

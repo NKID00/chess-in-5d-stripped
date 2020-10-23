@@ -189,7 +189,7 @@ export default class NotationViewer extends React.Component {
                   key={e}
                   onClick={() => {
                     var str = '';
-                    var notation = this.props.notation.replace(/\r\n/g, '\n').replace(/\s*;\s*/g, '\n').split('\n').filter(e => !e.includes('[') && e !== '');
+                    var notation = this.props.notation.replace(/\r\n/g, '\n').replace(/\s*;\s*/g, '\n').split('\n');
                     for(var i = 0;i < notation.length;i++) {
                       str += notation[i] + '\n';
                       if(e === notation[i] && typeof this.props.onNotationClick === 'function') {
@@ -202,10 +202,12 @@ export default class NotationViewer extends React.Component {
                   <Text p={1} fontWeight='bold'>{e}</Text>
                   <Box mx='auto' />
                   {(() => {
-                    var currentNotation = this.props.currentNotation.replace(/\r\n/g, '\n').replace(/\s*;\s*/g, '\n').split('\n').filter(e => !e.includes('[') && e !== '');
-                    if(currentNotation.length > 0) {
-                      if(currentNotation[currentNotation.length - 1] === e) {
-                        return true;
+                    if(typeof this.props.currentNotation === 'string'){
+                      var currentNotation = this.props.currentNotation.replace(/\r\n/g, '\n').replace(/\s*;\s*/g, '\n').split('\n').filter(e => !e.includes('[') && e !== '');
+                      if(currentNotation.length > 0) {
+                        if(currentNotation[currentNotation.length - 1] === e) {
+                          return true;
+                        }
                       }
                     }
                     return false;
