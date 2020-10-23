@@ -36,21 +36,24 @@ class NetworkHostPrivate extends React.Component {
     whiteDurationLeft: 0,
     blackDurationLeft: 0,
     winner: '',
+    variant: 'standard',
     chat: [],
     heartbeat: 0
   };
   lastUpdate = Date.now();
   async update() {
     if(this.state.start && this.gameRef.current && this.state.timed) {
-      if(await this.gameRef.current.chess.player() === 'white') {
-        this.setState({
-          whiteDurationLeft: this.state.whiteDurationLeft - (Date.now() - this.lastUpdate)/1000
-        });
-      }
-      else {
-        this.setState({
-          blackDurationLeft: this.state.blackDurationLeft - (Date.now() - this.lastUpdate)/1000
-        });
+      if(!this.gameRef.current.state.loading) {
+        if((await this.gameRef.current.chess.player()) === 'white') {
+          this.setState({
+            whiteDurationLeft: this.state.whiteDurationLeft - (Date.now() - this.lastUpdate)/1000
+          });
+        }
+        else {
+          this.setState({
+            blackDurationLeft: this.state.blackDurationLeft - (Date.now() - this.lastUpdate)/1000
+          });
+        }
       }
       this.lastUpdate = Date.now();
       window.setTimeout(this.update.bind(this), 1000);
@@ -83,6 +86,7 @@ class NetworkHostPrivate extends React.Component {
         perActionTimelineIncrement: this.state.perActionTimelineIncrement,
         whiteDurationLeft: this.state.whiteDurationLeft,
         blackDurationLeft: this.state.blackDurationLeft,
+        variant: this.state.variant
       }
     });
   }
@@ -286,6 +290,16 @@ class NetworkHostPrivate extends React.Component {
               />
             </Box>
             <Flex>
+              <Text p={2} fontWeight='bold'>Variant</Text>
+              <Select
+                value={this.state.variant}
+                onChange={(e) => { this.setState({variant: e.target.value}); }}
+              >
+                <MenuItem value='standard'>Standard</MenuItem>
+                <MenuItem value='defended_pawn'>Defended Pawn</MenuItem>
+              </Select>
+            </Flex>
+            <Flex>
               <Text p={2} fontWeight='bold'>Host Side</Text>
               <Select
                 value={this.state.selectedHost}
@@ -436,6 +450,7 @@ class NetworkHostPrivate extends React.Component {
           blackName={this.state.host !== 'white' ? this.state.hostName : this.state.clientName}
           flip={this.state.host !== 'white'}
           winner={this.state.winner}
+          variant={this.state.variant}
           onImport={(input) => {
             this.state.hostConnection.send({type: 'import', input: input});
             this.sync();

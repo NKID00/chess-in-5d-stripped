@@ -33,7 +33,8 @@ export default class GamePlayer extends React.Component {
       turnLabel: true,
       boardLabel: false
     },
-    ended: false
+    ended: false,
+    variant: 'standard'
   };
   async moveArrowCalc() {
     var actions = deepcopy(await this.chess.actionHistory());
@@ -117,7 +118,7 @@ export default class GamePlayer extends React.Component {
     }
     this.boardSync();
   }
-  componentDidUpdate(prevProps, prevState) {
+  async componentDidUpdate(prevProps, prevState) {
     if(!deepcompare(
         prevState.selectedPiece ? prevState.selectedPiece : {},
         this.state.selectedPiece ? this.state.selectedPiece : {}
@@ -147,9 +148,20 @@ export default class GamePlayer extends React.Component {
       settings.flip = this.props.flip;
       this.setState({settings: settings});
     }
-
     if((prevProps.defaultImport !== this.props.defaultImport) && (typeof this.props.defaultImport === 'string') && this.props.defaultImport.length > 0) {
       this.import(this.props.defaultImport);
+    }
+    if(prevProps.variant !== this.props.variant && typeof this.props.variant === 'string') {
+      this.setState({loading: true});
+      await this.chess.variant(this.props.variant);
+      await this.boardSync();
+      this.setState({loading: false});
+    }
+    if(prevProps.whiteName !== this.props.whiteName && typeof this.props.whiteName === 'string') {
+      this.chess.metadata({white: this.props.whiteName});
+    }
+    if(prevProps.blackName !== this.props.blackName && typeof this.props.blackName === 'string') {
+      this.chess.metadata({black: this.props.blackName});
     }
   }
   async revert() {

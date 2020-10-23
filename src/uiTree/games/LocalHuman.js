@@ -4,6 +4,8 @@ import Modal from 'react-modal';
 import { Box, Flex, Text, Button } from 'rebass';
 import TextField from '@material-ui/core/TextField';
 import Checkbox from '@material-ui/core/Checkbox';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
 
 import ClockDisplay from 'components/ClockDisplay';
 import LinkButton from 'components/LinkButton';
@@ -20,20 +22,23 @@ export default class LocalHuman extends React.Component {
     perActionTimelineIncrement: 5,
     whiteDurationLeft: 0,
     blackDurationLeft: 0,
-    winner: ''
+    winner: '',
+    variant: 'standard'
   };
   lastUpdate = Date.now();
   async update() {
     if(this.state.start && this.gameRef.current && this.state.timed) {
-      if(await this.gameRef.current.chess.player() === 'white') {
-        this.setState({
-          whiteDurationLeft: this.state.whiteDurationLeft - (Date.now() - this.lastUpdate)/1000
-        });
-      }
-      else {
-        this.setState({
-          blackDurationLeft: this.state.blackDurationLeft - (Date.now() - this.lastUpdate)/1000
-        });
+      if(!this.gameRef.current.state.loading) {
+        if((await this.gameRef.current.chess.player()) === 'white') {
+          this.setState({
+            whiteDurationLeft: this.state.whiteDurationLeft - (Date.now() - this.lastUpdate)/1000
+          });
+        }
+        else {
+          this.setState({
+            blackDurationLeft: this.state.blackDurationLeft - (Date.now() - this.lastUpdate)/1000
+          });
+        }
       }
       this.lastUpdate = Date.now();
       window.setTimeout(this.update.bind(this), 1000);
@@ -82,6 +87,16 @@ export default class LocalHuman extends React.Component {
             <Box mx='auto' />
           </Flex>
           <Box width={1} px={2} py={5} sx={{overflowY: 'auto', height: '100%'}}>
+            <Flex>
+              <Text p={2} fontWeight='bold'>Variant</Text>
+              <Select
+                value={this.state.variant}
+                onChange={(e) => { this.setState({variant: e.target.value}); }}
+              >
+                <MenuItem value='standard'>Standard</MenuItem>
+                <MenuItem value='defended_pawn'>Defended Pawn</MenuItem>
+              </Select>
+            </Flex>
             <Flex>
               <Text p={2} fontWeight='bold'>Timed Game</Text>
               <Checkbox color='primary' checked={this.state.timed} onChange={(e) => { this.setState({timed: e.target.checked}); }} />
@@ -197,6 +212,7 @@ export default class LocalHuman extends React.Component {
           canControlWhite
           canControlBlack
           winner={this.state.winner}
+          variant={this.state.variant}
           onEnd={(win) => {
             this.setState({ start: false, ended: true });
           }}

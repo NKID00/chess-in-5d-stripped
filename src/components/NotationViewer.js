@@ -179,7 +179,7 @@ export default class NotationViewer extends React.Component {
               userSelect: 'text'
             }}
           >
-            {this.props.notation.replace(/\r\n/g, '\n').replace(/\s*;\s*/g, '\n').split('\n').map((e) => {
+            {this.props.notation.replace(/\r\n/g, '\n').replace(/\s*;\s*/g, '\n').split('\n').filter(e => !e.includes('[') && e !== '').map((e) => {
               return (e.length > 0 ?
                 <Flex
                   p={2}
@@ -202,13 +202,12 @@ export default class NotationViewer extends React.Component {
                   <Text p={1} fontWeight='bold'>{e}</Text>
                   <Box mx='auto' />
                   {(() => {
-                    var currentNotation = this.props.currentNotation.replace(/\r\n/g, '\n').replace(/\s*;\s*/g, '\n').split('\n');
-                    if(currentNotation.length > 0) {
-                      if(currentNotation[currentNotation.length - 1] === e) {
-                        return true;
-                      }
-                      else if(currentNotation.length > 1 && currentNotation[currentNotation.length - 1].length === 0 && currentNotation[currentNotation.length - 2] === e) {
-                        return true;
+                    if(typeof this.props.currentNotation === 'string'){
+                      var currentNotation = this.props.currentNotation.replace(/\r\n/g, '\n').replace(/\s*;\s*/g, '\n').split('\n').filter(e => !e.includes('[') && e !== '');
+                      if(currentNotation.length > 0) {
+                        if(currentNotation[currentNotation.length - 1] === e) {
+                          return true;
+                        }
                       }
                     }
                     return false;
@@ -221,7 +220,7 @@ export default class NotationViewer extends React.Component {
                   }
                 </Flex>
               :
-                null
+                <></>
               );
             })}
           </Box>
