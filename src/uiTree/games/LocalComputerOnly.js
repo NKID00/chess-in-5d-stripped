@@ -355,8 +355,6 @@ class LocalComputerOnly extends React.Component {
         />
         <GamePlayer
           ref={this.gameRef}
-          canControlWhite={false}
-          canControlBlack={false}
           winner={this.state.winner}
           variant={this.state.variant}
           onEnd={(win) => {

@@ -25,8 +25,8 @@ export const convertable = (input) => {
   return chess.convertable(input);
 };
 
-export const importFunc = (input, skipDetection = true) => {
-  return chess.import(input, skipDetection);
+export const importFunc = (input, variant = undefined, skipDetection = true) => {
+  return chess.import(input, variant, skipDetection);
 };
 
 export const importable = (input, skipDetection = true) => {
