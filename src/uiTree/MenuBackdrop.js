@@ -10,7 +10,7 @@ export default class MenuBackdrop extends React.Component {
     triggerDate: Date.now(),
     board: this.chess.board,
     count: 0
-  }
+  };
   boardSync() {
     this.setState({
       board: this.chess.board,

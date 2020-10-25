@@ -28,7 +28,11 @@ export default class BotImport extends React.Component {
             width={1}
             sx={{position: 'absolute', top: 0}}
           >
-            <Text p={2} fontWeight='bold'>Import Bot</Text>
+            <Text p={2} fontWeight='bold'>{this.props.title ?
+              this.props.title
+            :
+              'Import Bot'
+            }</Text>
             <Box mx='auto' />
           </Flex>
           <Flex width={1} px={2} py={5} sx={{height: '100%'}}>

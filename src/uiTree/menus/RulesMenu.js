@@ -8,6 +8,29 @@ import LogoIcon from 'assets/logo.svg';
 import ReactMarkdown from 'react-markdown';
 import RulesText from 'components/RulesText.md';
 
+const assets = {
+  '1b1e7e6.gif': require('assets/rules/1b1e7e6.gif'),
+  '1w1e2e3_submit.gif': require('assets/rules/1w1e2e3_submit.gif'),
+  '1w1e2e3.gif': require('assets/rules/1w1e2e3.gif'),
+  '2w2Nb1+1+1b3.gif': require('assets/rules/2w2Nb1+1+1b3.gif'),
+  '3b2a7a6.gif': require('assets/rules/3b2a7a6.gif'),
+  '3w2+1e2e3.gif': require('assets/rules/3w2+1e2e3.gif'),
+  '4w3+1Nb3+0b5.gif': require('assets/rules/4w3+1Nb3+0b5.gif'),
+  'analyze_feature.gif': require('assets/rules/analyze_feature.gif'),
+  'bishop_move.png': require('assets/rules/bishop_move.png'),
+  'bot_feature.gif': require('assets/rules/bot_feature.gif'),
+  'castling.png': require('assets/rules/castling.png'),
+  'import_feature.gif': require('assets/rules/import_feature.gif'),
+  'king_move.png': require('assets/rules/king_move.png'),
+  'knight_move.png': require('assets/rules/knight_move.png'),
+  'pawn_capture.png': require('assets/rules/pawn_capture.png'),
+  'pawn_en_passant.png': require('assets/rules/pawn_en_passant.png'),
+  'pawn_promote.gif': require('assets/rules/pawn_promote.gif'),
+  'queen_move.png': require('assets/rules/queen_move.png'),
+  'rook_move.png': require('assets/rules/rook_move.png'),
+  'start.gif': require('assets/rules/start.gif')
+}
+
 export default class RulesMenu extends React.Component {
   state = {
     text: '### Loading...'
@@ -51,9 +74,10 @@ export default class RulesMenu extends React.Component {
               linkTarget='_blank'
               source={this.state.text}
               transformImageUri={(uri) => {
-                return uri.startsWith('http') ? uri : `http://localhost:3000${uri}`;
+                return assets[uri];
               }}
             />
+            <Box my={3} />
           </Box>
           <Flex
             p={2}

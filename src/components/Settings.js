@@ -6,6 +6,8 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Checkbox from '@material-ui/core/Checkbox';
 import { BsGear } from 'react-icons/bs';
 
+const deepcompare = require('deep-compare');
+
 export default class Settings extends React.Component {
   buttonRef = React.createRef();
   boxRef = React.createRef();
@@ -14,8 +16,16 @@ export default class Settings extends React.Component {
     boardShow: 'both',
     allowRecenter: true,
     moveShow: 'timeline',
-    flip: false
+    flip: false,
+    timelineLabel: true,
+    turnLabel: true,
+    boardLabel: false
   };
+  componentDidMount() {
+    if(typeof this.props.value === 'object') {
+      this.setState(this.props.value);
+    }
+  }
   componentDidUpdate(prevProps, prevState) {
     if(prevState.open !== this.state.open) {
       if(this.boxRef.current !== null && this.buttonRef.current !== null) {
@@ -28,16 +38,25 @@ export default class Settings extends React.Component {
       prevState.boardShow !== this.state.boardShow ||
       prevState.allowRecenter !== this.state.allowRecenter ||
       prevState.moveShow !== this.state.moveShow ||
-      prevState.flip !== this.state.flip
+      prevState.flip !== this.state.flip ||
+      prevState.timelineLabel !== this.state.timelineLabel ||
+      prevState.turnLabel !== this.state.turnLabel ||
+      prevState.boardLabel !== this.state.boardLabel
     ) {
       if(typeof this.props.onChange === 'function') {
         this.props.onChange({
           boardShow: this.state.boardShow,
           allowRecenter: this.state.allowRecenter,
           moveShow: this.state.moveShow,
-          flip: this.state.flip
+          flip: this.state.flip,
+          timelineLabel: this.state.timelineLabel,
+          turnLabel: this.state.turnLabel,
+          boardLabel: this.state.boardLabel
         });
       }
+    }
+    if(!deepcompare(prevProps.value, this.props.value)) {
+      this.setState(this.props.value);
     }
   }
   render() {
@@ -69,9 +88,6 @@ export default class Settings extends React.Component {
             <Select
               value={this.state.boardShow}
               onChange={(e) => {
-                if(e.target.value !== 'both') {
-                  this.setState({allowRecenter: false});
-                }
                 this.setState({boardShow: e.target.value});
               }}
             >
@@ -85,7 +101,6 @@ export default class Settings extends React.Component {
             <Checkbox
               color='primary'
               checked={this.state.allowRecenter}
-              disabled={this.state.boardShow !== 'both'}
               onChange={(e) => { this.setState({allowRecenter: e.target.checked}); }}
             />
           </Flex>
@@ -106,6 +121,30 @@ export default class Settings extends React.Component {
               color='primary'
               checked={this.state.flip}
               onChange={(e) => { this.setState({flip: e.target.checked}); }}
+            />
+          </Flex>
+          <Flex>
+            <Text p={2} fontWeight='bold'>Timeline Labels</Text>
+            <Checkbox
+              color='primary'
+              checked={this.state.timelineLabel}
+              onChange={(e) => { this.setState({timelineLabel: e.target.checked}); }}
+            />
+          </Flex>
+          <Flex>
+            <Text p={2} fontWeight='bold'>Turn Labels</Text>
+            <Checkbox
+              color='primary'
+              checked={this.state.turnLabel}
+              onChange={(e) => { this.setState({turnLabel: e.target.checked}); }}
+            />
+          </Flex>
+          <Flex>
+            <Text p={2} fontWeight='bold'>Board Labels</Text>
+            <Checkbox
+              color='primary'
+              checked={this.state.boardLabel}
+              onChange={(e) => { this.setState({boardLabel: e.target.checked}); }}
             />
           </Flex>
         </Box>

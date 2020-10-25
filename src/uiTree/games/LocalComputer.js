@@ -9,17 +9,61 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 
-import BotImport from 'components/BotImport';
 import ClockDisplay from 'components/ClockDisplay';
 import LinkButton from 'components/LinkButton';
 import GamePlayer from 'components/GamePlayer';
-import RandomBot from 'components/RandomBot';
+import BotImport from 'components/BotImport';
 import BotWorker from 'workerize-loader!uiTree/games/BotWorker'; // eslint-disable-line import/no-webpack-loader-syntax
+
+const { GPU } = require('gpu.js');
 
 var bw = new BotWorker();
 
+const defaultBot = '' +
+'(Chess, chessInstance) => {\n' +
+'  /*\n' +
+'    Notice: This bot/engine does not play competitively and is only here for demonstration purposes\n' +
+'\n' +
+'    This bot picks a random valid action and plays it.\n' +
+'\n' +
+'    Go to https://gitlab.com/alexbay218/chess-in-5d for more information on how to create your own bot\n' +
+'\n' +
+'    In the future, a better default bot will replace this one.\n' +
+'  */\n' +
+'  var action = {\n' +
+'    action: chessInstance.actionNumber,\n' +
+'    player: chessInstance.player,\n' +
+'    moves: []\n' +
+'  };\n' +
+'  var actionMoves = [];\n' +
+'  var valid = false;\n' +
+'  while(!valid) {\n' +
+'    actionMoves = [];\n' +
+'    var submit = false;\n' +
+'    var tmpChess = new Chess(chessInstance.export());\n' +
+'    while(!submit) {\n' +
+'      var moves = tmpChess.moves(\'object\', true, true, true);\n' +
+'      if(moves.length > 0) {\n' +
+'        var move = moves[Math.floor(Math.random() * moves.length)];\n' +
+'        actionMoves.push(move);\n' +
+'        tmpChess.move(move);\n' +
+'      }\n' +
+'      else {\n' +
+'        submit = true;\n' +
+'      }\n' +
+'    }\n' +
+'    if(!tmpChess.inCheck) {\n' +
+'      valid = true;\n' +
+'    }\n' +
+'  }\n' +
+'  action.moves = actionMoves;\n' +
+'  console.log(\'Random Bot is making action: \' + JSON.stringify(action));\n' +
+'  return action;\n' +
+'};';
+
 class LocalComputer extends React.Component {
   gameRef = React.createRef();
+  botGlobal = {};
   state = {
     start: false,
     ended: false,
@@ -27,40 +71,45 @@ class LocalComputer extends React.Component {
     debug: false,
     computer: 'white',
     selectedComputer: 'white',
-    botFunc: RandomBot.toString(),
+    botFunc: defaultBot,
     startingDuration: 10*60,
     perActionFlatIncrement: 0,
     perActionTimelineIncrement: 5,
     whiteDurationLeft: 0,
     blackDurationLeft: 0,
-    winner: ''
+    winner: '',
+    variant: 'standard'
   };
   lastUpdate = Date.now();
-  update() {
-    if(this.state.start && this.gameRef.current) {
-      if(this.gameRef.current.chess.player === 'white') {
-        this.setState({
-          whiteDurationLeft: this.state.whiteDurationLeft - (Date.now() - this.lastUpdate)/1000
-        });
-      }
-      else {
-        this.setState({
-          blackDurationLeft: this.state.blackDurationLeft - (Date.now() - this.lastUpdate)/1000
-        });
+  async update() {
+    if(this.state.start && this.gameRef.current && this.state.timed) {
+      if(!this.gameRef.current.state.loading) {
+        if((await this.gameRef.current.chess.player()) === 'white') {
+          this.setState({
+            whiteDurationLeft: this.state.whiteDurationLeft - (Date.now() - this.lastUpdate)/1000
+          });
+        }
+        else {
+          this.setState({
+            blackDurationLeft: this.state.blackDurationLeft - (Date.now() - this.lastUpdate)/1000
+          });
+        }
       }
       this.lastUpdate = Date.now();
       window.setTimeout(this.update.bind(this), 1000);
     }
   }
-  compute() {
+  async compute() {
     if(this.state.debug) {
       try {
-        var botFunc = new Function('Chess', 'chessInstance', 'return ' + this.state.botFunc)(); // eslint-disable-line no-new-func
-        var action = botFunc(Chess, new Chess(this.gameRef.current.chess.export()));
+        var botFunc = new Function('Chess', 'chessInstance', 'GPU', 'global', 'return ' + this.state.botFunc)(); // eslint-disable-line no-new-func
+        var action = botFunc(Chess, new Chess(await this.gameRef.current.chess.exportFunc()), GPU, this.botGlobal);
         for(var i = 0;i < action.moves.length;i++) {
-          this.gameRef.current.move(action.moves[i]);
+          await this.gameRef.current.move(action.moves[i]);
         }
-        this.gameRef.current.submit();
+        window.setTimeout(() => {
+          this.gameRef.current.submit();
+        }, 250);
       }
       catch(err) {
         this.props.enqueueSnackbar('Bot Error, see console for details', {variant: 'error'});
@@ -69,14 +118,14 @@ class LocalComputer extends React.Component {
       }
     }
     else {
-      bw.compute(this.gameRef.current.chess.export('notation'), this.state.botFunc).then((action) => {
+      bw.compute(await this.gameRef.current.chess.exportFunc('notation'), this.state.botFunc).then(async (action) => {
         if(!this.state.ended) {
           for(var i = 0;i < action.moves.length;i++) {
-            this.gameRef.current.move(action.moves[i]);
+            await this.gameRef.current.move(action.moves[i]);
           }
           window.setTimeout(() => {
             this.gameRef.current.submit();
-          }, 500);
+          }, 250);
         }
       }).catch((err) => {
         this.props.enqueueSnackbar('Bot Error, see console for details', {variant: 'error'});
@@ -86,23 +135,23 @@ class LocalComputer extends React.Component {
       });
     }
   }
-  componentDidUpdate(prevProps, prevState) {
+  async componentDidUpdate(prevProps, prevState) {
     if(prevState.selectedComputer !== this.state.selectedComputer) {
       if(this.state.selectedComputer === 'random') {
-        this.setState({computer: Math.random > 0.5 ? 'white' : 'black'});
+        this.setState({computer: Math.random() > 0.5 ? 'white' : 'black'});
       }
       else {
         this.setState({computer: this.state.selectedComputer});
       }
     }
     if(!prevState.start && this.state.start) {
-      if(this.gameRef.current.chess.player === this.state.computer) {
+      if(await this.gameRef.current.chess.player() === this.state.computer) {
         this.compute();
       }
       this.lastUpdate = Date.now();
       this.update();
     }
-    if(this.state.start) {
+    if(this.state.start && this.state.timed) {
       if(this.state.whiteDurationLeft <= 0) {
         this.setState({
           start: false,
@@ -141,6 +190,16 @@ class LocalComputer extends React.Component {
           </Flex>
           <Box width={1} px={2} py={5} sx={{overflowY: 'auto', height: '100%'}}>
             <Flex>
+              <Text p={2} fontWeight='bold'>Variant</Text>
+              <Select
+                value={this.state.variant}
+                onChange={(e) => { this.setState({variant: e.target.value}); }}
+              >
+                <MenuItem value='standard'>Standard</MenuItem>
+                <MenuItem value='defended_pawn'>Defended Pawn</MenuItem>
+              </Select>
+            </Flex>
+            <Flex>
               <Text p={2} fontWeight='bold'>Timed Game</Text>
               <Checkbox color='primary' checked={this.state.timed} onChange={(e) => { this.setState({timed: e.target.checked}); }} />
             </Flex>
@@ -156,7 +215,7 @@ class LocalComputer extends React.Component {
               </Select>
             </Flex>
             <Flex>
-              <Text p={2} fontWeight='bold'>Debug Mode</Text>
+              <Text p={2} fontWeight='bold'>Debug / GPU Mode</Text>
               <Checkbox color='primary' checked={this.state.debug} onChange={(e) => { this.setState({debug: e.target.checked}); }} />
             </Flex>
             {this.state.timed ?
@@ -275,26 +334,30 @@ class LocalComputer extends React.Component {
           ref={this.gameRef}
           canControlWhite={this.state.computer !== 'white' && !this.state.ended}
           canControlBlack={this.state.computer === 'white' && !this.state.ended}
+          whiteName={this.state.computer === 'white' ? 'Computer' : 'Human'}
+          blackName={this.state.computer !== 'white' ? 'Computer' : 'Human'}
+          flip={this.state.computer === 'white'}
           winner={this.state.winner}
+          variant={this.state.variant}
           onEnd={(win) => {
             this.setState({ start: false, ended: true });
           }}
-          onSubmit={() => {
-            if(this.gameRef.current.chess.player === 'white') {
+          onSubmit={async () => {
+            if(await this.gameRef.current.chess.player() === 'white') {
               this.setState({
                 whiteDurationLeft: this.state.whiteDurationLeft +
                 this.state.perActionFlatIncrement +
-                this.state.perActionTimelineIncrement * this.gameRef.current.chess.board.timelines.filter((e) => { return e.present; }).length
+                this.state.perActionTimelineIncrement * (await this.gameRef.current.chess.board()).timelines.filter((e) => { return e.present; }).length
               });
             }
             else {
               this.setState({
                 blackDurationLeft: this.state.blackDurationLeft +
                 this.state.perActionFlatIncrement +
-                this.state.perActionTimelineIncrement * this.gameRef.current.chess.board.timelines.filter((e) => { return e.present; }).length
+                this.state.perActionTimelineIncrement * (await this.gameRef.current.chess.board()).timelines.filter((e) => { return e.present; }).length
               });
             }
-            if(this.gameRef.current.chess.player === this.state.computer) {
+            if(await this.gameRef.current.chess.player() === this.state.computer) {
               this.compute();
             }
           }}

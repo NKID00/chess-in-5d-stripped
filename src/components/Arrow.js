@@ -1,5 +1,6 @@
 import React from 'react';
 import { Graphics } from 'react-pixi-fiber';
+import * as PIXI from 'pixi.js';
 
 const deepcompare = require('deep-compare');
 
@@ -17,31 +18,44 @@ export default class Arrow extends React.Component {
     :
       this.props.palette.moveArrow
     ;
-    var headlen = 50;
+    var headlen = 40;
     var dx = tx - sx;
     var dy = ty - sy;
     var angle = Math.atan2(dy, dx);
     var graphics = this.arrowRef.current;
     graphics.clear();
-    var arrow = () => {
-      graphics.moveTo(sx, sy);
-      graphics.lineTo(tx, ty);
+    var arrow = (size, color) => {
+      graphics.lineStyle({
+        width: size,
+        color: color,
+        alpha: 1,
+        alignment: 0.5,
+        native: false,
+        cap: PIXI.LINE_CAP.ROUND,
+        join: PIXI.LINE_JOIN.ROUND
+      });
+      graphics.moveTo(sx - (size - 10) / 2 * Math.cos(angle), sy - (size - 10) / 2 * Math.sin(angle));
+      graphics.lineTo(tx - headlen / 2 * Math.cos(angle), ty - headlen / 2 * Math.sin(angle));
       graphics.closePath();
-      graphics.moveTo(tx, ty);
-      graphics.lineTo(tx - headlen * Math.cos(angle - Math.PI / 6), ty - headlen * Math.sin(angle - Math.PI / 6));
-      graphics.closePath();
-      graphics.moveTo(tx, ty);
-      graphics.lineTo(tx - headlen * Math.cos(angle + Math.PI / 6), ty - headlen * Math.sin(angle + Math.PI / 6));
-      graphics.closePath();
+      graphics.lineStyle({
+        width: size-10,
+        color: color,
+        alpha: 1,
+        alignment: 0.5,
+        native: false,
+        cap: PIXI.LINE_CAP.ROUND,
+        join: PIXI.LINE_JOIN.ROUND
+      });
+      graphics.beginFill(color, 1);
+      graphics.drawPolygon([
+        tx - headlen * Math.cos(angle - Math.PI / 6), ty - headlen * Math.sin(angle - Math.PI / 6),
+        tx, ty,
+        tx - headlen * Math.cos(angle + Math.PI / 6), ty - headlen * Math.sin(angle + Math.PI / 6)
+      ]);
+      graphics.endFill();
     }
-    graphics.lineStyle(20, (this.props.moveObj.player === 'white' ?
-      this.props.palette.whiteArrowOutline
-    :
-      this.props.palette.blackArrowOutline
-    ), 1, 0.5);
-    arrow();
-    graphics.lineStyle(10, line, 1, 0.5);
-    arrow();
+    arrow(30, 0x000000);
+    arrow(15, line);
   }
   componentDidMount() {
     this.draw();

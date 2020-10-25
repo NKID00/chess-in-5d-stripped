@@ -5,6 +5,9 @@ import Modal from 'react-modal';
 import { Box, Flex, Text, Button } from 'rebass';
 import { withSnackbar } from 'notistack';
 import TextField from '@material-ui/core/TextField';
+import Checkbox from '@material-ui/core/Checkbox';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
 import Peer from 'peerjs';
 import Options from 'Options';
 
@@ -34,20 +37,24 @@ class NetworkClientPrivate extends React.Component {
     whiteDurationLeft: 0,
     blackDurationLeft: 0,
     winner: '',
-    chat: []
+    variant: 'standard',
+    chat: [],
+    heartbeat: 0
   };
   lastUpdate = Date.now();
-  update() {
-    if(this.state.start && this.gameRef.current) {
-      if(this.gameRef.current.chess.player === 'white') {
-        this.setState({
-          whiteDurationLeft: this.state.whiteDurationLeft - (Date.now() - this.lastUpdate)/1000
-        });
-      }
-      else {
-        this.setState({
-          blackDurationLeft: this.state.blackDurationLeft - (Date.now() - this.lastUpdate)/1000
-        });
+  async update() {
+    if(this.state.start && this.gameRef.current && this.state.timed) {
+      if(!this.gameRef.current.state.loading) {
+        if((await this.gameRef.current.chess.player()) === 'white') {
+          this.setState({
+            whiteDurationLeft: this.state.whiteDurationLeft - (Date.now() - this.lastUpdate)/1000
+          });
+        }
+        else {
+          this.setState({
+            blackDurationLeft: this.state.blackDurationLeft - (Date.now() - this.lastUpdate)/1000
+          });
+        }
       }
       this.lastUpdate = Date.now();
       window.setTimeout(this.update.bind(this), 1000);
@@ -95,9 +102,12 @@ class NetworkClientPrivate extends React.Component {
     }
   }
   initListener() {
-    this.state.clientConnection.on('data', (data) => {
+    this.state.clientConnection.on('data', async (data) => {
       if(data.type === 'sync') {
-        this.setState(data.state);
+        if(this.state.clientName !== data.state.clientName) {
+          this.state.clientConnection.send({type: 'name', name: this.state.clientName});
+        }
+        this.setState(Object.assign(data.state, {clientName: this.state.clientName}));
       }
       else if(data.type === 'chat') {
         var chat = this.state.chat;
@@ -107,7 +117,10 @@ class NetworkClientPrivate extends React.Component {
         });
         this.setState({chat: chat});
       }
-      if(this.gameRef.current.chess.player === this.state.host) {
+      else if(data.type === 'heartbeat') {
+        this.setState({heartbeat: Date.now()});
+      }
+      if(await this.gameRef.current.chess.player() === this.state.host) {
         if(data.type === 'move') {
           this.gameRef.current.move(data.move, true);
         }
@@ -118,7 +131,7 @@ class NetworkClientPrivate extends React.Component {
           this.gameRef.current.submit();
         }
         else if(data.type === 'import') {
-          this.gameRef.current.import(data.import);
+          this.gameRef.current.importFunct(data.import);
         }
       }
     });
@@ -129,6 +142,18 @@ class NetworkClientPrivate extends React.Component {
       }
     });
     this.state.clientConnection.send({type: 'name', name: this.state.clientName});
+    window.setInterval(() => {
+      if(Date.now() - this.state.heartbeat > 3000 && !this.state.ended && this.state.clientConnection !== null) {
+        this.props.enqueueSnackbar('Network error occurred, host disconnected!', {variant: 'error', persist: true});
+        this.clientConnector.destroy();
+        this.setState({clientConnection: null});
+      }
+    }, 3000);
+    window.setInterval(() => {
+      if(this.state.clientConnection !== null) {
+        this.state.clientConnection.send({type: 'heartbeat'});
+      }
+    }, 1000);
   }
   initConnector() {
     if(this.state.clientId === '') {
@@ -247,12 +272,113 @@ class NetworkClientPrivate extends React.Component {
                 value={this.state.clientName}
                 onChange={(e) => {
                   this.setState({ clientName: e.target.value });
+                  Options.set('name', {username: e.target.value});
                   if(this.state.clientConnection !== null) {
                     this.state.clientConnection.send({type: 'name', name: e.target.value});
                   }
                 }}
               />
             </Box>
+            {this.state.clientConnection !== null ?
+              <>
+                <Flex>
+                  <Text p={2} fontWeight='bold'>Variant</Text>
+                  <Select
+                    value={this.state.variant}
+                    disabled
+                  >
+                    <MenuItem value='standard'>Standard</MenuItem>
+                    <MenuItem value='defended_pawn'>Defended Pawn</MenuItem>
+                  </Select>
+                </Flex>
+                <Flex>
+                  <Text p={2} fontWeight='bold'>Host Side</Text>
+                  <Select
+                    value={this.state.selectedHost}
+                    disabled
+                  >
+                    <MenuItem value='white'>White</MenuItem>
+                    <MenuItem value='black'>Black</MenuItem>
+                    <MenuItem value='random'>Random</MenuItem>
+                  </Select>
+                </Flex>
+                <Flex>
+                  <Text p={2} fontWeight='bold'>Timed Game</Text>
+                  <Checkbox disabled color='primary' checked={this.state.timed} />
+                </Flex>
+                {this.state.timed ?
+                  <>
+                    <Text p={2} fontWeight='bold'>Initial Duration</Text>
+                    <Flex>
+                      <Box width={[1/2, 1/3, 1/4]} p={2}>
+                        <TextField
+                          fullWidth
+                          disabled
+                          label='Minutes'
+                          type='number'
+                          value={Math.floor(this.state.startingDuration/60)}
+                        />
+                      </Box>
+                      <Box width={[1/2, 1/3, 1/4]} p={2}>
+                        <TextField
+                          fullWidth
+                          disabled
+                          label='Seconds'
+                          type='number'
+                          value={this.state.startingDuration % 60}
+                        />
+                      </Box>
+                    </Flex>
+                    <Text p={2} fontWeight='bold'>Per Action Increment (Flat)</Text>
+                    <Flex>
+                      <Box width={[1/2, 1/3, 1/4]} p={2}>
+                        <TextField
+                          fullWidth
+                          disabled
+                          label='Minutes'
+                          type='number'
+                          value={Math.floor(this.state.perActionFlatIncrement/60)}
+                        />
+                      </Box>
+                      <Box width={[1/2, 1/3, 1/4]} p={2}>
+                        <TextField
+                          fullWidth
+                          disabled
+                          label='Seconds'
+                          type='number'
+                          value={this.state.perActionFlatIncrement % 60}
+                        />
+                      </Box>
+                    </Flex>
+                    <Text p={2} fontWeight='bold'>Per Action Increment (Per Present Timeline)</Text>
+                    <Flex>
+                      <Box width={[1/2, 1/3, 1/4]} p={2}>
+                        <TextField
+                          fullWidth
+                          disabled
+                          label='Minutes'
+                          type='number'
+                          value={Math.floor(this.state.perActionTimelineIncrement/60)}
+                        />
+                      </Box>
+                      <Box width={[1/2, 1/3, 1/4]} p={2}>
+                        <TextField
+                          fullWidth
+                          disabled
+                          label='Seconds'
+                          type='number'
+                          value={this.state.perActionTimelineIncrement % 60}
+                        />
+                      </Box>
+                    </Flex>
+                  </>
+                :
+                <></>
+                }
+              </>
+            :
+              <></>
+            }
           </Box>
           <Flex
             p={2}
@@ -292,33 +418,37 @@ class NetworkClientPrivate extends React.Component {
           ref={this.gameRef}
           canControlWhite={this.state.host !== 'white' && !this.state.ended}
           canControlBlack={this.state.host === 'white' && !this.state.ended}
+          whiteName={this.state.host === 'white' ? this.state.hostName : this.state.clientName}
+          blackName={this.state.host !== 'white' ? this.state.hostName : this.state.clientName}
+          flip={this.state.host === 'white'}
           winner={this.state.winner}
-          onMove={(moveObj) => {
-            if(this.gameRef.current.chess.player !== this.state.host) {
+          variant={this.state.variant}
+          onMove={async (moveObj) => {
+            if(await this.gameRef.current.chess.player() !== this.state.host) {
               this.state.clientConnection.send({type: 'move', move: moveObj});
             }
           }}
-          onUndo={() => {
-            if(this.gameRef.current.chess.player !== this.state.host) {
+          onUndo={async () => {
+            if(await this.gameRef.current.chess.player() !== this.state.host) {
               this.state.clientConnection.send({type: 'undo'});
             }
           }}
-          onSubmit={() => {
-            if(this.gameRef.current.chess.player === 'white') {
+          onSubmit={async () => {
+            if(await this.gameRef.current.chess.player() === 'white') {
               this.setState({
                 whiteDurationLeft: this.state.whiteDurationLeft +
                 this.state.perActionFlatIncrement +
-                this.state.perActionTimelineIncrement * this.gameRef.current.chess.board.timelines.filter((e) => { return e.present; }).length
+                this.state.perActionTimelineIncrement * (await this.gameRef.current.chess.board()).timelines.filter((e) => { return e.present; }).length
               });
             }
             else {
               this.setState({
                 blackDurationLeft: this.state.blackDurationLeft +
                 this.state.perActionFlatIncrement +
-                this.state.perActionTimelineIncrement * this.gameRef.current.chess.board.timelines.filter((e) => { return e.present; }).length
+                this.state.perActionTimelineIncrement * (await this.gameRef.current.chess.board()).timelines.filter((e) => { return e.present; }).length
               });
             }
-            if(this.gameRef.current.chess.player === this.state.host) {
+            if(await this.gameRef.current.chess.player() === this.state.host) {
               this.state.clientConnection.send({type: 'submit'});
             }
           }}

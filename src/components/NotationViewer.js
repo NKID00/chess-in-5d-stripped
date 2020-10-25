@@ -2,6 +2,7 @@ import React from 'react';
 
 import Modal from 'react-modal';
 import { AiOutlineOrderedList } from 'react-icons/ai';
+import { FaArrowLeft } from 'react-icons/fa';
 import { Box, Flex, Text, Button } from 'rebass';
 import { Textarea } from '@rebass/forms';
 import copy from 'copy-to-clipboard';
@@ -45,7 +46,7 @@ export default class NotationViewer extends React.Component {
             <Text p={2} fontWeight='bold'>{this.state.modalMode.substr(0,1).toUpperCase() + this.state.modalMode.substr(1)}</Text>
             <Box mx='auto' />
           </Flex>
-          <Flex width={1} px={2} py={5} sx={{height: '100%'}}>
+          <Box width={1} px={2} py={5} sx={{height: '100%'}}>
             {this.state.modalMode === 'import' ?
               <Flex width={1} sx={{height: '100%'}}>
                 <Box width={1/2} px={2} sx={{height: '100%'}}>
@@ -71,11 +72,37 @@ export default class NotationViewer extends React.Component {
                 </Box>
               </Flex>
             :
-              <Text as='pre' fontSize={[ 1, 2, 3 ]}>
-                {this.props.notation}
-              </Text>
+              <Box sx={{height: '100%'}}>
+                {typeof this.props.notation === 'string' && this.props.notation.length > 0 ?
+                  <>
+                    <Text p={2} fontWeight='bold'>Link</Text>
+                    <a href={window.location.origin + '/#/local/game/analyze?import=' + this.props.notation.replace(/\n/g, ';').replace(/\s/g, '%20').replace(/>/g, '%3E').replace(/</g, '%3C')} target='_blank' rel='noopener noreferrer'>
+                      {window.location.origin + '/#/local/game/analyze?import=' + this.props.notation.replace(/\n/g, ';').replace(/\s/g, '%20').replace(/>/g, '%3E').replace(/</g, '%3C')}
+                    </a>
+                    <Box my={1} />
+                  </>
+                :
+                  <></>
+                }
+                <Text
+                  as='pre'
+                  fontSize={[ 1, 2, 3 ]}
+                  sx={{
+                    WebkitTouchCallout: 'text',
+                    WebkitUserSelect: 'text',
+                    KhtmlUserSelect: 'text',
+                    MozUserSelect: 'text',
+                    MsUserSelect: 'text',
+                    userSelect: 'text',
+                    overflowY: 'auto',
+                    width: '100%'
+                  }}
+                >
+                  {this.props.notation}
+                </Text>
+              </Box>
             }
-          </Flex>
+          </Box>
           <Flex
             p={2}
             alignItems='center'
@@ -83,16 +110,26 @@ export default class NotationViewer extends React.Component {
             sx={{position: 'absolute', bottom: 0}}
           >
             <Box mx='auto' />
-            <Button m={1} variant='primary' onClick={() => { this.setState({openModal: false}); }}>Close</Button>
+            <Button m={1} variant='secondary' onClick={() => { this.setState({openModal: false}); }}>Close</Button>
             {this.state.modalMode === 'export' ?
-              <Button m={1} variant='primary'
-                onClick={() => {
-                  copy(this.props.notation);
-                  this.setState({openModal: false});
-                }}
-              >
-                Copy to clipboard
-              </Button>
+              <>
+                <Button m={1} variant='secondary'
+                  onClick={() => {
+                    copy(window.location.origin + '/#/local/game/analyze?import=' + this.props.notation.replace(/\n/g, ';').replace(/\s/g, '%20').replace(/>/g, '%3E').replace(/</g, '%3C'));
+                    this.setState({openModal: false});
+                  }}
+                >
+                  Copy link to clipboard
+                </Button>
+                <Button m={1} variant='primary'
+                  onClick={() => {
+                    copy(this.props.notation);
+                    this.setState({openModal: false});
+                  }}
+                >
+                  Copy to clipboard
+                </Button>
+              </>
             :
               <></>
             }
@@ -103,7 +140,7 @@ export default class NotationViewer extends React.Component {
                   if(typeof this.props.onImport === 'function') { this.props.onImport(input); }
                 }
                 else {
-                  fileDownload(this.props.notation, '5d-chess-' + (Date.now()) + '.txt');
+                  fileDownload(this.props.notation, 'chessin5d-' + (Date.now()) + '.c5d');
                 }
                 this.setState({openModal: false});
               }}
@@ -128,33 +165,62 @@ export default class NotationViewer extends React.Component {
           p={2}
           width={[1/2,1/3,1/4]}
           bg='grey'
-          sx={{display: this.state.open ? 'block' : 'none', maxHeight: '65vh', overflowY: 'auto'}}
+          sx={{display: this.state.open ? 'block' : 'none', maxHeight: '75vh', overflowY: 'auto'}}
         >
-          <Box 
+          <Box
             sx={{
               maxHeight: '65vh',
               overflowY: 'auto',
-              WebkitTouchCallout: 'all',
-              WebkitUserSelect: 'all',
-              KhtmlUserSelect: 'all',
-              MozUserSelect: 'all',
-              MsUserSelect: 'all',
-              userSelect: 'all'
+              WebkitTouchCallout: 'text',
+              WebkitUserSelect: 'text',
+              KhtmlUserSelect: 'text',
+              MozUserSelect: 'text',
+              MsUserSelect: 'text',
+              userSelect: 'text'
             }}
           >
-            {this.props.notation.replace(/\r\n/g, '\n').split('\n').map((e) => {
+            {this.props.notation.replace(/\r\n/g, '\n').replace(/\s*;\s*/g, '\n').split('\n').filter(e => !e.includes('[') && e !== '').map((e) => {
               return (e.length > 0 ?
-                <Box
+                <Flex
                   p={2}
                   m={2}
                   color={e.includes('w.') ? 'black' : 'white'}
                   bg={e.includes('w.') ? 'white' : 'black'}
                   key={e}
+                  onClick={() => {
+                    var str = '';
+                    var notation = this.props.notation.replace(/\r\n/g, '\n').replace(/\s*;\s*/g, '\n').split('\n');
+                    for(var i = 0;i < notation.length;i++) {
+                      str += notation[i] + '\n';
+                      if(e === notation[i] && typeof this.props.onNotationClick === 'function') {
+                        this.props.onNotationClick(str);
+                      }
+                    }
+                  }}
+                  alignItems='center'
                 >
                   <Text p={1} fontWeight='bold'>{e}</Text>
-                </Box>
+                  <Box mx='auto' />
+                  {(() => {
+                    if(typeof this.props.currentNotation === 'string'){
+                      var currentNotation = this.props.currentNotation.replace(/\r\n/g, '\n').replace(/\s*;\s*/g, '\n').split('\n').filter(e => !e.includes('[') && e !== '');
+                      if(currentNotation.length > 0) {
+                        if(currentNotation[currentNotation.length - 1] === e) {
+                          return true;
+                        }
+                      }
+                    }
+                    return false;
+                  })() ?
+                    <FaArrowLeft style={{
+                      color: (e.includes('w.') ? 'black' : 'white')
+                    }} />
+                  :
+                    <></>
+                  }
+                </Flex>
               :
-                null
+                <></>
               );
             })}
           </Box>

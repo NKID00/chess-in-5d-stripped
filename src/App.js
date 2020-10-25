@@ -8,6 +8,7 @@ import { SnackbarProvider } from 'notistack';
 import Menu from 'uiTree/Menu';
 import Game from 'uiTree/Game';
 import UpdateToast from 'components/UpdateToast';
+import Music from 'components/Music';
 
 import 'fontsource-roboto';
 import 'App.css';
@@ -29,6 +30,7 @@ export default class App extends React.Component {
         <ThemeProvider theme={theme}>
           <SnackbarProvider maxSnack={2}>
             <UpdateToast />
+            <Music />
             <Menu />
             <Game />
           </SnackbarProvider>

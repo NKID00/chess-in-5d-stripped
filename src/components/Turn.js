@@ -1,5 +1,5 @@
 import React from 'react';
-import { Graphics } from 'react-pixi-fiber';
+import { Graphics, Text } from 'react-pixi-fiber';
 import Piece from 'components/Piece';
 import Highlight from 'components/Highlight';
 
@@ -14,7 +14,7 @@ export default class Turn extends React.Component {
     graphics.clear();
     graphics.beginFill(0x000000,0);
     if(this.props.active || this.props.present) {
-      graphics.lineStyle(this.props.present ? 50 : 30,
+      graphics.lineStyle(this.props.present ? 70 : 50,
         this.props.turnObj.player === 'white' ?
           this.props.palette.whiteBoardOutline
         :
@@ -22,25 +22,28 @@ export default class Turn extends React.Component {
       1, (this.props.flip ? 0 : 1));
     }
     else {
-      graphics.lineStyle(10, this.props.palette.inactiveBoardOutline, 1, (this.props.flip ? 0 : 1));
+      graphics.lineStyle(30, this.props.palette.inactiveBoardOutline, 1, (this.props.flip ? 0 : 1));
     }
     if(
-      Array.isArray(this.props.checksD) &&
-      this.props.checksD.filter((e) => {
+      Array.isArray(this.props.checks) &&
+      this.props.checks.filter((e) => {
         return (
           e.end.turn === this.props.turnObj.turn &&
           e.end.player === this.props.turnObj.player
+        ) || (
+          e.start.turn === this.props.turnObj.turn &&
+          e.start.player === this.props.turnObj.player
         );
       }).length > 0
     ) {
-      graphics.lineStyle(this.props.present ? 50 : 30, this.props.palette.checkBoardOutline, 1, (this.props.flip ? 0 : 1));
+      graphics.lineStyle(this.props.present ? 70 : 50, this.props.palette.checkBoardOutline, 1, (this.props.flip ? 0 : 1));
     }
     graphics.drawRect(x, y, 800, 800 * (this.props.flip ? -1 : 1));
     graphics.endFill();
     graphics.lineStyle(0);
     for(var i = 0;i < 8;i++) {
       for(var j = 0;j < 8;j++) {
-        if((i + j) % 2 !== 0) {
+        if(((i + j) % 2 === 0 && !this.props.flip) || ((i + j) % 2 !== 0 && this.props.flip)) {
           graphics.beginFill(this.props.palette.whiteSquare);
           graphics.drawRect(x + (i * 100), y + (j * 100) * (this.props.flip ? -1 : 1), 100, 100 * (this.props.flip ? -1 : 1));
           graphics.endFill();
@@ -60,7 +63,10 @@ export default class Turn extends React.Component {
     if(
       !deepcompare(prevProps.palette, this.props.palette) ||
       prevProps.x !== this.props.x ||
-      prevProps.y !== this.props.y
+      prevProps.y !== this.props.y ||
+      prevProps.active !== this.props.active ||
+      prevProps.present !== this.props.present ||
+      !deepcompare(prevProps.checks, this.props.checks)
     ) {
       this.draw();
     }
@@ -77,7 +83,7 @@ export default class Turn extends React.Component {
               <Piece
                 app={this.props.app}
                 palette={this.props.palette}
-                x={x + (e.position.file - 1) * 100}
+                x={x + (this.props.flip ? 8 - e.position.file : e.position.file - 1) * 100}
                 y={y + ((8 - e.position.rank) * 100) * (this.props.flip ? -1 : 1) + (this.props.flip ? -100 : 0)}
                 pieceObj={e}
                 key={e.piece + e.position.coordinate}
@@ -106,54 +112,6 @@ export default class Turn extends React.Component {
         :
           <></>
         }
-        {Array.isArray(this.props.checksS) && typeof this.props.turnObj !== 'undefined' ?
-          this.props.checksS.filter((e) => {
-            return (
-              e.start.turn === this.props.turnObj.turn &&
-              e.start.player === this.props.turnObj.player
-            );
-          }).map((e) => {
-            var x = this.props.x ? this.props.x : 0;
-            var y = this.props.y ? this.props.y : 0;
-            return (
-              <Highlight
-                app={this.props.app}
-                palette={this.props.palette}
-                x={x + (e.start.file - 1) * 100}
-                y={y + ((8 - e.start.rank) * 100) * (this.props.flip ? -1 : 1) + (this.props.flip ? -100 : 0)}
-                moveObj={e}
-                key={e.start.coordinate}
-                isCheckSource
-              />
-            );
-          })
-        :
-          <></>
-        }
-        {Array.isArray(this.props.checksD) && typeof this.props.turnObj !== 'undefined' ?
-          this.props.checksD.filter((e) => {
-            return (
-              e.end.turn === this.props.turnObj.turn &&
-              e.end.player === this.props.turnObj.player
-            );
-          }).map((e) => {
-            var x = this.props.x ? this.props.x : 0;
-            var y = this.props.y ? this.props.y : 0;
-            return (
-              <Highlight
-                app={this.props.app}
-                palette={this.props.palette}
-                x={x + (e.end.file - 1) * 100}
-                y={y + ((8 - e.end.rank) * 100) * (this.props.flip ? -1 : 1) + (this.props.flip ? -100 : 0)}
-                moveObj={e}
-                key={e.end.coordinate + 'cd'}
-                isCheckDestination
-              />
-            );
-          })
-        :
-          <></>
-        }
         {Array.isArray(this.props.highlights) && typeof this.props.turnObj !== 'undefined' ?
           this.props.highlights.filter((e) => {
             return (
@@ -167,7 +125,7 @@ export default class Turn extends React.Component {
               <Highlight
                 app={this.props.app}
                 palette={this.props.palette}
-                x={x + (e.end.file - 1) * 100}
+                x={x + (this.props.flip ? 8 - e.end.file : e.end.file - 1) * 100}
                 y={y + ((8 - e.end.rank) * 100) * (this.props.flip ? -1 : 1) + (this.props.flip ? -100 : 0)}
                 moveObj={e}
                 key={e.end.coordinate + 'cs'}
@@ -205,7 +163,7 @@ export default class Turn extends React.Component {
               <Highlight
                 app={this.props.app}
                 palette={this.props.palette}
-                x={x + (e.end.file - 1) * 100}
+                x={x + (this.props.flip ? 8 - e.end.file : e.end.file - 1) * 100}
                 y={y + ((8 - e.end.rank) * 100) * (this.props.flip ? -1 : 1) + (this.props.flip ? -100 : 0)}
                 moveObj={e}
                 key={e.end.coordinate + 'h'}
@@ -221,6 +179,94 @@ export default class Turn extends React.Component {
                   );
                 }).length > 0}
               />
+            );
+          })
+        :
+          <></>
+        }
+        {this.props.turnLabel ?
+          <Text
+            text={this.props.turnObj.turn + 'T'}
+            style={{
+              align: 'left',
+              fill: this.props.palette.turnLabel,
+              fontFamily: ['BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', 'sans-serif'],
+              fontWeight: 'bold',
+              fontSize: 60
+            }}
+            x={this.props.x ? this.props.x + 0 : 0}
+            y={(this.props.y ? this.props.y : 0) + (this.props.flip ? 70 : -130)}
+          />
+        :
+          <></>
+        }
+        {this.props.boardLabel ?
+          [0,1,2,3,4,5,6,7].map((e) => {
+            return (
+              <React.Fragment key={e + 'rf'}>
+                <Text
+                  text={String.fromCharCode(97+e)}
+                  style={{
+                    align: 'left',
+                    fill: (Array.isArray(this.props.checks) &&
+                    this.props.checks.filter((e) => {
+                      return (
+                        e.end.turn === this.props.turnObj.turn &&
+                        e.end.player === this.props.turnObj.player
+                      ) || (
+                        e.start.turn === this.props.turnObj.turn &&
+                        e.start.player === this.props.turnObj.player
+                      );
+                    }).length > 0) ?
+                      this.props.palette.checkBoardLabel
+                    : this.props.turnObj.player === 'white' ?
+                      this.props.palette.whiteBoardLabel
+                    :
+                      this.props.palette.blackBoardLabel,
+                    fontFamily: ['BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', 'sans-serif'],
+                    fontWeight: 'bold',
+                    fontSize: 40
+                  }}
+                  key={e + 'f'}
+                  x={(this.props.x ? this.props.x : 0) + ((this.props.flip ? 7 - e : e))*100}
+                  y={this.props.y ?
+                    this.props.y + 800 * (this.props.flip ? -1 : 1) + (this.props.flip ? -50 : 0)
+                  :
+                    800 * (this.props.flip ? -1 : 1) + (this.props.flip ? -50 : 0)
+                  }
+                />
+                <Text
+                  text={e+1}
+                  style={{
+                    align: 'left',
+                    fill: (Array.isArray(this.props.checks) &&
+                    this.props.checks.filter((e) => {
+                      return (
+                        e.end.turn === this.props.turnObj.turn &&
+                        e.end.player === this.props.turnObj.player
+                      ) || (
+                        e.start.turn === this.props.turnObj.turn &&
+                        e.start.player === this.props.turnObj.player
+                      );
+                    }).length > 0) ?
+                      this.props.palette.checkBoardLabel
+                    : this.props.turnObj.player === 'white' ?
+                      this.props.palette.whiteBoardLabel
+                    :
+                      this.props.palette.blackBoardLabel,
+                    fontFamily: ['BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', 'sans-serif'],
+                    fontWeight: 'bold',
+                    fontSize: 40
+                  }}
+                  key={e + 'r'}
+                  x={this.props.x ? this.props.x - 30 : -30}
+                  y={this.props.y ?
+                    this.props.y + (700 - e*100) * (this.props.flip ? -1 : 1) + (this.props.flip ? -100 : 0)
+                  :
+                    (700 - e*100) * (this.props.flip ? -1 : 1) + (this.props.flip ? -100 : 0)
+                  }
+                />
+              </React.Fragment>
             );
           })
         :
