@@ -289,6 +289,9 @@ class NetworkClientPrivate extends React.Component {
                   >
                     <MenuItem value='standard'>Standard</MenuItem>
                     <MenuItem value='defended_pawn'>Defended Pawn</MenuItem>
+                    <MenuItem value='half_reflected'>Half Reflected</MenuItem>
+                    <MenuItem value='two_timelines'>Two Timelines</MenuItem>
+                    <MenuItem value='turn_zero'>Turn Zero</MenuItem>
                   </Select>
                 </Flex>
                 <Flex>

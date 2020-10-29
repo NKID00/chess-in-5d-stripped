@@ -126,6 +126,8 @@ export default class GamePlayer extends React.Component {
     });
     obj.moveArrows = await this.moveArrowCalc();
     obj.currentNotation = await this.chess.exportFunc('notation_short');
+    obj.variant = (await this.chess.metadata()).variant;
+    obj.metadata = await this.chess.metadata();
     this.setState(obj);
     if(win.checkmate || win.stalemate) {
       this.endHowl.volume(Options.get('sound').effect);
