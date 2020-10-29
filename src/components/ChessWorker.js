@@ -4,7 +4,6 @@ var chess = new Chess();
 chess.checkmateTimeout = 10000;
 
 export const metadata = (metadata = {}) => {
-  console.log(chess.rawAction)
   Object.assign(chess.metadata, metadata);
   return chess.metadata;
 };
