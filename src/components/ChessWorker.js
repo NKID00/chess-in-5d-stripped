@@ -10,7 +10,7 @@ export const metadata = (metadata = {}) => {
 
 export const variant = (variant) => {
   chess.metadata.variant = variant;
-  return chess.reset();
+  return chess.reset(variant);
 };
 
 export const reset = () => {
@@ -25,8 +25,8 @@ export const convertable = (input) => {
   return chess.convertable(input);
 };
 
-export const importFunc = (input, skipDetection = true) => {
-  return chess.import(input, skipDetection);
+export const importFunc = (input, variant = undefined, skipDetection = true) => {
+  return chess.import(input, variant, skipDetection);
 };
 
 export const importable = (input, skipDetection = true) => {

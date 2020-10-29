@@ -8,6 +8,12 @@ import Board from 'components/Board';
 import NotationViewer from 'components/NotationViewer';
 import Settings from 'components/Settings';
 import LogoIcon from 'assets/logo.svg';
+import Options from 'Options';
+import { Howl } from 'howler';
+import piece from 'assets/sound/piece.flac';
+import reverse from 'assets/sound/reverse.flac';
+import submit from 'assets/sound/submit.flac';
+import end from 'assets/sound/end.flac';
 
 const deepcompare = require('deep-compare');
 const deepcopy = require('deep-copy');
@@ -15,6 +21,22 @@ const deepcopy = require('deep-copy');
 export default class GamePlayer extends React.Component {
   chess = new ChessWorker();
   boardRef = React.createRef();
+  pieceHowl = new Howl({
+    volume: 0,
+    src: piece
+  });
+  reverseHowl = new Howl({
+    volume: 0,
+    src: reverse
+  });
+  submitHowl = new Howl({
+    volume: 0,
+    src: submit
+  });
+  endHowl = new Howl({
+    volume: 0,
+    src: end
+  });
   state = {
     selectedPiece: null,
     highlights: [],
@@ -104,11 +126,19 @@ export default class GamePlayer extends React.Component {
     });
     obj.moveArrows = await this.moveArrowCalc();
     obj.currentNotation = await this.chess.exportFunc('notation_short');
+    obj.variant = (await this.chess.metadata()).variant;
+    obj.metadata = await this.chess.metadata();
     this.setState(obj);
     if(win.checkmate || win.stalemate) {
-      this.setState({ended: true});
-      if(typeof this.props.onEnd === 'function') {
-        this.props.onEnd(win);
+      this.endHowl.volume(Options.get('sound').effect);
+      if(this.endHowl.volume() > 0) {
+        this.endHowl.play();
+      }
+      if(!this.props.canAnalyze) {
+        this.setState({ended: true});
+        if(typeof this.props.onEnd === 'function') {
+          this.props.onEnd(win);
+        }
       }
     }
   }
@@ -173,7 +203,7 @@ export default class GamePlayer extends React.Component {
       else { newPlayer = 'white'; }
       await this.chess.importFunc(this.state.importedHistory.filter((e) => {
         return (e.action * 2 + (e.player === 'white' ? 0 : 1)) < (newAction * 2 + (newPlayer === 'white' ? 0 : 1));
-      }), true);
+      }), this.state.variant, true);
       await this.boardSync();
       this.setState({loading: false});
     }
@@ -183,7 +213,7 @@ export default class GamePlayer extends React.Component {
       this.setState({loading: true});
       await this.chess.importFunc(this.state.importedHistory.filter((e) => {
         return (e.action * 2 + (e.player === 'white' ? 0 : 1)) <= (this.state.action * 2 + (this.state.player === 'white' ? 0 : 1));
-      }), true);
+      }), this.state.variant, true);
       await this.boardSync();
       this.setState({loading: false});
     }
@@ -201,6 +231,10 @@ export default class GamePlayer extends React.Component {
     this.setState({highlights: []});
     if(unselectPiece) { this.setState({selectedPiece: null}); }
     await this.boardSync();
+    this.pieceHowl.volume(Options.get('sound').effect);
+    if(this.pieceHowl.volume() > 0) {
+      this.pieceHowl.play();
+    }
     if(typeof this.props.onMove === 'function') { this.props.onMove(moveObj); }
     this.setState({loading: false});
   }
@@ -208,6 +242,10 @@ export default class GamePlayer extends React.Component {
     this.setState({loading: true});
     await this.chess.undo();
     await this.boardSync();
+    this.reverseHowl.volume(Options.get('sound').effect);
+    if(this.reverseHowl.volume() > 0) {
+      this.reverseHowl.play();
+    }
     if(typeof this.props.onUndo === 'function') { this.props.onUndo(); }
     this.setState({loading: false});
   }
@@ -219,13 +257,17 @@ export default class GamePlayer extends React.Component {
       notation: await this.chess.exportFunc('notation_short')
     });
     await this.boardSync();
+    this.submitHowl.volume(Options.get('sound').effect);
+    if(this.submitHowl.volume() > 0) {
+      this.submitHowl.play();
+    }
     if(typeof this.props.onSubmit === 'function') { this.props.onSubmit(); }
     this.setState({loading: false});
   }
   async import(input) {
     if(this.props.canImport) {
       this.setState({loading: true});
-      await this.chess.importFunc(input, true);
+      await this.chess.importFunc(input, undefined, true);
       this.setState({
         importedHistory: await this.chess.exportFunc('object'),
         notation: await this.chess.exportFunc('notation_short')
@@ -259,7 +301,7 @@ export default class GamePlayer extends React.Component {
             onNotationClick={async (input) => {
               if(this.props.canAnalyze) {
                 this.setState({loading: true});
-                await this.chess.importFunc(input, true);
+                await this.chess.importFunc(input, this.state.variant, true);
                 await this.boardSync();
                 this.setState({loading: false});
               }

@@ -1,9 +1,31 @@
 const store = require('store');
 
+var defaultPalette = {
+  background: 0x000000,
+  whiteSquare: 0xaaaaaa,
+  blackSquare: 0x555555,
+  selectedPiece: 0x0083be,
+  moveArrow: 0xd3a026,
+  moveHighlight: 0x6fc326,
+  captureHighlight: 0xf50000,
+  checkArrow: 0xf50000,
+  whiteBoardOutline: 0xdddddd,
+  blackBoardOutline: 0x222222,
+  checkBoardOutline: 0xf50000,
+  inactiveBoardOutline: 0x777777,
+  timelineLabel: 0xffffff,
+  turnLabel: 0xffffff,
+  whiteBoardLabel: 0x000000,
+  blackBoardLabel: 0xffffff,
+  checkBoardLabel: 0xffffff
+};
+
 const reset = () => { store.clearAll(); }
+
 const resetPalette = () => {
-  
-}
+  store.set('palette', defaultPalette);
+};
+
 const get = (str) => {
   var res = store.get(str);
   var defaultObj = {};
@@ -16,25 +38,7 @@ const get = (str) => {
     };
   }
   else if(str === 'palette') {
-    defaultObj = {
-      background: 0x000000,
-      whiteSquare: 0xaaaaaa,
-      blackSquare: 0x555555,
-      selectedPiece: 0x0000ff,
-      moveArrow: 0xd3a026,
-      moveHighlight: 0x00ff00,
-      captureHighlight: 0xff0000,
-      checkArrow: 0xff0000,
-      whiteBoardOutline: 0xdddddd,
-      blackBoardOutline: 0x222222,
-      checkBoardOutline: 0xff0000,
-      inactiveBoardOutline: 0x777777,
-      timelineLabel: 0xffffff,
-      turnLabel: 0xffffff,
-      whiteBoardLabel: 0x000000,
-      blackBoardLabel: 0xffffff,
-      checkBoardLabel: 0xffffff
-    };
+    defaultObj = defaultPalette;
   }
   else if(str === 'name') {
     defaultObj = {
@@ -44,7 +48,8 @@ const get = (str) => {
   else if(str === 'sound') {
     defaultObj = {
       ambience: 0.5,
-      music: 0.5
+      music: 0.5,
+      effect: 0.5
     };
   }
   if(res) {

@@ -138,7 +138,7 @@ class LocalComputer extends React.Component {
   async componentDidUpdate(prevProps, prevState) {
     if(prevState.selectedComputer !== this.state.selectedComputer) {
       if(this.state.selectedComputer === 'random') {
-        this.setState({computer: Math.random > 0.5 ? 'white' : 'black'});
+        this.setState({computer: Math.random() > 0.5 ? 'white' : 'black'});
       }
       else {
         this.setState({computer: this.state.selectedComputer});
@@ -197,6 +197,7 @@ class LocalComputer extends React.Component {
               >
                 <MenuItem value='standard'>Standard</MenuItem>
                 <MenuItem value='defended_pawn'>Defended Pawn</MenuItem>
+                <MenuItem value='half_reflected'>Half Reflected</MenuItem>
               </Select>
             </Flex>
             <Flex>

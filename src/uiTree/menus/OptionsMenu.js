@@ -20,7 +20,8 @@ export default class OptionsMenu extends React.Component {
     paletteTmp: JSON.stringify(Options.get('palette'), null, 2),
     playerName: Options.get('name').username,
     musicVol: Options.get('sound').music,
-    ambienceVol: Options.get('sound').ambience
+    ambienceVol: Options.get('sound').ambience,
+    effectVol: Options.get('sound').effect
   };
   sync() {
     this.setState({
@@ -31,6 +32,7 @@ export default class OptionsMenu extends React.Component {
       playerName: Options.get('name').username,
       musicVol: Options.get('sound').music,
       ambienceVol: Options.get('sound').ambience,
+      effectVol: Options.get('sound').effect
     });
   }
   render() {
@@ -73,15 +75,20 @@ export default class OptionsMenu extends React.Component {
               }}
             />
             <Text py={2} fontWeight='bold'>Sound</Text>
+            <Text py={2}>Effect</Text>
+            <Slider value={this.state.effectVol} max={1} step={0.05} onChange={(e,v) => {
+              this.setState({effectVol: v});
+              Options.set('sound', {effect: v, ambience: this.state.ambienceVol, music: this.state.musicVol});
+            }}/>
             <Text py={2}>Music</Text>
             <Slider value={this.state.musicVol} max={1} step={0.05} onChange={(e,v) => {
               this.setState({musicVol: v});
-              Options.set('sound', {music: v, ambience: this.state.ambienceVol});
+              Options.set('sound', {music: v, ambience: this.state.ambienceVol, effect: this.state.effectVol});
             }}/>
             <Text py={2}>Ambience</Text>
             <Slider value={this.state.ambienceVol} max={1} step={0.05} onChange={(e,v) => {
               this.setState({ambienceVol: v});
-              Options.set('sound', {ambience: v, music: this.state.musicVol});
+              Options.set('sound', {ambience: v, music: this.state.musicVol, effect: this.state.effectVol});
             }}/>
             <Text py={2} fontWeight='bold'>PeerJS Server Config</Text>
             <TextField

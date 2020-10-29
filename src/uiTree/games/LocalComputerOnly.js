@@ -212,6 +212,7 @@ class LocalComputerOnly extends React.Component {
               >
                 <MenuItem value='standard'>Standard</MenuItem>
                 <MenuItem value='defended_pawn'>Defended Pawn</MenuItem>
+                <MenuItem value='half_reflected'>Half Reflected</MenuItem>
               </Select>
             </Flex>
             <Flex>
@@ -355,8 +356,6 @@ class LocalComputerOnly extends React.Component {
         />
         <GamePlayer
           ref={this.gameRef}
-          canControlWhite={false}
-          canControlBlack={false}
           winner={this.state.winner}
           variant={this.state.variant}
           onEnd={(win) => {

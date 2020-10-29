@@ -95,6 +95,7 @@ export default class LocalHuman extends React.Component {
               >
                 <MenuItem value='standard'>Standard</MenuItem>
                 <MenuItem value='defended_pawn'>Defended Pawn</MenuItem>
+                <MenuItem value='half_reflected'>Half Reflected</MenuItem>
               </Select>
             </Flex>
             <Flex>
@@ -209,8 +210,8 @@ export default class LocalHuman extends React.Component {
         </Modal>
         <GamePlayer
           ref={this.gameRef}
-          canControlWhite
-          canControlBlack
+          canControlWhite={!this.state.ended}
+          canControlBlack={!this.state.ended}
           winner={this.state.winner}
           variant={this.state.variant}
           onEnd={(win) => {
