@@ -385,7 +385,7 @@ export default class GamePlayer extends React.Component {
           :
             <></>
           }
-          {typeof this.props.winner === 'string' && this.props.winner !== '' ?
+          {typeof this.props.winner === 'string' && this.props.winner !== '' && this.props.winner !== 'draw' ?
             <Button
               variant='primary'
               disabled
@@ -413,7 +413,17 @@ export default class GamePlayer extends React.Component {
           :
             <></>
           }
-          {this.state.stalemate ?
+          {typeof this.props.winner === 'string' && this.props.winner === 'draw' ?
+            <Button
+              variant='primary'
+              disabled
+              color='black'
+              bg='grey'
+              mr={2}
+            >
+              Draw
+            </Button>
+          : this.state.stalemate ?
             <Button
               variant='primary'
               disabled
