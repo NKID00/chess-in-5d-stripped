@@ -19,7 +19,8 @@ export default class Settings extends React.Component {
     flip: false,
     timelineLabel: true,
     turnLabel: true,
-    boardLabel: false
+    boardLabel: false,
+    showCheckGhost: true
   };
   componentDidMount() {
     if(typeof this.props.value === 'object') {

@@ -53,7 +53,8 @@ export default class GamePlayer extends React.Component {
       flip: typeof this.props.flip === 'boolean' ? this.props.flip : false,
       timelineLabel: true,
       turnLabel: true,
-      boardLabel: false
+      boardLabel: false,
+      showCheckGhost: true
     },
     ended: false,
     variant: 'standard'
@@ -94,6 +95,11 @@ export default class GamePlayer extends React.Component {
     }
     return res;
   }
+  async addCheckGhost(boardObj, checks) {
+    var newBoardObj = deepcopy(boardObj);
+    
+    return newBoardObj;
+  }
   async boardSync() {
     var win = {
       player: await this.chess.player(),
@@ -101,7 +107,6 @@ export default class GamePlayer extends React.Component {
       stalemate: await this.chess.inStalemate()
     };
     var obj = {};
-    obj.board = await this.chess.board();
     obj.submittable = await this.chess.submittable(true);
     obj.undoable = await this.chess.undoable();
     obj.player = await this.chess.player();
@@ -112,6 +117,7 @@ export default class GamePlayer extends React.Component {
     obj.check = await this.chess.inCheck();
     obj.action = await this.chess.actionNumber();
     obj.checks = await this.chess.checks();
+    obj.board = await this.addCheckGhost(await this.chess.board(), obj.checks);
     obj.triggerDate = Date.now();
     obj.nextMoves = (await this.chess.moves('object', false, false, true)).filter((e) => {
       if(e.promotion !== '' && e.promotion !== null) {
