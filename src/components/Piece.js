@@ -125,7 +125,7 @@ export default class Piece extends React.Component {
           y={this.props.y}
           width={100}
           height={100}
-          alpha={this.props.fade ? 0.5 : 1}
+          alpha={this.props.fade ? 0.35 : 1}
         />
       </>
     );

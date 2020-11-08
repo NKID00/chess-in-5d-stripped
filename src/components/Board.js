@@ -5,6 +5,7 @@ import Arrow from 'components/Arrow';
 import { Stage, AppContext } from 'react-pixi-fiber';
 import Viewport from 'components/Viewport';
 import Options from 'Options';
+import Promotion from './Promotion';
 
 export default class Board extends React.Component {
   state = {
@@ -13,7 +14,9 @@ export default class Board extends React.Component {
     snapX: 500,
     snapY: 500,
     zoomHeight: 1333,
-    triggerDate: Date.now()
+    triggerDate: Date.now(),
+    triggerPromote: false,
+    promotionObj: {}
   }
   resizeListener = (() => {
     this.setState({
@@ -85,6 +88,21 @@ export default class Board extends React.Component {
   render() {
     return (
       <>
+        <Promotion
+          open={this.state.triggerPromote}
+          moveObj={this.state.promotionObj}
+          onClose={() => {
+            this.setState({ triggerPromote: false });
+          }}
+          onPromote={(piece) => {
+            var newMoveObj = Object.assign({}, this.state.promotionObj);
+            newMoveObj.promotion = piece;
+            if(typeof this.props.onHighlightClick === 'function') {
+              this.props.onHighlightClick(newMoveObj);
+            }
+            this.setState({ triggerPromote: false });
+          }}
+        />
         <Stage
           options={{
             height: this.state.height,
@@ -165,8 +183,13 @@ export default class Board extends React.Component {
                           }
                         }}
                         onHighlightClick={(moveObj) => {
-                          if(typeof this.props.onHighlightClick === 'function') {
-                            this.props.onHighlightClick(moveObj);
+                          if(moveObj.promotion === null) {
+                            if(typeof this.props.onHighlightClick === 'function') {
+                              this.props.onHighlightClick(moveObj);
+                            }
+                          }
+                          else {
+                            this.setState({ triggerPromote: true, promotionObj: moveObj });
                           }
                         }}
                         selectedPiece={this.props.selectedPiece}

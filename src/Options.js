@@ -29,7 +29,13 @@ const resetPalette = () => {
 const get = (str) => {
   var res = store.get(str);
   var defaultObj = {};
-  if(str === 'peerjs') {
+  if(str === 'server') {
+    defaultObj = {
+      url: 'server.chessin5d.net',
+      key: 'ff104801-d3da-49b5-ae3c-11a3198f6c22'
+    };
+  }
+  else if(str === 'peerjs') {
     defaultObj = {
       host: 'peer.chessin5d.net',
       port: 8000,

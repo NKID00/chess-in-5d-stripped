@@ -97,7 +97,7 @@ export default class GamePlayer extends React.Component {
   }
   async addCheckGhost(boardObj, checks) {
     var newBoardObj = deepcopy(boardObj);
-    for(var i = 0;i < checks.length;i++) {
+    for(var i = 0;this.state.settings.showCheckGhost && i < checks.length;i++) {
       var checksExists = false;
       for(var l = 0;l < newBoardObj.timelines.length;l++) {
         if(
@@ -114,7 +114,7 @@ export default class GamePlayer extends React.Component {
               }
             }
           }
-          for(var t = 0;!checksExists && t < newBoardObj.timelines[l].turns.length;t++) {
+          for(var t = 0;!checksExists && t < newBoardObj.timelines[l].turns.length;t++) { // eslint-disable-line no-redeclare
             if(
               newBoardObj.timelines[l].turns[t].turn === checks[i].start.turn ||
               newBoardObj.timelines[l].turns[t].turn === checks[i].end.turn
@@ -131,7 +131,7 @@ export default class GamePlayer extends React.Component {
               newBoardObj.timelines[l].turns[t].turn === checks[i].end.turn + 1
             ) {
               if(newBoardObj.timelines[l].turns[t].player === 'black' && checks[i].player === 'white') {
-                var newTurn = deepcopy(newBoardObj.timelines[l].turns[t]);
+                var newTurn = deepcopy(newBoardObj.timelines[l].turns[t]); // eslint-disable-line no-redeclare
                 newTurn.fade = true;
                 newTurn.player = 'white';
                 newTurn.turn++;
@@ -227,6 +227,9 @@ export default class GamePlayer extends React.Component {
       var settings = Object.assign({}, this.state.settings);
       settings.flip = this.props.flip;
       this.setState({settings: settings});
+    }
+    if(prevState.settings.showCheckGhost !== this.state.settings.showCheckGhost) {
+      this.setState({board: await this.addCheckGhost(await this.chess.board(), await this.chess.checks()) });
     }
     if((prevProps.defaultImport !== this.props.defaultImport) && (typeof this.props.defaultImport === 'string') && this.props.defaultImport.length > 0) {
       this.import(this.props.defaultImport);

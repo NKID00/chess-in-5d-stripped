@@ -35,7 +35,7 @@ export default class BotImport extends React.Component {
             }</Text>
             <Box mx='auto' />
           </Flex>
-          <Flex width={1} px={2} py={5} sx={{height: '100%'}}>
+          <Box width={1} px={2} py={5} sx={{height: '100%'}}>
               <Flex width={1} sx={{height: '100%'}}>
                 <Box width={1/2} px={2} sx={{height: '100%'}}>
                   <Textarea
@@ -60,7 +60,7 @@ export default class BotImport extends React.Component {
                   />
                 </Box>
               </Flex>
-          </Flex>
+          </Box>
           <Flex
             p={2}
             alignItems='center'
