@@ -58,6 +58,18 @@ const get = (str) => {
       effect: 0.5
     };
   }
+  else if(str === 'settings') {
+    defaultObj = {
+      boardShow: 'both',
+      allowRecenter: true,
+      moveShow: 'timeline',
+      flip: false,
+      timelineLabel: true,
+      turnLabel: true,
+      boardLabel: false,
+      showCheckGhost: true
+    };
+  }
   if(res) {
     res = Object.assign(defaultObj, res);
   }

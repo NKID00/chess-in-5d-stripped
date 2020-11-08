@@ -127,8 +127,8 @@ export default class GamePlayer extends React.Component {
               }
             }
             if(
-              newBoardObj.timelines[l].turns[t].turn === checks[i].start.turn + 1 ||
-              newBoardObj.timelines[l].turns[t].turn === checks[i].end.turn + 1
+              newBoardObj.timelines[l].turns[t].turn === checks[i].start.turn - 1 ||
+              newBoardObj.timelines[l].turns[t].turn === checks[i].end.turn - 1
             ) {
               if(newBoardObj.timelines[l].turns[t].player === 'black' && checks[i].player === 'white') {
                 var newTurn = deepcopy(newBoardObj.timelines[l].turns[t]); // eslint-disable-line no-redeclare
@@ -193,6 +193,9 @@ export default class GamePlayer extends React.Component {
     }
   }
   componentDidMount() {
+    var settings = Options.get('settings');
+    delete settings.flip;
+    this.setState({settings: Object.assign(this.state.settings, settings)});
     if((typeof this.props.defaultImport === 'string') && this.props.defaultImport.length > 0) {
       this.import(this.props.defaultImport);
     }
@@ -360,7 +363,10 @@ export default class GamePlayer extends React.Component {
               }
             }}
           />
-          <Settings value={this.state.settings} onChange={(e) => { this.setState({settings: e}); }}/>
+          <Settings value={this.state.settings} onChange={(e) => {
+            Options.set('settings', e);
+            this.setState({settings: e});
+          }}/>
         </Flex>
         {this.state.loading ?
           <LinearProgress
