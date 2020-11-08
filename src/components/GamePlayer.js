@@ -53,7 +53,8 @@ export default class GamePlayer extends React.Component {
       flip: typeof this.props.flip === 'boolean' ? this.props.flip : false,
       timelineLabel: true,
       turnLabel: true,
-      boardLabel: false
+      boardLabel: false,
+      showCheckGhost: true
     },
     ended: false,
     variant: 'standard'
@@ -94,6 +95,55 @@ export default class GamePlayer extends React.Component {
     }
     return res;
   }
+  async addCheckGhost(boardObj, checks) {
+    var newBoardObj = deepcopy(boardObj);
+    for(var i = 0;this.state.settings.showCheckGhost && i < checks.length;i++) {
+      var checksExists = false;
+      for(var l = 0;l < newBoardObj.timelines.length;l++) {
+        if(
+          newBoardObj.timelines[l].timeline === checks[i].start.timeline ||
+          newBoardObj.timelines[l].timeline === checks[i].end.timeline
+        ) {
+          for(var t = 0;t < newBoardObj.timelines[l].turns.length;t++) {
+            if(
+              newBoardObj.timelines[l].turns[t].turn === checks[i].start.turn ||
+              newBoardObj.timelines[l].turns[t].turn === checks[i].end.turn
+            ) {
+              if(newBoardObj.timelines[l].turns[t].player === checks[i].player) {
+                checksExists = true;
+              }
+            }
+          }
+          for(var t = 0;!checksExists && t < newBoardObj.timelines[l].turns.length;t++) { // eslint-disable-line no-redeclare
+            if(
+              newBoardObj.timelines[l].turns[t].turn === checks[i].start.turn ||
+              newBoardObj.timelines[l].turns[t].turn === checks[i].end.turn
+            ) {
+              if(newBoardObj.timelines[l].turns[t].player === 'white' && checks[i].player === 'black') {
+                var newTurn = deepcopy(newBoardObj.timelines[l].turns[t]);
+                newTurn.fade = true;
+                newTurn.player = 'black';
+                newBoardObj.timelines[l].turns.push(newTurn);
+              }
+            }
+            if(
+              newBoardObj.timelines[l].turns[t].turn === checks[i].start.turn - 1 ||
+              newBoardObj.timelines[l].turns[t].turn === checks[i].end.turn - 1
+            ) {
+              if(newBoardObj.timelines[l].turns[t].player === 'black' && checks[i].player === 'white') {
+                var newTurn = deepcopy(newBoardObj.timelines[l].turns[t]); // eslint-disable-line no-redeclare
+                newTurn.fade = true;
+                newTurn.player = 'white';
+                newTurn.turn++;
+                newBoardObj.timelines[l].turns.push(newTurn);
+              }
+            }
+          }
+        }
+      }
+    }
+    return newBoardObj;
+  }
   async boardSync() {
     var win = {
       player: await this.chess.player(),
@@ -101,7 +151,6 @@ export default class GamePlayer extends React.Component {
       stalemate: await this.chess.inStalemate()
     };
     var obj = {};
-    obj.board = await this.chess.board();
     obj.submittable = await this.chess.submittable(true);
     obj.undoable = await this.chess.undoable();
     obj.player = await this.chess.player();
@@ -112,6 +161,7 @@ export default class GamePlayer extends React.Component {
     obj.check = await this.chess.inCheck();
     obj.action = await this.chess.actionNumber();
     obj.checks = await this.chess.checks();
+    obj.board = await this.addCheckGhost(await this.chess.board(), obj.checks);
     obj.triggerDate = Date.now();
     obj.nextMoves = (await this.chess.moves('object', false, false, true)).filter((e) => {
       if(e.promotion !== '' && e.promotion !== null) {
@@ -143,6 +193,9 @@ export default class GamePlayer extends React.Component {
     }
   }
   componentDidMount() {
+    var settings = Options.get('settings');
+    delete settings.flip;
+    this.setState({settings: Object.assign(this.state.settings, settings)});
     if((typeof this.props.defaultImport === 'string') && this.props.defaultImport.length > 0) {
       this.import(this.props.defaultImport);
     }
@@ -177,6 +230,9 @@ export default class GamePlayer extends React.Component {
       var settings = Object.assign({}, this.state.settings);
       settings.flip = this.props.flip;
       this.setState({settings: settings});
+    }
+    if(prevState.settings.showCheckGhost !== this.state.settings.showCheckGhost) {
+      this.setState({board: await this.addCheckGhost(await this.chess.board(), await this.chess.checks()) });
     }
     if((prevProps.defaultImport !== this.props.defaultImport) && (typeof this.props.defaultImport === 'string') && this.props.defaultImport.length > 0) {
       this.import(this.props.defaultImport);
@@ -307,7 +363,10 @@ export default class GamePlayer extends React.Component {
               }
             }}
           />
-          <Settings value={this.state.settings} onChange={(e) => { this.setState({settings: e}); }}/>
+          <Settings value={this.state.settings} onChange={(e) => {
+            Options.set('settings', e);
+            this.setState({settings: e});
+          }}/>
         </Flex>
         {this.state.loading ?
           <LinearProgress
@@ -385,7 +444,7 @@ export default class GamePlayer extends React.Component {
           :
             <></>
           }
-          {typeof this.props.winner === 'string' && this.props.winner !== '' ?
+          {typeof this.props.winner === 'string' && this.props.winner !== '' && this.props.winner !== 'draw' ?
             <Button
               variant='primary'
               disabled
@@ -413,7 +472,17 @@ export default class GamePlayer extends React.Component {
           :
             <></>
           }
-          {this.state.stalemate ?
+          {typeof this.props.winner === 'string' && this.props.winner === 'draw' ?
+            <Button
+              variant='primary'
+              disabled
+              color='black'
+              bg='grey'
+              mr={2}
+            >
+              Draw
+            </Button>
+          : this.state.stalemate ?
             <Button
               variant='primary'
               disabled

@@ -76,8 +76,8 @@ export default class NotationViewer extends React.Component {
                 {typeof this.props.notation === 'string' && this.props.notation.length > 0 ?
                   <>
                     <Text p={2} fontWeight='bold'>Link</Text>
-                    <a href={window.location.origin + '/#/local/game/analyze?import=' + this.props.notation.replace(/\n/g, ';').replace(/\s/g, '%20').replace(/>/g, '%3E').replace(/</g, '%3C')} target='_blank' rel='noopener noreferrer'>
-                      {window.location.origin + '/#/local/game/analyze?import=' + this.props.notation.replace(/\n/g, ';').replace(/\s/g, '%20').replace(/>/g, '%3E').replace(/</g, '%3C')}
+                    <a href={window.location.origin + '/#/local/game/analyze?import=' + this.props.notation.replace(/\n/g, ';').replace(/\s/g, '%20').replace(/>/g, '%3E').replace(/</g, '%3C').replace(/\+/g, '%2B')} target='_blank' rel='noopener noreferrer'>
+                      {window.location.origin + '/#/local/game/analyze?import=' + this.props.notation.replace(/\n/g, ';').replace(/\s/g, '%20').replace(/>/g, '%3E').replace(/</g, '%3C').replace(/\+/g, '%2B')}
                     </a>
                     <Box my={1} />
                   </>
@@ -115,7 +115,7 @@ export default class NotationViewer extends React.Component {
               <>
                 <Button m={1} variant='secondary'
                   onClick={() => {
-                    copy(window.location.origin + '/#/local/game/analyze?import=' + this.props.notation.replace(/\n/g, ';').replace(/\s/g, '%20').replace(/>/g, '%3E').replace(/</g, '%3C'));
+                    copy(window.location.origin + '/#/local/game/analyze?import=' + this.props.notation.replace(/\n/g, ';').replace(/\s/g, '%20').replace(/>/g, '%3E').replace(/</g, '%3C').replace(/\+/g, '%2B'));
                     this.setState({openModal: false});
                   }}
                 >
