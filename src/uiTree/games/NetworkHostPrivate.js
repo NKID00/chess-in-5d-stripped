@@ -103,12 +103,12 @@ class NetworkHostPrivate extends React.Component {
     });
     this.sync();
     window.setInterval(() => {
-      if(Date.now() - this.state.heartbeat > 3000 && !this.state.ended && this.state.hostConnection !== null) {
+      if(Date.now() - this.state.heartbeat > 10000 && !this.state.ended && this.state.hostConnection !== null) {
         this.props.enqueueSnackbar('Network error occurred, client disconnected!', {variant: 'error', persist: true});
         this.hostConnector.destroy();
         this.setState({hostConnection: null});
       }
-    }, 3000);
+    }, 10000);
     window.setInterval(() => {
       if(this.state.hostConnection !== null) {
         this.state.hostConnection.send({type: 'heartbeat'});
