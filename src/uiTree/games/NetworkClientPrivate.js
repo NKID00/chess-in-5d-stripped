@@ -14,7 +14,7 @@ import Chat from 'components/Chat';
 
 class NetworkClientPrivate extends React.Component {
   clientConnector = null;
-  gameRef = React.createRef();
+  timedGameRef = React.createRef();
   state = {
     start: false,
     ended: false,
@@ -120,12 +120,12 @@ class NetworkClientPrivate extends React.Component {
     });
     this.state.clientConnection.send({type: 'name', name: this.state.clientName});
     window.setInterval(() => {
-      if(Date.now() - this.state.heartbeat > 3000 && !this.state.ended && this.state.clientConnection !== null) {
+      if(Date.now() - this.state.heartbeat > 10000 && !this.state.ended && this.state.clientConnection !== null) {
         this.props.enqueueSnackbar('Network error occurred, host disconnected!', {variant: 'error', persist: true});
         this.clientConnector.destroy();
         this.setState({clientConnection: null});
       }
-    }, 3000);
+    }, 10000);
     window.setInterval(() => {
       if(this.state.clientConnection !== null) {
         this.state.clientConnection.send({type: 'heartbeat'});
@@ -300,6 +300,7 @@ class NetworkClientPrivate extends React.Component {
         onEnd={(win) => {
           this.setState({ start: false, ended: true });
         }}
+        startTitle='Connect'
       >
         <Chat
           sendChat={(str) => { this.sendChat(str); }}

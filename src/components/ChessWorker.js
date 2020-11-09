@@ -1,7 +1,7 @@
 import Chess from '5d-chess-js';
 
 var chess = new Chess();
-chess.checkmateTimeout = 10000;
+chess.checkmateTimeout = 7500;
 
 export const metadata = (metadata = {}) => {
   Object.assign(chess.metadata, metadata);

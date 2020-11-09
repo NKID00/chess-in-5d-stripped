@@ -284,6 +284,7 @@ export default class GamePlayer extends React.Component {
   async move(moveObj, unselectPiece = false) {
     this.setState({loading: true});
     await this.chess.move(moveObj, true);
+    if(typeof this.props.onMove === 'function') { this.props.onMove(moveObj); }
     this.setState({highlights: []});
     if(unselectPiece) { this.setState({selectedPiece: null}); }
     await this.boardSync();
@@ -291,23 +292,23 @@ export default class GamePlayer extends React.Component {
     if(this.pieceHowl.volume() > 0) {
       this.pieceHowl.play();
     }
-    if(typeof this.props.onMove === 'function') { this.props.onMove(moveObj); }
     this.setState({loading: false});
   }
   async undo() {
     this.setState({loading: true});
     await this.chess.undo();
+    if(typeof this.props.onUndo === 'function') { this.props.onUndo(); }
     await this.boardSync();
     this.reverseHowl.volume(Options.get('sound').effect);
     if(this.reverseHowl.volume() > 0) {
       this.reverseHowl.play();
     }
-    if(typeof this.props.onUndo === 'function') { this.props.onUndo(); }
     this.setState({loading: false});
   }
   async submit() {
     this.setState({loading: true});
     await this.chess.submit(true);
+    if(typeof this.props.onSubmit === 'function') { this.props.onSubmit(); }
     this.setState({
       importedHistory: await this.chess.exportFunc('object'),
       notation: await this.chess.exportFunc('notation_short')
@@ -317,7 +318,6 @@ export default class GamePlayer extends React.Component {
     if(this.submitHowl.volume() > 0) {
       this.submitHowl.play();
     }
-    if(typeof this.props.onSubmit === 'function') { this.props.onSubmit(); }
     this.setState({loading: false});
   }
   async import(input) {
