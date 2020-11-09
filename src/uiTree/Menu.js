@@ -7,7 +7,7 @@ import MenuBackdrop from 'uiTree/MenuBackdrop';
 import MainMenu from 'uiTree/menus/MainMenu';
 import LocalMenu from 'uiTree/menus/LocalMenu';
 import NetworkMenu from 'uiTree/menus/NetworkMenu';
-import RulesMenu from 'uiTree/menus/RulesMenu';
+import TutorialMenu from 'uiTree/menus/TutorialMenu';
 import OptionsMenu from 'uiTree/menus/OptionsMenu';
 import BugTrackerMenu from 'uiTree/menus/BugTrackerMenu';
 
@@ -35,8 +35,8 @@ class Menu extends React.Component {
           <Route exact path='/network'>
             <NetworkMenu />
           </Route>
-          <Route exact path='/rules'>
-            <RulesMenu />
+          <Route exact path='/tutorial'>
+            <TutorialMenu />
           </Route>
           <Route exact path='/options'>
             <OptionsMenu />
@@ -49,7 +49,8 @@ class Menu extends React.Component {
           '/',
           '/local',
           '/network',
-          '/rules',
+          '/tutorial',
+          '/tutorial/rules',
           '/options',
           '/bugs'
         ]}>

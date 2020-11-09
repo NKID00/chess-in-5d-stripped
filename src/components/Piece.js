@@ -30,7 +30,7 @@ export default class Piece extends React.Component {
       else if(this.props.pieceObj.piece === 'R') {
         this.pieceRef.current.texture = PIXI.Texture.from(WhiteRook);
       }
-      else if(this.props.pieceObj.piece === 'Q') {
+      else if(this.props.pieceObj.piece === 'Q' || this.props.pieceObj.piece === 'P') {
         this.pieceRef.current.texture = PIXI.Texture.from(WhiteQueen);
       }
       else if(this.props.pieceObj.piece === 'K') {
@@ -50,7 +50,7 @@ export default class Piece extends React.Component {
       else if(this.props.pieceObj.piece === 'R') {
         this.pieceRef.current.texture = PIXI.Texture.from(BlackRook);
       }
-      else if(this.props.pieceObj.piece === 'Q') {
+      else if(this.props.pieceObj.piece === 'Q' || this.props.pieceObj.piece === 'P') {
         this.pieceRef.current.texture = PIXI.Texture.from(BlackQueen);
       }
       else if(this.props.pieceObj.piece === 'K') {
@@ -104,7 +104,7 @@ export default class Piece extends React.Component {
             }
           }}
         />
-        <Sprite 
+        <Sprite
           ref={this.pieceRef}
           pointertap={(e) => {
             if(typeof this.props.onPieceClick === 'function') {

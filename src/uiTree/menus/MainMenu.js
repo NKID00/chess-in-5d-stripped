@@ -39,12 +39,12 @@ export default class MainMenu extends React.Component {
               Network Game
             </LinkButton>
             <LinkButton
-              to='/rules'
+              to='/tutorial'
               variant='primary'
               width={1}
               my={3}
             >
-              Rules
+              Tutorials
             </LinkButton>
             <LinkButton
               to='/options'

@@ -78,6 +78,12 @@ export default class GamePlayer extends React.Component {
         this.submit();
       }
     }
+    if(e.keyCode === 37) {
+      this.revert();
+    }
+    if(e.keyCode === 39) {
+      this.forward();
+    }
     if(e.keyCode === 85) {
       var settings = Object.assign({}, this.state.settings);
       settings.flip = !this.state.settings.flip;
@@ -87,6 +93,10 @@ export default class GamePlayer extends React.Component {
   async moveArrowCalc() {
     var actions = deepcopy(await this.chess.actionHistory());
     var chess = new ChessWorker();
+    try {
+      await chess.variant((await this.chess.metadata()).variant);
+    }
+    catch(err) {}
     var res = [];
     var newMoveArrow = async (currMove) => {
       var prevTimelines = deepcopy((await chess.board()).timelines);
@@ -190,15 +200,18 @@ export default class GamePlayer extends React.Component {
     obj.triggerDate = Date.now();
     obj.nextMoves = (await this.chess.moves('object', false, false, true)).filter((e) => {
       if(e.promotion !== '' && e.promotion !== null) {
+        /*
         if(e.promotion === 'K') { return true; }
         if(e.promotion === 'R' && !(
           (e.player === 'white' && e.end.rank === 8 && e.start.rank === 7) ||
           (e.player === 'black' && e.end.rank === 2 && e.start.rank === 1)
         )) { return true; }
-        return e.promotion === 'Q';
+        */
+        return e.promotion === 'Q' || e.promotion === 'P';
       }
       return true;
     });
+    obj.moveBuffer = await this.chess.moveBuffer();
     obj.moveArrows = await this.moveArrowCalc();
     obj.currentNotation = await this.chess.exportFunc('notation_short');
     obj.variant = (await this.chess.metadata()).variant;
@@ -297,6 +310,9 @@ export default class GamePlayer extends React.Component {
       await this.chess.importFunc(this.state.importedHistory.filter((e) => {
         return (e.action * 2 + (e.player === 'white' ? 0 : 1)) < (newAction * 2 + (newPlayer === 'white' ? 0 : 1));
       }), this.state.variant, true);
+      if(typeof this.props.onRevert === 'function') {
+        this.props.onRevert();
+      }
       await this.boardSync();
       this.setState({loading: false});
     }
@@ -307,6 +323,9 @@ export default class GamePlayer extends React.Component {
       await this.chess.importFunc(this.state.importedHistory.filter((e) => {
         return (e.action * 2 + (e.player === 'white' ? 0 : 1)) <= (this.state.action * 2 + (this.state.player === 'white' ? 0 : 1));
       }), this.state.variant, true);
+      if(typeof this.props.onForward === 'function') {
+        this.props.onForward();
+      }
       await this.boardSync();
       this.setState({loading: false});
     }
