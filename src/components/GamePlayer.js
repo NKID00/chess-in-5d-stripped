@@ -452,12 +452,12 @@ export default class GamePlayer extends React.Component {
               bg={this.props.winner !== 'white'? 'black' : 'white'}
               mr={2}
             >
-              {this.state.player === 'white' && this.props.whiteName ?
+              {this.props.winner === 'white' && this.props.whiteName ?
                 this.props.whiteName + ' Wins'
-              : this.state.player === 'black' && this.props.blackName ?
+              : this.props.winner === 'black' && this.props.blackName ?
                 this.props.blackName + ' Wins'
               :
-                this.state.player.substr(0,1).toUpperCase() + this.state.player.substr(1) + ' Wins'}
+                this.props.winner.substr(0,1).toUpperCase() + this.props.winner.substr(1) + ' Wins'}
             </Button>
           : this.state.checkmate ?
             <Button
