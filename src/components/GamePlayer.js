@@ -59,6 +59,31 @@ export default class GamePlayer extends React.Component {
     ended: false,
     variant: 'standard'
   };
+  shortcuts(e) {
+    if(e.keyCode === 8 || e.keyCode === 90) {
+      if(e.keyCode === 8) {
+        e.preventDefault();
+      }
+      if(this.state.undoable) {
+        this.undo();
+      }
+    }
+    if(e.keyCode === 9) {
+      if(typeof this.boardRef !== 'undefined') {
+        this.boardRef.current.recenter();
+      }
+    }
+    if(e.keyCode === 13 || e.keyCode === 70) {
+      if(this.state.submittable) {
+        this.submit();
+      }
+    }
+    if(e.keyCode === 85) {
+      var settings = Object.assign({}, this.state.settings);
+      settings.flip = !this.state.settings.flip;
+      this.setState({settings: settings});
+    }
+  }
   async moveArrowCalc() {
     var actions = deepcopy(await this.chess.actionHistory());
     var chess = new ChessWorker();
@@ -199,7 +224,13 @@ export default class GamePlayer extends React.Component {
     if((typeof this.props.defaultImport === 'string') && this.props.defaultImport.length > 0) {
       this.import(this.props.defaultImport);
     }
-    this.boardSync();
+    this.boardSync().then(() => {
+      if(typeof this.props.onVariantLoad === 'function') {
+        this.props.onVariantLoad();
+      }
+    });
+    this.shortcuts = this.shortcuts.bind(this);
+    window.addEventListener('keyup', this.shortcuts);
   }
   async componentDidUpdate(prevProps, prevState) {
     if(!deepcompare(
@@ -241,6 +272,9 @@ export default class GamePlayer extends React.Component {
       this.setState({loading: true});
       await this.chess.variant(this.props.variant);
       await this.boardSync();
+      if(typeof this.props.onVariantLoad === 'function') {
+        this.props.onVariantLoad();
+      }
       this.setState({loading: false});
     }
     if(prevProps.whiteName !== this.props.whiteName && typeof this.props.whiteName === 'string') {
@@ -249,6 +283,9 @@ export default class GamePlayer extends React.Component {
     if(prevProps.blackName !== this.props.blackName && typeof this.props.blackName === 'string') {
       this.chess.metadata({black: this.props.blackName});
     }
+  }
+  componentWillUnmount() {
+    window.removeEventListener('keypress', this.shortcuts);
   }
   async revert() {
     if(this.props.canAnalyze) {

@@ -23,7 +23,8 @@ export default class TimedGamePlayer extends React.Component {
     whiteDurationLeft: 0,
     blackDurationLeft: 0,
     winner: '',
-    variant: 'standard'
+    variant: 'standard',
+    variantLoaded: false
   };
   lastUpdate = Date.now();
   async update() {
@@ -117,7 +118,7 @@ export default class TimedGamePlayer extends React.Component {
               <Select
                 value={this.props.variant ? this.props.variant : this.state.variant}
                 disabled={this.props.disableVariant}
-                onChange={(e) => { this.setState({variant: e.target.value}); }}
+                onChange={(e) => { this.setState({variant: e.target.value, variantLoaded: false }); }}
               >
                 <MenuItem value='standard'>Standard</MenuItem>
                 <MenuItem value='defended_pawn'>Defended Pawn</MenuItem>
@@ -242,8 +243,8 @@ export default class TimedGamePlayer extends React.Component {
             </LinkButton>
             {this.props.modalBarChildren}
             <Button m={1}
-              disabled={this.props.disableStart}
-              bg={this.props.disableStart ? 'grey' : 'blue'}
+              disabled={this.props.disableStart && this.state.variantLoaded}
+              bg={(this.props.disableStart && this.state.variantLoaded) ? 'grey' : 'blue'}
               onClick={() => {
                 if(typeof this.props.onStart === 'function') {
                   this.props.onStart();
@@ -269,6 +270,7 @@ export default class TimedGamePlayer extends React.Component {
           winner={this.props.winner ? this.props.winner : this.state.winner}
           variant={this.props.variant ? this.props.variant : this.state.variant}
           flip={this.props.flip}
+          onVariantLoad={() => { this.setState({ variantLoaded: true }) }}
           onEnd={(win) => {
             if(typeof this.props.onEnd === 'function') {
               this.props.onEnd(win);
