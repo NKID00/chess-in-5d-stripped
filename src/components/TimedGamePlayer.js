@@ -266,7 +266,7 @@ export default class TimedGamePlayer extends React.Component {
           canImport={this.props.canImport}
           canControlWhite={typeof this.props.canControlWhite === 'boolean' ? this.props.canControlWhite : !this.state.ended}
           canControlBlack={typeof this.props.canControlBlack === 'boolean' ? this.props.canControlBlack : !this.state.ended}
-          winner={this.props.winner ? (this.props.winner === 'white' ? 'black' : 'white') : this.state.winner}
+          winner={this.props.winner ? this.props.winner : this.state.winner}
           variant={this.props.variant ? this.props.variant : this.state.variant}
           flip={this.props.flip}
           onEnd={(win) => {
@@ -274,7 +274,7 @@ export default class TimedGamePlayer extends React.Component {
               this.props.onEnd(win);
             }
             if(!this.props.overrideEnd) {
-              this.setState({ start: false, ended: true, winner: win.player });
+              this.setState({ start: false, ended: true, winner: win.player === 'white' ? 'black' : 'white' });
             }
           }}
           onMove={async (moveObj) => {
