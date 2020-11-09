@@ -40,7 +40,12 @@ export default class Promotion extends React.Component {
                 <>
                   <img src={WhiteQueen} alt='White Queen' width='25%' onClick={() => {
                     if(typeof this.props.onPromote === 'function') {
-                      this.props.onPromote('Q');
+                      if(this.props.moveObj.promotion === 'Q') {
+                        this.props.onPromote('Q');
+                      }
+                      else {
+                        this.props.onPromote('P');
+                      }
                     }
                   }}/>
                   <img src={WhiteRook} alt='White Rook' width='25%' onClick={() => {
@@ -63,7 +68,12 @@ export default class Promotion extends React.Component {
                 <>
                   <img src={BlackQueen} alt='Black Queen' width='25%' onClick={() => {
                     if(typeof this.props.onPromote === 'function') {
-                      this.props.onPromote('Q');
+                      if(this.props.moveObj.promotion === 'Q') {
+                        this.props.onPromote('Q');
+                      }
+                      else {
+                        this.props.onPromote('P');
+                      }
                     }
                   }}/>
                   <img src={BlackRook} alt='Black Rook' width='25%' onClick={() => {

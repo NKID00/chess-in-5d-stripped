@@ -46,7 +46,7 @@ export default class Tutorial extends React.Component {
         <Box
           ref={this.boxRef}
           p={2}
-          width={[2/3,1/2]}
+          width={[2/3,1/2,2/5]}
           bg='white'
           color='black'
           sx={{display: this.state.open ? 'block' : 'none'}}
