@@ -20,19 +20,17 @@ var defaultPalette = {
   checkBoardLabel: 0xffffff
 };
 
-const reset = () => { store.clearAll(); }
-
 const resetPalette = () => {
   store.set('palette', defaultPalette);
 };
 
-const get = (str) => {
-  var res = store.get(str);
+const getDefault = (str) => {
   var defaultObj = {};
   if(str === 'server') {
     defaultObj = {
       url: 'server.chessin5d.net',
-      key: 'ff104801-d3da-49b5-ae3c-11a3198f6c22'
+      key: 'ff104801-d3da-49b5-ae3c-11a3198f6c22',
+      jwt: ''
     };
   }
   else if(str === 'peerjs') {
@@ -70,6 +68,12 @@ const get = (str) => {
       showCheckGhost: true
     };
   }
+  return defaultObj;
+};
+
+const get = (str) => {
+  var res = store.get(str);
+  var defaultObj = getDefault(str);
   if(res) {
     res = Object.assign(defaultObj, res);
   }
@@ -82,6 +86,16 @@ const get = (str) => {
 
 const set = (str, data) => {
   store.set(str, data);
+};
+
+const reset = () => {
+  store.clearAll();
+  store.set('server', getDefault('server'));
+  store.set('peerjs', getDefault('peerjs'));
+  store.set('palette', getDefault('palette'));
+  store.set('name', getDefault('name'));
+  store.set('sound', getDefault('sound'));
+  store.set('settings', getDefault('settings'));
 };
 
 export default {

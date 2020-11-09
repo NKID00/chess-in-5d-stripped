@@ -8,6 +8,7 @@ import { Howler } from 'howler';
 
 import Menu from 'uiTree/Menu';
 import Game from 'uiTree/Game';
+import Tutorial from 'uiTree/Tutorial';
 import UpdateToast from 'components/UpdateToast';
 import Music from 'components/Music';
 
@@ -47,6 +48,7 @@ export default class App extends React.Component {
             <Music />
             <Menu />
             <Game />
+            <Tutorial />
           </SnackbarProvider>
         </ThemeProvider>
       </HashRouter>

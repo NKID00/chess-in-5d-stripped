@@ -38,11 +38,13 @@ export default class Turn extends React.Component {
     ) {
       graphics.lineStyle(this.props.present ? 70 : 50, this.props.palette.checkBoardOutline, (this.props.turnObj.fade ? 0.35 : 1), (this.props.flip ? 0 : 1));
     }
-    graphics.drawRect(x, y, 800, 800 * (this.props.flip ? -1 : 1));
+    graphics.drawRect(x, y,
+      (this.props.turnObj.width ? this.props.turnObj.width : 8) * 100,
+      (this.props.turnObj.height ? this.props.turnObj.height : 8) * 100 * (this.props.flip ? -1 : 1));
     graphics.endFill();
     graphics.lineStyle(0);
-    for(var i = 0;i < 8;i++) {
-      for(var j = 0;j < 8;j++) {
+    for(var i = 0;i < (this.props.turnObj.width ? this.props.turnObj.width : 8);i++) {
+      for(var j = 0;j < (this.props.turnObj.height ? this.props.turnObj.height : 8);j++) {
         if(((i + j) % 2 === 0 && !this.props.flip) || ((i + j) % 2 !== 0 && this.props.flip)) {
           graphics.beginFill(this.props.palette.whiteSquare, (this.props.turnObj.fade ? 0.35 : 1));
           graphics.drawRect(x + (i * 100), y + (j * 100) * (this.props.flip ? -1 : 1), 100, 100 * (this.props.flip ? -1 : 1));
