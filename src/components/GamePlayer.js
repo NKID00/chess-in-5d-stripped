@@ -15,7 +15,7 @@ import reverse from 'assets/sound/reverse.flac';
 import submit from 'assets/sound/submit.flac';
 import end from 'assets/sound/end.flac';
 
-const deepcompare = require('deep-compare');
+const deepcompare = require('deep-equal');
 const deepcopy = require('deep-copy');
 
 export default class GamePlayer extends React.Component {
@@ -278,7 +278,7 @@ export default class GamePlayer extends React.Component {
     if(prevState.settings.showCheckGhost !== this.state.settings.showCheckGhost) {
       this.setState({board: await this.addCheckGhost(await this.chess.board(), await this.chess.checks()) });
     }
-    if((prevProps.defaultImport !== this.props.defaultImport) && (typeof this.props.defaultImport === 'string') && this.props.defaultImport.length > 0) {
+    if((prevProps.defaultImport !== this.props.defaultImport) && (typeof this.props.defaultImport === 'string')) {
       this.import(this.props.defaultImport);
     }
     if(prevProps.variant !== this.props.variant && typeof this.props.variant === 'string') {

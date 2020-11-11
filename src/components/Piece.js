@@ -14,7 +14,7 @@ import WhiteQueen from 'assets/wQ.png';
 import WhiteKing from 'assets/wK.png';
 import * as PIXI from 'pixi.js';
 
-const deepcompare = require('deep-compare');
+const deepcompare = require('deep-equal');
 
 export default class Piece extends React.Component {
   pieceRef = React.createRef();
