@@ -118,6 +118,8 @@ For now, just assume that this move is possible.`,
 
 Here we can see there is a new 2T board above the 4 boards we saw earlier.
 
+(WIP Insert Image)
+
 **What just happened?!?**
 
 If you just considered what happened, the knight essentially just travelled back in time by 1 turn.
@@ -127,14 +129,14 @@ So now you have two timelines:
   - The bottom main timeline (0L), we have 5 boards with the knight vanishing from this timeline when it travelled back into the past.
   - The top new timeline (-1L), we have 1 board with the knight appearing at where it was trying to go to (b6). This timeline is created from black's 1T board on the bottom timeline (0L).
 
-You can think about it like this: When the knight moved back in time, the timeline split into two timelines. One that has the knight travel back in time and disappear and one that has the knight appear at the point it's trying to travel back too.
+You can think about it like this: When the knight moved back in time, the timeline split into two timelines. One that has the knight travel back in time, disappearing from the timeline and one that has the knight appear at the point it's trying to travel back too.
 
 *Note: The grandfather paradox refers to the idea that if you were to travel into the past and kill your grandfather, how can you exist to kill your grandfather? Chess in 5D resolves this by essentially saying when you travel back in time, you also travel to a new timeline.
 So you really travel to a new timeline that is an exact copy of the point in time you were trying to travel to. This means when you kill your grandfather, you actually kill a copy of your grandfather. In timeline you came from, your grandfather was never killed.*`,
             import: '1w. 1:e2:e3 ; 1b. 1:e7:e6 ; 2w. 2:Bf1:d3 ; 2b. 2:Nb8<-1>1:b6'
           },
           {
-            text: `## Menus (Bottom)
+            text: `## Concept 2 - Time Travel
 
 (WIP Insert Image)
 

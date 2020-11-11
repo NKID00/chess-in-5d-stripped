@@ -1,6 +1,6 @@
 const store = require('store');
 
-var defaultPalette = {
+const defaultPalette = {
   background: 0x000000,
   whiteSquare: 0xaaaaaa,
   blackSquare: 0x555555,
@@ -92,7 +92,7 @@ const reset = () => {
   store.clearAll();
   store.set('server', getDefault('server'));
   store.set('peerjs', getDefault('peerjs'));
-  store.set('palette', getDefault('palette'));
+  store.set('palette', defaultPalette);
   store.set('name', getDefault('name'));
   store.set('sound', getDefault('sound'));
   store.set('settings', getDefault('settings'));
