@@ -10,7 +10,7 @@ import Options from 'Options';
 import { SketchPicker } from 'react-color';
 import * as PIXI from 'pixi.js';
 
-const deepcompare = require('deep-compare');
+const deepcompare = require('deep-equal');
 
 export default class OptionsMenu extends React.Component {
   state = {

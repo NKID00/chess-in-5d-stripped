@@ -55,13 +55,15 @@ export default class Tutorial extends React.Component {
             sx={{maxHeight: '60vh', overflowY: 'auto'}}
           >
           {Array.isArray(this.props.tutorialArray) && this.props.step >= 0 && this.props.step < this.props.tutorialArray.length ?
-            <ReactMarkdown
-              linkTarget='_blank'
-              source={this.props.tutorialArray[this.props.step].text}
-              transformImageUri={(uri) => {
-                return this.props.tutorialArray[this.props.step].assets[uri];
-              }}
-            />
+            <Box id='markdown-tutorial'>
+              <ReactMarkdown
+                linkTarget='_blank'
+                source={this.props.tutorialArray[this.props.step].text}
+                transformImageUri={(uri) => {
+                  return this.props.tutorialArray[this.props.step].assets[uri];
+                }}
+              />
+            </Box>
           :
             <></>
           }

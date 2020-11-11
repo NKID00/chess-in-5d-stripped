@@ -27,6 +27,10 @@ body > * {
   max-width: 900px;
 }
 
+#markdown-tutorial img {
+  max-width: 100%;
+}
+
 .MuiLinearProgress-barColorPrimary {
   background-color: black !important;
 }

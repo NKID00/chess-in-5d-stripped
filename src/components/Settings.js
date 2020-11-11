@@ -6,7 +6,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Checkbox from '@material-ui/core/Checkbox';
 import { BsGear } from 'react-icons/bs';
 
-const deepcompare = require('deep-compare');
+const deepcompare = require('deep-equal');
 
 export default class Settings extends React.Component {
   buttonRef = React.createRef();

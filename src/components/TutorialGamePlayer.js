@@ -4,7 +4,7 @@ import { withRouter } from 'react-router';
 import GamePlayer from 'components/GamePlayer';
 import Tutorial from 'components/Tutorial';
 
-const deepcompare = require('deep-compare');
+const deepcompare = require('deep-equal');
 
 class TutorialGamePlayer extends React.Component {
   gameRef = React.createRef();
@@ -47,15 +47,25 @@ class TutorialGamePlayer extends React.Component {
         }
         variant={this.props.variant}
         defaultImport={Array.isArray(this.props.tutorialArray) &&
-          typeof this.props.tutorialArray[this.state.step] !== 'undefined' &&
-          typeof this.props.tutorialArray[this.state.step].import !== 'undefined' ?
+          typeof this.props.tutorialArray[this.state.step] !== 'undefined' ?
           this.props.tutorialArray[this.state.step].import
         :
-          ''
+          undefined
         }
         onSubmit={() => {
           if(this.gameRef) {
-            if(deepcompare(this.props.tutorialArray[this.state.step].moveBuffer, this.gameRef.current.state.moveBuffer)) {
+            var tutorialBuffer = this.props.tutorialArray[this.state.step].moveBuffer;
+            var valid = false;
+            if(typeof tutorialBuffer !== 'undefined') {
+              var gameBuffer = this.gameRef.current.state.moveBuffer;
+              valid = tutorialBuffer.length === gameBuffer.length;
+              for(var i = 0;valid && i < tutorialBuffer.length;i++) {
+                if(!deepcompare(tutorialBuffer[i], gameBuffer[i])) {
+                  valid = false;
+                }
+              }
+            }
+            if(valid) {
               this.setState({
                 step: this.state.step + 1,
                 disableNext: (this.state.step + 1 < this.props.tutorialArray.length && typeof this.props.tutorialArray[this.state.step + 1].moveBuffer !== 'undefined')
@@ -71,9 +81,11 @@ class TutorialGamePlayer extends React.Component {
           step={this.state.step}
           tutorialArray={this.props.tutorialArray}
           disableNext={this.state.step >= this.props.tutorialArray.length - 1 || this.state.disableNext}
-          onNext={() => {
+          onNext={async () => {
             if(typeof this.props.tutorialArray[this.state.step].moveBuffer !== 'undefined') {
-              this.gameRef.current.submit();
+              if(this.gameRef && await this.gameRef.current.state.submittable) {
+                this.gameRef.current.submit();
+              }
             }
             else {
               this.setState({step: this.state.step + 1});

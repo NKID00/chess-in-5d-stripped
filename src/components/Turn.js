@@ -3,7 +3,7 @@ import { Graphics, Text } from 'react-pixi-fiber';
 import Piece from 'components/Piece';
 import Highlight from 'components/Highlight';
 
-const deepcompare = require('deep-compare');
+const deepcompare = require('deep-equal');
 
 export default class Turn extends React.Component {
   turnRef = React.createRef();
