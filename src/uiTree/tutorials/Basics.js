@@ -5,6 +5,7 @@ import TutorialGamePlayer from 'components/TutorialGamePlayer';
 const tutorialArray = [
   {
     text: `## Welcome
+
 Welcome to the world of Chess in 5D!
 
 Chess in 5D looks to faithfully implement the rules of the game
@@ -176,7 +177,7 @@ On devices with a keyboard, the 'Z' and 'Backspace' keys also trigger this funct
 
 (WIP Insert Image)
 
-This button is used to submit moves that the current player played.
+This button is used to submit moves (action) that the current player played.
 
 This is needed because sometimes multiple moves need to be played.
 
@@ -185,9 +186,9 @@ On devices with a keyboard, the 'F' and 'Enter' keys also trigger this function.
   {
     text: `## Making a move
 
-(WIP Insert Image)
+Let's make the first move. Following the picture shown below, move the e2 pawn to e3. You'll notice that a new board appears on the right of the original board, we'll cover what this means in the next tutorial.
 
-Let's make the first move. Following the picture shown above, move the e2 pawn to e3.
+(WIP Insert Image)
 
 If you make the wrong move, go ahead and use the undo button.
 
@@ -197,12 +198,23 @@ Don't click on the submit button yet.`,
   {
     text: `## Submitting an action
 
-(WIP Insert Image)
-
 Let's submit the move we just made. In the tutorials, whenever an action is needed, clicking on the next button will also act as a submit button.
+
+(WIP Insert Image)
 
 For now, try clicking on the submit button instead.`,
     moveBuffer: [{"promotion":null,"enPassant":null,"castling":null,"start":{"timeline":0,"turn":1,"player":"white","coordinate":"e2","rank":2,"file":5},"end":{"timeline":0,"turn":1,"player":"white","coordinate":"e3","rank":3,"file":5},"player":"white"}]
+  },
+  {
+    text: `## Pan / Zoom
+
+(WIP Insert Image)
+
+In the game of Chess in 5D, you may often find yourself needing to look at specific boards during the game.
+
+Using your mouse, click and drag to pan the camera around. Use the mouse wheel to zoom in and out.
+
+If on mobile, drag with one finger to pan the camera. Use a pinching action to zoom in and out.`
   },
   {
     text: `## Finished
