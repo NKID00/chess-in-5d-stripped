@@ -5,6 +5,7 @@ import TutorialGamePlayer from 'components/TutorialGamePlayer';
 const tutorialArray = [
   {
     text: `## Welcome
+
 Welcome to the world of Chess in 5D!
 
 Chess in 5D looks to faithfully implement the rules of the game
@@ -128,86 +129,132 @@ On devices with a keyboard, the 'Right Arrow' key also triggers this function.`,
   {
     text: `## Menus (Bottom)
 
-(WIP Insert Image)
+![Bottom bar with three buttons](bottom_three.png)
 
-Looking at the bottom bar, we currently have three buttons and one status indicator.`
+![Bottom bar with status indicator](bottom_turn_indicator.png)
+
+Looking at the bottom bar, we currently have three buttons and one status indicator.`,
+    assets: {
+      'bottom_three.png': require('assets/tutorials/basics/bottom_three.png'),
+      'bottom_turn_indicator.png': require('assets/tutorials/basics/bottom_turn_indicator.png')
+    }
   },
   {
     text: `## Menus (Bottom / Status)
 
-(WIP Insert Image)
-
 This status indicator shows multiple states. By default, it shows which player is currently allowed to play.
 
-(WIP Insert Image)
+![Status indicator](bottom_turn_indicator.png)
 
 When one player is in check, a second indicator shows up indicating this.
 
-(WIP Insert Image)
+![Black player in check](black_check.png)
 
 When one player wins, this indicator shows this.
 
-(WIP Insert Image)
+![Bottom bar with status indicator](white_win.png)
 
-When a tie occurs, this indicator shows this.`
+When a tie occurs, this indicator shows this.
+
+![Stalemate](stalemate.png)`,
+    assets: {
+      'bottom_turn_indicator.png': require('assets/tutorials/basics/bottom_turn_indicator.png'),
+      'black_check.png': require('assets/tutorials/basics/black_check.png'),
+      'stalemate.png': require('assets/tutorials/basics/stalemate.png'),
+      'white_win.png': require('assets/tutorials/basics/white_win.png')
+    }
   },
   {
     text: `## Menus (Bottom / Re-center)
 
-(WIP Insert Image)
+![Re-center button](recenter.png)
 
 This button is used to re-align the main view to show the current board. If the main view gets scrolled offscreen, use this button to reset the view.
 
-On devices with a keyboard, the 'Tab' key also triggers this function.`
+On devices with a keyboard, the 'Tab' key also triggers this function.`,
+    assets: {
+      'recenter.png': require('assets/tutorials/basics/recenter.png')
+    }
   },
   {
     text: `## Menus (Bottom / Undo)
 
-(WIP Insert Image)
+![Undo button](undo.png)
 
 This button is used to undo moves that the current player played. You can do this before you submit.
 
 This is needed because sometimes multiple moves need to be played.
 
-On devices with a keyboard, the 'Z' and 'Backspace' keys also trigger this function.`
+On devices with a keyboard, the 'Z' and 'Backspace' keys also trigger this function.`,
+    assets: {
+      'undo.png': require('assets/tutorials/basics/undo.png')
+    }
   },
   {
     text: `## Menus (Bottom / Submit)
 
-(WIP Insert Image)
+![Submit button](submit.png)
 
-This button is used to submit moves that the current player played.
+This button is used to submit moves (action) that the current player played.
 
 This is needed because sometimes multiple moves need to be played.
 
-On devices with a keyboard, the 'F' and 'Enter' keys also trigger this function.`
+On devices with a keyboard, the 'F' and 'Enter' keys also trigger this function.`,
+    assets: {
+      'submit.png': require('assets/tutorials/basics/submit.png')
+    }
   },
   {
     text: `## Making a move
 
-(WIP Insert Image)
+Let's make the first move. Following the picture shown below, move the e2 pawn to e3. You'll notice that a new board appears on the right of the original board, we'll cover what this means in the next tutorial.
 
-Let's make the first move. Following the picture shown above, move the e2 pawn to e3.
+![Pawn move from e2 to e3](we2e3.gif)
 
 If you make the wrong move, go ahead and use the undo button.
 
 Don't click on the submit button yet.`,
-    import: ''
+    import: '',
+    assets: {
+      'we2e3.gif': require('assets/tutorials/basics/we2e3.gif')
+    }
   },
   {
     text: `## Submitting an action
 
-(WIP Insert Image)
-
 Let's submit the move we just made. In the tutorials, whenever an action is needed, clicking on the next button will also act as a submit button.
 
+![Submit Action](submit_action.gif)
+
 For now, try clicking on the submit button instead.`,
-    moveBuffer: [{"promotion":null,"enPassant":null,"castling":null,"start":{"timeline":0,"turn":1,"player":"white","coordinate":"e2","rank":2,"file":5},"end":{"timeline":0,"turn":1,"player":"white","coordinate":"e3","rank":3,"file":5},"player":"white"}]
+    moveBuffer: [{"promotion":null,"enPassant":null,"castling":null,"start":{"timeline":0,"turn":1,"player":"white","coordinate":"e2","rank":2,"file":5},"end":{"timeline":0,"turn":1,"player":"white","coordinate":"e3","rank":3,"file":5},"player":"white"}],
+    assets: {
+      'submit_action.gif': require('assets/tutorials/basics/submit_action.gif')
+    }
+  },
+  {
+    text: `## Pan / Zoom
+
+![Pan and Zoom](pan_zoom.gif)
+
+In the game of Chess in 5D, you may often find yourself needing to look at specific boards during the game.
+
+Using your mouse, click and drag to pan the camera around. Use the mouse wheel to zoom in and out.
+
+If on mobile, drag with one finger to pan the camera. Use a pinching action to zoom in and out.
+
+Go ahead and try it out now.`,
+    import: '1w. 1:e2:e3',
+    assets: {
+      'pan_zoom.gif': require('assets/tutorials/basics/pan_zoom.gif')
+    }
   },
   {
     text: `## Finished
 
-That's it for this tutorial! Go ahead and go to the next tutorial to learn more about movement.`
+That's it for this tutorial! Go ahead and go to the next tutorial to learn more about movement.
+
+To exit, click on the logo or 'Chess in 5D' text in the top bar to return to the main menu.`
   }
 ];
 

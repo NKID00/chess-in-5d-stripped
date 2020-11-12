@@ -14,15 +14,16 @@ class TutorialGamePlayer extends React.Component {
     disablePrevious: false
   };
   componentDidMount() {
-    if(this.gameRef) {
-      this.setState({
-        disableNext: (this.state.step + 1 < this.props.tutorialArray.length && typeof this.props.tutorialArray[this.state.step + 1].moveBuffer !== 'undefined')
-      });
-    }
+    this.setState({
+      disableNext: (typeof this.props.tutorialArray[this.state.step].moveBuffer !== 'undefined')
+    });
     var url = new URLSearchParams(this.props.location.search);
     var stepStr = url.get('step');
     if(stepStr) {
-      this.setState({step: Number(stepStr)});
+      this.setState({
+        step: Number(stepStr),
+        disableNext: (typeof this.props.tutorialArray[Number(stepStr)].moveBuffer !== 'undefined')
+      });
     }
   }
   componentDidUpdate(prevProps, prevState) {
@@ -68,12 +69,52 @@ class TutorialGamePlayer extends React.Component {
             if(valid) {
               this.setState({
                 step: this.state.step + 1,
-                disableNext: (this.state.step + 1 < this.props.tutorialArray.length && typeof this.props.tutorialArray[this.state.step + 1].moveBuffer !== 'undefined')
+                disableNext: (typeof this.props.tutorialArray[this.state.step + 1].moveBuffer !== 'undefined')
               });
             }
             else {
               this.gameRef.current.revert();
             }
+          }
+        }}
+        onMove={async () => {
+          if(this.gameRef) {
+            this.setState({
+              disableNext: await (async () => {
+                var tutorialBuffer = this.props.tutorialArray[this.state.step].moveBuffer;
+                var valid = true;
+                if(typeof tutorialBuffer !== 'undefined') {
+                  var gameBuffer = await this.gameRef.current.chess.moveBuffer();
+                  valid = tutorialBuffer.length === gameBuffer.length;
+                  for(var i = 0;valid && i < tutorialBuffer.length;i++) {
+                    if(!deepcompare(tutorialBuffer[i], gameBuffer[i])) {
+                      valid = false;
+                    }
+                  }
+                }
+                return !valid;
+              })()
+            });
+          }
+        }}
+        onImport={async () => {
+          if(this.gameRef) {
+            this.setState({
+              disableNext: await (async () => {
+                var tutorialBuffer = this.props.tutorialArray[this.state.step].moveBuffer;
+                var valid = true;
+                if(typeof tutorialBuffer !== 'undefined') {
+                  var gameBuffer = await this.gameRef.current.chess.moveBuffer();
+                  valid = tutorialBuffer.length === gameBuffer.length;
+                  for(var i = 0;valid && i < tutorialBuffer.length;i++) {
+                    if(!deepcompare(tutorialBuffer[i], gameBuffer[i])) {
+                      valid = false;
+                    }
+                  }
+                }
+                return !valid;
+              })()
+            });
           }
         }}
       >
@@ -88,12 +129,44 @@ class TutorialGamePlayer extends React.Component {
               }
             }
             else {
-              this.setState({step: this.state.step + 1});
+              this.setState({
+                step: this.state.step + 1,
+                disableNext: await (async () => {
+                  var tutorialBuffer = this.props.tutorialArray[this.state.step + 1].moveBuffer;
+                  var valid = true;
+                  if(typeof tutorialBuffer !== 'undefined') {
+                    var gameBuffer = await this.gameRef.current.chess.moveBuffer();
+                    valid = tutorialBuffer.length === gameBuffer.length;
+                    for(var i = 0;valid && i < tutorialBuffer.length;i++) {
+                      if(!deepcompare(tutorialBuffer[i], gameBuffer[i])) {
+                        valid = false;
+                      }
+                    }
+                  }
+                  return !valid;
+                })()
+              });
             }
           }}
           disablePrevious={this.state.step <= 0 || this.state.disablePrevious}
-          onPrevious={() => {
-            this.setState({step: this.state.step - 1});
+          onPrevious={async () => {
+            this.setState({
+              step: this.state.step - 1,
+              disableNext: await (async () => {
+                var tutorialBuffer = this.props.tutorialArray[this.state.step - 1].moveBuffer;
+                var valid = true;
+                if(typeof tutorialBuffer !== 'undefined') {
+                  var gameBuffer = await this.gameRef.current.chess.moveBuffer();
+                  valid = tutorialBuffer.length === gameBuffer.length;
+                  for(var i = 0;valid && i < tutorialBuffer.length;i++) {
+                    if(!deepcompare(tutorialBuffer[i], gameBuffer[i])) {
+                      valid = false;
+                    }
+                  }
+                }
+                return !valid;
+              })()
+            });
           }}
         />
       </GamePlayer>
