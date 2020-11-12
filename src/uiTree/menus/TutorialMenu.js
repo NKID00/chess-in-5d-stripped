@@ -28,7 +28,7 @@ export default class TutorialMenu extends React.Component {
               width={1}
               my={3}
             >
-              (WIP) Basics
+              Basics
             </LinkButton>
             <LinkButton
               to='/tutorial/movement'
