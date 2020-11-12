@@ -136,11 +136,13 @@ So you really travel to a new timeline that is an exact copy of the point in tim
             import: '1w. 1:e2:e3 ; 1b. 1:e7:e6 ; 2w. 2:Bf1:d3 ; 2b. 2:Nb8<-1>1:b6'
           },
           {
-            text: `## Concept 2 - Time Travel
+            text: `## Concept 3 - The Present
 
-(WIP Insert Image)
+Okay, so we just have our black knight travel back in time.
 
-Looking at the bottom bar, we currently have three buttons and one status indicator.`
+**What happens now?**
+
+`
           },
           {
             text: `## Menus (Bottom / Status)
@@ -191,6 +193,13 @@ This button is used to submit moves that the current player played.
 This is needed because sometimes multiple moves need to be played.
 
 On devices with a keyboard, the 'F' and 'Enter' keys also trigger this function.`
+          },
+          {
+            text: `## Finished
+
+That's it for this tutorial! Go ahead and go to the next tutorial to learn more about movement.
+
+To exit, click on the logo or 'Chess in 5D' text in the top bar to return to the main menu.`
           }
         ]}
       />
