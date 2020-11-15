@@ -1,6 +1,7 @@
 import React from 'react';
 import { withRouter } from 'react-router';
 
+import { withSnackbar } from 'notistack';
 import GamePlayer from 'components/GamePlayer';
 import Tutorial from 'components/Tutorial';
 
@@ -73,11 +74,37 @@ class TutorialGamePlayer extends React.Component {
               });
             }
             else {
-              this.gameRef.current.revert();
+              if(Array.isArray(this.props.tutorialArray) &&
+                typeof this.props.tutorialArray[this.state.step] !== 'undefined' &&
+                typeof this.props.tutorialArray[this.state.step].import !== 'undefined'
+              ) {
+                this.props.enqueueSnackbar('Moves are incorrect!', {variant: 'error'});
+                this.gameRef.current.import(this.props.tutorialArray[this.state.step].import);
+              }
             }
           }
         }}
         onMove={async () => {
+          if(this.gameRef) {
+            this.setState({
+              disableNext: await (async () => {
+                var tutorialBuffer = this.props.tutorialArray[this.state.step].moveBuffer;
+                var valid = true;
+                if(typeof tutorialBuffer !== 'undefined') {
+                  var gameBuffer = await this.gameRef.current.chess.moveBuffer();
+                  valid = tutorialBuffer.length === gameBuffer.length;
+                  for(var i = 0;valid && i < tutorialBuffer.length;i++) {
+                    if(!deepcompare(tutorialBuffer[i], gameBuffer[i])) {
+                      valid = false;
+                    }
+                  }
+                }
+                return !valid;
+              })()
+            });
+          }
+        }}
+        onUndo={async () => {
           if(this.gameRef) {
             this.setState({
               disableNext: await (async () => {
@@ -174,4 +201,4 @@ class TutorialGamePlayer extends React.Component {
   }
 }
 
-export default withRouter(TutorialGamePlayer);
+export default withSnackbar(withRouter(TutorialGamePlayer));

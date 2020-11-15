@@ -189,7 +189,7 @@ export default class Turn extends React.Component {
         }
         {this.props.turnLabel ?
           <Text
-            text={this.props.turnObj.turn + 'T'}
+            text={'T' + this.props.turnObj.turn}
             style={{
               align: 'left',
               fill: this.props.palette.turnLabel,
