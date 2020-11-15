@@ -13,6 +13,9 @@ Chess in 5D looks to faithfully implement the rules of the game
 
 Here in these series of tutorials, we'll be learning how to play the game of Chess in 5D.
 
+Before we get started, these tutorials will assume you know how to play the regular game of chess and understand the SAN coordinate system.
+Learning these two subjects are a prerequsite to understanding the game of Chess in 5D.
+
 We'll be walking through the basics of how to use the user interface to play Chess in 5D in this tutorial.`
   },
   {
@@ -64,6 +67,8 @@ Working with this box is beyond the scope of this tutorial, so we'll skip this f
 ![Settings Button](settings_button.png)
 
 This button hides and shows the box to change several settings for displaying the game.
+
+Go ahead and turn on board labels if desired.
 
 Working with this box is beyond the scope of this tutorial, so we'll skip this for now.
 
@@ -207,7 +212,7 @@ On devices with a keyboard, the 'F' and 'Enter' keys also trigger this function.
   {
     text: `## Making a move
 
-Let's make the first move. Following the picture shown below, move the e2 pawn to e3. You'll notice that a new board appears on the right of the original board, we'll cover what this means in the next tutorial.
+Let's make the first move. Following the picture shown below, move the e2 pawn to e3. You'll notice that a new board appears on the right of the original board, we'll cover what this means in the next tutorial ('Movement').
 
 ![Pawn move from e2 to e3](we2e3.gif)
 
@@ -227,6 +232,7 @@ Let's submit the move we just made. In the tutorials, whenever an action is need
 ![Submit Action](submit_action.gif)
 
 For now, try clicking on the submit button instead.`,
+    import: '',
     moveBuffer: [{"promotion":null,"enPassant":null,"castling":null,"start":{"timeline":0,"turn":1,"player":"white","coordinate":"e2","rank":2,"file":5},"end":{"timeline":0,"turn":1,"player":"white","coordinate":"e3","rank":3,"file":5},"player":"white"}],
     assets: {
       'submit_action.gif': require('assets/tutorials/basics/submit_action.gif')
@@ -252,7 +258,7 @@ Go ahead and try it out now.`,
   {
     text: `## Finished
 
-That's it for this tutorial! Go ahead and go to the next tutorial to learn more about movement.
+That's it for this tutorial! Go ahead and go to the next tutorial ('Movement') to learn more about movement.
 
 To exit, click on the logo or 'Chess in 5D' text in the top bar to return to the main menu.`
   }
