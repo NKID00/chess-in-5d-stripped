@@ -48,6 +48,8 @@ You will only find this button in the tutorials section of Chess in 5D.`,
   {
     text: `## Menus (Top / Notation)
 
+*Feel free to skip this section. This section is only here for a complete overview of the user interface and is not required for basic understanding of the game.*
+
 ![Notation Button](notation_button.png)
 
 This button hides and shows the notation box, which imports and exports games.
@@ -63,6 +65,8 @@ Working with this box is beyond the scope of this tutorial, so we'll skip this f
   },
   {
     text: `## Menus (Top / Settings)
+
+*Feel free to skip this section. This section is only here for a complete overview of the user interface and is not required for basic understanding of the game.*
 
 ![Settings Button](settings_button.png)
 
@@ -81,6 +85,8 @@ Working with this box is beyond the scope of this tutorial, so we'll skip this f
   {
     text: `## Menus (Top / Second Row)
 
+*Feel free to skip this section. This section is only here for a complete overview of the user interface and is not required for basic understanding of the game.*
+
 ![Action Buttons](action_buttons.png)
 
 Looking at the second row of the top bar, we currently have two buttons and an action indicator.
@@ -92,6 +98,8 @@ This row only shows up in the Match Analyzer and tutorials. This is used primari
   },
   {
     text: `## Menus (Top / Second Row / Action Indicator)
+
+*Feel free to skip this section. This section is only here for a complete overview of the user interface and is not required for basic understanding of the game.*
 
 ![Action Indicator](action_indicator.png)
 
@@ -110,6 +118,8 @@ Another example, an action number of 7 during black's turn indicates the current
   {
     text: `## Menus (Top / Second Row / Revert)
 
+*Feel free to skip this section. This section is only here for a complete overview of the user interface and is not required for basic understanding of the game.*
+
 ![Revert Button](revert_button.png)
 
 This button is used go back one action within the game history.
@@ -121,6 +131,8 @@ On devices with a keyboard, the 'Left Arrow' key also triggers this function.`,
   },
   {
     text: `## Menus (Top / Second Row / Forward)
+
+*Feel free to skip this section. This section is only here for a complete overview of the user interface and is not required for basic understanding of the game.*
 
 ![Forward Button](forward_button.png)
 
@@ -214,11 +226,11 @@ On devices with a keyboard, the 'F' and 'Enter' keys also trigger this function.
 
 Let's make the first move. Following the picture shown below, move the e2 pawn to e3. You'll notice that a new board appears on the right of the original board, we'll cover what this means in the next tutorial ('Movement').
 
-![Pawn move from e2 to e3](we2e3.gif)
-
 If you make the wrong move, go ahead and use the undo button.
 
-Don't click on the submit button yet.`,
+**Don't click on the submit button yet.**
+
+![Pawn move from e2 to e3](we2e3.gif)`,
     import: '',
     assets: {
       'we2e3.gif': require('assets/tutorials/basics/we2e3.gif')
@@ -229,9 +241,9 @@ Don't click on the submit button yet.`,
 
 Let's submit the move we just made. In the tutorials, whenever an action is needed, clicking on the next button will also act as a submit button.
 
-![Submit Action](submit_action.gif)
+**For now, try clicking on the submit button instead.**
 
-For now, try clicking on the submit button instead.`,
+![Submit Action](submit_action.gif)`,
     import: '',
     moveBuffer: [{"promotion":null,"enPassant":null,"castling":null,"start":{"timeline":0,"turn":1,"player":"white","coordinate":"e2","rank":2,"file":5},"end":{"timeline":0,"turn":1,"player":"white","coordinate":"e3","rank":3,"file":5},"player":"white"}],
     assets: {
@@ -241,15 +253,15 @@ For now, try clicking on the submit button instead.`,
   {
     text: `## Pan / Zoom
 
-![Pan and Zoom](pan_zoom.gif)
-
 In the game of Chess in 5D, you may often find yourself needing to look at specific boards during the game.
 
 Using your mouse, click and drag to pan the camera around. Use the mouse wheel to zoom in and out.
 
 If on mobile, drag with one finger to pan the camera. Use a pinching action to zoom in and out.
 
-Go ahead and try it out now.`,
+Go ahead and try it out now.
+
+![Pan and Zoom](pan_zoom.gif)`,
     import: '1w. 1:e2:e3',
     assets: {
       'pan_zoom.gif': require('assets/tutorials/basics/pan_zoom.gif')
@@ -258,9 +270,11 @@ Go ahead and try it out now.`,
   {
     text: `## Finished
 
-That's it for this tutorial! Go ahead and go to the next tutorial ('Movement') to learn more about movement.
+That's it for this tutorial!
 
-To exit, click on the logo or 'Chess in 5D' text in the top bar to return to the main menu.`
+Clicking on the next button below will take you to the next tutorial ('Movement'), which will teach you about movement concepts.
+
+To exit to the main menu, click on the logo or 'Chess in 5D' text in the top bar.`
   }
 ];
 
@@ -269,6 +283,7 @@ export default class Basics extends React.Component {
     return (
       <TutorialGamePlayer
         tutorialArray={tutorialArray}
+        next='/tutorial/movement'
       />
     );
   }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { withRouter } from 'react-router';
+import { withRouter, Redirect } from 'react-router';
 
 import { withSnackbar } from 'notistack';
 import GamePlayer from 'components/GamePlayer';
@@ -12,7 +12,8 @@ class TutorialGamePlayer extends React.Component {
   state = {
     step: 0,
     disableNext: false,
-    disablePrevious: false
+    disablePrevious: false,
+    redirectNext: false
   };
   componentDidMount() {
     this.setState({
@@ -29,7 +30,18 @@ class TutorialGamePlayer extends React.Component {
   }
   componentDidUpdate(prevProps, prevState) {
     if(prevState.step !== this.state.step) {
-      window.history.pushState({}, null, window.location.origin + '/#' + this.props.location.pathname + '?step=' + this.state.step);
+      var url = new URLSearchParams(this.props.location.search);
+      var stepStr = url.get('step');
+      if(Number(stepStr) !== this.state.step) {
+        window.history.pushState({}, null, window.location.origin + '/#' + this.props.location.pathname + '?step=' + this.state.step);
+      }
+    }
+    if(prevProps.location.search !== this.props.location.search) {
+      var url = new URLSearchParams(this.props.location.search);
+      var stepStr = url.get('step');
+      if(Number(stepStr) !== this.state.step) {
+        this.setState({ step: Number(stepStr) });
+      }
     }
   }
   render() {
@@ -145,34 +157,44 @@ class TutorialGamePlayer extends React.Component {
           }
         }}
       >
+        {this.state.redirectNext ?
+          <Redirect push to={this.props.next} />
+        :
+          <></>
+        }
         <Tutorial
           step={this.state.step}
           tutorialArray={this.props.tutorialArray}
-          disableNext={this.state.step >= this.props.tutorialArray.length - 1 || this.state.disableNext}
+          disableNext={this.state.disableNext}
           onNext={async () => {
-            if(typeof this.props.tutorialArray[this.state.step].moveBuffer !== 'undefined') {
-              if(this.gameRef && await this.gameRef.current.state.submittable) {
-                this.gameRef.current.submit();
-              }
+            if(this.state.step >= this.props.tutorialArray.length - 1) {
+              this.setState({redirectNext: true});
             }
             else {
-              this.setState({
-                step: this.state.step + 1,
-                disableNext: await (async () => {
-                  var tutorialBuffer = this.props.tutorialArray[this.state.step + 1].moveBuffer;
-                  var valid = true;
-                  if(typeof tutorialBuffer !== 'undefined') {
-                    var gameBuffer = await this.gameRef.current.chess.moveBuffer();
-                    valid = tutorialBuffer.length === gameBuffer.length;
-                    for(var i = 0;valid && i < tutorialBuffer.length;i++) {
-                      if(!deepcompare(tutorialBuffer[i], gameBuffer[i])) {
-                        valid = false;
+              if(typeof this.props.tutorialArray[this.state.step].moveBuffer !== 'undefined') {
+                if(this.gameRef && await this.gameRef.current.state.submittable) {
+                  this.gameRef.current.submit();
+                }
+              }
+              else {
+                this.setState({
+                  step: this.state.step + 1,
+                  disableNext: await (async () => {
+                    var tutorialBuffer = this.props.tutorialArray[this.state.step + 1].moveBuffer;
+                    var valid = true;
+                    if(typeof tutorialBuffer !== 'undefined') {
+                      var gameBuffer = await this.gameRef.current.chess.moveBuffer();
+                      valid = tutorialBuffer.length === gameBuffer.length;
+                      for(var i = 0;valid && i < tutorialBuffer.length;i++) {
+                        if(!deepcompare(tutorialBuffer[i], gameBuffer[i])) {
+                          valid = false;
+                        }
                       }
                     }
-                  }
-                  return !valid;
-                })()
-              });
+                    return !valid;
+                  })()
+                });
+              }
             }
           }}
           disablePrevious={this.state.step <= 0 || this.state.disablePrevious}
