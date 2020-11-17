@@ -2,6 +2,7 @@ import React from 'react';
 
 import { Box, Flex, Text, Button } from 'rebass';
 import LinkButton from 'components/LinkButton';
+import TutorialPopup from 'components/TutorialPopup';
 import LogoIcon from 'assets/logo.svg';
 
 export default class MainMenu extends React.Component {
@@ -85,6 +86,7 @@ export default class MainMenu extends React.Component {
           </Box>
           <Box width={1/3}></Box>
         </Flex>
+        <TutorialPopup />
       </>
     );
   }

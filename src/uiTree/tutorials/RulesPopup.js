@@ -29,7 +29,7 @@ const assets = {
   'queen_move.png': require('assets/rules/queen_move.png'),
   'rook_move.png': require('assets/rules/rook_move.png'),
   'start.gif': require('assets/rules/start.gif')
-}
+};
 
 export default class RulesPopup extends React.Component {
   state = {
