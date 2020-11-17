@@ -1,6 +1,8 @@
 import React from 'react';
 import { withRouter, Redirect } from 'react-router';
 
+import Options from 'Options';
+
 import { withSnackbar } from 'notistack';
 import GamePlayer from 'components/GamePlayer';
 import Tutorial from 'components/Tutorial';
@@ -27,6 +29,7 @@ class TutorialGamePlayer extends React.Component {
         disableNext: (typeof this.props.tutorialArray[Number(stepStr)].moveBuffer !== 'undefined')
       });
     }
+    Options.set('tutorial', { tutorialPopup: false });
   }
   componentDidUpdate(prevProps, prevState) {
     if(prevState.step !== this.state.step) {
@@ -37,8 +40,8 @@ class TutorialGamePlayer extends React.Component {
       }
     }
     if(prevProps.location.search !== this.props.location.search) {
-      var url = new URLSearchParams(this.props.location.search);
-      var stepStr = url.get('step');
+      var url = new URLSearchParams(this.props.location.search); // eslint-disable-line no-redeclare
+      var stepStr = url.get('step'); // eslint-disable-line no-redeclare
       if(Number(stepStr) !== this.state.step) {
         this.setState({ step: Number(stepStr) });
       }

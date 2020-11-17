@@ -23,7 +23,7 @@ export default class NotationViewer extends React.Component {
     if(prevState.open !== this.state.open) {
       if(this.boxRef.current !== null && this.buttonRef.current !== null) {
         this.boxRef.current.style.position = 'absolute';
-        this.boxRef.current.style.left = window.innerWidth - 13 - this.boxRef.current.getBoundingClientRect().width + 'px';
+        this.boxRef.current.style.left = (window.innerWidth > window.screen.width ? window.screen.width : window.innerWidth) - 13 - this.boxRef.current.getBoundingClientRect().width + 'px';
         this.boxRef.current.style.top = this.buttonRef.current.getBoundingClientRect().bottom + 13 + 'px';
       }
     }

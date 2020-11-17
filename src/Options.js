@@ -21,7 +21,7 @@ const defaultPalette = {
 };
 
 const resetPalette = () => {
-  store.set('palette', defaultPalette);
+  store.set('palette', Object.assign({}, defaultPalette));
 };
 
 const getDefault = (str) => {
@@ -42,7 +42,7 @@ const getDefault = (str) => {
     };
   }
   else if(str === 'palette') {
-    defaultObj = defaultPalette;
+    defaultObj = Object.assign({}, defaultPalette);
   }
   else if(str === 'name') {
     defaultObj = {
@@ -66,6 +66,11 @@ const getDefault = (str) => {
       turnLabel: true,
       boardLabel: false,
       showCheckGhost: true
+    };
+  }
+  else if(str === 'tutorial') {
+    defaultObj = {
+      tutorialPopup: true
     };
   }
   return defaultObj;
@@ -92,10 +97,11 @@ const reset = () => {
   store.clearAll();
   store.set('server', getDefault('server'));
   store.set('peerjs', getDefault('peerjs'));
-  store.set('palette', defaultPalette);
+  store.set('palette', Object.assign({}, defaultPalette));
   store.set('name', getDefault('name'));
   store.set('sound', getDefault('sound'));
   store.set('settings', getDefault('settings'));
+  store.set('tutorial', getDefault('tutorial'));
 };
 
 export default {
