@@ -17,7 +17,7 @@ export default class Board extends React.Component {
     triggerDate: Date.now(),
     triggerPromote: false,
     promotionObj: {}
-  }
+  };
   resizeListener = (() => {
     this.setState({
       width: window.innerWidth,

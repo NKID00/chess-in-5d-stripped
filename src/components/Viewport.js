@@ -1,6 +1,6 @@
 import { CustomPIXIComponent } from 'react-pixi-fiber';
 import { Viewport as PixiViewport} from 'pixi-viewport';
-import * as PIXI from 'pixi.js';
+import * as PIXI from 'pixi.js-legacy';
 
 const behavior = {
   customDisplayObject: (props) => {

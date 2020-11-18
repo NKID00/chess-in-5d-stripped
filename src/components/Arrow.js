@@ -1,6 +1,6 @@
 import React from 'react';
 import { Graphics } from 'react-pixi-fiber';
-import * as PIXI from 'pixi.js';
+import * as PIXI from 'pixi.js-legacy';
 
 const deepcompare = require('deep-equal');
 

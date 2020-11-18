@@ -12,7 +12,7 @@ import WhiteKnight from 'assets/wN.png';
 import WhiteRook from 'assets/wR.png';
 import WhiteQueen from 'assets/wQ.png';
 import WhiteKing from 'assets/wK.png';
-import * as PIXI from 'pixi.js';
+import * as PIXI from 'pixi.js-legacy';
 
 const deepcompare = require('deep-equal');
 
