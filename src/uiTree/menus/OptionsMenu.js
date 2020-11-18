@@ -9,7 +9,7 @@ import LinkButton from 'components/LinkButton';
 import LogoIcon from 'assets/logo.svg';
 import Options from 'Options';
 import { SketchPicker } from 'react-color';
-import * as PIXI from 'pixi.js';
+import * as PIXI from 'pixi.js-legacy';
 
 const deepcompare = require('deep-equal');
 
