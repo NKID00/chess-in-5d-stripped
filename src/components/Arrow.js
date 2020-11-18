@@ -1,8 +1,8 @@
 import React from 'react';
 import { Graphics } from 'react-pixi-fiber';
-import * as PIXI from 'pixi.js';
+import * as PIXI from 'pixi.js-legacy';
 
-const deepcompare = require('deep-compare');
+const deepcompare = require('deep-equal');
 
 export default class Arrow extends React.Component {
   arrowRef = React.createRef();

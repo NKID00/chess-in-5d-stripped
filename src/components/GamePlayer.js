@@ -15,7 +15,7 @@ import reverse from 'assets/sound/reverse.flac';
 import submit from 'assets/sound/submit.flac';
 import end from 'assets/sound/end.flac';
 
-const deepcompare = require('deep-compare');
+const deepcompare = require('deep-equal');
 const deepcopy = require('deep-copy');
 
 export default class GamePlayer extends React.Component {
@@ -53,14 +53,50 @@ export default class GamePlayer extends React.Component {
       flip: typeof this.props.flip === 'boolean' ? this.props.flip : false,
       timelineLabel: true,
       turnLabel: true,
-      boardLabel: false
+      boardLabel: false,
+      showCheckGhost: true
     },
     ended: false,
     variant: 'standard'
   };
+  shortcuts(e) {
+    if(e.keyCode === 8 || e.keyCode === 90) {
+      if(e.keyCode === 8) {
+        e.preventDefault();
+      }
+      if(this.state.undoable) {
+        this.undo();
+      }
+    }
+    if(e.keyCode === 9) {
+      if(typeof this.boardRef !== 'undefined') {
+        this.boardRef.current.recenter();
+      }
+    }
+    if(e.keyCode === 13 || e.keyCode === 70) {
+      if(this.state.submittable) {
+        this.submit();
+      }
+    }
+    if(e.keyCode === 37) {
+      this.revert();
+    }
+    if(e.keyCode === 39) {
+      this.forward();
+    }
+    if(e.keyCode === 85) {
+      var settings = Object.assign({}, this.state.settings);
+      settings.flip = !this.state.settings.flip;
+      this.setState({settings: settings});
+    }
+  }
   async moveArrowCalc() {
     var actions = deepcopy(await this.chess.actionHistory());
     var chess = new ChessWorker();
+    try {
+      await chess.variant((await this.chess.metadata()).variant);
+    }
+    catch(err) {}
     var res = [];
     var newMoveArrow = async (currMove) => {
       var prevTimelines = deepcopy((await chess.board()).timelines);
@@ -94,6 +130,55 @@ export default class GamePlayer extends React.Component {
     }
     return res;
   }
+  async addCheckGhost(boardObj, checks) {
+    var newBoardObj = deepcopy(boardObj);
+    for(var i = 0;this.state.settings.showCheckGhost && i < checks.length;i++) {
+      var checksExists = false;
+      for(var l = 0;l < newBoardObj.timelines.length;l++) {
+        if(
+          newBoardObj.timelines[l].timeline === checks[i].start.timeline ||
+          newBoardObj.timelines[l].timeline === checks[i].end.timeline
+        ) {
+          for(var t = 0;t < newBoardObj.timelines[l].turns.length;t++) {
+            if(
+              newBoardObj.timelines[l].turns[t].turn === checks[i].start.turn ||
+              newBoardObj.timelines[l].turns[t].turn === checks[i].end.turn
+            ) {
+              if(newBoardObj.timelines[l].turns[t].player === checks[i].player) {
+                checksExists = true;
+              }
+            }
+          }
+          for(var t = 0;!checksExists && t < newBoardObj.timelines[l].turns.length;t++) { // eslint-disable-line no-redeclare
+            if(
+              newBoardObj.timelines[l].turns[t].turn === checks[i].start.turn ||
+              newBoardObj.timelines[l].turns[t].turn === checks[i].end.turn
+            ) {
+              if(newBoardObj.timelines[l].turns[t].player === 'white' && checks[i].player === 'black') {
+                var newTurn = deepcopy(newBoardObj.timelines[l].turns[t]);
+                newTurn.fade = true;
+                newTurn.player = 'black';
+                newBoardObj.timelines[l].turns.push(newTurn);
+              }
+            }
+            if(
+              newBoardObj.timelines[l].turns[t].turn === checks[i].start.turn - 1 ||
+              newBoardObj.timelines[l].turns[t].turn === checks[i].end.turn - 1
+            ) {
+              if(newBoardObj.timelines[l].turns[t].player === 'black' && checks[i].player === 'white') {
+                var newTurn = deepcopy(newBoardObj.timelines[l].turns[t]); // eslint-disable-line no-redeclare
+                newTurn.fade = true;
+                newTurn.player = 'white';
+                newTurn.turn++;
+                newBoardObj.timelines[l].turns.push(newTurn);
+              }
+            }
+          }
+        }
+      }
+    }
+    return newBoardObj;
+  }
   async boardSync() {
     var win = {
       player: await this.chess.player(),
@@ -101,7 +186,6 @@ export default class GamePlayer extends React.Component {
       stalemate: await this.chess.inStalemate()
     };
     var obj = {};
-    obj.board = await this.chess.board();
     obj.submittable = await this.chess.submittable(true);
     obj.undoable = await this.chess.undoable();
     obj.player = await this.chess.player();
@@ -112,20 +196,26 @@ export default class GamePlayer extends React.Component {
     obj.check = await this.chess.inCheck();
     obj.action = await this.chess.actionNumber();
     obj.checks = await this.chess.checks();
+    obj.board = await this.addCheckGhost(await this.chess.board(), obj.checks);
     obj.triggerDate = Date.now();
     obj.nextMoves = (await this.chess.moves('object', false, false, true)).filter((e) => {
       if(e.promotion !== '' && e.promotion !== null) {
+        /*
         if(e.promotion === 'K') { return true; }
         if(e.promotion === 'R' && !(
           (e.player === 'white' && e.end.rank === 8 && e.start.rank === 7) ||
           (e.player === 'black' && e.end.rank === 2 && e.start.rank === 1)
         )) { return true; }
-        return e.promotion === 'Q';
+        */
+        return e.promotion === 'Q' || e.promotion === 'P';
       }
       return true;
     });
+    obj.moveBuffer = await this.chess.moveBuffer();
     obj.moveArrows = await this.moveArrowCalc();
     obj.currentNotation = await this.chess.exportFunc('notation_short');
+    obj.variant = (await this.chess.metadata()).variant;
+    obj.metadata = await this.chess.metadata();
     this.setState(obj);
     if(win.checkmate || win.stalemate) {
       this.endHowl.volume(Options.get('sound').effect);
@@ -141,10 +231,19 @@ export default class GamePlayer extends React.Component {
     }
   }
   componentDidMount() {
+    var settings = Options.get('settings');
+    delete settings.flip;
+    this.setState({settings: Object.assign(this.state.settings, settings)});
     if((typeof this.props.defaultImport === 'string') && this.props.defaultImport.length > 0) {
       this.import(this.props.defaultImport);
     }
-    this.boardSync();
+    this.boardSync().then(() => {
+      if(typeof this.props.onVariantLoad === 'function') {
+        this.props.onVariantLoad();
+      }
+    });
+    this.shortcuts = this.shortcuts.bind(this);
+    window.addEventListener('keyup', this.shortcuts);
   }
   async componentDidUpdate(prevProps, prevState) {
     if(!deepcompare(
@@ -176,13 +275,19 @@ export default class GamePlayer extends React.Component {
       settings.flip = this.props.flip;
       this.setState({settings: settings});
     }
-    if((prevProps.defaultImport !== this.props.defaultImport) && (typeof this.props.defaultImport === 'string') && this.props.defaultImport.length > 0) {
+    if(prevState.settings.showCheckGhost !== this.state.settings.showCheckGhost) {
+      this.setState({board: await this.addCheckGhost(await this.chess.board(), await this.chess.checks()) });
+    }
+    if((prevProps.defaultImport !== this.props.defaultImport) && (typeof this.props.defaultImport === 'string')) {
       this.import(this.props.defaultImport);
     }
     if(prevProps.variant !== this.props.variant && typeof this.props.variant === 'string') {
       this.setState({loading: true});
       await this.chess.variant(this.props.variant);
       await this.boardSync();
+      if(typeof this.props.onVariantLoad === 'function') {
+        this.props.onVariantLoad();
+      }
       this.setState({loading: false});
     }
     if(prevProps.whiteName !== this.props.whiteName && typeof this.props.whiteName === 'string') {
@@ -191,6 +296,9 @@ export default class GamePlayer extends React.Component {
     if(prevProps.blackName !== this.props.blackName && typeof this.props.blackName === 'string') {
       this.chess.metadata({black: this.props.blackName});
     }
+  }
+  componentWillUnmount() {
+    window.removeEventListener('keypress', this.shortcuts);
   }
   async revert() {
     if(this.props.canAnalyze) {
@@ -202,6 +310,9 @@ export default class GamePlayer extends React.Component {
       await this.chess.importFunc(this.state.importedHistory.filter((e) => {
         return (e.action * 2 + (e.player === 'white' ? 0 : 1)) < (newAction * 2 + (newPlayer === 'white' ? 0 : 1));
       }), this.state.variant, true);
+      if(typeof this.props.onRevert === 'function') {
+        this.props.onRevert();
+      }
       await this.boardSync();
       this.setState({loading: false});
     }
@@ -212,6 +323,9 @@ export default class GamePlayer extends React.Component {
       await this.chess.importFunc(this.state.importedHistory.filter((e) => {
         return (e.action * 2 + (e.player === 'white' ? 0 : 1)) <= (this.state.action * 2 + (this.state.player === 'white' ? 0 : 1));
       }), this.state.variant, true);
+      if(typeof this.props.onForward === 'function') {
+        this.props.onForward();
+      }
       await this.boardSync();
       this.setState({loading: false});
     }
@@ -226,6 +340,7 @@ export default class GamePlayer extends React.Component {
   async move(moveObj, unselectPiece = false) {
     this.setState({loading: true});
     await this.chess.move(moveObj, true);
+    if(typeof this.props.onMove === 'function') { this.props.onMove(moveObj); }
     this.setState({highlights: []});
     if(unselectPiece) { this.setState({selectedPiece: null}); }
     await this.boardSync();
@@ -233,23 +348,23 @@ export default class GamePlayer extends React.Component {
     if(this.pieceHowl.volume() > 0) {
       this.pieceHowl.play();
     }
-    if(typeof this.props.onMove === 'function') { this.props.onMove(moveObj); }
     this.setState({loading: false});
   }
   async undo() {
     this.setState({loading: true});
     await this.chess.undo();
+    if(typeof this.props.onUndo === 'function') { this.props.onUndo(); }
     await this.boardSync();
     this.reverseHowl.volume(Options.get('sound').effect);
     if(this.reverseHowl.volume() > 0) {
       this.reverseHowl.play();
     }
-    if(typeof this.props.onUndo === 'function') { this.props.onUndo(); }
     this.setState({loading: false});
   }
   async submit() {
     this.setState({loading: true});
     await this.chess.submit(true);
+    if(typeof this.props.onSubmit === 'function') { this.props.onSubmit(); }
     this.setState({
       importedHistory: await this.chess.exportFunc('object'),
       notation: await this.chess.exportFunc('notation_short')
@@ -259,7 +374,6 @@ export default class GamePlayer extends React.Component {
     if(this.submitHowl.volume() > 0) {
       this.submitHowl.play();
     }
-    if(typeof this.props.onSubmit === 'function') { this.props.onSubmit(); }
     this.setState({loading: false});
   }
   async import(input) {
@@ -285,8 +399,8 @@ export default class GamePlayer extends React.Component {
           alignItems='center'
           width={1}
         >
-          <img src={LogoIcon} alt='Logo' />
-          <Text p={2} fontWeight='bold'>Chess in 5D</Text>
+          <img src={LogoIcon} alt='Logo' onClick={() => { window.location.href = window.location.origin; }} />
+          <Text p={2} fontWeight='bold' onClick={() => { window.location.href = window.location.origin; }}>Chess in 5D</Text>
           <Box mx='auto' />
           {this.props.children}
           <NotationViewer
@@ -305,7 +419,10 @@ export default class GamePlayer extends React.Component {
               }
             }}
           />
-          <Settings value={this.state.settings} onChange={(e) => { this.setState({settings: e}); }}/>
+          <Settings value={this.state.settings} onChange={(e) => {
+            Options.set('settings', e);
+            this.setState({settings: e});
+          }}/>
         </Flex>
         {this.state.loading ?
           <LinearProgress
@@ -383,7 +500,7 @@ export default class GamePlayer extends React.Component {
           :
             <></>
           }
-          {typeof this.props.winner === 'string' && this.props.winner !== '' ?
+          {typeof this.props.winner === 'string' && this.props.winner !== '' && this.props.winner !== 'draw' ?
             <Button
               variant='primary'
               disabled
@@ -391,12 +508,12 @@ export default class GamePlayer extends React.Component {
               bg={this.props.winner !== 'white'? 'black' : 'white'}
               mr={2}
             >
-              {this.state.player === 'white' && this.props.whiteName ?
+              {this.props.winner === 'white' && this.props.whiteName ?
                 this.props.whiteName + ' Wins'
-              : this.state.player === 'black' && this.props.blackName ?
+              : this.props.winner === 'black' && this.props.blackName ?
                 this.props.blackName + ' Wins'
               :
-                this.state.player.substr(0,1).toUpperCase() + this.state.player.substr(1) + ' Wins'}
+                this.props.winner.substr(0,1).toUpperCase() + this.props.winner.substr(1) + ' Wins'}
             </Button>
           : this.state.checkmate ?
             <Button
@@ -411,7 +528,17 @@ export default class GamePlayer extends React.Component {
           :
             <></>
           }
-          {this.state.stalemate ?
+          {typeof this.props.winner === 'string' && this.props.winner === 'draw' ?
+            <Button
+              variant='primary'
+              disabled
+              color='black'
+              bg='grey'
+              mr={2}
+            >
+              Draw
+            </Button>
+          : this.state.stalemate ?
             <Button
               variant='primary'
               disabled

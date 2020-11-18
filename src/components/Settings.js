@@ -6,7 +6,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Checkbox from '@material-ui/core/Checkbox';
 import { BsGear } from 'react-icons/bs';
 
-const deepcompare = require('deep-compare');
+const deepcompare = require('deep-equal');
 
 export default class Settings extends React.Component {
   buttonRef = React.createRef();
@@ -19,7 +19,8 @@ export default class Settings extends React.Component {
     flip: false,
     timelineLabel: true,
     turnLabel: true,
-    boardLabel: false
+    boardLabel: false,
+    showCheckGhost: true
   };
   componentDidMount() {
     if(typeof this.props.value === 'object') {
@@ -30,7 +31,7 @@ export default class Settings extends React.Component {
     if(prevState.open !== this.state.open) {
       if(this.boxRef.current !== null && this.buttonRef.current !== null) {
         this.boxRef.current.style.position = 'absolute';
-        this.boxRef.current.style.left = window.innerWidth - 13 - this.boxRef.current.getBoundingClientRect().width + 'px';
+        this.boxRef.current.style.left = (window.innerWidth > window.screen.width ? window.screen.width : window.innerWidth) - 13 - this.boxRef.current.getBoundingClientRect().width + 'px';
         this.boxRef.current.style.top = this.buttonRef.current.getBoundingClientRect().bottom + 13 + 'px';
       }
     }
@@ -41,7 +42,8 @@ export default class Settings extends React.Component {
       prevState.flip !== this.state.flip ||
       prevState.timelineLabel !== this.state.timelineLabel ||
       prevState.turnLabel !== this.state.turnLabel ||
-      prevState.boardLabel !== this.state.boardLabel
+      prevState.boardLabel !== this.state.boardLabel ||
+      prevState.showCheckGhost !== this.state.showCheckGhost
     ) {
       if(typeof this.props.onChange === 'function') {
         this.props.onChange({
@@ -51,7 +53,8 @@ export default class Settings extends React.Component {
           flip: this.state.flip,
           timelineLabel: this.state.timelineLabel,
           turnLabel: this.state.turnLabel,
-          boardLabel: this.state.boardLabel
+          boardLabel: this.state.boardLabel,
+          showCheckGhost: this.state.showCheckGhost
         });
       }
     }
@@ -121,6 +124,14 @@ export default class Settings extends React.Component {
               color='primary'
               checked={this.state.flip}
               onChange={(e) => { this.setState({flip: e.target.checked}); }}
+            />
+          </Flex>
+          <Flex>
+            <Text p={2} fontWeight='bold'>Show Check Boards</Text>
+            <Checkbox
+              color='primary'
+              checked={this.state.showCheckGhost}
+              onChange={(e) => { this.setState({showCheckGhost: e.target.checked}); }}
             />
           </Flex>
           <Flex>

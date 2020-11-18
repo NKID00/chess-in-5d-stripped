@@ -2,7 +2,7 @@
 
 ## Work In Progress
 
-These rules are still a work in progress.
+These rules are still a work in progress. Rules are outdated compared to the tutorials.
 
 ## Introduction
 
@@ -28,7 +28,7 @@ Open another tab to follow along [https://chessin5d.net/#/local/game/human](http
 
 Here is the starting board of Chess in 5D. This is the exact same starting board as regular chess. In fact, when not utilizing the temporal dimensions, Chess in 5D pieces move along the Rank / File dimension in the same way as regular chess.
 
-Let's make the first move: `1w. 1:e2:e3` (regular chess equivalent is `e3`). To do this, select the `e2` pawn and then select the `e3` square. Do not press the 'Submit' button first.
+Let's make the first move: `1w. 1:e2:e3` (regular chess equivalent is `e3`). To do this, select the `e2` pawn and then select the `e3` space. Do not press the 'Submit' button first.
 
 *We'll go over the notation later*
 
@@ -56,7 +56,7 @@ Let's make our first move using time travel.
 
 We are going to play this move: `2w. 2:Nb1<+1>1:b3` (no regular chess equivalent)
 
-To play this move, select the knight on `b1` on the right most board. Then select the `b3` square on the left most board. Submit when done.
+To play this move, select the knight on `b1` on the right most board. Then select the `b3` space on the left most board. Submit when done.
 
 ![2w. 2:Nb1<+1>1:b3](2w2Nb1+1+1b3.gif)
 
@@ -107,13 +107,13 @@ Let's get a few definitions out of the way:
  - Rank - A movable dimension within the game. Same as standard chess.
  - File - A movable dimension within the game. Same as standard chess.
  - Full Board - A full board is considered as the full board state between actions. Contains all timelines, turns, and singular boards with all pieces.
- - Backline: Each player has a backline, which is the latest timeline create by each opponent.
+ - Backline - Each player has a backline, which is the latest timeline create by each opponent.
 
 *Notice: the previous example did not use these terms for the sake of easier introduction, as explaining terms before context would not make sense*
 
 ## Piece Movements
 
-Chess in 5D piece have the same Rank / File movement as regular chess pieces. Castling and En Passant in the Rank / File dimension is the same (though when looking for if a square is under attack for castling, Turn / Timeline movements attacking a square is still part of the calculation).
+Chess in 5D piece have the same Rank / File movement as regular chess pieces. Castling and En Passant in the Rank / File dimension is the same (though when looking for if a space is under attack for castling, Turn / Timeline movements attacking a space is still part of the calculation).
 
 We'll look at how pieces move / capture from the easiest piece to understand to the hardest.
 
@@ -123,7 +123,7 @@ We'll look at how pieces move / capture from the easiest piece to understand to 
 
 The rook is the easiest piece to understand.
 
-In the regular game of chess, the rook can move as many squares along one dimension.
+In the regular game of chess, the rook can move as many spaces along one dimension.
 
 This means that when extended to Chess in 5D, the rook can only move:
  - Left or Right along the File dimension
@@ -137,52 +137,52 @@ Capturing is the same as normal chess, if you can move to the same location as a
 
 ![Bishop Move](bishop_move.png)
 
-Bishops in the regular game of chess moves along two dimensions an equal amount of squares.
+Bishops in the regular game of chess moves along two dimensions an equal amount of spaces.
 
-For example, a `Ba3c5` move results in moving 2 squares to the right (from White's perspective) and 2 squares up.
+For example, a `Ba3c5` move results in moving 2 spaces to the right (from White's perspective) and 2 spaces up.
 
 When extending to Chess in 5D, the bishop can still only move along two dimensions, but it can chose any of the two dimensions.
 
 This means bishops can do moves like this:
- - Move 1 square up and 1 square to the right
- - Move back in time 2 turns and 2 squares to the left
+ - Move 1 space up and 1 space to the right
+ - Move back in time 2 turns and 2 spaces to the left
  - Move across 5 timelines towards the opponent's backline and 5 turns into the future
 
 ### Queens
 
 ![Queen Move](queen_move.png)
 
-Queens in the regular game of chess can move up to two dimensions and an equal amount of squares along the selected dimensions.
+Queens in the regular game of chess can move up to two dimensions and an equal amount of spaces along the selected dimensions.
 
 When extending to Chess in 5D, the queen can move along any amount of dimensions.
 
 This means queens can do moves like this:
- - Move 4 squares up
- - Move 3 turns into the past, 3 squares up, and 3 squares to the left
- - Move across 5 timelines towards the opponent's backline, 5 turns into the past, 5 squares up, and 5 squares to the left
+ - Move 4 spaces up
+ - Move 3 turns into the past, 3 spaces up, and 3 spaces to the left
+ - Move across 5 timelines towards the opponent's backline, 5 turns into the past, 5 spaces up, and 5 spaces to the left
 
 ### Kings
 
 ![King Move](king_move.png)
 
-Follows the same movement directions as the queen, but can only do 1 square instead.
+Follows the same movement directions as the queen, but can only do 1 space instead.
 
 This means kings can do moves like this:
- - Move 1 squares up
- - Move 1 turns into the past, 1 squares up, and 1 squares to the left
- - Move across 1 timelines towards the opponent's backline, 1 turn into the future, 1 squares up, and 1 squares to the left
+ - Move 1 spaces up
+ - Move 1 turns into the past, 1 spaces up, and 1 spaces to the left
+ - Move across 1 timelines towards the opponent's backline, 1 turn into the future, 1 spaces up, and 1 spaces to the left
 
 ### Knights
 
 ![Knight Move](knight_move.png)
 
-Knights work in regular chess by moving 2 squares in one dimension and 1 in another.
+Knights work in regular chess by moving 2 spaces in one dimension and 1 in another.
 
-When extending to Chess in 5D, the knight can moving 2 squares in one dimension and 1 in another, but they can chose as many dimensions as they want.
+When extending to Chess in 5D, the knight can moving 2 spaces in one dimension and 1 in another, but they can chose any dimension they want.
 
 This means knights can do moves like this:
- - Move 1 square up and 2 squares to the right
- - Move back in time 2 turns and 1 square to the left
+ - Move 1 space up and 2 spaces to the right
+ - Move back in time 2 turns and 1 space to the left
  - Move across 2 timelines towards the opponent's backline and 1 turn into the past
 
 ### Pawn
@@ -193,9 +193,9 @@ This means knights can do moves like this:
 
 Pawns are the most complicated piece in terms of movement.
 
-When trying to move across the Turn / Timeline dimension, pawns can only move across timelines towards opponent's backline.
+When trying to move across the Turn / Timeline dimension, pawns can only move across timelines towards the backline.
 
-When trying to capture across the Turn / Timeline dimension, pawns can only move across timelines towards the opponent's backline and one turn into the past or future.
+When trying to capture across the Turn / Timeline dimension, pawns can only move across timelines towards the backline and one turn into the past or future.
 
 ### En Passant
 
@@ -214,8 +214,6 @@ Currently Castling is only possible via the regular chess move. Extending this i
 ![Promotion](pawn_promote.gif)
 
 Currently Promotion is only possible via the regular chess move. Extending this into Chess in 5D is unclear at this time.
-
-As of right now, pawns only promote to queens. In the future, this will change.
 
 ## Notation
 

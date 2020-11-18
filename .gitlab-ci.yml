@@ -36,6 +36,8 @@ build_electron_app:
     - job: install_dependencies
       artifacts: true
   script:
+    - apt-get update
+    - apt-get install xserver-xorg-dev libxi-dev libxext-dev -y
     - CI=false npm run electron-build
   artifacts:
     paths:

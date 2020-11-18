@@ -12,9 +12,9 @@ import WhiteKnight from 'assets/wN.png';
 import WhiteRook from 'assets/wR.png';
 import WhiteQueen from 'assets/wQ.png';
 import WhiteKing from 'assets/wK.png';
-import * as PIXI from 'pixi.js';
+import * as PIXI from 'pixi.js-legacy';
 
-const deepcompare = require('deep-compare');
+const deepcompare = require('deep-equal');
 
 export default class Piece extends React.Component {
   pieceRef = React.createRef();
@@ -30,7 +30,7 @@ export default class Piece extends React.Component {
       else if(this.props.pieceObj.piece === 'R') {
         this.pieceRef.current.texture = PIXI.Texture.from(WhiteRook);
       }
-      else if(this.props.pieceObj.piece === 'Q') {
+      else if(this.props.pieceObj.piece === 'Q' || this.props.pieceObj.piece === 'P') {
         this.pieceRef.current.texture = PIXI.Texture.from(WhiteQueen);
       }
       else if(this.props.pieceObj.piece === 'K') {
@@ -50,7 +50,7 @@ export default class Piece extends React.Component {
       else if(this.props.pieceObj.piece === 'R') {
         this.pieceRef.current.texture = PIXI.Texture.from(BlackRook);
       }
-      else if(this.props.pieceObj.piece === 'Q') {
+      else if(this.props.pieceObj.piece === 'Q' || this.props.pieceObj.piece === 'P') {
         this.pieceRef.current.texture = PIXI.Texture.from(BlackQueen);
       }
       else if(this.props.pieceObj.piece === 'K') {
@@ -104,7 +104,7 @@ export default class Piece extends React.Component {
             }
           }}
         />
-        <Sprite 
+        <Sprite
           ref={this.pieceRef}
           pointertap={(e) => {
             if(typeof this.props.onPieceClick === 'function') {
@@ -125,6 +125,7 @@ export default class Piece extends React.Component {
           y={this.props.y}
           width={100}
           height={100}
+          alpha={this.props.fade ? 0.35 : 1}
         />
       </>
     );

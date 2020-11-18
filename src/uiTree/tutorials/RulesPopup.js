@@ -29,9 +29,9 @@ const assets = {
   'queen_move.png': require('assets/rules/queen_move.png'),
   'rook_move.png': require('assets/rules/rook_move.png'),
   'start.gif': require('assets/rules/start.gif')
-}
+};
 
-export default class RulesMenu extends React.Component {
+export default class RulesPopup extends React.Component {
   state = {
     text: '### Loading...'
   };
@@ -70,7 +70,7 @@ export default class RulesMenu extends React.Component {
             <Box mx='auto' />
           </Flex>
           <Box id='markdown-container' width={1} px={2} py={5} sx={{overflowY: 'auto', height: '100%'}}>
-            <ReactMarkdown 
+            <ReactMarkdown
               linkTarget='_blank'
               source={this.state.text}
               transformImageUri={(uri) => {
@@ -88,7 +88,7 @@ export default class RulesMenu extends React.Component {
           >
             <Box mx='auto' />
             <LinkButton
-              to='/'
+              to='/tutorial'
               variant='secondary'
               m={1}
             >

@@ -3,7 +3,7 @@ import { Graphics, Text } from 'react-pixi-fiber';
 import Piece from 'components/Piece';
 import Highlight from 'components/Highlight';
 
-const deepcompare = require('deep-compare');
+const deepcompare = require('deep-equal');
 
 export default class Turn extends React.Component {
   turnRef = React.createRef();
@@ -19,10 +19,10 @@ export default class Turn extends React.Component {
           this.props.palette.whiteBoardOutline
         :
           this.props.palette.blackBoardOutline,
-      1, (this.props.flip ? 0 : 1));
+      (this.props.turnObj.fade ? 0.35 : 1), (this.props.flip ? 0 : 1));
     }
     else {
-      graphics.lineStyle(30, this.props.palette.inactiveBoardOutline, 1, (this.props.flip ? 0 : 1));
+      graphics.lineStyle(30, this.props.palette.inactiveBoardOutline, (this.props.turnObj.fade ? 0.35 : 1), (this.props.flip ? 0 : 1));
     }
     if(
       Array.isArray(this.props.checks) &&
@@ -36,20 +36,22 @@ export default class Turn extends React.Component {
         );
       }).length > 0
     ) {
-      graphics.lineStyle(this.props.present ? 70 : 50, this.props.palette.checkBoardOutline, 1, (this.props.flip ? 0 : 1));
+      graphics.lineStyle(this.props.present ? 70 : 50, this.props.palette.checkBoardOutline, (this.props.turnObj.fade ? 0.35 : 1), (this.props.flip ? 0 : 1));
     }
-    graphics.drawRect(x, y, 800, 800 * (this.props.flip ? -1 : 1));
+    graphics.drawRect(x, y,
+      (this.props.turnObj.width ? this.props.turnObj.width : 8) * 100,
+      (this.props.turnObj.height ? this.props.turnObj.height : 8) * 100 * (this.props.flip ? -1 : 1));
     graphics.endFill();
     graphics.lineStyle(0);
-    for(var i = 0;i < 8;i++) {
-      for(var j = 0;j < 8;j++) {
+    for(var i = 0;i < (this.props.turnObj.width ? this.props.turnObj.width : 8);i++) {
+      for(var j = 0;j < (this.props.turnObj.height ? this.props.turnObj.height : 8);j++) {
         if(((i + j) % 2 === 0 && !this.props.flip) || ((i + j) % 2 !== 0 && this.props.flip)) {
-          graphics.beginFill(this.props.palette.whiteSquare);
+          graphics.beginFill(this.props.palette.whiteSquare, (this.props.turnObj.fade ? 0.35 : 1));
           graphics.drawRect(x + (i * 100), y + (j * 100) * (this.props.flip ? -1 : 1), 100, 100 * (this.props.flip ? -1 : 1));
           graphics.endFill();
         }
         else {
-          graphics.beginFill(this.props.palette.blackSquare);
+          graphics.beginFill(this.props.palette.blackSquare, (this.props.turnObj.fade ? 0.35 : 1));
           graphics.drawRect(x + (i * 100), y + (j * 100) * (this.props.flip ? -1 : 1), 100, 100 * (this.props.flip ? -1 : 1));
           graphics.endFill();
         }
@@ -83,6 +85,7 @@ export default class Turn extends React.Component {
               <Piece
                 app={this.props.app}
                 palette={this.props.palette}
+                fade={this.props.turnObj.fade}
                 x={x + (this.props.flip ? 8 - e.position.file : e.position.file - 1) * 100}
                 y={y + ((8 - e.position.rank) * 100) * (this.props.flip ? -1 : 1) + (this.props.flip ? -100 : 0)}
                 pieceObj={e}
@@ -186,7 +189,7 @@ export default class Turn extends React.Component {
         }
         {this.props.turnLabel ?
           <Text
-            text={this.props.turnObj.turn + 'T'}
+            text={'T' + this.props.turnObj.turn}
             style={{
               align: 'left',
               fill: this.props.palette.turnLabel,

@@ -5,6 +5,7 @@ import Arrow from 'components/Arrow';
 import { Stage, AppContext } from 'react-pixi-fiber';
 import Viewport from 'components/Viewport';
 import Options from 'Options';
+import Promotion from './Promotion';
 
 export default class Board extends React.Component {
   state = {
@@ -13,8 +14,10 @@ export default class Board extends React.Component {
     snapX: 500,
     snapY: 500,
     zoomHeight: 1333,
-    triggerDate: Date.now()
-  }
+    triggerDate: Date.now(),
+    triggerPromote: false,
+    promotionObj: {}
+  };
   resizeListener = (() => {
     this.setState({
       width: window.innerWidth,
@@ -23,9 +26,9 @@ export default class Board extends React.Component {
   });
   recenter() {
     var res = {
-      snapX: 500,
-      snapY: 500,
-      zoomHeight: 1333
+      snapX: (this.props.boardObj && this.props.boardObj.width ? this.props.boardObj.width * 100 + 200 : 1000)/2,
+      snapY: (this.props.boardObj && this.props.boardObj.height ? this.props.boardObj.height * 100 + 200 : 1000)/2,
+      zoomHeight: (this.props.boardObj && this.props.boardObj.height ? this.props.boardObj.height * 100 + 200 : 1000)*1.333
     };
     if(typeof this.props.boardObj !== 'undefined') {
       var actives = this.props.boardObj.timelines.filter((e) => { return e.present; });
@@ -62,12 +65,12 @@ export default class Board extends React.Component {
             }
           }
         }
-        res.snapX = (highestTurn - 1) * 1000;
-        res.snapX -= 500;
+        res.snapX = (highestTurn - 1) * (this.props.boardObj && this.props.boardObj.width ? this.props.boardObj.width * 100 + 200 : 1000);
+        res.snapX -= (this.props.boardObj && this.props.boardObj.width ? this.props.boardObj.width * 100 + 200 : 1000)/2;
         res.snapY = (actives[index].timeline - this.props.boardObj.timelines.map((e) => { return e.timeline; }).reduce((a, c) => {
           return a > c ? c : a;
-        })) * 1000;
-        res.snapY += 500;
+        })) * (this.props.boardObj && this.props.boardObj.height ? this.props.boardObj.height * 100 + 200 : 1000);
+        res.snapY += (this.props.boardObj && this.props.boardObj.height ? this.props.boardObj.height * 100 + 200 : 1000)/2;
       }
     }
     if(typeof this.props.allowRecenter === 'undefined' || this.props.allowRecenter) {
@@ -85,6 +88,21 @@ export default class Board extends React.Component {
   render() {
     return (
       <>
+        <Promotion
+          open={this.state.triggerPromote}
+          moveObj={this.state.promotionObj}
+          onClose={() => {
+            this.setState({ triggerPromote: false });
+          }}
+          onPromote={(piece) => {
+            var newMoveObj = Object.assign({}, this.state.promotionObj);
+            newMoveObj.promotion = piece;
+            if(typeof this.props.onHighlightClick === 'function') {
+              this.props.onHighlightClick(newMoveObj);
+            }
+            this.setState({ triggerPromote: false });
+          }}
+        />
         <Stage
           options={{
             height: this.state.height,
@@ -109,21 +127,21 @@ export default class Board extends React.Component {
                 decelerate
                 blur={this.props.blur}
                 worldHeight={typeof this.props.boardObj !== 'undefined' ?
-                  this.props.boardObj.timelines.length * (this.props.flip ? -1000 : 1000)
+                  this.props.boardObj.timelines.length * (this.props.flip ? -1 : 1) * (this.props.boardObj && this.props.boardObj.width ? this.props.boardObj.width * 100 + 200 : 1000)
                 :
-                  1000
+                  (this.props.boardObj && this.props.boardObj.width ? this.props.boardObj.width * 100 + 200 : 1000)
                 }
                 worldWidth={typeof this.props.boardObj !== 'undefined' ?
                   this.props.boardObj.timelines.map((e) => {
                     if(e.turns.length <= 0) { return 0; }
                     return e.turns.reduce((a, c) => {
                       return a < c.turn + (c.player === 'white' ? 0 : 1) ? c.turn + (c.player === 'white' ? 0 : 1) : a;
-                    }, e.turns[0].turn + (e.turns[0].player === 'white' ? 0 : 1)) * 1000;
+                    }, e.turns[0].turn + (e.turns[0].player === 'white' ? 0 : 1)) * (this.props.boardObj && this.props.boardObj.width ? this.props.boardObj.width * 100 + 200 : 1000);
                   }).reduce((a, c) => {
                     return a < c ? c : a;
                   })
                 :
-                  1000
+                  (this.props.boardObj && this.props.boardObj.width ? this.props.boardObj.width * 100 + 200 : 1000)
                 }
                 snapX={this.state.snapX}
                 snapY={this.state.snapY * (this.props.flip ? -1 : 1)}
@@ -145,7 +163,7 @@ export default class Board extends React.Component {
                             }).length > 0;
                           }).map((e) => { return e.timeline; }).reduce((a, c) => {
                             return a > c ? c : a;
-                          })) * (this.props.flip ? -1000 : 1000)
+                          })) * (this.props.flip ? -1 : 1) * (this.props.boardObj && this.props.boardObj.width ? this.props.boardObj.width * 100 + 200 : 1000)
                         }
                         timelineObj={e}
                         key={e.timeline}
@@ -165,8 +183,13 @@ export default class Board extends React.Component {
                           }
                         }}
                         onHighlightClick={(moveObj) => {
-                          if(typeof this.props.onHighlightClick === 'function') {
-                            this.props.onHighlightClick(moveObj);
+                          if(moveObj.promotion === null) {
+                            if(typeof this.props.onHighlightClick === 'function') {
+                              this.props.onHighlightClick(moveObj);
+                            }
+                          }
+                          else {
+                            this.setState({ triggerPromote: true, promotionObj: moveObj });
                           }
                         }}
                         selectedPiece={this.props.selectedPiece}
@@ -204,10 +227,18 @@ export default class Board extends React.Component {
                     return (
                       <Arrow
                         palette={Options.get('palette')}
-                        sx={(e.start.turn - 1) * (onlyOne ? 1000 : 2000) + (e.player === 'white' ? 0 : 1000) + 150 + (onlyOne ? (e.player === 'white' ? 0 : -1000) : 0) + (this.props.flip ? 8 - e.start.file : e.start.file - 1) * 100}
-                        sy={((e.start.timeline - lowestTimeline) * 1000 + 150 + (8 - e.start.rank) * 100) * (this.props.flip ? -1 : 1)}
-                        tx={(e.end.turn - 1) * (onlyOne ? 1000 : 2000) + (e.player === 'white' ? 0 : 1000) + 150 + (onlyOne ? (e.player === 'white' ? 0 : -1000) : 0) + (e.isNew ? 1000 : 0) + (this.props.flip ? 8 - e.end.file : e.end.file - 1) * 100}
-                        ty={((e.end.timeline - lowestTimeline) * 1000 + 150 + (8 - e.end.rank) * 100) * (this.props.flip ? -1 : 1)}
+                        sx={(e.start.turn - 1) * (onlyOne ? 1 : 2) * (this.props.boardObj && this.props.boardObj.width ? this.props.boardObj.width * 100 + 200 : 1000) +
+                          (e.player === 'white' ? 0 : (this.props.boardObj && this.props.boardObj.width ? this.props.boardObj.width * 100 + 200 : 1000)) + 150 +
+                          (onlyOne ? (e.player === 'white' ? 0 : -(this.props.boardObj && this.props.boardObj.width ? this.props.boardObj.width * 100 + 200 : 1000)) : 0) +
+                          (this.props.flip ? 8 - e.start.file : e.start.file - 1) * 100}
+                        sy={((e.start.timeline - lowestTimeline) * (this.props.boardObj && this.props.boardObj.height ? this.props.boardObj.height * 100 + 200 : 1000) +
+                          150 + (8 - e.start.rank) * 100) * (this.props.flip ? -1 : 1)}
+                        tx={(e.end.turn - 1) * (onlyOne ? 1 : 2) * (this.props.boardObj && this.props.boardObj.width ? this.props.boardObj.width * 100 + 200 : 1000) +
+                          (e.player === 'white' ? 0 : (this.props.boardObj && this.props.boardObj.width ? this.props.boardObj.width * 100 + 200 : 1000)) +
+                          150 + (onlyOne ? (e.player === 'white' ? 0 : -(this.props.boardObj && this.props.boardObj.width ? this.props.boardObj.width * 100 + 200 : 1000)) : 0) +
+                          (e.isNew ? (this.props.boardObj && this.props.boardObj.width ? this.props.boardObj.width * 100 + 200 : 1000) : 0) + (this.props.flip ? 8 - e.end.file : e.end.file - 1) * 100}
+                        ty={((e.end.timeline - lowestTimeline) * (this.props.boardObj && this.props.boardObj.height ? this.props.boardObj.height * 100 + 200 : 1000) +
+                          150 + (8 - e.end.rank) * 100) * (this.props.flip ? -1 : 1)}
                         moveObj={e}
                         key={JSON.stringify(e)}
                       />
@@ -238,10 +269,18 @@ export default class Board extends React.Component {
                     return (
                       <Arrow
                         palette={Options.get('palette')}
-                        sx={(e.start.turn - 1) * (onlyOne ? 1000 : 2000) + (e.player === 'white' ? 0 : 1000) + 150 + (onlyOne ? (e.player === 'white' ? 0 : -1000) : 0) + (this.props.flip ? 8 - e.start.file : e.start.file - 1) * 100}
-                        sy={((e.start.timeline - lowestTimeline) * 1000 + 150 + (8 - e.start.rank) * 100) * (this.props.flip ? -1 : 1)}
-                        tx={(e.end.turn - 1) * (onlyOne ? 1000 : 2000) + (e.player === 'white' ? 0 : 1000) + 150 + (onlyOne ? (e.player === 'white' ? 0 : -1000) : 0) + (e.isNew ? 1000 : 0) + (this.props.flip ? 8 - e.end.file : e.end.file - 1) * 100}
-                        ty={((e.end.timeline - lowestTimeline) * 1000 + 150 + (8 - e.end.rank) * 100) * (this.props.flip ? -1 : 1)}
+                        sx={(e.start.turn - 1) * (onlyOne ? 1 : 2) * (this.props.boardObj && this.props.boardObj.width ? this.props.boardObj.width * 100 + 200 : 1000) +
+                          (e.player === 'white' ? 0 : (this.props.boardObj && this.props.boardObj.width ? this.props.boardObj.width * 100 + 200 : 1000)) + 150 +
+                          (onlyOne ? (e.player === 'white' ? 0 : -(this.props.boardObj && this.props.boardObj.width ? this.props.boardObj.width * 100 + 200 : 1000)) : 0) +
+                          (this.props.flip ? 8 - e.start.file : e.start.file - 1) * 100}
+                        sy={((e.start.timeline - lowestTimeline) * (this.props.boardObj && this.props.boardObj.height ? this.props.boardObj.height * 100 + 200 : 1000) +
+                          150 + (8 - e.start.rank) * 100) * (this.props.flip ? -1 : 1)}
+                        tx={(e.end.turn - 1) * (onlyOne ? 1 : 2) * (this.props.boardObj && this.props.boardObj.width ? this.props.boardObj.width * 100 + 200 : 1000) +
+                          (e.player === 'white' ? 0 : (this.props.boardObj && this.props.boardObj.width ? this.props.boardObj.width * 100 + 200 : 1000)) +
+                          150 + (onlyOne ? (e.player === 'white' ? 0 : -(this.props.boardObj && this.props.boardObj.width ? this.props.boardObj.width * 100 + 200 : 1000)) : 0) +
+                          (e.isNew ? (this.props.boardObj && this.props.boardObj.width ? this.props.boardObj.width * 100 + 200 : 1000) : 0) + (this.props.flip ? 8 - e.end.file : e.end.file - 1) * 100}
+                        ty={((e.end.timeline - lowestTimeline) * (this.props.boardObj && this.props.boardObj.height ? this.props.boardObj.height * 100 + 200 : 1000) +
+                          150 + (8 - e.end.rank) * 100) * (this.props.flip ? -1 : 1)}
                         moveObj={e}
                         key={JSON.stringify(e)}
                         isCheck

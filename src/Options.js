@@ -1,6 +1,6 @@
 const store = require('store');
 
-var defaultPalette = {
+const defaultPalette = {
   background: 0x000000,
   whiteSquare: 0xaaaaaa,
   blackSquare: 0x555555,
@@ -20,16 +20,20 @@ var defaultPalette = {
   checkBoardLabel: 0xffffff
 };
 
-const reset = () => { store.clearAll(); }
-
 const resetPalette = () => {
-  store.set('palette', defaultPalette);
+  store.set('palette', Object.assign({}, defaultPalette));
 };
 
-const get = (str) => {
-  var res = store.get(str);
+const getDefault = (str) => {
   var defaultObj = {};
-  if(str === 'peerjs') {
+  if(str === 'server') {
+    defaultObj = {
+      url: 'server.chessin5d.net',
+      key: 'ff104801-d3da-49b5-ae3c-11a3198f6c22',
+      jwt: ''
+    };
+  }
+  else if(str === 'peerjs') {
     defaultObj = {
       host: 'peer.chessin5d.net',
       port: 8000,
@@ -38,7 +42,7 @@ const get = (str) => {
     };
   }
   else if(str === 'palette') {
-    defaultObj = defaultPalette;
+    defaultObj = Object.assign({}, defaultPalette);
   }
   else if(str === 'name') {
     defaultObj = {
@@ -52,6 +56,29 @@ const get = (str) => {
       effect: 0.5
     };
   }
+  else if(str === 'settings') {
+    defaultObj = {
+      boardShow: 'both',
+      allowRecenter: true,
+      moveShow: 'timeline',
+      flip: false,
+      timelineLabel: true,
+      turnLabel: true,
+      boardLabel: false,
+      showCheckGhost: true
+    };
+  }
+  else if(str === 'tutorial') {
+    defaultObj = {
+      tutorialPopup: true
+    };
+  }
+  return defaultObj;
+};
+
+const get = (str) => {
+  var res = store.get(str);
+  var defaultObj = getDefault(str);
   if(res) {
     res = Object.assign(defaultObj, res);
   }
@@ -64,6 +91,17 @@ const get = (str) => {
 
 const set = (str, data) => {
   store.set(str, data);
+};
+
+const reset = () => {
+  store.clearAll();
+  store.set('server', getDefault('server'));
+  store.set('peerjs', getDefault('peerjs'));
+  store.set('palette', Object.assign({}, defaultPalette));
+  store.set('name', getDefault('name'));
+  store.set('sound', getDefault('sound'));
+  store.set('settings', getDefault('settings'));
+  store.set('tutorial', getDefault('tutorial'));
 };
 
 export default {

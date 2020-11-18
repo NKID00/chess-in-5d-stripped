@@ -2,6 +2,7 @@ import React from 'react';
 
 import { Box, Flex, Text, Button } from 'rebass';
 import LinkButton from 'components/LinkButton';
+import TutorialPopup from 'components/TutorialPopup';
 import LogoIcon from 'assets/logo.svg';
 
 export default class MainMenu extends React.Component {
@@ -15,8 +16,8 @@ export default class MainMenu extends React.Component {
           alignItems='center'
           width={1}
         >
-          <img src={LogoIcon} alt='Logo' />
-          <Text p={2} fontWeight='bold'>Chess in 5D</Text>
+          <img src={LogoIcon} alt='Logo' onClick={() => { window.location.href = window.location.origin; }} />
+          <Text p={2} fontWeight='bold' onClick={() => { window.location.href = window.location.origin; }}>Chess in 5D</Text>
           <Box mx='auto' />
         </Flex>
         <Flex>
@@ -39,12 +40,12 @@ export default class MainMenu extends React.Component {
               Network Game
             </LinkButton>
             <LinkButton
-              to='/rules'
+              to='/tutorial'
               variant='primary'
               width={1}
               my={3}
             >
-              Rules
+              Tutorials
             </LinkButton>
             <LinkButton
               to='/options'
@@ -85,6 +86,7 @@ export default class MainMenu extends React.Component {
           </Box>
           <Box width={1/3}></Box>
         </Flex>
+        <TutorialPopup />
       </>
     );
   }

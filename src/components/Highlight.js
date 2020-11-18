@@ -1,7 +1,7 @@
 import React from 'react';
 import { Graphics } from 'react-pixi-fiber';
 
-const deepcompare = require('deep-compare');
+const deepcompare = require('deep-equal');
 
 export default class Highlight extends React.Component {
   highlightRef = React.createRef();

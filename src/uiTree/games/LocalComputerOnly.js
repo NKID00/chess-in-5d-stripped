@@ -1,17 +1,11 @@
 import React from 'react';
 
-import Modal from 'react-modal';
-import { Box, Flex, Text, Button } from 'rebass';
+import { Flex, Text } from 'rebass';
 import { withSnackbar } from 'notistack';
 import Chess from '5d-chess-js';
-import TextField from '@material-ui/core/TextField';
 import Checkbox from '@material-ui/core/Checkbox';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
 
-import ClockDisplay from 'components/ClockDisplay';
-import LinkButton from 'components/LinkButton';
-import GamePlayer from 'components/GamePlayer';
+import TimedGamePlayer from 'components/TimedGamePlayer';
 import BotImport from 'components/BotImport';
 import BotWorker from 'workerize-loader!uiTree/games/BotWorker'; // eslint-disable-line import/no-webpack-loader-syntax
 
@@ -20,325 +14,154 @@ const { GPU } = require('gpu.js');
 var bw1 = new BotWorker();
 var bw2 = new BotWorker();
 
-const defaultBot = '' +
-'(Chess, chessInstance) => {\n' +
-'  /*\n' +
-'    Notice: This bot/engine does not play competitively and is only here for demonstration purposes\n' +
-'\n' +
-'    This bot picks a random valid action and plays it.\n' +
-'\n' +
-'    Go to https://gitlab.com/alexbay218/chess-in-5d for more information on how to create your own bot\n' +
-'\n' +
-'    In the future, a better default bot will replace this one.\n' +
-'  */\n' +
-'  var action = {\n' +
-'    action: chessInstance.actionNumber,\n' +
-'    player: chessInstance.player,\n' +
-'    moves: []\n' +
-'  };\n' +
-'  var actionMoves = [];\n' +
-'  var valid = false;\n' +
-'  while(!valid) {\n' +
-'    actionMoves = [];\n' +
-'    var submit = false;\n' +
-'    var tmpChess = new Chess(chessInstance.export());\n' +
-'    while(!submit) {\n' +
-'      var moves = tmpChess.moves(\'object\', true, true, true);\n' +
-'      if(moves.length > 0) {\n' +
-'        var move = moves[Math.floor(Math.random() * moves.length)];\n' +
-'        actionMoves.push(move);\n' +
-'        tmpChess.move(move);\n' +
-'      }\n' +
-'      else {\n' +
-'        submit = true;\n' +
-'      }\n' +
-'    }\n' +
-'    if(!tmpChess.inCheck) {\n' +
-'      valid = true;\n' +
-'    }\n' +
-'  }\n' +
-'  action.moves = actionMoves;\n' +
-'  console.log(\'Random Bot is making action: \' + JSON.stringify(action));\n' +
-'  return action;\n' +
-'};';
+const defaultBot = `(Chess, chessInstance) => {
+  /*
+    Notice: This bot/engine does not play competitively and is only here for demonstration purposes
+
+    This bot picks a random valid action and plays it.
+
+    Go to https://gitlab.com/alexbay218/chess-in-5d for more information on how to create your own bot
+
+    In the future, a better default bot will replace this one.
+  */
+  var action = {
+    action: chessInstance.actionNumber,
+    player: chessInstance.player,
+    moves: []
+  };
+  var actionMoves = [];
+  var valid = false;
+  while(!valid) {
+    actionMoves = [];
+    var submit = false;
+    var tmpChess = new Chess(chessInstance.export());
+    while(!submit) {
+      var moves = tmpChess.moves('object', true, true, true);
+      if(moves.length > 0) {
+        var move = moves[Math.floor(Math.random() * moves.length)];
+        actionMoves.push(move);
+        tmpChess.move(move);
+      }
+      else {
+        submit = true;
+      }
+    }
+    if(!tmpChess.inCheck) {
+      valid = true;
+    }
+  }
+  action.moves = actionMoves;
+  console.log('Random Bot is making action: ' + JSON.stringify(action));
+  return action;
+};`;
 
 class LocalComputerOnly extends React.Component {
-  gameRef = React.createRef();
+  timedGameRef = React.createRef();
   bot1Global = {};
   bot2Global = {};
   state = {
     start: false,
     ended: false,
-    timed: false,
     debug: false,
     botFunc1: defaultBot,
-    botFunc2: defaultBot,
-    startingDuration: 10*60,
-    perActionFlatIncrement: 0,
-    perActionTimelineIncrement: 5,
-    whiteDurationLeft: 0,
-    blackDurationLeft: 0,
-    winner: '',
-    variant: 'standard'
+    botFunc2: defaultBot
   };
-  lastUpdate = Date.now();
-  async update() {
-    if(this.state.start && this.gameRef.current && this.state.timed) {
-      if(!this.gameRef.current.state.loading) {
-        if((await this.gameRef.current.chess.player()) === 'white') {
-          this.setState({
-            whiteDurationLeft: this.state.whiteDurationLeft - (Date.now() - this.lastUpdate)/1000
-          });
-        }
-        else {
-          this.setState({
-            blackDurationLeft: this.state.blackDurationLeft - (Date.now() - this.lastUpdate)/1000
-          });
-        }
-      }
-      this.lastUpdate = Date.now();
-      window.setTimeout(this.update.bind(this), 1000);
-    }
-  }
   async compute() {
-    if(this.state.debug) {
-      try {
-        var botFunc = new Function('Chess', 'chessInstance', 'GPU', 'global', 'return ' + (await this.gameRef.current.chess.player === 'white' ? this.state.botFunc1 : this.state.botFunc2))(); // eslint-disable-line no-new-func
-        var action = botFunc(Chess, new Chess(await this.gameRef.current.chess.exportFunc()), GPU, (await this.gameRef.current.chess.player === 'white' ? this.bot1Global : this.bot2Global));
-        for(var i = 0;i < action.moves.length;i++) {
-          await this.gameRef.current.move(action.moves[i]);
-        }
-        window.setTimeout(() => {
-          this.gameRef.current.submit();
-        }, 250);
-      }
-      catch(err) {
-        if(await this.gameRef.current.chess.player === 'white') {
-          this.props.enqueueSnackbar('White Bot Error, see console for details', {variant: 'error'});
-        }
-        else {
-          this.props.enqueueSnackbar('Black Bot Error, see console for details', {variant: 'error'});
-        }
-        console.log('Bot encountered error:');
-        console.error(err);
-      }
-    }
-    else {
-      if(await this.gameRef.current.chess.player === 'white') {
-        bw1.compute(await this.gameRef.current.chess.exportFunc('notation'), this.state.botFunc1).then(async (action) => {
-          if(!this.state.ended) {
-            for(var i = 0;i < action.moves.length;i++) {
-              await this.gameRef.current.move(action.moves[i]);
-            }
-            window.setTimeout(() => {
-              this.gameRef.current.submit();
-            }, 250);
+    if(!this.state.ended) {
+      if(
+        (await this.timedGameRef.current.gameRef.current.chess.player === 'white' && this.state.debug1) ||
+        (await this.timedGameRef.current.gameRef.current.chess.player !== 'white' && this.state.debug2)
+      ) {
+        try {
+          var botFunc = new Function('Chess', 'chessInstance', 'GPU', 'global', 'return ' + (await this.timedGameRef.current.gameRef.current.chess.player === 'white' ? this.state.botFunc1 : this.state.botFunc2))(); // eslint-disable-line no-new-func
+          var action = botFunc(Chess, new Chess(await this.timedGameRef.current.gameRef.current.chess.exportFunc()), GPU, (await this.timedGameRef.current.gameRef.current.chess.player === 'white' ? this.bot1Global : this.bot2Global));
+          for(var i = 0;i < action.moves.length;i++) {
+            await this.timedGameRef.current.gameRef.current.move(action.moves[i]);
           }
-        }).catch((err) => {
-          this.props.enqueueSnackbar('White Bot Error, see console for details', {variant: 'error'});
-          console.log('Not in debug mode! Error may be cryptic due to web worker processing!');
+          window.setTimeout(() => {
+            this.timedGameRef.current.gameRef.current.submit();
+          }, 250);
+        }
+        catch(err) {
+          if(await this.timedGameRef.current.gameRef.current.chess.player === 'white') {
+            this.props.enqueueSnackbar('White Bot Error, see console for details', {variant: 'error'});
+          }
+          else {
+            this.props.enqueueSnackbar('Black Bot Error, see console for details', {variant: 'error'});
+          }
           console.log('Bot encountered error:');
           console.error(err);
-        });
+        }
       }
       else {
-        bw2.compute(await this.gameRef.current.chess.exportFunc('notation'), this.state.botFunc2).then(async (action) => {
-          if(!this.state.ended) {
+        if(await this.timedGameRef.current.gameRef.current.chess.player === 'white') {
+          bw1.compute(await this.timedGameRef.current.gameRef.current.chess.exportFunc('notation'), this.state.botFunc1).then(async (action) => {
             for(var i = 0;i < action.moves.length;i++) {
-              await this.gameRef.current.move(action.moves[i]);
+              await this.timedGameRef.current.gameRef.current.move(action.moves[i]);
             }
             window.setTimeout(() => {
-              this.gameRef.current.submit();
+              this.timedGameRef.current.gameRef.current.submit();
             }, 250);
-          }
-        }).catch((err) => {
-          this.props.enqueueSnackbar('Black Bot Error, see console for details', {variant: 'error'});
-          console.log('Not in debug mode! Error may be cryptic due to web worker processing!');
-          console.log('Bot encountered error:');
-          console.error(err);
-        });
+          }).catch((err) => {
+            this.props.enqueueSnackbar('White Bot Error, see console for details', {variant: 'error'});
+            console.log('Not in debug mode! Error may be cryptic due to web worker processing!');
+            console.log('Bot encountered error:');
+            console.error(err);
+          });
+        }
+        else {
+          bw2.compute(await this.timedGameRef.current.gameRef.current.chess.exportFunc('notation'), this.state.botFunc2).then(async (action) => {
+            for(var i = 0;i < action.moves.length;i++) {
+              await this.timedGameRef.current.gameRef.current.move(action.moves[i]);
+            }
+            window.setTimeout(() => {
+              this.timedGameRef.current.gameRef.current.submit();
+            }, 250);
+          }).catch((err) => {
+            this.props.enqueueSnackbar('Black Bot Error, see console for details', {variant: 'error'});
+            console.log('Not in debug mode! Error may be cryptic due to web worker processing!');
+            console.log('Bot encountered error:');
+            console.error(err);
+          });
+        }
       }
     }
   }
   async componentDidUpdate(prevProps, prevState) {
     if(!prevState.start && this.state.start) {
       this.compute();
-      this.lastUpdate = Date.now();
-      this.update();
-    }
-    if(this.state.start && this.state.timed) {
-      if(this.state.whiteDurationLeft <= 0) {
-        this.setState({
-          start: false,
-          ended: true,
-          winner: 'black',
-          whiteDurationLeft: 0
-        });
-      }
-      if(this.state.blackDurationLeft <= 0) {
-        this.setState({
-          start: false,
-          ended: true,
-          winner: 'white',
-          blackDurationLeft: 0
-        });
-      }
     }
   }
   render() {
     return (
       <>
-        <Modal
-          isOpen={!this.state.start && !this.state.ended}
-          style={{content: {padding: '0px'}}}
-        >
-          <Flex
-            p={2}
-            color='white'
-            bg='black'
-            alignItems='center'
-            width={1}
-            sx={{position: 'absolute', top: 0, zIndex: 100}}
-          >
-            <Text p={2} fontWeight='bold'>Settings</Text>
-            <Box mx='auto' />
-          </Flex>
-          <Box width={1} px={2} py={5} sx={{overflowY: 'auto', height: '100%'}}>
-            <Flex>
-              <Text p={2} fontWeight='bold'>Variant</Text>
-              <Select
-                value={this.state.variant}
-                onChange={(e) => { this.setState({variant: e.target.value}); }}
-              >
-                <MenuItem value='standard'>Standard</MenuItem>
-                <MenuItem value='defended_pawn'>Defended Pawn</MenuItem>
-              </Select>
-            </Flex>
-            <Flex>
-              <Text p={2} fontWeight='bold'>Timed Game</Text>
-              <Checkbox color='primary' checked={this.state.timed} onChange={(e) => { this.setState({timed: e.target.checked}); }} />
-            </Flex>
-            <Flex>
-              <Text p={2} fontWeight='bold'>Bot Side</Text>
-              <Select
-                value={this.state.selectedComputer}
-                onChange={(e) => { this.setState({selectedComputer: e.target.value}); }}
-              >
-                <MenuItem value='white'>White</MenuItem>
-                <MenuItem value='black'>Black</MenuItem>
-                <MenuItem value='random'>Random</MenuItem>
-              </Select>
-            </Flex>
-            <Flex>
-              <Text p={2} fontWeight='bold'>Debug / GPU Mode</Text>
-              <Checkbox color='primary' checked={this.state.debug} onChange={(e) => { this.setState({debug: e.target.checked}); }} />
-            </Flex>
-            {this.state.timed ?
-              <>
-                <Text p={2} fontWeight='bold'>Initial Duration</Text>
-                <Flex>
-                  <Box width={[1/2, 1/3, 1/4]} p={2}>
-                    <TextField
-                      fullWidth
-                      label='Minutes'
-                      type='number'
-                      value={Math.floor(this.state.startingDuration/60)}
-                      onChange={(e) => {
-                        this.setState({ startingDuration: Number(e.target.value) * 60 + (this.state.startingDuration % 60) });
-                      }}
-                    />
-                  </Box>
-                  <Box width={[1/2, 1/3, 1/4]} p={2}>
-                    <TextField
-                      fullWidth
-                      label='Seconds'
-                      type='number'
-                      value={this.state.startingDuration % 60}
-                      onChange={(e) => {
-                        this.setState({ startingDuration: Number(e.target.value) + Math.floor(this.state.startingDuration/60) * 60 });
-                      }}
-                    />
-                  </Box>
-                </Flex>
-                <Text p={2} fontWeight='bold'>Per Action Increment (Flat)</Text>
-                <Flex>
-                  <Box width={[1/2, 1/3, 1/4]} p={2}>
-                    <TextField
-                      fullWidth
-                      label='Minutes'
-                      type='number'
-                      value={Math.floor(this.state.perActionFlatIncrement/60)}
-                      onChange={(e) => {
-                        this.setState({ perActionFlatIncrement: Number(e.target.value) * 60 + (this.state.perActionFlatIncrement % 60) });
-                      }}
-                    />
-                  </Box>
-                  <Box width={[1/2, 1/3, 1/4]} p={2}>
-                    <TextField
-                      fullWidth
-                      label='Seconds'
-                      type='number'
-                      value={this.state.perActionFlatIncrement % 60}
-                      onChange={(e) => {
-                        this.setState({ perActionFlatIncrement: Number(e.target.value) + Math.floor(this.state.perActionFlatIncrement/60) * 60 });
-                      }}
-                    />
-                  </Box>
-                </Flex>
-                <Text p={2} fontWeight='bold'>Per Action Increment (Per Present Timeline)</Text>
-                <Flex>
-                  <Box width={[1/2, 1/3, 1/4]} p={2}>
-                    <TextField
-                      fullWidth
-                      label='Minutes'
-                      type='number'
-                      value={Math.floor(this.state.perActionTimelineIncrement/60)}
-                      onChange={(e) => {
-                        this.setState({ perActionTimelineIncrement: Number(e.target.value) * 60 + (this.state.perActionTimelineIncrement % 60) });
-                      }}
-                    />
-                  </Box>
-                  <Box width={[1/2, 1/3, 1/4]} p={2}>
-                    <TextField
-                      fullWidth
-                      label='Seconds'
-                      type='number'
-                      value={this.state.perActionTimelineIncrement % 60}
-                      onChange={(e) => {
-                        this.setState({ perActionTimelineIncrement: Number(e.target.value) + Math.floor(this.state.perActionTimelineIncrement/60) * 60 });
-                      }}
-                    />
-                  </Box>
-                </Flex>
-              </>
-            :
-             <></>
-            }
-          </Box>
-          <Flex
-            p={2}
-            alignItems='center'
-            bg='white'
-            width={1}
-            sx={{position: 'absolute', bottom: 0}}
-          >
-            <Box mx='auto' />
-            <LinkButton
-              to='/local'
-              variant='secondary'
-              m={1}
-            >
-              Back
-            </LinkButton>
-            <Button m={1} variant='primary' onClick={() => {
-              this.setState({
-                start: true,
-                whiteDurationLeft: this.state.startingDuration + this.state.perActionFlatIncrement + this.state.perActionTimelineIncrement,
-                blackDurationLeft: this.state.startingDuration
-              });
-            }}>Start</Button>
-          </Flex>
-        </Modal>
+        <TimedGamePlayer
+          ref={this.timedGameRef}
+          canControlWhite={false}
+          canControlBlack={false}
+          backLink='/local'
+          modalChildren={
+            <>
+              <Flex>
+                <Text p={2} fontWeight='bold'>White Bot Debug / GPU Mode</Text>
+                <Checkbox color='primary' checked={this.state.debug1} onChange={(e) => { this.setState({debug1: e.target.checked}); }} />
+              </Flex>
+              <Flex>
+                <Text p={2} fontWeight='bold'>Black Bot Debug / GPU Mode</Text>
+                <Checkbox color='primary' checked={this.state.debug2} onChange={(e) => { this.setState({debug2: e.target.checked}); }} />
+              </Flex>
+            </>
+          }
+          onStart={() => {
+            this.setState({ start: true });
+          }}
+          onEnd={(win) => {
+            this.setState({ start: false, ended: true });
+          }}
+          onSubmit={async () => {
+            this.compute();
+          }}
+        />
         <BotImport
           title='Import Bot for Black'
           value={this.state.botFunc2}
@@ -353,40 +176,6 @@ class LocalComputerOnly extends React.Component {
             this.setState({botFunc1: text});
           }}
         />
-        <GamePlayer
-          ref={this.gameRef}
-          winner={this.state.winner}
-          variant={this.state.variant}
-          onEnd={(win) => {
-            this.setState({ start: false, ended: true });
-          }}
-          onSubmit={async () => {
-            if(await this.gameRef.current.chess.player() === 'white') {
-              this.setState({
-                whiteDurationLeft: this.state.whiteDurationLeft +
-                this.state.perActionFlatIncrement +
-                this.state.perActionTimelineIncrement * (await this.gameRef.current.chess.board()).timelines.filter((e) => { return e.present; }).length
-              });
-            }
-            else {
-              this.setState({
-                blackDurationLeft: this.state.blackDurationLeft +
-                this.state.perActionFlatIncrement +
-                this.state.perActionTimelineIncrement * (await this.gameRef.current.chess.board()).timelines.filter((e) => { return e.present; }).length
-              });
-            }
-            this.compute();
-          }}
-        >
-          {this.state.timed ?
-            <ClockDisplay
-              whiteDurationLeft={this.state.whiteDurationLeft}
-              blackDurationLeft={this.state.blackDurationLeft}
-            />
-          :
-            <></>
-          }
-        </GamePlayer>
       </>
     );
   }

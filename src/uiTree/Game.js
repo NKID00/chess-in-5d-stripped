@@ -8,31 +8,29 @@ import LocalComputerOnly from 'uiTree/games/LocalComputerOnly';
 import NetworkHostPrivate from 'uiTree/games/NetworkHostPrivate';
 import NetworkClientPrivate from 'uiTree/games/NetworkClientPrivate';
 
-export default class Menu extends React.Component {
+export default class Game extends React.Component {
   render() {
     return (
-      <>
-        <Switch>
-          <Route exact path='/local/game/analyze'>
-            <LocalAnalyzer />
-          </Route>
-          <Route exact path='/local/game/human'>
-            <LocalHuman />
-          </Route>
-          <Route exact path='/local/game/computer'>
-            <LocalComputer />
-          </Route>
-          <Route exact path='/local/game/computeronly'>
-            <LocalComputerOnly />
-          </Route>
-          <Route exact path='/network/game/host'>
-            <NetworkHostPrivate />
-          </Route>
-          <Route exact path='/network/game/client'>
-            <NetworkClientPrivate />
-          </Route>
-        </Switch>
-      </>
+      <Switch>
+        <Route exact path='/local/game/analyze'>
+          <LocalAnalyzer />
+        </Route>
+        <Route exact path='/local/game/human'>
+          <LocalHuman />
+        </Route>
+        <Route exact path='/local/game/computer'>
+          <LocalComputer />
+        </Route>
+        <Route exact path='/local/game/computeronly'>
+          <LocalComputerOnly />
+        </Route>
+        <Route exact path='/network/game/host'>
+          <NetworkHostPrivate />
+        </Route>
+        <Route exact path='/network/game/client'>
+          <NetworkClientPrivate />
+        </Route>
+      </Switch>
     );
   }
 }

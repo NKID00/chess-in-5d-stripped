@@ -4,13 +4,14 @@ import Modal from 'react-modal';
 import { Button, Box, Flex, Text } from 'rebass';
 import Slider from '@material-ui/core/Slider';
 import TextField from '@material-ui/core/TextField';
+import Checkbox from '@material-ui/core/Checkbox';
 import LinkButton from 'components/LinkButton';
 import LogoIcon from 'assets/logo.svg';
 import Options from 'Options';
 import { SketchPicker } from 'react-color';
-import * as PIXI from 'pixi.js';
+import * as PIXI from 'pixi.js-legacy';
 
-const deepcompare = require('deep-compare');
+const deepcompare = require('deep-equal');
 
 export default class OptionsMenu extends React.Component {
   state = {
@@ -21,7 +22,8 @@ export default class OptionsMenu extends React.Component {
     playerName: Options.get('name').username,
     musicVol: Options.get('sound').music,
     ambienceVol: Options.get('sound').ambience,
-    effectVol: Options.get('sound').effect
+    effectVol: Options.get('sound').effect,
+    showTutorialPopup: Options.get('tutorial').showPopup
   };
   sync() {
     this.setState({
@@ -32,7 +34,8 @@ export default class OptionsMenu extends React.Component {
       playerName: Options.get('name').username,
       musicVol: Options.get('sound').music,
       ambienceVol: Options.get('sound').ambience,
-      effectVol: Options.get('sound').effect
+      effectVol: Options.get('sound').effect,
+      showTutorialPopup: Options.get('tutorial').showPopup
     });
   }
   render() {
@@ -45,8 +48,8 @@ export default class OptionsMenu extends React.Component {
           alignItems='center'
           width={1}
         >
-          <img src={LogoIcon} alt='Logo' />
-          <Text p={2} fontWeight='bold'>Chess in 5D</Text>
+          <img src={LogoIcon} alt='Logo' onClick={() => { window.location.href = window.location.origin; }} />
+          <Text p={2} fontWeight='bold' onClick={() => { window.location.href = window.location.origin; }}>Chess in 5D</Text>
           <Box mx='auto' />
         </Flex>
         <Modal
@@ -90,6 +93,18 @@ export default class OptionsMenu extends React.Component {
               this.setState({ambienceVol: v});
               Options.set('sound', {ambience: v, music: this.state.musicVol, effect: this.state.effectVol});
             }}/>
+            <Text py={2} fontWeight='bold'>Tutorial</Text>
+            <Flex>
+              <Text p={2}>Show Tutorial Popup</Text>
+              <Checkbox
+                color='primary'
+                checked={this.state.showTutorialPopup}
+                onChange={(e) => {
+                  this.setState({showTutorialPopup: e.target.checked});
+                  Options.set('tutorial', { showPopup: e.target.checked })
+                }}
+              />
+            </Flex>
             <Text py={2} fontWeight='bold'>PeerJS Server Config</Text>
             <TextField
               fullWidth
@@ -179,6 +194,13 @@ export default class OptionsMenu extends React.Component {
             >
               Back
             </LinkButton>
+            <Button
+              variant='primary'
+              onClick={() => { Options.resetPalette(); this.sync(); }}
+              m={1}
+            >
+              Reset Palette
+            </Button>
             <Button
               variant='primary'
               onClick={() => { Options.reset(); this.sync(); }}
