@@ -300,12 +300,12 @@ To exit to the main menu, click on the logo or 'Chess in 5D' text in the top bar
   }
 ];
 
-export default class Movement2 extends React.Component {
+export default class Checkmate extends React.Component {
   render() {
     return (
       <TutorialGamePlayer
         tutorialArray={tutorialArray}
-        next='/tutorial/checkmate'
+        next='/tutorial'
       />
     );
   }
