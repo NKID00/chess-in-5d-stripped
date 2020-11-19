@@ -86,8 +86,11 @@ export default class Turn extends React.Component {
                 app={this.props.app}
                 palette={this.props.palette}
                 fade={this.props.turnObj.fade}
-                x={x + (this.props.flip ? 8 - e.position.file : e.position.file - 1) * 100}
-                y={y + ((8 - e.position.rank) * 100) * (this.props.flip ? -1 : 1) + (this.props.flip ? -100 : 0)}
+                x={x + (this.props.flip ? (this.props.boardObj && this.props.boardObj.width ? this.props.boardObj.width : 8) - e.position.file : e.position.file - 1) * 100}
+                y={y + (((this.props.boardObj && this.props.boardObj.height ? this.props.boardObj.height : 8) - e.position.rank) * 100) * (this.props.flip ? -1 : 1) + (this.props.flip ? -100 : 0)}
+                boardObj={this.props.boardObj}
+                timelineObj={this.props.timelineObj}
+                turnObj={this.props.turnObj}
                 pieceObj={e}
                 key={e.piece + e.position.coordinate}
                 onPieceClick={(piece) => {
@@ -128,8 +131,8 @@ export default class Turn extends React.Component {
               <Highlight
                 app={this.props.app}
                 palette={this.props.palette}
-                x={x + (this.props.flip ? 8 - e.end.file : e.end.file - 1) * 100}
-                y={y + ((8 - e.end.rank) * 100) * (this.props.flip ? -1 : 1) + (this.props.flip ? -100 : 0)}
+                x={x + (this.props.flip ? (this.props.boardObj && this.props.boardObj.width ? this.props.boardObj.width : 8) - e.end.file : e.end.file - 1) * 100}
+                y={y + (((this.props.boardObj && this.props.boardObj.height ? this.props.boardObj.height : 8) - e.end.rank) * 100) * (this.props.flip ? -1 : 1) + (this.props.flip ? -100 : 0)}
                 moveObj={e}
                 key={e.end.coordinate + 'cs'}
                 onHighlightClick={(moveObj) => {
@@ -166,8 +169,8 @@ export default class Turn extends React.Component {
               <Highlight
                 app={this.props.app}
                 palette={this.props.palette}
-                x={x + (this.props.flip ? 8 - e.end.file : e.end.file - 1) * 100}
-                y={y + ((8 - e.end.rank) * 100) * (this.props.flip ? -1 : 1) + (this.props.flip ? -100 : 0)}
+                x={x + (this.props.flip ? (this.props.boardObj && this.props.boardObj.width ? this.props.boardObj.width : 8) - e.end.file : e.end.file - 1) * 100}
+                y={y + (((this.props.boardObj && this.props.boardObj.height ? this.props.boardObj.height : 8) - e.end.rank) * 100) * (this.props.flip ? -1 : 1) + (this.props.flip ? -100 : 0)}
                 moveObj={e}
                 key={e.end.coordinate + 'h'}
                 isHover
@@ -233,9 +236,9 @@ export default class Turn extends React.Component {
                   key={e + 'f'}
                   x={(this.props.x ? this.props.x : 0) + ((this.props.flip ? 7 - e : e))*100}
                   y={this.props.y ?
-                    this.props.y + 800 * (this.props.flip ? -1 : 1) + (this.props.flip ? -50 : 0)
+                    this.props.y + (this.props.boardObj && this.props.boardObj.height * 100 ? this.props.boardObj.height * 100 : 800) * (this.props.flip ? -1 : 1) + (this.props.flip ? -50 : 0)
                   :
-                    800 * (this.props.flip ? -1 : 1) + (this.props.flip ? -50 : 0)
+                    (this.props.boardObj && this.props.boardObj.height ? this.props.boardObj.height * 100 : 800) * (this.props.flip ? -1 : 1) + (this.props.flip ? -50 : 0)
                   }
                 />
                 <Text
@@ -264,9 +267,9 @@ export default class Turn extends React.Component {
                   key={e + 'r'}
                   x={this.props.x ? this.props.x - 30 : -30}
                   y={this.props.y ?
-                    this.props.y + (700 - e*100) * (this.props.flip ? -1 : 1) + (this.props.flip ? -100 : 0)
+                    this.props.y + ((this.props.boardObj && this.props.boardObj.height ? this.props.boardObj.height * 100 - 100 : 700) - e*100) * (this.props.flip ? -1 : 1) + (this.props.flip ? -100 : 0)
                   :
-                    (700 - e*100) * (this.props.flip ? -1 : 1) + (this.props.flip ? -100 : 0)
+                    ((this.props.boardObj && this.props.boardObj.height ? this.props.boardObj.height * 100 - 100 : 700) - e*100) * (this.props.flip ? -1 : 1) + (this.props.flip ? -100 : 0)
                   }
                 />
               </React.Fragment>

@@ -47,6 +47,14 @@ export default class TutorialMenu extends React.Component {
               Movement Part 2
             </LinkButton>
             <LinkButton
+              to='/tutorial/checkmate'
+              variant='primary'
+              width={1}
+              my={3}
+            >
+              (WIP) Checkmate
+            </LinkButton>
+            <LinkButton
               to='/tutorial/rules'
               variant='primary'
               width={1}

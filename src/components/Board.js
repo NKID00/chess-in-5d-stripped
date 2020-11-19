@@ -165,6 +165,8 @@ export default class Board extends React.Component {
                             return a > c ? c : a;
                           })) * (this.props.flip ? -1 : 1) * (this.props.boardObj && this.props.boardObj.width ? this.props.boardObj.width * 100 + 200 : 1000)
                         }
+                        
+                        boardObj={this.props.boardObj}
                         timelineObj={e}
                         key={e.timeline}
                         onPieceClick={(piece) => {
