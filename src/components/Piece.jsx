@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { Sprite, Graphics } from 'react-pixi-fiber';
 import BlackPawn from 'assets/b.png';
 import BlackBishop from 'assets/bB.png';

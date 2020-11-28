@@ -8,9 +8,11 @@ import MenuItem from '@material-ui/core/MenuItem';
 
 import GamePlayer from 'components/GamePlayer';
 import LinkButton from 'components/LinkButton';
+import ImportBox from 'components/ImportBox';
 
 class LocalAnalyzer extends React.Component {
   state = {
+    tmpImport: '',
     import: '',
     variant: 'standard',
     open: true
@@ -52,6 +54,8 @@ class LocalAnalyzer extends React.Component {
                 <MenuItem value='turn_zero'>Turn Zero</MenuItem>
               </Select>
             </Flex>
+            <Text p={2} fontWeight='bold'>Import</Text>
+            <ImportBox value={this.state.tmpImport} onChange={(v) => { this.setState({ tmpImport: v }); }} />
           </Box>
           <Flex
             p={2}
@@ -70,6 +74,9 @@ class LocalAnalyzer extends React.Component {
             </LinkButton>
             <Button m={1} variant='primary' onClick={() => {
               this.setState({open: false});
+              if(this.state.tmpImport.length > 0) {
+                this.setState({ import: this.state.tmpImport });
+              }
             }}>Start</Button>
           </Flex>
         </Modal>
