@@ -9,8 +9,6 @@ import TimedGamePlayer from 'components/TimedGamePlayer';
 import BotImport from 'components/BotImport';
 import BotWorker from 'workerize-loader!uiTree/games/BotWorker'; // eslint-disable-line import/no-webpack-loader-syntax
 
-const { GPU } = require('gpu.js');
-
 var bw1 = new BotWorker();
 var bw2 = new BotWorker();
 
@@ -74,7 +72,7 @@ class LocalComputerOnly extends React.Component {
       ) {
         try {
           var botFunc = new Function('Chess', 'chessInstance', 'GPU', 'global', 'return ' + (await this.timedGameRef.current.gameRef.current.chess.player === 'white' ? this.state.botFunc1 : this.state.botFunc2))(); // eslint-disable-line no-new-func
-          var action = botFunc(Chess, new Chess(await this.timedGameRef.current.gameRef.current.chess.exportFunc()), GPU, (await this.timedGameRef.current.gameRef.current.chess.player === 'white' ? this.bot1Global : this.bot2Global));
+          var action = botFunc(Chess, new Chess(await this.timedGameRef.current.gameRef.current.chess.exportFunc()), undefined, (await this.timedGameRef.current.gameRef.current.chess.player === 'white' ? this.bot1Global : this.bot2Global));
           for(var i = 0;i < action.moves.length;i++) {
             await this.timedGameRef.current.gameRef.current.move(action.moves[i]);
           }
@@ -165,14 +163,14 @@ class LocalComputerOnly extends React.Component {
         <BotImport
           title='Import Bot for Black'
           value={this.state.botFunc2}
-          onImport={(text) => {
+          onChange={(text) => {
             this.setState({botFunc2: text});
           }}
         />
         <BotImport
           title='Import Bot for White'
           value={this.state.botFunc1}
-          onImport={(text) => {
+          onChange={(text) => {
             this.setState({botFunc1: text});
           }}
         />

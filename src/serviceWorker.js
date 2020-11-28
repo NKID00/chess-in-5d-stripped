@@ -48,7 +48,6 @@ export function register(config) {
         });
       } else {
         // Is not localhost. Just register service worker
-        this.addEventListener('fetch', () => {});
         registerValidSW(swUrl, config);
       }
     });

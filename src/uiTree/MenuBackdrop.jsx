@@ -1,4 +1,5 @@
 import React from 'react';
+
 import Chess from '5d-chess-js';
 
 import Board from 'components/Board';

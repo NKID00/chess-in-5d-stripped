@@ -11,8 +11,6 @@ import TimedGamePlayer from 'components/TimedGamePlayer';
 import BotImport from 'components/BotImport';
 import BotWorker from 'workerize-loader!uiTree/games/BotWorker'; // eslint-disable-line import/no-webpack-loader-syntax
 
-const { GPU } = require('gpu.js');
-
 var bw = new BotWorker();
 
 const defaultBot = `(Chess, chessInstance) => {
@@ -72,7 +70,7 @@ class LocalComputer extends React.Component {
       if(this.state.debug) {
         try {
           var botFunc = new Function('Chess', 'chessInstance', 'GPU', 'global', 'return ' + this.state.botFunc)(); // eslint-disable-line no-new-func
-          var action = botFunc(Chess, new Chess(await this.timedGameRef.current.gameRef.current.chess.exportFunc()), GPU, this.botGlobal);
+          var action = botFunc(Chess, new Chess(await this.timedGameRef.current.gameRef.current.chess.exportFunc()), undefined, this.botGlobal);
           for(var i = 0;i < action.moves.length;i++) {
             await this.timedGameRef.current.gameRef.current.move(action.moves[i]);
           }
@@ -164,7 +162,7 @@ class LocalComputer extends React.Component {
         />
         <BotImport
           value={this.state.botFunc}
-          onImport={(text) => {
+          onChange={(text) => {
             this.setState({botFunc: text});
           }}
         />

@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { Graphics, Text } from 'react-pixi-fiber';
 import Piece from 'components/Piece';
 import Highlight from 'components/Highlight';
