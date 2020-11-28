@@ -91,7 +91,7 @@ export default class GamePlayer extends React.Component {
     }
   }
   async moveArrowCalc() {
-    var actions = deepcopy(await this.chess.actionHistory());
+    var actions = (await this.chess.actionHistory());
     var chess = new ChessWorker();
     try {
       await chess.variant((await this.chess.metadata()).variant);
@@ -99,9 +99,9 @@ export default class GamePlayer extends React.Component {
     catch(err) {}
     var res = [];
     var newMoveArrow = async (currMove) => {
-      var prevTimelines = deepcopy((await chess.board()).timelines);
+      var prevTimelines = ((await chess.board()).timelines);
       await chess.move(currMove);
-      var newTimelines = deepcopy((await chess.board()).timelines);
+      var newTimelines = ((await chess.board()).timelines);
       if(prevTimelines.length !== newTimelines.length) {
         var newTimeline = newTimelines.filter((e) => { // eslint-disable-line no-loop-func
           return !prevTimelines.map((e2) => { return e2.timeline}).includes(e.timeline);

@@ -1,4 +1,5 @@
 import React from 'react';
+
 import Chess from '5d-chess-js';
 
 import Board from 'components/Board';
@@ -6,6 +7,7 @@ import Board from 'components/Board';
 export default class MenuBackdrop extends React.Component {
   chess = new Chess();
   boardRef = React.createRef();
+  timer = null;
   state = {
     triggerDate: Date.now(),
     board: this.chess.board,
@@ -38,13 +40,18 @@ export default class MenuBackdrop extends React.Component {
       else { this.setState({count: this.state.count + 1}); }
       this.boardSync();
       this.boardRef.current.recenter();
-      window.setTimeout(this.next.bind(this), Math.random()*2000 + 4000);
+      this.timer = window.setTimeout(this.next.bind(this), Math.random()*2000 + 4000);
     }
     catch(err) {}
   }
   componentDidMount() {
     this.boardSync();
-    window.setTimeout(this.next.bind(this), Math.random()*2000 + 4000);
+    this.timer = window.setTimeout(this.next.bind(this), Math.random()*2000 + 4000);
+  }
+  componentWillUnmount() {
+    if(this.timer) {
+      window.clearTimeout(this.timer);
+    }
   }
   render() {
     return (

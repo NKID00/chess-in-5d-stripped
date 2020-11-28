@@ -305,7 +305,7 @@ export default class Movement2 extends React.Component {
     return (
       <TutorialGamePlayer
         tutorialArray={tutorialArray}
-        next='/tutorial'
+        next='/tutorial/checkmate'
       />
     );
   }

@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { Text } from 'react-pixi-fiber';
 import Turn from 'components/Turn';
 
@@ -44,11 +45,13 @@ export default class Timeline extends React.Component {
                   []
                 }
                 x={this.props.onlyBlack || this.props.onlyWhite ?
-                  x + (e.turn - 1) * 1000 + 100
+                  x + (e.turn - 1) * (this.props.boardObj && this.props.boardObj.width ? this.props.boardObj.width * 100 + 200 : 1000) + 100
                 :
-                  x + (((e.turn - 1) * 2) + (e.player === 'white' ? 0 : 1)) * 1000 + 100
+                  x + (((e.turn - 1) * 2) + (e.player === 'white' ? 0 : 1)) * (this.props.boardObj && this.props.boardObj.width ? this.props.boardObj.width * 100 + 200 : 1000) + 100
                 }
                 y={(y + (this.props.flip ? -100 : 100))}
+                boardObj={this.props.boardObj}
+                timelineObj={this.props.timelineObj}
                 turnObj={e}
                 active={this.props.timelineObj.active}
                 present={this.props.timelineObj.present}
@@ -130,12 +133,12 @@ export default class Timeline extends React.Component {
                     var firstTurn = turns[0];
                     var onlyOne = (this.props.onlyWhite || this.props.onlyBlack);
                     if(onlyOne) {
-                      return (firstTurn.turn-1)*1000 + (this.props.x ? this.props.x + 40 : 40);
+                      return (firstTurn.turn-1) * (this.props.boardObj && this.props.boardObj.width ? this.props.boardObj.width * 100 + 200 : 1000) + (this.props.x ? this.props.x + 40 : 40);
                     }
-                    return ((firstTurn.turn-1)*2 + (firstTurn.player === 'white' ? 0 : 1))*1000 + (this.props.x ? this.props.x + 40 : 40);
+                    return ((firstTurn.turn-1)*2 + (firstTurn.player === 'white' ? 0 : 1)) * (this.props.boardObj && this.props.boardObj.width ? this.props.boardObj.width * 100 + 200 : 1000) + (this.props.x ? this.props.x + 40 : 40);
                   }
                 })()}
-                y={(this.props.y ? this.props.y : 0) + (this.props.flip ? -900 : 100)}
+                y={(this.props.y ? this.props.y : 0) + (this.props.flip ? -(this.props.boardObj && this.props.boardObj.height ? this.props.boardObj.height * 100 + 100 : 900) : 100)}
               />
               <Text
                 text={this.props.timelineObj.timeline === 0 ?
@@ -166,12 +169,12 @@ export default class Timeline extends React.Component {
                     var lastTurn = turns[0];
                     var onlyOne = (this.props.onlyWhite || this.props.onlyBlack);
                     if(onlyOne) {
-                      return (lastTurn.turn-1)*1000 + (this.props.x ? this.props.x + 960 : 960);
+                      return (lastTurn.turn-1) * (this.props.boardObj && this.props.boardObj.width ? this.props.boardObj.width * 100 + 200 : 1000) + (this.props.x ? this.props.x + 960 : 960);
                     }
-                    return ((lastTurn.turn-1)*2 + (lastTurn.player === 'white' ? 0 : 1))*1000 + (this.props.x ? this.props.x + 960 : 960);
+                    return ((lastTurn.turn-1)*2 + (lastTurn.player === 'white' ? 0 : 1)) * (this.props.boardObj && this.props.boardObj.width ? this.props.boardObj.width * 100 + 200 : 1000) + (this.props.x ? this.props.x + 960 : 960);
                   }
                 })()}
-                y={(this.props.y ? this.props.y : 0) + (this.props.flip ? -100 : 900)}
+                y={(this.props.y ? this.props.y : 0) + (this.props.flip ? -100 : (this.props.boardObj && this.props.boardObj.height ? this.props.boardObj.height * 100 + 100 : 900))}
               />
             </>
           :
