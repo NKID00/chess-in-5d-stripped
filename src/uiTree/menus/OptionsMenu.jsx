@@ -6,7 +6,7 @@ import Slider from '@material-ui/core/Slider';
 import TextField from '@material-ui/core/TextField';
 import Checkbox from '@material-ui/core/Checkbox';
 import LinkButton from 'components/LinkButton';
-import LogoIcon from 'assets/logo.svg';
+import MenuBar from 'components/MenuBar';
 import Options from 'Options';
 import { SketchPicker } from 'react-color';
 import * as PIXI from 'pixi.js-legacy';
@@ -15,6 +15,8 @@ const deepcompare = require('deep-equal');
 
 export default class OptionsMenu extends React.Component {
   state = {
+    server: Options.get('server'),
+    serverTmp: JSON.stringify(Options.get('server'), null, 2),
     peerjs: Options.get('peerjs'),
     peerjsTmp: JSON.stringify(Options.get('peerjs'), null, 2),
     palette: Options.get('palette'),
@@ -27,6 +29,8 @@ export default class OptionsMenu extends React.Component {
   };
   sync() {
     this.setState({
+      server: Options.get('server'),
+      serverTmp: JSON.stringify(Options.get('server'), null, 2),
       peerjs: Options.get('peerjs'),
       peerjsTmp: JSON.stringify(Options.get('peerjs'), null, 2),
       palette: Options.get('palette'),
@@ -41,17 +45,7 @@ export default class OptionsMenu extends React.Component {
   render() {
     return (
       <>
-        <Flex
-          p={2}
-          color='white'
-          bg='black'
-          alignItems='center'
-          width={1}
-        >
-          <img src={LogoIcon} alt='Logo' onClick={() => { window.location.href = window.location.origin; }} />
-          <Text p={2} fontWeight='bold' onClick={() => { window.location.href = window.location.origin; }}>Chess in 5D</Text>
-          <Box mx='auto' />
-        </Flex>
+        <MenuBar />
         <Modal
           isOpen={true}
           style={{content: {padding: '0px'}}}
@@ -105,6 +99,28 @@ export default class OptionsMenu extends React.Component {
                 }}
               />
             </Flex>
+            <Text py={2} fontWeight='bold'>Server Config</Text>
+            <TextField
+              fullWidth
+              multiline
+              rows={5}
+              defaultValue={this.state.serverTmp}
+              error={!deepcompare(this.state.server, (() => {
+                try {
+                  return JSON.parse(this.state.serverTmp);
+                }
+                catch(err) { return {}; }
+              })())}
+              onChange={(e) => {
+                this.setState({serverTmp: e.target.value});
+                try {
+                  var res = JSON.parse(e.target.value);
+                  this.setState({server: res});
+                  Options.set('server', res);
+                }
+                catch(err) {}
+              }}
+            />
             <Text py={2} fontWeight='bold'>PeerJS Server Config</Text>
             <TextField
               fullWidth

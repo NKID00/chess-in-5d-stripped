@@ -28,9 +28,8 @@ const getDefault = (str) => {
   var defaultObj = {};
   if(str === 'server') {
     defaultObj = {
-      url: 'server.chessin5d.net',
-      key: 'ff104801-d3da-49b5-ae3c-11a3198f6c22',
-      jwt: ''
+      url: 'https://server.chessin5d.net',
+      key: 'ff104801-d3da-49b5-ae3c-11a3198f6c22'
     };
   }
   else if(str === 'peerjs') {
@@ -46,7 +45,9 @@ const getDefault = (str) => {
   }
   else if(str === 'name') {
     defaultObj = {
-      username: 'Player ' + Math.round(Math.random() * 9999).toFixed()
+      username: 'Player ' + Math.round(Math.random() * 9999).toFixed(),
+      token: '',
+      tokenCheck: 0
     };
   }
   else if(str === 'sound') {
@@ -90,7 +91,7 @@ const get = (str) => {
 };
 
 const set = (str, data) => {
-  store.set(str, data);
+  store.set(str, Object.assign(get(str), data));
 };
 
 const reset = () => {

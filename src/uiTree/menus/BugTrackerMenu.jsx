@@ -3,7 +3,7 @@ import React from 'react';
 import Modal from 'react-modal';
 import { Box, Flex, Text, Button } from 'rebass';
 import LinkButton from 'components/LinkButton';
-import LogoIcon from 'assets/logo.svg';
+import MenuBar from 'components/MenuBar';
 import copy from 'copy-to-clipboard';
 
 import ReactMarkdown from 'react-markdown';
@@ -22,17 +22,7 @@ export default class RulesMenu extends React.Component {
   render() {
     return (
       <>
-        <Flex
-          p={2}
-          color='white'
-          bg='black'
-          alignItems='center'
-          width={1}
-        >
-          <img src={LogoIcon} alt='Logo' onClick={() => { window.location.href = window.location.origin; }} />
-          <Text p={2} fontWeight='bold' onClick={() => { window.location.href = window.location.origin; }}>Chess in 5D</Text>
-          <Box mx='auto' />
-        </Flex>
+        <MenuBar />
         <Modal
           isOpen={true}
           style={{content: {padding: '0px'}}}
