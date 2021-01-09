@@ -169,6 +169,11 @@ export default class Board extends React.Component {
                         boardObj={this.props.boardObj}
                         timelineObj={e}
                         key={e.timeline}
+                        onBoardClick={(e) => {
+                          if(typeof this.props.onBoardClick === 'function') {
+                            this.props.onBoardClick(e);
+                          }
+                        }}
                         onPieceClick={(piece) => {
                           if(typeof this.props.onPieceClick === 'function') {
                             this.props.onPieceClick(piece);
@@ -204,6 +209,7 @@ export default class Board extends React.Component {
                         timelineLabel={this.props.timelineLabel}
                         turnLabel={this.props.turnLabel}
                         boardLabel={this.props.boardLabel}
+                        drawArrow={this.props.drawArrow}
                       />
                     );
                   })
@@ -286,6 +292,22 @@ export default class Board extends React.Component {
                         moveObj={e}
                         key={JSON.stringify(e)}
                         isCheck
+                      />
+                    );
+                  })
+                :
+                  <></>
+                }
+                {Array.isArray(this.props.drawArrows) ?
+                  this.props.drawArrows.map((e) => {
+                    return (
+                      <Arrow
+                        color={e.color}
+                        sx={e.start.x}
+                        sy={e.start.y}
+                        tx={e.end.x}
+                        ty={e.end.y}
+                        key={JSON.stringify(e)}
                       />
                     );
                   })

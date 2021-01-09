@@ -7,6 +7,7 @@ import { Box, Flex, Text, Button } from 'rebass';
 import Board from 'components/Board';
 import NotationViewer from 'components/NotationViewer';
 import Settings from 'components/Settings';
+import ArrowMenu from 'components/ArrowMenu';
 import LogoIcon from 'assets/logo.svg';
 import Options from 'Options';
 import { Howl } from 'howler';
@@ -56,6 +57,11 @@ export default class GamePlayer extends React.Component {
       boardLabel: false,
       showCheckGhost: true
     },
+    drawArrow: false,
+    drawArrowNumber: '1',
+    drawingArrow: false,
+    drawingArrowCoord: {},
+    drawArrows: [],
     ended: false,
     variant: 'standard'
   };
@@ -139,21 +145,16 @@ export default class GamePlayer extends React.Component {
           newBoardObj.timelines[l].timeline === checks[i].start.timeline ||
           newBoardObj.timelines[l].timeline === checks[i].end.timeline
         ) {
+          checksExists = false;
           for(var t = 0;t < newBoardObj.timelines[l].turns.length;t++) {
-            if(
-              newBoardObj.timelines[l].turns[t].turn === checks[i].start.turn ||
-              newBoardObj.timelines[l].turns[t].turn === checks[i].end.turn
-            ) {
+            if(newBoardObj.timelines[l].turns[t].turn === checks[i].start.turn) {
               if(newBoardObj.timelines[l].turns[t].player === checks[i].player) {
                 checksExists = true;
               }
             }
           }
           for(var t = 0;!checksExists && t < newBoardObj.timelines[l].turns.length;t++) { // eslint-disable-line no-redeclare
-            if(
-              newBoardObj.timelines[l].turns[t].turn === checks[i].start.turn ||
-              newBoardObj.timelines[l].turns[t].turn === checks[i].end.turn
-            ) {
+            if(newBoardObj.timelines[l].turns[t].turn === checks[i].start.turn) {
               if(newBoardObj.timelines[l].turns[t].player === 'white' && checks[i].player === 'black') {
                 var newTurn = deepcopy(newBoardObj.timelines[l].turns[t]);
                 newTurn.fade = true;
@@ -161,10 +162,34 @@ export default class GamePlayer extends React.Component {
                 newBoardObj.timelines[l].turns.push(newTurn);
               }
             }
-            if(
-              newBoardObj.timelines[l].turns[t].turn === checks[i].start.turn - 1 ||
-              newBoardObj.timelines[l].turns[t].turn === checks[i].end.turn - 1
-            ) {
+            if(newBoardObj.timelines[l].turns[t].turn === checks[i].start.turn - 1) {
+              if(newBoardObj.timelines[l].turns[t].player === 'black' && checks[i].player === 'white') {
+                var newTurn = deepcopy(newBoardObj.timelines[l].turns[t]); // eslint-disable-line no-redeclare
+                newTurn.fade = true;
+                newTurn.player = 'white';
+                newTurn.turn++;
+                newBoardObj.timelines[l].turns.push(newTurn);
+              }
+            }
+          }
+          checksExists = false;
+          for(var t = 0;t < newBoardObj.timelines[l].turns.length;t++) { // eslint-disable-line no-redeclare
+            if(newBoardObj.timelines[l].turns[t].turn === checks[i].end.turn) {
+              if(newBoardObj.timelines[l].turns[t].player === checks[i].player) {
+                checksExists = true;
+              }
+            }
+          }
+          for(var t = 0;!checksExists && t < newBoardObj.timelines[l].turns.length;t++) { // eslint-disable-line no-redeclare
+            if(newBoardObj.timelines[l].turns[t].turn === checks[i].end.turn) {
+              if(newBoardObj.timelines[l].turns[t].player === 'white' && checks[i].player === 'black') {
+                var newTurn = deepcopy(newBoardObj.timelines[l].turns[t]); // eslint-disable-line no-redeclare
+                newTurn.fade = true;
+                newTurn.player = 'black';
+                newBoardObj.timelines[l].turns.push(newTurn);
+              }
+            }
+            if(newBoardObj.timelines[l].turns[t].turn === checks[i].end.turn - 1) {
               if(newBoardObj.timelines[l].turns[t].player === 'black' && checks[i].player === 'white') {
                 var newTurn = deepcopy(newBoardObj.timelines[l].turns[t]); // eslint-disable-line no-redeclare
                 newTurn.fade = true;
@@ -298,7 +323,7 @@ export default class GamePlayer extends React.Component {
     }
   }
   componentWillUnmount() {
-    window.removeEventListener('keypress', this.shortcuts);
+    window.removeEventListener('keyup', this.shortcuts);
   }
   async revert() {
     if(this.props.canAnalyze) {
@@ -403,6 +428,17 @@ export default class GamePlayer extends React.Component {
           <Text p={2} fontWeight='bold' onClick={() => { window.location.href = window.location.origin; }}>Chess in 5D</Text>
           <Box mx='auto' />
           {this.props.children}
+          <ArrowMenu
+            onArrowOn={(n) => {
+              this.setState({ drawArrow: true, drawArrowNumber: n });
+            }}
+            onArrowOff={() => {
+              this.setState({ drawArrow: false, drawingArrow: false });
+            }}
+            onArrowClear={() => {
+              this.setState({ drawArrow: false, drawingArrow: false, drawArrows: [] });
+            }}
+          />
           <NotationViewer
             canImport={this.props.canImport}
             notation={this.state.notation}
@@ -436,6 +472,23 @@ export default class GamePlayer extends React.Component {
           ref={this.boardRef}
           boardObj={this.state.board}
           moveArrows={this.state.moveArrows}
+          onBoardClick={(e) => {
+            var point = e;
+            if(this.state.drawArrow) {
+              if(this.state.drawingArrow) {
+                var currArrows = this.state.drawArrows;
+                currArrows.push({
+                  color: Options.get('palette')['drawArrow' + this.state.drawArrowNumber],
+                  start: this.state.drawingArrowCoord,
+                  end: point
+                });
+                this.setState({ drawArrows: currArrows, drawingArrow: false });
+              }
+              else {
+                this.setState({ drawingArrow: true, drawingArrowCoord: point });
+              }
+            }
+          }}
           onPieceClick={(piece) => {
             if(piece) {
               if((this.props.canControlWhite && this.state.player === 'white') || (this.props.canControlBlack && this.state.player === 'black')) { this.selectPiece(piece); }
@@ -470,6 +523,8 @@ export default class GamePlayer extends React.Component {
           timelineLabel={this.state.settings.timelineLabel}
           turnLabel={this.state.settings.turnLabel}
           boardLabel={this.state.settings.boardLabel}
+          drawArrow={this.state.drawArrow}
+          drawArrows={this.state.drawArrows}
         />
         <Flex
           p={2}

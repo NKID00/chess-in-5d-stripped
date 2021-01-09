@@ -5,7 +5,7 @@ import Basics from 'uiTree/tutorials/Basics';
 import Movement from 'uiTree/tutorials/Movement';
 import Movement2 from 'uiTree/tutorials/Movement2';
 import Checkmate from 'uiTree/tutorials/Checkmate';
-import RulesPopup from 'uiTree/tutorials/RulesPopup';
+//import RulesPopup from 'uiTree/tutorials/RulesPopup';
 
 export default class Tutorial extends React.Component {
   render() {
@@ -22,9 +22,6 @@ export default class Tutorial extends React.Component {
         </Route>
         <Route exact path='/tutorial/checkmate'>
           <Checkmate />
-        </Route>
-        <Route exact path='/tutorial/rules'>
-          <RulesPopup />
         </Route>
       </Switch>
     );

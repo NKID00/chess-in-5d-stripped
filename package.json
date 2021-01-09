@@ -4,7 +4,7 @@
     "name": "Shaun Wu",
     "email": "alexbay218@gmail.com"
   },
-  "version": "0.1.39",
+  "version": "0.1.41",
   "description": "Open source implementation of '5D Chess With Multiverse Time Travel'.",
   "private": true,
   "main": "public/electron.js",
@@ -29,7 +29,9 @@
     "publish": {
       "provider": "bintray",
       "package": "chess-in-5d",
-      "repo": "chess-in-5d"
+      "repo": "chess-in-5d",
+      "owner": "alexbay218",
+      "user": "alexbay218"
     },
     "win": {
       "icon": "public/android-chrome-512x512.png",
@@ -79,7 +81,7 @@
     "copyright": "Created by Shaun Wu, source code released uner AGPL-v3.0. All other assets are released under CC BY-SA 4.0"
   },
   "dependencies": {
-    "5d-chess-js": "^0.3.5",
+    "5d-chess-js": "^0.3.6",
     "@material-ui/core": "^4.11.0",
     "@rebass/forms": "^4.0.6",
     "@rebass/preset": "^4.0.5",
@@ -127,9 +129,9 @@
     "electron-start": "concurrently \"npm start\" \"wait-on http://localhost:3000 && electron .\"",
     "build": "react-scripts build",
     "preelectron-build": "npm run build --em.main=build/electron.js",
-    "electron-build": "electron-builder install-app-deps && electron-builder -wl",
+    "electron-build": "electron-builder install-app-deps && electron-builder -wl -p always",
     "preelectron-build-test": "npm run build --em.main=build/electron.js",
-    "electron-build-test": "electron-builder install-app-deps && electron-builder -w",
+    "electron-build-test": "electron-builder install-app-deps && electron-builder -w -p always",
     "test": "react-scripts test --passWithNoTests",
     "eject": "react-scripts eject"
   },

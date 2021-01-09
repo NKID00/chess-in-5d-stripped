@@ -48,6 +48,7 @@ const behavior = {
         removeOnInterrupt: true
       }
     );
+    window.pixivp = viewport;
     return viewport;
   },
   customApplyProps: (viewport, oldProps, newProps) => {
