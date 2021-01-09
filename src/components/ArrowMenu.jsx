@@ -1,14 +1,8 @@
 import React from 'react';
 
-import { Box, Flex, Text, Button } from 'rebass';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
-import Checkbox from '@material-ui/core/Checkbox';
+import { Box, Flex, Button } from 'rebass';
 import { BsPen, BsTrash } from 'react-icons/bs';
 import Options from 'Options';
-import { BiBorderAll } from 'react-icons/bi';
-
-const deepcompare = require('deep-equal');
 
 export default class Settings extends React.Component {
   buttonRef = React.createRef();
@@ -18,15 +12,66 @@ export default class Settings extends React.Component {
     active: false,
     selected: '1'
   };
+  isDown = false;
   shortcutsDown(e) {
-
+    if(!this.isDown) {
+      if(e.keyCode === 17) {
+        e.preventDefault();
+        if(!e.shiftKey) {
+          this.setState({ active: true, selected: '1' });
+          if(typeof this.props.onArrowOn === 'function') {
+            this.props.onArrowOn('1');
+          }
+        }
+        else {
+          this.setState({ active: true, selected: '2' });
+          if(typeof this.props.onArrowOn === 'function') {
+            this.props.onArrowOn('2');
+          }
+        }
+        this.isDown = true;
+      }
+      if(e.keyCode === 18) {
+        e.preventDefault();
+        if(!e.shiftKey) {
+          this.setState({ active: true, selected: '3' });
+          if(typeof this.props.onArrowOn === 'function') {
+            this.props.onArrowOn('3');
+          }
+        }
+        else {
+          this.setState({ active: true, selected: '4' });
+          if(typeof this.props.onArrowOn === 'function') {
+            this.props.onArrowOn('4');
+          }
+        }
+        this.isDown = true;
+      }
+    }
   }
   shortcutsUp(e) {
-
+    if(e.keyCode === 17) {
+      e.preventDefault();
+      this.setState({ active: false });
+      if(typeof this.props.onArrowOn === 'function') {
+        this.props.onArrowOff();
+      }
+      this.isDown = false;
+    }
+    if(e.keyCode === 18) {
+      e.preventDefault();
+      this.setState({ active: false });
+      if(typeof this.props.onArrowOn === 'function') {
+        this.props.onArrowOff();
+      }
+      this.isDown = false;
+    }
   }
   componentDidMount() {
-    //this.shortcuts = this.shortcuts.bind(this);
-    //window.addEventListener('keydown', this.shortcuts);
+    this.shortcutsDown = this.shortcutsDown.bind(this);
+    this.shortcutsUp = this.shortcutsUp.bind(this);
+    window.addEventListener('keydown', this.shortcutsDown);
+    window.addEventListener('keyup', this.shortcutsUp);
   }
   componentDidUpdate(prevProps, prevState) {
     if(prevState.open !== this.state.open) {
@@ -38,7 +83,8 @@ export default class Settings extends React.Component {
     }
   }
   componentWillUnmount() {
-    //window.removeEventListener('keydown', this.shortcuts);
+    window.removeEventListener('keydown', this.shortcutsDown);
+    window.removeEventListener('keyup', this.shortcutsUp);
   }
   render() {
     return (
