@@ -62,9 +62,9 @@ export default class Turn extends React.Component {
     graphics = this.overlayRef.current;
     graphics.clear();
     graphics.beginFill(0x000000,0.001);
-    graphics.drawRect(x, y,
+    graphics.drawRect(x, y - ((this.props.turnObj.height ? this.props.turnObj.height : 8) * 100 * (this.props.flip ? 1 : 0)),
       (this.props.turnObj.width ? this.props.turnObj.width : 8) * 100,
-      (this.props.turnObj.height ? this.props.turnObj.height : 8) * 100 * (this.props.flip ? -1 : 1));
+      (this.props.turnObj.height ? this.props.turnObj.height : 8) * 100);
     graphics.endFill();
   }
   componentDidMount() {
@@ -289,6 +289,7 @@ export default class Turn extends React.Component {
         }
         <Graphics ref={this.overlayRef}
           interactive={this.props.drawArrow}
+          buttonMode={this.props.drawArrow}
           pointertap={(e) => {
             e = window.pixivp.toWorld(e.data.global.x, e.data.global.y);
             var point = {
