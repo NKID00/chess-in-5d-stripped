@@ -19,7 +19,7 @@ Let's make a move and submit. Move the pawn on e2 to e3 and submit.
 
 ![Pawn move from e2 to e3](we2e3.gif)
 
-*Note: this is the same move in the previous tutorial*`,
+*Note: This is the same move in the previous tutorial*`,
     import: '',
     moveBuffer: [{"promotion":null,"enPassant":null,"castling":null,"start":{"timeline":0,"turn":1,"player":"white","coordinate":"e2","rank":2,"file":5},"end":{"timeline":0,"turn":1,"player":"white","coordinate":"e3","rank":3,"file":5},"player":"white"}],
     assets: {
