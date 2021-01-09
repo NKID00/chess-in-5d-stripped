@@ -7,6 +7,7 @@ import Highlight from 'components/Highlight';
 const deepcompare = require('deep-equal');
 
 export default class Turn extends React.Component {
+  overlayRef = React.createRef();
   turnRef = React.createRef();
   draw() {
     var x = this.props.x ? this.props.x : 0;
@@ -58,6 +59,13 @@ export default class Turn extends React.Component {
         }
       }
     }
+    graphics = this.overlayRef.current;
+    graphics.clear();
+    graphics.beginFill(0x000000,0.001);
+    graphics.drawRect(x, y,
+      (this.props.turnObj.width ? this.props.turnObj.width : 8) * 100,
+      (this.props.turnObj.height ? this.props.turnObj.height : 8) * 100 * (this.props.flip ? -1 : 1));
+    graphics.endFill();
   }
   componentDidMount() {
     this.draw();
@@ -77,7 +85,7 @@ export default class Turn extends React.Component {
   render() {
     return (
       <>
-        <Graphics ref={this.turnRef} />
+        <Graphics ref={this.turnRef}/>
         {typeof this.props.turnObj !== 'undefined' ?
           this.props.turnObj.pieces.map((e) => {
             var x = this.props.x ? this.props.x : 0;
@@ -279,6 +287,19 @@ export default class Turn extends React.Component {
         :
           <></>
         }
+        <Graphics ref={this.overlayRef}
+          interactive={this.props.drawArrow}
+          pointertap={(e) => {
+            e = window.pixivp.toWorld(e.data.global.x, e.data.global.y);
+            var point = {
+              x: e.x,
+              y: e.y
+            };
+            if(typeof this.props.onBoardClick === 'function') {
+              this.props.onBoardClick(point);
+            }
+          }}
+        />
       </>
     );
   }
