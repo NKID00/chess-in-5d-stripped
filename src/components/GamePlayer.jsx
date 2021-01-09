@@ -139,21 +139,16 @@ export default class GamePlayer extends React.Component {
           newBoardObj.timelines[l].timeline === checks[i].start.timeline ||
           newBoardObj.timelines[l].timeline === checks[i].end.timeline
         ) {
+          checksExists = false;
           for(var t = 0;t < newBoardObj.timelines[l].turns.length;t++) {
-            if(
-              newBoardObj.timelines[l].turns[t].turn === checks[i].start.turn ||
-              newBoardObj.timelines[l].turns[t].turn === checks[i].end.turn
-            ) {
+            if(newBoardObj.timelines[l].turns[t].turn === checks[i].start.turn) {
               if(newBoardObj.timelines[l].turns[t].player === checks[i].player) {
                 checksExists = true;
               }
             }
           }
           for(var t = 0;!checksExists && t < newBoardObj.timelines[l].turns.length;t++) { // eslint-disable-line no-redeclare
-            if(
-              newBoardObj.timelines[l].turns[t].turn === checks[i].start.turn ||
-              newBoardObj.timelines[l].turns[t].turn === checks[i].end.turn
-            ) {
+            if(newBoardObj.timelines[l].turns[t].turn === checks[i].start.turn) {
               if(newBoardObj.timelines[l].turns[t].player === 'white' && checks[i].player === 'black') {
                 var newTurn = deepcopy(newBoardObj.timelines[l].turns[t]);
                 newTurn.fade = true;
@@ -161,10 +156,34 @@ export default class GamePlayer extends React.Component {
                 newBoardObj.timelines[l].turns.push(newTurn);
               }
             }
-            if(
-              newBoardObj.timelines[l].turns[t].turn === checks[i].start.turn - 1 ||
-              newBoardObj.timelines[l].turns[t].turn === checks[i].end.turn - 1
-            ) {
+            if(newBoardObj.timelines[l].turns[t].turn === checks[i].start.turn - 1) {
+              if(newBoardObj.timelines[l].turns[t].player === 'black' && checks[i].player === 'white') {
+                var newTurn = deepcopy(newBoardObj.timelines[l].turns[t]); // eslint-disable-line no-redeclare
+                newTurn.fade = true;
+                newTurn.player = 'white';
+                newTurn.turn++;
+                newBoardObj.timelines[l].turns.push(newTurn);
+              }
+            }
+          }
+          checksExists = false;
+          for(var t = 0;t < newBoardObj.timelines[l].turns.length;t++) { // eslint-disable-line no-redeclare
+            if(newBoardObj.timelines[l].turns[t].turn === checks[i].end.turn) {
+              if(newBoardObj.timelines[l].turns[t].player === checks[i].player) {
+                checksExists = true;
+              }
+            }
+          }
+          for(var t = 0;!checksExists && t < newBoardObj.timelines[l].turns.length;t++) { // eslint-disable-line no-redeclare
+            if(newBoardObj.timelines[l].turns[t].turn === checks[i].end.turn) {
+              if(newBoardObj.timelines[l].turns[t].player === 'white' && checks[i].player === 'black') {
+                var newTurn = deepcopy(newBoardObj.timelines[l].turns[t]); // eslint-disable-line no-redeclare
+                newTurn.fade = true;
+                newTurn.player = 'black';
+                newBoardObj.timelines[l].turns.push(newTurn);
+              }
+            }
+            if(newBoardObj.timelines[l].turns[t].turn === checks[i].end.turn - 1) {
               if(newBoardObj.timelines[l].turns[t].player === 'black' && checks[i].player === 'white') {
                 var newTurn = deepcopy(newBoardObj.timelines[l].turns[t]); // eslint-disable-line no-redeclare
                 newTurn.fade = true;
