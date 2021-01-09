@@ -29,7 +29,9 @@
     "publish": {
       "provider": "bintray",
       "package": "chess-in-5d",
-      "repo": "chess-in-5d"
+      "repo": "chess-in-5d",
+      "owner": "alexbay218",
+      "user": "alexbay218"
     },
     "win": {
       "icon": "public/android-chrome-512x512.png",
@@ -127,9 +129,9 @@
     "electron-start": "concurrently \"npm start\" \"wait-on http://localhost:3000 && electron .\"",
     "build": "react-scripts build",
     "preelectron-build": "npm run build --em.main=build/electron.js",
-    "electron-build": "electron-builder install-app-deps && electron-builder -wl",
+    "electron-build": "electron-builder install-app-deps && electron-builder -wl -p always",
     "preelectron-build-test": "npm run build --em.main=build/electron.js",
-    "electron-build-test": "electron-builder install-app-deps && electron-builder -w",
+    "electron-build-test": "electron-builder install-app-deps && electron-builder -w -p always",
     "test": "react-scripts test --passWithNoTests",
     "eject": "react-scripts eject"
   },
