@@ -25,8 +25,8 @@ export default class Settings extends React.Component {
 
   }
   componentDidMount() {
-    this.shortcuts = this.shortcuts.bind(this);
-    window.addEventListener('keydown', this.shortcuts);
+    //this.shortcuts = this.shortcuts.bind(this);
+    //window.addEventListener('keydown', this.shortcuts);
   }
   componentDidUpdate(prevProps, prevState) {
     if(prevState.open !== this.state.open) {
@@ -38,7 +38,7 @@ export default class Settings extends React.Component {
     }
   }
   componentWillUnmount() {
-    window.removeEventListener('keydown', this.shortcuts);
+    //window.removeEventListener('keydown', this.shortcuts);
   }
   render() {
     return (
