@@ -11,13 +11,19 @@ export default class Arrow extends React.Component {
     var sy = this.props.sy ? this.props.sy : 0;
     var tx = this.props.tx ? this.props.tx : 0;
     var ty = this.props.ty ? this.props.ty : 0;
-    var line = this.props.isCapture ?
-      this.props.palette.captureArrow
-    : this.props.isCheck ?
-      this.props.palette.checkArrow
-    :
-      this.props.palette.moveArrow
-    ;
+    var line = 0x000000;
+    if(typeof this.props.color !== 'undefined') {
+      line = this.props.color;
+    }
+    else {
+      line = this.props.isCapture ?
+        this.props.palette.captureArrow
+      : this.props.isCheck ?
+        this.props.palette.checkArrow
+      :
+        this.props.palette.moveArrow
+      ;
+    }
     var headlen = 40;
     var dx = tx - sx;
     var dy = ty - sy;
