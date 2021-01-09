@@ -42,15 +42,7 @@ export default class TutorialMenu extends React.Component {
               width={1}
               my={3}
             >
-              (WIP) Checkmate
-            </LinkButton>
-            <LinkButton
-              to='/tutorial/rules'
-              variant='primary'
-              width={1}
-              my={3}
-            >
-              (WIP) Rules
+              Checkmate
             </LinkButton>
             <LinkButton
               to='/'
