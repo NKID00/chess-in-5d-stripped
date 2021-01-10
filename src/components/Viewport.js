@@ -34,11 +34,11 @@ const behavior = {
       if(props.decelerate) { viewport.decelerate({
         friction: 0.75
       }); }
-      viewport.fitHeight(1333);
+      viewport.fitHeight(1500);
       viewport.clampZoom({
         minWidth: 1000,
         minHeight: 1000,
-        maxWidth: props.worldWidth * 2.2
+        maxWidth: props.worldWidth * 3
       });
     }
     viewport.snap(500, 500,
