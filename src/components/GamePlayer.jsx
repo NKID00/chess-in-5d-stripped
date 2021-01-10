@@ -205,19 +205,10 @@ export default class GamePlayer extends React.Component {
     return newBoardObj;
   }
   async boardSync() {
-    var win = {
-      player: await this.chess.player(),
-      checkmate: await this.chess.inCheckmate(),
-      stalemate: await this.chess.inStalemate()
-    };
     var obj = {};
     obj.submittable = await this.chess.submittable(true);
     obj.undoable = await this.chess.undoable();
     obj.player = await this.chess.player();
-    if(!this.state.ended) {
-      obj.checkmate = win.checkmate;
-      obj.stalemate = win.stalemate;
-    }
     obj.check = await this.chess.inCheck();
     obj.action = await this.chess.actionNumber();
     obj.checks = await this.chess.checks();
@@ -241,6 +232,17 @@ export default class GamePlayer extends React.Component {
     obj.currentNotation = await this.chess.exportFunc('notation_short');
     obj.variant = (await this.chess.metadata()).variant;
     obj.metadata = await this.chess.metadata();
+    this.setState(obj);
+    var win = {
+      player: await this.chess.player(),
+      checkmate: await this.chess.inCheckmate(),
+      stalemate: await this.chess.inStalemate()
+    };
+    obj = {};
+    if(!this.state.ended) {
+      obj.checkmate = win.checkmate;
+      obj.stalemate = win.stalemate;
+    }
     this.setState(obj);
     if(win.checkmate || win.stalemate) {
       this.endHowl.volume(Options.get('sound').effect);
