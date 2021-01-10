@@ -7,6 +7,7 @@ import { Box, Flex, Text, Button } from 'rebass';
 import Board from 'components/Board';
 import NotationViewer from 'components/NotationViewer';
 import Settings from 'components/Settings';
+import ArrowMenu from 'components/ArrowMenu';
 import LogoIcon from 'assets/logo.svg';
 import Options from 'Options';
 import { Howl } from 'howler';
@@ -56,6 +57,11 @@ export default class GamePlayer extends React.Component {
       boardLabel: false,
       showCheckGhost: true
     },
+    drawArrow: false,
+    drawArrowNumber: '1',
+    drawingArrow: false,
+    drawingArrowCoord: {},
+    drawArrows: [],
     ended: false,
     variant: 'standard'
   };
@@ -199,19 +205,10 @@ export default class GamePlayer extends React.Component {
     return newBoardObj;
   }
   async boardSync() {
-    var win = {
-      player: await this.chess.player(),
-      checkmate: await this.chess.inCheckmate(),
-      stalemate: await this.chess.inStalemate()
-    };
     var obj = {};
     obj.submittable = await this.chess.submittable(true);
     obj.undoable = await this.chess.undoable();
     obj.player = await this.chess.player();
-    if(!this.state.ended) {
-      obj.checkmate = win.checkmate;
-      obj.stalemate = win.stalemate;
-    }
     obj.check = await this.chess.inCheck();
     obj.action = await this.chess.actionNumber();
     obj.checks = await this.chess.checks();
@@ -235,6 +232,17 @@ export default class GamePlayer extends React.Component {
     obj.currentNotation = await this.chess.exportFunc('notation_short');
     obj.variant = (await this.chess.metadata()).variant;
     obj.metadata = await this.chess.metadata();
+    this.setState(obj);
+    var win = {
+      player: await this.chess.player(),
+      checkmate: await this.chess.inCheckmate(),
+      stalemate: await this.chess.inStalemate()
+    };
+    obj = {};
+    if(!this.state.ended) {
+      obj.checkmate = win.checkmate;
+      obj.stalemate = win.stalemate;
+    }
     this.setState(obj);
     if(win.checkmate || win.stalemate) {
       this.endHowl.volume(Options.get('sound').effect);
@@ -317,7 +325,7 @@ export default class GamePlayer extends React.Component {
     }
   }
   componentWillUnmount() {
-    window.removeEventListener('keypress', this.shortcuts);
+    window.removeEventListener('keyup', this.shortcuts);
   }
   async revert() {
     if(this.props.canAnalyze) {
@@ -422,6 +430,17 @@ export default class GamePlayer extends React.Component {
           <Text p={2} fontWeight='bold' onClick={() => { window.location.href = window.location.origin; }}>Chess in 5D</Text>
           <Box mx='auto' />
           {this.props.children}
+          <ArrowMenu
+            onArrowOn={(n) => {
+              this.setState({ drawArrow: true, drawArrowNumber: n });
+            }}
+            onArrowOff={() => {
+              this.setState({ drawArrow: false, drawingArrow: false });
+            }}
+            onArrowClear={() => {
+              this.setState({ drawArrow: false, drawingArrow: false, drawArrows: [] });
+            }}
+          />
           <NotationViewer
             canImport={this.props.canImport}
             notation={this.state.notation}
@@ -455,6 +474,23 @@ export default class GamePlayer extends React.Component {
           ref={this.boardRef}
           boardObj={this.state.board}
           moveArrows={this.state.moveArrows}
+          onBoardClick={(e) => {
+            var point = e;
+            if(this.state.drawArrow) {
+              if(this.state.drawingArrow) {
+                var currArrows = this.state.drawArrows;
+                currArrows.push({
+                  color: Options.get('palette')['drawArrow' + this.state.drawArrowNumber],
+                  start: this.state.drawingArrowCoord,
+                  end: point
+                });
+                this.setState({ drawArrows: currArrows, drawingArrow: false });
+              }
+              else {
+                this.setState({ drawingArrow: true, drawingArrowCoord: point });
+              }
+            }
+          }}
           onPieceClick={(piece) => {
             if(piece) {
               if((this.props.canControlWhite && this.state.player === 'white') || (this.props.canControlBlack && this.state.player === 'black')) { this.selectPiece(piece); }
@@ -489,6 +525,8 @@ export default class GamePlayer extends React.Component {
           timelineLabel={this.state.settings.timelineLabel}
           turnLabel={this.state.settings.turnLabel}
           boardLabel={this.state.settings.boardLabel}
+          drawArrow={this.state.drawArrow}
+          drawArrows={this.state.drawArrows}
         />
         <Flex
           p={2}
