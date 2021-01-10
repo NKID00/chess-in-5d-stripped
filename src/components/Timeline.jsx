@@ -63,6 +63,11 @@ export default class Timeline extends React.Component {
                   (this.props.timelineObj.active ? 'A' : '') +
                   (this.props.timelineObj.present ? 'P' : '')
                 }
+                onBoardClick={(e) => {
+                  if(typeof this.props.onBoardClick === 'function') {
+                    this.props.onBoardClick(e);
+                  }
+                }}
                 onPieceClick={(piece) => {
                   if(typeof this.props.onPieceClick === 'function') {
                     this.props.onPieceClick(piece);
@@ -95,6 +100,7 @@ export default class Timeline extends React.Component {
                 flip={this.props.flip}
                 turnLabel={this.props.turnLabel}
                 boardLabel={this.props.boardLabel}
+                drawArrow={this.props.drawArrow}
               />
             );
           })}

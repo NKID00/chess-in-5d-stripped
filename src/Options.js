@@ -17,7 +17,11 @@ const defaultPalette = {
   turnLabel: 0xffffff,
   whiteBoardLabel: 0x000000,
   blackBoardLabel: 0xffffff,
-  checkBoardLabel: 0xffffff
+  checkBoardLabel: 0xffffff,
+  drawArrow1: 0xd3a026,
+  drawArrow2: 0x0dd95b,
+  drawArrow3: 0x32dcfa,
+  drawArrow4: 0xf50000
 };
 
 const resetPalette = () => {
