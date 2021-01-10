@@ -67,11 +67,23 @@ export default class Settings extends React.Component {
       this.isDown = false;
     }
   }
+  visibilityListener() {
+    const state = document.visibilityState;
+    if(state === 'hidden') {
+      this.setState({ active: false });
+      if(typeof this.props.onArrowOn === 'function') {
+        this.props.onArrowOff();
+      }
+      this.isDown = false;
+    }
+  }
   componentDidMount() {
     this.shortcutsDown = this.shortcutsDown.bind(this);
     this.shortcutsUp = this.shortcutsUp.bind(this);
+    this.visibilityListener = this.visibilityListener.bind(this);
     window.addEventListener('keydown', this.shortcutsDown);
     window.addEventListener('keyup', this.shortcutsUp);
+    window.addEventListener('visibilitychange', this.visibilityListener);
   }
   componentDidUpdate(prevProps, prevState) {
     if(prevState.open !== this.state.open) {
