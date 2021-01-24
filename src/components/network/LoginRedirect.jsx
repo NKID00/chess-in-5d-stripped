@@ -1,4 +1,5 @@
 import React from 'react';
+import { Redirect } from 'react-router';
 
 import { withSnackbar } from 'notistack';
 import Options from 'Options';
@@ -40,12 +41,17 @@ class LoginRedirect extends React.Component {
   }
   render() {
     return (
-      <LoginMenu
-        open={this.state.invalid}
-        onLogin={() => {
-          this.check();
-        }}
-      />
+      this.state.invalid ?
+        <LoginMenu
+          to={this.props.to}
+          backLink={this.props.backLink}
+          open={this.state.invalid}
+          onLogin={() => {
+            this.check();
+          }}
+        />
+      :
+        <Redirect to={this.props.to} />
     );
   }
 }

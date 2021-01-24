@@ -12,7 +12,10 @@ export default class ImportModal extends React.Component {
     return (
       <Modal
         isOpen={this.props.open}
-        style={{content: {padding: '0px'}}}
+        style={{
+          overlay: {backgroundColor: 'rgba(0,0,0,0)'},
+          content: {padding: '0px'}
+        }}
       >
         <Flex
           p={2}

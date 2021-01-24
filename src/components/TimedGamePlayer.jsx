@@ -45,6 +45,17 @@ export default class TimedGamePlayer extends React.Component {
       window.setTimeout(this.update.bind(this), 1000);
     }
   }
+  componentDidMount() {
+    if(typeof this.props.start === 'boolean' && this.state.start !== this.props.start) {
+      this.setState({ start: this.props.start });
+    }
+    if(typeof this.props.ended === 'boolean' && this.state.ended !== this.props.ended) {
+      this.setState({ ended: this.props.ended });
+    }
+    if(typeof this.props.timed === 'boolean' && this.state.timed !== this.props.timed) {
+      this.setState({ timed: this.props.timed });
+    }
+  }
   componentDidUpdate(prevProps, prevState) {
     if(!prevState.start && this.state.start) {
       this.lastUpdate = Date.now();
@@ -67,6 +78,9 @@ export default class TimedGamePlayer extends React.Component {
           blackDurationLeft: 0
         });
       }
+    }
+    if(prevProps.timed !== this.props.timed) {
+      this.setState({ timed: this.props.timed });
     }
     if(prevProps.startingDuration !== this.props.startingDuration) {
       this.setState({ startingDuration: this.props.startingDuration });
@@ -98,7 +112,10 @@ export default class TimedGamePlayer extends React.Component {
       <>
         <Modal
           isOpen={!this.state.start && !this.state.ended}
-          style={{content: {padding: '0px'}}}
+          style={{
+            overlay: {backgroundColor: 'rgba(0,0,0,0)'},
+            content: {padding: '0px'}
+          }}
         >
           <Flex
             p={2}

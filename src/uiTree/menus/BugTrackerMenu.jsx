@@ -25,7 +25,10 @@ export default class RulesMenu extends React.Component {
         <MenuBar />
         <Modal
           isOpen={true}
-          style={{content: {padding: '0px'}}}
+          style={{
+            overlay: {backgroundColor: 'rgba(0,0,0,0)'},
+            content: {padding: '0px'}
+          }}
         >
           <Flex
             p={2}

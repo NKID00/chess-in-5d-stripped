@@ -11,8 +11,7 @@ import TutorialMenu from 'uiTree/menus/TutorialMenu';
 import OptionsMenu from 'uiTree/menus/OptionsMenu';
 import BugTrackerMenu from 'uiTree/menus/BugTrackerMenu';
 import ServerMenu from 'uiTree/menus/network/ServerMenu';
-
-import LoginRedirect from 'components/network/LoginRedirect';
+import SessionRedirect from 'uiTree/menus/network/SessionRedirect';
 
 class Menu extends React.Component {
   state = {
@@ -39,8 +38,10 @@ class Menu extends React.Component {
             <NetworkMenu />
           </Route>
           <Route exact path='/network/server'>
-            <LoginRedirect />
             <ServerMenu />
+          </Route>
+          <Route exact path='/network/server/join/:id'>
+            <SessionRedirect />
           </Route>
           <Route exact path='/tutorial'>
             <TutorialMenu />
@@ -57,6 +58,7 @@ class Menu extends React.Component {
           '/local',
           '/network',
           '/network/server',
+          '/network/server/join/:id',
           '/tutorial',
           '/tutorial/rules',
           '/options',

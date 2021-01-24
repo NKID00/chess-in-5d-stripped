@@ -99,7 +99,10 @@ class LoginMenu extends React.Component {
         }
         <Modal
           isOpen={this.props.open}
-          style={{content: {padding: '0px'}}}
+          style={{
+            overlay: {backgroundColor: 'rgba(0,0,0,0)'},
+            content: {padding: '0px'}
+          }}
         >
           <Flex
             p={2}
@@ -220,7 +223,7 @@ class LoginMenu extends React.Component {
           >
             <Box mx='auto' />
             <LinkButton
-              to='/network'
+              to={this.props.backLink ? this.props.backLink : '/network'}
               variant='secondary'
               m={1}
             >

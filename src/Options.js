@@ -98,6 +98,13 @@ const set = (str, data) => {
   store.set(str, Object.assign(get(str), data));
 };
 
+const logout = () => {
+  store.set('name', Object.assign(get('name'), {
+    token: '',
+    tokenCheck: 0
+  }));
+}
+
 const reset = () => {
   store.clearAll();
   store.set('server', getDefault('server'));
@@ -113,5 +120,6 @@ export default {
   reset: reset,
   resetPalette: resetPalette,
   get: get,
-  set: set
+  set: set,
+  logout: logout
 };
