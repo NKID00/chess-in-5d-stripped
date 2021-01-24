@@ -111,7 +111,7 @@ export default class TimedGamePlayer extends React.Component {
             <Text p={2} fontWeight='bold'>Settings</Text>
             <Box mx='auto' />
           </Flex>
-          <Box width={1} px={2} py={5} sx={{overflowY: 'auto', height: '100%'}}>
+          <Box width={1} px={2} py={5} sx={{overflow: 'auto', height: '100%'}}>
             {this.props.modalChildren}
             <Flex>
               <Text p={2} fontWeight='bold'>Variant</Text>
