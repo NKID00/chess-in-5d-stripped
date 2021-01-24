@@ -39,6 +39,7 @@
 
 .CodeMirror {
   height: 100%;
+  z-index: 0;
 }
 
 .react-codemirror2 {

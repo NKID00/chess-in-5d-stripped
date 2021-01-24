@@ -229,7 +229,7 @@ export default class GamePlayer extends React.Component {
     });
     obj.moveBuffer = await this.chess.moveBuffer();
     obj.moveArrows = await this.moveArrowCalc();
-    obj.currentNotation = await this.chess.exportFunc('notation_short');
+    obj.currentNotation = await this.chess.exportFunc('5dpgn_active_timeline');
     obj.variant = (await this.chess.metadata()).variant;
     obj.metadata = await this.chess.metadata();
     this.setState(obj);
@@ -394,7 +394,7 @@ export default class GamePlayer extends React.Component {
     if(typeof this.props.onSubmit === 'function') { this.props.onSubmit(); }
     this.setState({
       importedHistory: await this.chess.exportFunc('object'),
-      notation: await this.chess.exportFunc('notation_short')
+      notation: await this.chess.exportFunc('5dpgn_active_timeline')
     });
     await this.boardSync();
     this.submitHowl.volume(Options.get('sound').effect);
@@ -409,7 +409,7 @@ export default class GamePlayer extends React.Component {
       await this.chess.importFunc(input, undefined, true);
       this.setState({
         importedHistory: await this.chess.exportFunc('object'),
-        notation: await this.chess.exportFunc('notation_short')
+        notation: await this.chess.exportFunc('5dpgn_active_timeline')
       });
       await this.boardSync();
       if(typeof this.props.onImport === 'function') { this.props.onImport(input); }
