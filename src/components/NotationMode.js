@@ -3,11 +3,11 @@ const CodeMirror = require('codemirror');
 CodeMirror.defineSimpleMode('notation', {
   start: [
     {
-      regex: /\d+w\.\s+/, 
-      token: 'variable-2'
+      regex: /\d+\.\s*/, 
+      token: 'number'
     },
     {
-      regex: /\d+b\.\s+/, 
+      regex: /\s*\/\s*/, 
       token: 'variable-3'
     },
     {
@@ -15,20 +15,16 @@ CodeMirror.defineSimpleMode('notation', {
       token: 'string-2'
     },
     {
-      regex: /(\d+)?([-+]\d+)?(:)([PBNRQK]?)([a-h][1-8])/,
-      token: ['number','operator','number-2','string','atom']
+      regex: /(\(L?[+-]?\d*T[+-]?\d*\))?([A-Z]+)?([a-h]+)?([1-8]+)?(x)?([a-h][1-8])/,
+      token: ['tag','operator','atom','atom','string','atom']
     },
     {
-      regex: /(\d+)?([-+]\d+)?(:)(0-0(?:-0)?)/,
-      token: ['number','operator','number-2','atom']
+      regex: /(\(L?[+-]?\d*T[+-]?\d*\))?(O-O(?:-O)?)/,
+      token: ['tag','atom']
     },
     {
-      regex: /(<)([[\-+]\d+]?)(>)/,
-      token: ['number-2','operator','number-2']
-    },
-    {
-      regex: /[=+#]/,
-      token: 'tag'
+      regex: /(>>?x?)/,
+      token: ['string']
     }
   ]
 });
