@@ -9,6 +9,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import GamePlayer from 'components/GamePlayer';
 import LinkButton from 'components/LinkButton';
 import ImportBox from 'components/ImportBox';
+import { decompressLink } from 'components/LinkCompression';
 
 class LocalAnalyzer extends React.Component {
   state = {
@@ -18,9 +19,7 @@ class LocalAnalyzer extends React.Component {
     open: true
   };
   componentDidMount() {
-    var url = new URLSearchParams(this.props.location.search);
-    var importStr = url.get('import');
-    this.setState({import: importStr});
+    this.setState({import: decompressLink(window.location.href) });
   }
   render() {
     return (
