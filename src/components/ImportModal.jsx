@@ -25,7 +25,7 @@ export default class ImportModal extends React.Component {
           <Text p={2} fontWeight='bold'>Import</Text>
           <Box mx='auto' />
         </Flex>
-        <Box width={1} px={2} py={5} sx={{height: '100%'}}>
+        <Box width={1} px={2} py={5} sx={{height: '100%', overflow: 'auto'}}>
           <Flex width={1} sx={{height: '100%'}}>
             <ImportBox value={this.state.import} onChange={(v) => { this.setState({ import: v }); }} />
           </Flex>
@@ -35,6 +35,7 @@ export default class ImportModal extends React.Component {
           alignItems='center'
           width={1}
           sx={{position: 'absolute', bottom: 0}}
+          style={{zIndex: 100}}
         >
           <Box mx='auto' />
           <Button m={1} variant='secondary' 

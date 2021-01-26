@@ -13,7 +13,7 @@ export default class Board extends React.Component {
     height: window.innerHeight,
     snapX: 500,
     snapY: 500,
-    zoomHeight: 1333,
+    zoomHeight: 1500,
     triggerDate: Date.now(),
     triggerPromote: false,
     promotionObj: {}
@@ -28,7 +28,7 @@ export default class Board extends React.Component {
     var res = {
       snapX: (this.props.boardObj && this.props.boardObj.width ? this.props.boardObj.width * 100 + 200 : 1000)/2,
       snapY: (this.props.boardObj && this.props.boardObj.height ? this.props.boardObj.height * 100 + 200 : 1000)/2,
-      zoomHeight: (this.props.boardObj && this.props.boardObj.height ? this.props.boardObj.height * 100 + 200 : 1000)*1.333
+      zoomHeight: (this.props.boardObj && this.props.boardObj.height ? this.props.boardObj.height * 100 + 200 : 1000)*1.5
     };
     if(typeof this.props.boardObj !== 'undefined') {
       var actives = this.props.boardObj.timelines.filter((e) => { return e.present; });
