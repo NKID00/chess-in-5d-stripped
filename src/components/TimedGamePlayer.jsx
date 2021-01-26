@@ -121,10 +121,10 @@ export default class TimedGamePlayer extends React.Component {
                 onChange={(e) => { this.setState({variant: e.target.value, variantLoaded: false }); }}
               >
                 <MenuItem value='standard'>Standard</MenuItem>
-                <MenuItem value='defended_pawn'>Defended Pawn</MenuItem>
-                <MenuItem value='half_reflected'>Half Reflected</MenuItem>
+                <MenuItem value='defended pawn'>Defended Pawn</MenuItem>
+                <MenuItem value='half reflected'>Half Reflected</MenuItem>
                 <MenuItem value='princess'>Princess</MenuItem>
-                <MenuItem value='turn_zero'>Turn Zero</MenuItem>
+                <MenuItem value='turn zero'>Turn Zero</MenuItem>
               </Select>
             </Flex>
             <Flex>
