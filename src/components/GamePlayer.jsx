@@ -205,19 +205,10 @@ export default class GamePlayer extends React.Component {
     return newBoardObj;
   }
   async boardSync() {
-    var win = {
-      player: await this.chess.player(),
-      checkmate: await this.chess.inCheckmate(),
-      stalemate: await this.chess.inStalemate()
-    };
     var obj = {};
     obj.submittable = await this.chess.submittable(true);
     obj.undoable = await this.chess.undoable();
     obj.player = await this.chess.player();
-    if(!this.state.ended) {
-      obj.checkmate = win.checkmate;
-      obj.stalemate = win.stalemate;
-    }
     obj.check = await this.chess.inCheck();
     obj.action = await this.chess.actionNumber();
     obj.checks = await this.chess.checks();
@@ -238,9 +229,20 @@ export default class GamePlayer extends React.Component {
     });
     obj.moveBuffer = await this.chess.moveBuffer();
     obj.moveArrows = await this.moveArrowCalc();
-    obj.currentNotation = await this.chess.exportFunc('notation_short');
+    obj.currentNotation = await this.chess.exportFunc('5dpgn_active_timeline');
     obj.variant = (await this.chess.metadata()).variant;
     obj.metadata = await this.chess.metadata();
+    this.setState(obj);
+    var win = {
+      player: await this.chess.player(),
+      checkmate: await this.chess.inCheckmate(),
+      stalemate: await this.chess.inStalemate()
+    };
+    obj = {};
+    if(!this.state.ended) {
+      obj.checkmate = win.checkmate;
+      obj.stalemate = win.stalemate;
+    }
     this.setState(obj);
     if(win.checkmate || win.stalemate) {
       this.endHowl.volume(Options.get('sound').effect);
@@ -392,7 +394,7 @@ export default class GamePlayer extends React.Component {
     if(typeof this.props.onSubmit === 'function') { this.props.onSubmit(); }
     this.setState({
       importedHistory: await this.chess.exportFunc('object'),
-      notation: await this.chess.exportFunc('notation_short')
+      notation: await this.chess.exportFunc('5dpgn_active_timeline')
     });
     await this.boardSync();
     this.submitHowl.volume(Options.get('sound').effect);
@@ -407,7 +409,7 @@ export default class GamePlayer extends React.Component {
       await this.chess.importFunc(input, undefined, true);
       this.setState({
         importedHistory: await this.chess.exportFunc('object'),
-        notation: await this.chess.exportFunc('notation_short')
+        notation: await this.chess.exportFunc('5dpgn_active_timeline')
       });
       await this.boardSync();
       if(typeof this.props.onImport === 'function') { this.props.onImport(input); }
