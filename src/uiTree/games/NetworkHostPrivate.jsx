@@ -3,6 +3,7 @@ import React from 'react';
 import { Box, Flex, Text, Button } from 'rebass';
 import { withSnackbar } from 'notistack';
 import TextField from '@material-ui/core/TextField';
+import Checkbox from '@material-ui/core/Checkbox';
 import copy from 'copy-to-clipboard';
 import Peer from 'peerjs';
 import Options from 'Options';
@@ -26,7 +27,8 @@ class NetworkHostPrivate extends React.Component {
     chat: [],
     heartbeat: 0,
     winner: '',
-    variant: 'standard'
+    variant: 'standard',
+    fog: false
   };
   sendChat(str) {
     if(this.state.hostConnection !== null) {
@@ -56,7 +58,8 @@ class NetworkHostPrivate extends React.Component {
         whiteDurationLeft: this.timedGameRef.current.state.whiteDurationLeft,
         blackDurationLeft: this.timedGameRef.current.state.blackDurationLeft,
         variant: this.timedGameRef.current.state.variant,
-        winner: this.timedGameRef.current.state.winner
+        winner: this.timedGameRef.current.state.winner,
+        fog: this.state.fog
       }
     });
   }
@@ -64,6 +67,9 @@ class NetworkHostPrivate extends React.Component {
     this.state.hostConnection.on('data', async (data) => {
       if(data.type === 'name') {
         this.setState({clientName: data.name});
+      }
+      else if(data.type === 'fog') {
+        this.setState({ start: false, ended: true, winner: this.state.host, fog: false });
       }
       else if(data.type === 'chat') {
         var chat = this.state.chat;
@@ -176,6 +182,7 @@ class NetworkHostPrivate extends React.Component {
         start={this.state.start}
         ended={this.state.ended}
         backLink='/network'
+        fog={this.state.fog}
         onBack={() => {
           if(this.state.hostConnection !== null) {
             this.state.hostConnection.close();
@@ -247,6 +254,16 @@ class NetworkHostPrivate extends React.Component {
                 }}
               />
             </Box>
+            <Flex>
+              <Text p={2} fontWeight='bold'>Fog of War</Text>
+              <Checkbox color='primary'
+                checked={this.state.fog}
+                onChange={(e) => {
+                  this.setState({fog: e.target.checked});
+                  this.sync();
+                }}
+              />
+            </Flex>
           </>
         }
         onImport={(input) => {
@@ -291,6 +308,14 @@ class NetworkHostPrivate extends React.Component {
         disableStart={this.state.hostConnection === null}
         onStart={() => {
           this.setState({ start: true });
+        }}
+        onFogEnd={(player) => {
+          if(this.state.hostConnection !== null) {
+            this.state.hostConnection.send({type: 'fog', name: player});
+          }
+          window.setTimeout(() => {
+            this.setState({ start: false, ended: true, fog: false });
+          }, 1000);
         }}
       >
         <Chat

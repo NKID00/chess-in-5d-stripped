@@ -37,7 +37,7 @@ export default class Timeline extends React.Component {
                 :
                   []
                 }
-                checks={Array.isArray(this.props.checks) ?
+                checks={!this.props.fog && Array.isArray(this.props.checks) ?
                   this.props.checks.filter((e) => {
                     return e.end.timeline === this.props.timelineObj.timeline || e.start.timeline === this.props.timelineObj.timeline;
                   })
@@ -101,6 +101,9 @@ export default class Timeline extends React.Component {
                 turnLabel={this.props.turnLabel}
                 boardLabel={this.props.boardLabel}
                 drawArrow={this.props.drawArrow}
+                fog={this.props.fog}
+                fogMode={this.props.fogMode}
+                allMoves={this.props.allMoves}
               />
             );
           })}
