@@ -281,6 +281,14 @@ export default class TimedGamePlayer extends React.Component {
               this.setState({ start: false, ended: true, winner: win.player === 'white' ? 'black' : 'white' });
             }
           }}
+          onFogEnd={(player) => {
+            if(typeof this.props.onFogEnd === 'function') {
+              this.props.onFogEnd(player);
+            }
+            if(!this.props.overrideEnd) {
+              this.setState({ start: false, ended: true, winner: player === 'white' ? 'white' : 'black' });
+            }
+          }}
           onMove={async (moveObj) => {
             if(typeof this.props.onMove === 'function') {
               this.props.onMove(moveObj);
@@ -317,6 +325,7 @@ export default class TimedGamePlayer extends React.Component {
               this.props.onImport(input);
             }
           }}
+          fog={this.props.fog}
         >
           {this.state.timed ?
             <ClockDisplay

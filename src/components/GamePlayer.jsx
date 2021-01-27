@@ -40,6 +40,8 @@ export default class GamePlayer extends React.Component {
   });
   state = {
     selectedPiece: null,
+    allMoves: [],
+    nextMoves: [],
     highlights: [],
     hoverHighlights: [],
     triggerDate: Date.now(),
@@ -80,9 +82,7 @@ export default class GamePlayer extends React.Component {
       }
     }
     if(e.keyCode === 13 || e.keyCode === 70) {
-      if(this.state.submittable) {
-        this.submit();
-      }
+      this.submit();
     }
     if(e.keyCode === 37) {
       this.revert();
@@ -137,6 +137,9 @@ export default class GamePlayer extends React.Component {
     return res;
   }
   async addCheckGhost(boardObj, checks) {
+    if(this.props.fog) {
+      return boardObj;
+    }
     var newBoardObj = deepcopy(boardObj);
     for(var i = 0;this.state.settings.showCheckGhost && i < checks.length;i++) {
       var checksExists = false;
@@ -227,6 +230,10 @@ export default class GamePlayer extends React.Component {
       }
       return true;
     });
+    obj.allMoves = this.state.allMoves.slice();
+    for(var i = 0;i < obj.nextMoves.length;i++) {
+      obj.allMoves.push(obj.nextMoves[i]);
+    }
     obj.moveBuffer = await this.chess.moveBuffer();
     obj.moveArrows = await this.moveArrowCalc();
     obj.currentNotation = await this.chess.exportFunc('5dpgn_active_timeline');
@@ -235,7 +242,7 @@ export default class GamePlayer extends React.Component {
     this.setState(obj);
     var win = {
       player: await this.chess.player(),
-      checkmate: await this.chess.inCheckmate(),
+      checkmate: this.props.fog ? false : await this.chess.inCheckmate(),
       stalemate: await this.chess.inStalemate()
     };
     obj = {};
@@ -390,16 +397,23 @@ export default class GamePlayer extends React.Component {
   }
   async submit() {
     this.setState({loading: true});
-    await this.chess.submit(true);
-    if(typeof this.props.onSubmit === 'function') { this.props.onSubmit(); }
-    this.setState({
-      importedHistory: await this.chess.exportFunc('object'),
-      notation: await this.chess.exportFunc('5dpgn_active_timeline')
-    });
-    await this.boardSync();
-    this.submitHowl.volume(Options.get('sound').effect);
-    if(this.submitHowl.volume() > 0) {
-      this.submitHowl.play();
+      if(this.state.submittable) {
+      await this.chess.submit(true);
+      if(typeof this.props.onSubmit === 'function') { this.props.onSubmit(); }
+      this.setState({
+        importedHistory: await this.chess.exportFunc('object'),
+        notation: await this.chess.exportFunc('5dpgn_active_timeline')
+      });
+      await this.boardSync();
+      this.submitHowl.volume(Options.get('sound').effect);
+      if(this.submitHowl.volume() > 0) {
+        this.submitHowl.play();
+      }
+    }
+    else if(this.props.fog && this.state.check) {
+      if(typeof this.props.onFogEnd === 'function') {
+        this.props.onFogEnd(this.state.player);
+      }
     }
     this.setState({loading: false});
   }
@@ -498,7 +512,7 @@ export default class GamePlayer extends React.Component {
           }}
           onPieceOver={(piece) => {
             this.setState({hoverHighlights:
-              this.state.nextMoves.filter((e) => {
+              this.state.allMoves.filter((e) => {
                 return deepcompare(e.start, piece.position) && (this.state.selectedPiece ?
                   !deepcompare(this.state.selectedPiece, piece)
                 :
@@ -527,6 +541,13 @@ export default class GamePlayer extends React.Component {
           boardLabel={this.state.settings.boardLabel}
           drawArrow={this.state.drawArrow}
           drawArrows={this.state.drawArrows}
+          fog={this.props.fog}
+          fogMode={this.props.canControlWhite ?
+            'white'
+          :
+            'black'
+          }
+          allMoves={this.state.allMoves}
         />
         <Flex
           p={2}
@@ -608,7 +629,7 @@ export default class GamePlayer extends React.Component {
           :
             <></>
           }
-          {this.state.check && !this.state.checkmate ?
+          {this.state.check && !this.state.checkmate && !this.props.fog ?
             <Button
               variant='primary'
               disabled
@@ -642,8 +663,8 @@ export default class GamePlayer extends React.Component {
             Undo
           </Button>
           <Button
-            variant={this.state.submittable ? 'primary' : 'outline'}
-            disabled={!this.state.submittable}
+            variant={(this.state.submittable || this.props.fog) ? 'primary' : 'outline'}
+            disabled={!(this.state.submittable || this.props.fog)}
             onClick={() => {
               if((this.props.canControlWhite && this.state.player === 'white') || (this.props.canControlBlack && this.state.player === 'black')) { this.submit(); }
             }}
