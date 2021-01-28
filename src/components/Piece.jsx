@@ -95,6 +95,18 @@ export default class Piece extends React.Component {
       this.draw();
     }
   }
+  shouldComponentUpdate(nextProps) {
+    if(
+      !deepcompare(nextProps.palette, this.props.palette) ||
+      !deepcompare(nextProps.pieceObj, this.props.pieceObj) ||
+      nextProps.x !== this.props.x ||
+      nextProps.y !== this.props.y ||
+      nextProps.selectedPiece !== this.props.selectedPiece
+    ) {
+      return true;
+    }
+    return false;
+  }
   render() {
     return (
       <>

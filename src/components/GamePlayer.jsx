@@ -98,7 +98,7 @@ export default class GamePlayer extends React.Component {
       this.setState({settings: settings});
     }
   }
-  async moveArrowCalc() {
+  moveArrowCalc() {
     var tmpChess = this.chess.copy();
     var chess = new Chess();
     chess.reset(tmpChess.metadata.board.replace(/_/g, ' '));
@@ -455,22 +455,26 @@ export default class GamePlayer extends React.Component {
               this.setState({ drawArrow: false, drawingArrow: false, drawArrows: [] });
             }}
           />
-          <NotationViewer
-            canImport={this.props.canImport}
-            notation={this.state.notation}
-            currentNotation={this.state.currentNotation}
-            player={this.state.player}
-            action={this.state.action}
-            onImport={(input) => { this.import(input); }}
-            onNotationClick={async (input) => {
-              if(this.props.canAnalyze) {
-                this.setState({loading: true});
-                this.chess.import(input, this.state.variant, true);
-                await this.boardSync();
-                this.setState({loading: false});
-              }
-            }}
-          />
+          {!this.props.fog ?
+            <NotationViewer
+              canImport={this.props.canImport}
+              notation={this.state.notation}
+              currentNotation={this.state.currentNotation}
+              player={this.state.player}
+              action={this.state.action}
+              onImport={(input) => { this.import(input); }}
+              onNotationClick={async (input) => {
+                if(this.props.canAnalyze) {
+                  this.setState({loading: true});
+                  this.chess.import(input, this.state.variant, true);
+                  await this.boardSync();
+                  this.setState({loading: false});
+                }
+              }}
+            />
+          :
+            <></>
+          }
           <Settings value={this.state.settings} onChange={(e) => {
             Options.set('settings', e);
             this.setState({settings: e});
