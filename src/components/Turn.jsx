@@ -88,6 +88,28 @@ export default class Turn extends React.Component {
         <Graphics ref={this.turnRef}/>
         {typeof this.props.turnObj !== 'undefined' ?
           this.props.turnObj.pieces.map((e) => {
+            if(this.props.fog) {
+              var visible = e.player === this.props.fogMode;
+              if(!visible) {
+                for(var i = 0;i < this.props.allMoves.length;i++) {
+                  var currMove = this.props.allMoves[i];
+                  if(currMove.player === this.props.fogMode) {
+                    if(
+                      currMove.end.timeline === e.position.timeline &&
+                      currMove.end.turn === e.position.turn &&
+                      currMove.end.rank === e.position.rank &&
+                      currMove.end.file === e.position.file &&
+                      currMove.end.player === e.position.player
+                    ) {
+                      visible = true;
+                    }
+                  }
+                }
+              }
+              if(!visible) {
+                return null;
+              }
+            }
             var x = this.props.x ? this.props.x : 0;
             var y = this.props.y ? this.props.y : 0;
             return (

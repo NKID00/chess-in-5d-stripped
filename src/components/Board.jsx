@@ -210,6 +210,9 @@ export default class Board extends React.Component {
                         turnLabel={this.props.turnLabel}
                         boardLabel={this.props.boardLabel}
                         drawArrow={this.props.drawArrow}
+                        fog={this.props.fog}
+                        fogMode={this.props.fogMode}
+                        allMoves={this.props.allMoves}
                       />
                     );
                   })
@@ -255,7 +258,7 @@ export default class Board extends React.Component {
                 :
                   <></>
                 }
-                {Array.isArray(this.props.checks) ?
+                {!this.props.fog && Array.isArray(this.props.checks) ?
                   this.props.checks.filter((e2) => {
                     return this.props.boardObj.timelines.filter((e) => { return e.timeline === e2.start.timeline; }).filter((e3) => {
                       return e3.turns.filter((e4) => { return e4.turn === e2.start.turn && e4.player === e2.start.player; }).length > 0;

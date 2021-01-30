@@ -9,6 +9,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import GamePlayer from 'components/GamePlayer';
 import LinkButton from 'components/LinkButton';
 import ImportBox from 'components/ImportBox';
+import { decompressLink } from 'components/LinkCompression';
 
 class LocalAnalyzer extends React.Component {
   state = {
@@ -18,9 +19,7 @@ class LocalAnalyzer extends React.Component {
     open: true
   };
   componentDidMount() {
-    var url = new URLSearchParams(this.props.location.search);
-    var importStr = url.get('import');
-    this.setState({import: importStr});
+    this.setState({import: decompressLink(window.location.href) });
   }
   render() {
     return (
@@ -51,10 +50,10 @@ class LocalAnalyzer extends React.Component {
                 onChange={(e) => { this.setState({variant: e.target.value}); }}
               >
                 <MenuItem value='standard'>Standard</MenuItem>
-                <MenuItem value='defended_pawn'>Defended Pawn</MenuItem>
-                <MenuItem value='half_reflected'>Half Reflected</MenuItem>
+                <MenuItem value='defended pawn'>Defended Pawn</MenuItem>
+                <MenuItem value='half reflected'>Half Reflected</MenuItem>
                 <MenuItem value='princess'>Princess</MenuItem>
-                <MenuItem value='turn_zero'>Turn Zero</MenuItem>
+                <MenuItem value='turn zero'>Turn Zero</MenuItem>
               </Select>
             </Flex>
             <Text p={2} fontWeight='bold'>Import</Text>

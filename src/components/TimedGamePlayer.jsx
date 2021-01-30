@@ -128,7 +128,7 @@ export default class TimedGamePlayer extends React.Component {
             <Text p={2} fontWeight='bold'>Settings</Text>
             <Box mx='auto' />
           </Flex>
-          <Box width={1} px={2} py={5} sx={{overflowY: 'auto', height: '100%'}}>
+          <Box width={1} px={2} py={5} sx={{overflow: 'auto', height: '100%'}}>
             {this.props.modalChildren}
             <Flex>
               <Text p={2} fontWeight='bold'>Variant</Text>
@@ -138,10 +138,10 @@ export default class TimedGamePlayer extends React.Component {
                 onChange={(e) => { this.setState({variant: e.target.value, variantLoaded: false }); }}
               >
                 <MenuItem value='standard'>Standard</MenuItem>
-                <MenuItem value='defended_pawn'>Defended Pawn</MenuItem>
-                <MenuItem value='half_reflected'>Half Reflected</MenuItem>
+                <MenuItem value='defended pawn'>Defended Pawn</MenuItem>
+                <MenuItem value='half reflected'>Half Reflected</MenuItem>
                 <MenuItem value='princess'>Princess</MenuItem>
-                <MenuItem value='turn_zero'>Turn Zero</MenuItem>
+                <MenuItem value='turn zero'>Turn Zero</MenuItem>
               </Select>
             </Flex>
             <Flex>
@@ -298,6 +298,14 @@ export default class TimedGamePlayer extends React.Component {
               this.setState({ start: false, ended: true, winner: win.player === 'white' ? 'black' : 'white' });
             }
           }}
+          onFogEnd={(player) => {
+            if(typeof this.props.onFogEnd === 'function') {
+              this.props.onFogEnd(player);
+            }
+            if(!this.props.overrideEnd) {
+              this.setState({ start: false, ended: true, winner: player === 'white' ? 'white' : 'black' });
+            }
+          }}
           onMove={async (moveObj) => {
             if(typeof this.props.onMove === 'function') {
               this.props.onMove(moveObj);
@@ -334,6 +342,7 @@ export default class TimedGamePlayer extends React.Component {
               this.props.onImport(input);
             }
           }}
+          fog={this.props.fog}
         >
           {this.state.timed ?
             <ClockDisplay
