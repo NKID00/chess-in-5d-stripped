@@ -86,26 +86,12 @@ export default class Piece extends React.Component {
   }
   componentDidUpdate(prevProps) {
     if(
-      !deepcompare(prevProps.palette, this.props.palette) ||
-      !deepcompare(prevProps.pieceObj, this.props.pieceObj) ||
       prevProps.x !== this.props.x ||
       prevProps.y !== this.props.y ||
       prevProps.selectedPiece !== this.props.selectedPiece
     ) {
       this.draw();
     }
-  }
-  shouldComponentUpdate(nextProps) {
-    if(
-      !deepcompare(nextProps.palette, this.props.palette) ||
-      !deepcompare(nextProps.pieceObj, this.props.pieceObj) ||
-      nextProps.x !== this.props.x ||
-      nextProps.y !== this.props.y ||
-      nextProps.selectedPiece !== this.props.selectedPiece
-    ) {
-      return true;
-    }
-    return false;
   }
   render() {
     return (

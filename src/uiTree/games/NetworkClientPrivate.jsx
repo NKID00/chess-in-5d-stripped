@@ -193,6 +193,7 @@ class NetworkClientPrivate extends React.Component {
         variant={this.state.variant}
         start={this.state.start}
         ended={this.state.ended}
+        timed={this.state.timed}
         disableTimed
         startingDuration={this.state.startingDuration}
         perActionFlatIncrement={this.state.perActionFlatIncrement}

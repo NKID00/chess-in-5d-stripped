@@ -65,14 +65,14 @@ class LocalComputer extends React.Component {
     selectedComputer: 'white',
     botFunc: defaultBot
   };
-  async compute() {
+  compute() {
     if(!this.state.ended) {
       if(this.state.debug) {
         try {
           var botFunc = new Function('Chess', 'chessInstance', 'GPU', 'global', 'return ' + this.state.botFunc)(); // eslint-disable-line no-new-func
-          var action = botFunc(Chess, new Chess(await this.timedGameRef.current.gameRef.current.chess.exportFunc()), undefined, this.botGlobal);
+          var action = botFunc(Chess, (new Chess()).state(this.timedGameRef.current.gameRef.current.chess.state()), undefined, this.botGlobal);
           for(var i = 0;i < action.moves.length;i++) {
-            await this.timedGameRef.current.gameRef.current.move(action.moves[i]);
+            this.timedGameRef.current.gameRef.current.move(action.moves[i]);
           }
           window.setTimeout(() => {
             this.timedGameRef.current.gameRef.current.submit();
@@ -85,9 +85,9 @@ class LocalComputer extends React.Component {
         }
       }
       else {
-        bw.compute(await this.timedGameRef.current.gameRef.current.chess.exportFunc('notation'), this.state.botFunc).then(async (action) => {
+        bw.compute(this.timedGameRef.current.gameRef.current.chess.state(), this.state.botFunc).then(async (action) => {
           for(var i = 0;i < action.moves.length;i++) {
-            await this.timedGameRef.current.gameRef.current.move(action.moves[i]);
+            this.timedGameRef.current.gameRef.current.move(action.moves[i]);
           }
           window.setTimeout(() => {
             this.timedGameRef.current.gameRef.current.submit();
@@ -101,7 +101,7 @@ class LocalComputer extends React.Component {
       }
     }
   }
-  async componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps, prevState) {
     if(prevState.selectedComputer !== this.state.selectedComputer) {
       if(this.state.selectedComputer === 'random') {
         this.setState({computer: Math.random() > 0.5 ? 'white' : 'black'});
@@ -111,7 +111,7 @@ class LocalComputer extends React.Component {
       }
     }
     if(!prevState.start && this.state.start) {
-      if(await this.timedGameRef.current.gameRef.current.chess.player() === this.state.computer) {
+      if(this.timedGameRef.current.gameRef.current.chess.player === this.state.computer) {
         this.compute();
       }
     }
@@ -154,8 +154,8 @@ class LocalComputer extends React.Component {
           onEnd={(win) => {
             this.setState({ start: false, ended: true });
           }}
-          onSubmit={async () => {
-            if(await this.timedGameRef.current.gameRef.current.chess.player() === this.state.computer) {
+          onSubmit={() => {
+            if(this.timedGameRef.current.gameRef.current.chess.player === this.state.computer) {
               this.compute();
             }
           }}
