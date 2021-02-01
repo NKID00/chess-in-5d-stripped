@@ -7,6 +7,8 @@ import LocalComputer from 'uiTree/games/LocalComputer';
 import LocalComputerOnly from 'uiTree/games/LocalComputerOnly';
 import NetworkHostPrivate from 'uiTree/games/NetworkHostPrivate';
 import NetworkClientPrivate from 'uiTree/games/NetworkClientPrivate';
+import NetworkSpectateClient from 'uiTree/games/NetworkSpectateClient';
+import NetworkPlayClient from 'uiTree/games/NetworkPlayClient';
 
 export default class Game extends React.Component {
   render() {
@@ -29,6 +31,12 @@ export default class Game extends React.Component {
         </Route>
         <Route exact path='/network/game/client'>
           <NetworkClientPrivate />
+        </Route>
+        <Route exact path='/network/server/spectate/:id'>
+          <NetworkSpectateClient />
+        </Route>
+        <Route exact path='/network/server/play/:id'>
+          <NetworkPlayClient />
         </Route>
       </Switch>
     );

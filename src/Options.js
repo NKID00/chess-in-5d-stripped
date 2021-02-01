@@ -32,9 +32,8 @@ const getDefault = (str) => {
   var defaultObj = {};
   if(str === 'server') {
     defaultObj = {
-      url: 'server.chessin5d.net',
-      key: 'ff104801-d3da-49b5-ae3c-11a3198f6c22',
-      jwt: ''
+      url: 'https://server.chessin5d.net',
+      key: 'ff104801-d3da-49b5-ae3c-11a3198f6c22'
     };
   }
   else if(str === 'peerjs') {
@@ -50,7 +49,9 @@ const getDefault = (str) => {
   }
   else if(str === 'name') {
     defaultObj = {
-      username: 'Player ' + Math.round(Math.random() * 9999).toFixed()
+      username: 'player_' + Math.round(Math.random() * 9999).toFixed(),
+      token: '',
+      tokenCheck: 0
     };
   }
   else if(str === 'sound') {
@@ -80,7 +81,7 @@ const getDefault = (str) => {
   return defaultObj;
 };
 
-const get = (str) => {
+const get = (str, corrections = true) => {
   var res = store.get(str);
   var defaultObj = getDefault(str);
   if(res) {
@@ -90,12 +91,31 @@ const get = (str) => {
     res = defaultObj;
   }
   store.set(str, res);
+  if(corrections) {
+    if(str === 'name') {
+      correctName();
+    }
+  }
   return res;
 };
 
 const set = (str, data) => {
-  store.set(str, data);
+  store.set(str, Object.assign(get(str), data));
 };
+
+const logout = () => {
+  store.set('name', Object.assign(get('name'), {
+    token: '',
+    tokenCheck: 0
+  }));
+}
+
+const correctName = () => {
+  var data = get('name', false);
+  store.set('name', Object.assign(data, {
+    username: data.username.toLocaleLowerCase().replace(/\s+/g,'_')
+  }));
+}
 
 const reset = () => {
   store.clearAll();
@@ -112,5 +132,6 @@ export default {
   reset: reset,
   resetPalette: resetPalette,
   get: get,
-  set: set
+  set: set,
+  logout: logout
 };
