@@ -68,14 +68,11 @@ export default class Settings extends React.Component {
     }
   }
   visibilityListener() {
-    const state = document.visibilityState;
-    if(state === 'hidden') {
-      this.setState({ active: false });
-      if(typeof this.props.onArrowOn === 'function') {
-        this.props.onArrowOff();
-      }
-      this.isDown = false;
+    this.setState({ active: false });
+    if(typeof this.props.onArrowOn === 'function') {
+      this.props.onArrowOff();
     }
+    this.isDown = false;
   }
   componentDidMount() {
     this.shortcutsDown = this.shortcutsDown.bind(this);

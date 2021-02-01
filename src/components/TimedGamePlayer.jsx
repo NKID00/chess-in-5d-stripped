@@ -27,10 +27,10 @@ export default class TimedGamePlayer extends React.Component {
     variantLoaded: false
   };
   lastUpdate = Date.now();
-  async update() {
+  update() {
     if(this.state.start && this.gameRef.current && this.state.timed) {
       if(!this.gameRef.current.state.loading) {
-        if((await this.gameRef.current.chess.player()) === 'white') {
+        if((this.gameRef.current.chess.player) === 'white') {
           this.setState({
             whiteDurationLeft: this.state.whiteDurationLeft - (Date.now() - this.lastUpdate)/1000
           });
@@ -130,114 +130,120 @@ export default class TimedGamePlayer extends React.Component {
           </Flex>
           <Box width={1} px={2} py={5} sx={{overflow: 'auto', height: '100%'}}>
             {this.props.modalChildren}
-            <Flex>
-              <Text p={2} fontWeight='bold'>Variant</Text>
-              <Select
-                value={this.props.variant ? this.props.variant : this.state.variant}
-                disabled={this.props.disableVariant}
-                onChange={(e) => { this.setState({variant: e.target.value, variantLoaded: false }); }}
-              >
-                <MenuItem value='standard'>Standard</MenuItem>
-                <MenuItem value='defended pawn'>Defended Pawn</MenuItem>
-                <MenuItem value='half reflected'>Half Reflected</MenuItem>
-                <MenuItem value='princess'>Princess</MenuItem>
-                <MenuItem value='turn zero'>Turn Zero</MenuItem>
-              </Select>
-            </Flex>
-            <Flex>
-              <Text p={2} fontWeight='bold'>Timed Game</Text>
-              <Checkbox color='primary'
-                checked={this.state.timed}
-                disabled={this.props.disableTimed}
-                onChange={(e) => { this.setState({timed: e.target.checked}); }}
-              />
-            </Flex>
-            {this.state.timed ?
+            {!this.props.hideAll ?
               <>
-                <Text p={2} fontWeight='bold'>Initial Duration</Text>
                 <Flex>
-                  <Box width={[1/2, 1/3, 1/4]} p={2}>
-                    <TextField
-                      fullWidth
-                      label='Minutes'
-                      type='number'
-                      disabled={this.props.disableTimed}
-                      value={Math.floor(this.state.startingDuration/60)}
-                      onChange={(e) => {
-                        this.setState({ startingDuration: Number(e.target.value) * 60 + (this.state.startingDuration % 60) });
-                      }}
-                    />
-                  </Box>
-                  <Box width={[1/2, 1/3, 1/4]} p={2}>
-                    <TextField
-                      fullWidth
-                      label='Seconds'
-                      type='number'
-                      disabled={this.props.disableTimed}
-                      value={this.state.startingDuration % 60}
-                      onChange={(e) => {
-                        this.setState({ startingDuration: Number(e.target.value) + Math.floor(this.state.startingDuration/60) * 60 });
-                      }}
-                    />
-                  </Box>
+                  <Text p={2} fontWeight='bold'>Variant</Text>
+                  <Select
+                    value={this.props.variant ? this.props.variant : this.state.variant}
+                    disabled={this.props.disableVariant}
+                    onChange={(e) => { this.setState({variant: e.target.value, variantLoaded: false }); }}
+                  >
+                    <MenuItem value='standard'>Standard</MenuItem>
+                    <MenuItem value='defended pawn'>Defended Pawn</MenuItem>
+                    <MenuItem value='half reflected'>Half Reflected</MenuItem>
+                    <MenuItem value='princess'>Princess</MenuItem>
+                    <MenuItem value='turn zero'>Turn Zero</MenuItem>
+                  </Select>
                 </Flex>
-                <Text p={2} fontWeight='bold'>Per Action Increment (Flat)</Text>
                 <Flex>
-                  <Box width={[1/2, 1/3, 1/4]} p={2}>
-                    <TextField
-                      fullWidth
-                      label='Minutes'
-                      type='number'
-                      disabled={this.props.disableTimed}
-                      value={Math.floor(this.state.perActionFlatIncrement/60)}
-                      onChange={(e) => {
-                        this.setState({ perActionFlatIncrement: Number(e.target.value) * 60 + (this.state.perActionFlatIncrement % 60) });
-                      }}
-                    />
-                  </Box>
-                  <Box width={[1/2, 1/3, 1/4]} p={2}>
-                    <TextField
-                      fullWidth
-                      label='Seconds'
-                      type='number'
-                      disabled={this.props.disableTimed}
-                      value={this.state.perActionFlatIncrement % 60}
-                      onChange={(e) => {
-                        this.setState({ perActionFlatIncrement: Number(e.target.value) + Math.floor(this.state.perActionFlatIncrement/60) * 60 });
-                      }}
-                    />
-                  </Box>
+                  <Text p={2} fontWeight='bold'>Timed Game</Text>
+                  <Checkbox color='primary'
+                    checked={this.state.timed}
+                    disabled={this.props.disableTimed}
+                    onChange={(e) => { this.setState({timed: e.target.checked}); }}
+                  />
                 </Flex>
-                <Text p={2} fontWeight='bold'>Per Action Increment (Per Present Timeline)</Text>
-                <Flex>
-                  <Box width={[1/2, 1/3, 1/4]} p={2}>
-                    <TextField
-                      fullWidth
-                      label='Minutes'
-                      type='number'
-                      disabled={this.props.disableTimed}
-                      value={Math.floor(this.state.perActionTimelineIncrement/60)}
-                      onChange={(e) => {
-                        this.setState({ perActionTimelineIncrement: Number(e.target.value) * 60 + (this.state.perActionTimelineIncrement % 60) });
-                      }}
-                    />
-                  </Box>
-                  <Box width={[1/2, 1/3, 1/4]} p={2}>
-                    <TextField
-                      fullWidth
-                      label='Seconds'
-                      type='number'
-                      disabled={this.props.disableTimed}
-                      value={this.state.perActionTimelineIncrement % 60}
-                      onChange={(e) => {
-                        this.setState({ perActionTimelineIncrement: Number(e.target.value) + Math.floor(this.state.perActionTimelineIncrement/60) * 60 });
-                      }}
-                    />
-                  </Box>
-                </Flex>
+                {this.state.timed ?
+                  <>
+                    <Text p={2} fontWeight='bold'>Initial Duration</Text>
+                    <Flex>
+                      <Box width={[1/2, 1/3, 1/4]} p={2}>
+                        <TextField
+                          fullWidth
+                          label='Minutes'
+                          type='number'
+                          disabled={this.props.disableTimed}
+                          value={Math.floor(this.state.startingDuration/60)}
+                          onChange={(e) => {
+                            this.setState({ startingDuration: Number(e.target.value) * 60 + (this.state.startingDuration % 60) });
+                          }}
+                        />
+                      </Box>
+                      <Box width={[1/2, 1/3, 1/4]} p={2}>
+                        <TextField
+                          fullWidth
+                          label='Seconds'
+                          type='number'
+                          disabled={this.props.disableTimed}
+                          value={this.state.startingDuration % 60}
+                          onChange={(e) => {
+                            this.setState({ startingDuration: Number(e.target.value) + Math.floor(this.state.startingDuration/60) * 60 });
+                          }}
+                        />
+                      </Box>
+                    </Flex>
+                    <Text p={2} fontWeight='bold'>Per Action Increment (Flat)</Text>
+                    <Flex>
+                      <Box width={[1/2, 1/3, 1/4]} p={2}>
+                        <TextField
+                          fullWidth
+                          label='Minutes'
+                          type='number'
+                          disabled={this.props.disableTimed}
+                          value={Math.floor(this.state.perActionFlatIncrement/60)}
+                          onChange={(e) => {
+                            this.setState({ perActionFlatIncrement: Number(e.target.value) * 60 + (this.state.perActionFlatIncrement % 60) });
+                          }}
+                        />
+                      </Box>
+                      <Box width={[1/2, 1/3, 1/4]} p={2}>
+                        <TextField
+                          fullWidth
+                          label='Seconds'
+                          type='number'
+                          disabled={this.props.disableTimed}
+                          value={this.state.perActionFlatIncrement % 60}
+                          onChange={(e) => {
+                            this.setState({ perActionFlatIncrement: Number(e.target.value) + Math.floor(this.state.perActionFlatIncrement/60) * 60 });
+                          }}
+                        />
+                      </Box>
+                    </Flex>
+                    <Text p={2} fontWeight='bold'>Per Action Increment (Per Present Timeline)</Text>
+                    <Flex>
+                      <Box width={[1/2, 1/3, 1/4]} p={2}>
+                        <TextField
+                          fullWidth
+                          label='Minutes'
+                          type='number'
+                          disabled={this.props.disableTimed}
+                          value={Math.floor(this.state.perActionTimelineIncrement/60)}
+                          onChange={(e) => {
+                            this.setState({ perActionTimelineIncrement: Number(e.target.value) * 60 + (this.state.perActionTimelineIncrement % 60) });
+                          }}
+                        />
+                      </Box>
+                      <Box width={[1/2, 1/3, 1/4]} p={2}>
+                        <TextField
+                          fullWidth
+                          label='Seconds'
+                          type='number'
+                          disabled={this.props.disableTimed}
+                          value={this.state.perActionTimelineIncrement % 60}
+                          onChange={(e) => {
+                            this.setState({ perActionTimelineIncrement: Number(e.target.value) + Math.floor(this.state.perActionTimelineIncrement/60) * 60 });
+                          }}
+                        />
+                      </Box>
+                    </Flex>
+                  </>
+                :
+                <></>
+                }
               </>
             :
-             <></>
+              <></>
             }
           </Box>
           <Flex
@@ -306,33 +312,33 @@ export default class TimedGamePlayer extends React.Component {
               this.setState({ start: false, ended: true, winner: player === 'white' ? 'white' : 'black' });
             }
           }}
-          onMove={async (moveObj) => {
+          onMove={(moveObj) => {
             if(typeof this.props.onMove === 'function') {
               this.props.onMove(moveObj);
             }
           }}
-          onUndo={async () => {
+          onUndo={() => {
             if(typeof this.props.onUndo === 'function') {
               this.props.onUndo();
             }
           }}
-          onSubmit={async () => {
+          onSubmit={() => {
             if(typeof this.props.onSubmit === 'function') {
               this.props.onSubmit();
             }
             if(!this.props.overrideSubmit) {
-              if(await this.gameRef.current.chess.player() === 'white') {
+              if(this.gameRef.current.chess.player === 'white') {
                 this.setState({
                   whiteDurationLeft: this.state.whiteDurationLeft +
                   this.state.perActionFlatIncrement +
-                  this.state.perActionTimelineIncrement * (await this.gameRef.current.chess.board()).timelines.filter((e) => { return e.present; }).length
+                  this.state.perActionTimelineIncrement * this.gameRef.current.chess.board.timelines.filter((e) => { return e.present; }).length
                 });
               }
               else {
                 this.setState({
                   blackDurationLeft: this.state.blackDurationLeft +
                   this.state.perActionFlatIncrement +
-                  this.state.perActionTimelineIncrement * (await this.gameRef.current.chess.board()).timelines.filter((e) => { return e.present; }).length
+                  this.state.perActionTimelineIncrement * this.gameRef.current.chess.board.timelines.filter((e) => { return e.present; }).length
                 });
               }
             }

@@ -14,7 +14,7 @@ class LoginRedirect extends React.Component {
   async check() {
     var token = Options.get('name').token;
     var lastCheck = Options.get('name').tokenCheck;
-    if(Date.now() >= lastCheck + 60000 && token.length > 0) {
+    if(Date.now() >= lastCheck + 300000 && token.length > 0) {
       axios.post(Options.get('server').url + '/users/' + Options.get('name').username + '/update', {}, {
         headers: {
           'Authorization': token

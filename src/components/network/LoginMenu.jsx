@@ -16,7 +16,7 @@ const axios = require('axios');
 class LoginMenu extends React.Component {
   state = {
     registerMode: false,
-    username: Options.get('name').username,
+    username: Options.get('name').username.toLocaleLowerCase().replace(/\s+/g,'_'),
     password: '',
     bio: '',
     fullname: '',
@@ -70,9 +70,9 @@ class LoginMenu extends React.Component {
           fullname: this.state.fullname,
           bio: this.state.bio,
           country: countries.getAlpha3Code(this.state.country, 'en'),
-          bot: Options.get('server').key
+          token: Options.get('server').key
         }).then((res) => {
-          Options.set('name', { token: res.data });
+          Options.set('name', { username: this.state.username, token: res.data });
           this.setState({ redirect: true });
           if(typeof this.props.onLogin === 'function') {
             this.props.onLogin();
@@ -140,8 +140,8 @@ class LoginMenu extends React.Component {
                 error={this.state.invalidUsername}
                 value={this.state.username}
                 onChange={(e) => {
-                  this.setState({ username: e.target.value });
-                  Options.set('name', {username: e.target.value});
+                  Options.set('name', {username: e.target.value.toLocaleLowerCase().replace(/\s+/g,'_')});
+                  this.setState({ username: e.target.value.toLocaleLowerCase().replace(/\s+/g,'_') });
                 }}
                 helperText={this.state.invalidUsername ?
                   this.state.registerMode ? 'Username already taken!' : 'User does not exist!'

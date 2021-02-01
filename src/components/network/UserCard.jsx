@@ -96,6 +96,9 @@ export default class UserCard extends React.Component {
                 {this.props.user.bio}
               </Typography>
             </Grid>
+            <Grid item xs={12}>
+              {this.props.children}
+            </Grid>
           </Grid>
         </AccordionDetails>
       </Accordion>

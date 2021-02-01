@@ -49,7 +49,7 @@ const getDefault = (str) => {
   }
   else if(str === 'name') {
     defaultObj = {
-      username: 'Player ' + Math.round(Math.random() * 9999).toFixed(),
+      username: 'player_' + Math.round(Math.random() * 9999).toFixed(),
       token: '',
       tokenCheck: 0
     };
@@ -81,7 +81,7 @@ const getDefault = (str) => {
   return defaultObj;
 };
 
-const get = (str) => {
+const get = (str, corrections = true) => {
   var res = store.get(str);
   var defaultObj = getDefault(str);
   if(res) {
@@ -91,6 +91,11 @@ const get = (str) => {
     res = defaultObj;
   }
   store.set(str, res);
+  if(corrections) {
+    if(str === 'name') {
+      correctName();
+    }
+  }
   return res;
 };
 
@@ -102,6 +107,13 @@ const logout = () => {
   store.set('name', Object.assign(get('name'), {
     token: '',
     tokenCheck: 0
+  }));
+}
+
+const correctName = () => {
+  var data = get('name', false);
+  store.set('name', Object.assign(data, {
+    username: data.username.toLocaleLowerCase().replace(/\s+/g,'_')
   }));
 }
 
