@@ -123,7 +123,7 @@ export default class Turn extends React.Component {
                 timelineObj={this.props.timelineObj}
                 turnObj={this.props.turnObj}
                 pieceObj={e}
-                key={e.piece + e.position.coordinate}
+                key={this.props.turnObj.turn + ':' + this.props.turnObj.player + ':' + e.piece + e.position.coordinate}
                 onPieceClick={(piece) => {
                   if(typeof this.props.onPieceClick === 'function') {
                     this.props.onPieceClick(piece);

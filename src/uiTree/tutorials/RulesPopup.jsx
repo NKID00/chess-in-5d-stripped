@@ -3,7 +3,7 @@ import React from 'react';
 import Modal from 'react-modal';
 import { Box, Flex, Text } from 'rebass';
 import LinkButton from 'components/LinkButton';
-import LogoIcon from 'assets/logo.svg';
+import MenuBar from 'components/MenuBar';
 
 import ReactMarkdown from 'react-markdown';
 import RulesText from 'components/RulesText.md';
@@ -43,20 +43,13 @@ export default class RulesPopup extends React.Component {
   render() {
     return (
       <>
-        <Flex
-          p={2}
-          color='white'
-          bg='black'
-          alignItems='center'
-          width={1}
-        >
-          <img src={LogoIcon} alt='Logo' />
-          <Text p={2} fontWeight='bold'>Chess in 5D</Text>
-          <Box mx='auto' />
-        </Flex>
+        <MenuBar />
         <Modal
           isOpen={true}
-          style={{content: {padding: '0px'}}}
+          style={{
+            overlay: {backgroundColor: 'rgba(0,0,0,0)'},
+            content: {padding: '0px'}
+          }}
         >
           <Flex
             p={2}

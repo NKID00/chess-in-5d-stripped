@@ -207,6 +207,10 @@ export default class GamePlayer extends React.Component {
     }
     return newBoardObj;
   }
+  async chessState(state) {
+    this.chess.state(state);
+    await this.boardSync();
+  }
   async boardSync() {
     var obj = {};
     obj.submittable = this.chess.submittable(true);
