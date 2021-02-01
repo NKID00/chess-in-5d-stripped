@@ -26,7 +26,10 @@ class LocalAnalyzer extends React.Component {
       <>
         <Modal
           isOpen={this.state.open && ((typeof this.state.import === 'string' && this.state.import.length <= 0) || typeof this.state.import !== 'string')}
-          style={{content: {padding: '0px'}}}
+          style={{
+            overlay: {backgroundColor: 'rgba(0,0,0,0)'},
+            content: {padding: '0px'}
+          }}
         >
           <Flex
             p={2}
