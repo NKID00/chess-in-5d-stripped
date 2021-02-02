@@ -118,7 +118,7 @@ class NetworkPlayClient extends React.Component {
         }
       }
       if(this.refresh) {
-        window.setTimeout(this.getSession.bind(this), 500);
+        window.setTimeout(this.getSession.bind(this), 1000);
       }
     }
     catch(err) {
