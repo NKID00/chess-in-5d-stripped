@@ -37,7 +37,7 @@
       "icon": "public/android-chrome-512x512.png",
       "target": [
         {
-          "target": "nsisWeb",
+          "target": "nsis-web",
           "arch": [
             "x64",
             "ia32"
@@ -45,7 +45,7 @@
         }
       ]
     },
-    "nsis": {
+    "nsisWeb": {
       "oneClick": false,
       "allowToChangeInstallationDirectory": true
     },
