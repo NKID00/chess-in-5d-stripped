@@ -4,6 +4,7 @@ import { withRouter } from 'react-router';
 import { Box, Flex, Text } from 'rebass';
 import { withSnackbar } from 'notistack';
 import TextField from '@material-ui/core/TextField';
+import Checkbox from '@material-ui/core/Checkbox';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import Peer from 'peerjs';
@@ -35,7 +36,8 @@ class NetworkClientPrivate extends React.Component {
     chat: [],
     heartbeat: 0,
     winner: '',
-    variant: 'standard'
+    variant: 'standard',
+    fog: false
   };
   sendChat(str) {
     if(this.state.clientConnection !== null) {
@@ -85,6 +87,9 @@ class NetworkClientPrivate extends React.Component {
           this.state.clientConnection.send({type: 'name', name: this.state.clientName});
         }
         this.setState(Object.assign(data.state, {clientName: this.state.clientName}));
+      }
+      else if(data.type === 'fog') {
+        this.setState({ start: false, ended: true, winner: this.state.host === 'white' ? 'black' : 'white', fog: false });
       }
       else if(data.type === 'chat') {
         var chat = this.state.chat;
@@ -188,6 +193,7 @@ class NetworkClientPrivate extends React.Component {
         variant={this.state.variant}
         start={this.state.start}
         ended={this.state.ended}
+        timed={this.state.timed}
         disableTimed
         startingDuration={this.state.startingDuration}
         perActionFlatIncrement={this.state.perActionFlatIncrement}
@@ -195,6 +201,7 @@ class NetworkClientPrivate extends React.Component {
         whiteDurationLeft={this.state.whiteDurationLeft}
         blackDurationLeft={this.state.blackDurationLeft}
         backLink='/network'
+        fog={this.state.fog}
         onBack={() => {
           if(this.state.clientConnection !== null) {
             this.state.clientConnection.close();
@@ -261,6 +268,13 @@ class NetworkClientPrivate extends React.Component {
             :
               <></>
             }
+            <Flex>
+              <Text p={2} fontWeight='bold'>Fog of War</Text>
+              <Checkbox color='primary'
+                checked={this.state.fog}
+                disabled
+              />
+            </Flex>
           </>
         }
         disableStart={this.state.clientId === '' || this.state.hostId === '' || this.state.connecting || this.state.clientConnection !== null}
@@ -299,6 +313,14 @@ class NetworkClientPrivate extends React.Component {
         }}
         onEnd={(win) => {
           this.setState({ start: false, ended: true });
+        }}
+        onFogEnd={(player) => {
+          if(this.state.clientConnection !== null) {
+            this.state.clientConnection.send({type: 'fog', name: player});
+          }
+          window.setTimeout(() => {
+            this.setState({ start: false, ended: true, fog: false });
+          }, 1000);
         }}
         startTitle='Connect'
       >

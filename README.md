@@ -4,6 +4,9 @@
 
 Open source implementation of '5D Chess With Multiverse Time Travel'.
 
+[![Pipeline Status](https://gitlab.com/alexbay218/chess-in-5d/badges/master/pipeline.svg)](https://gitlab.com/alexbay218/chess-in-5d/-/commits/master)
+[![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://gitlab.com/alexbay218/chess-in-5d)
+
 Chess In 5D aims to reimplement the rules as found in the original.
 This project looks to implement additional features also not found in the game:
 

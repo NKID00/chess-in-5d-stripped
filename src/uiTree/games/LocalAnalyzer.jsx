@@ -26,7 +26,10 @@ class LocalAnalyzer extends React.Component {
       <>
         <Modal
           isOpen={this.state.open && ((typeof this.state.import === 'string' && this.state.import.length <= 0) || typeof this.state.import !== 'string')}
-          style={{content: {padding: '0px'}}}
+          style={{
+            overlay: {backgroundColor: 'rgba(0,0,0,0)'},
+            content: {padding: '0px'}
+          }}
         >
           <Flex
             p={2}
@@ -47,10 +50,10 @@ class LocalAnalyzer extends React.Component {
                 onChange={(e) => { this.setState({variant: e.target.value}); }}
               >
                 <MenuItem value='standard'>Standard</MenuItem>
-                <MenuItem value='defended_pawn'>Defended Pawn</MenuItem>
-                <MenuItem value='half_reflected'>Half Reflected</MenuItem>
+                <MenuItem value='defended pawn'>Defended Pawn</MenuItem>
+                <MenuItem value='half reflected'>Half Reflected</MenuItem>
                 <MenuItem value='princess'>Princess</MenuItem>
-                <MenuItem value='turn_zero'>Turn Zero</MenuItem>
+                <MenuItem value='turn zero'>Turn Zero</MenuItem>
               </Select>
             </Flex>
             <Text p={2} fontWeight='bold'>Import</Text>
