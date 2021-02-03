@@ -210,6 +210,7 @@ export default class GamePlayer extends React.Component {
   async chessState(state) {
     this.chess.state(state);
     await this.boardSync();
+    this.getNotation();
   }
   async boardSync() {
     var obj = {};
@@ -329,10 +330,10 @@ export default class GamePlayer extends React.Component {
       this.setState({loading: false});
     }
     if(prevProps.whiteName !== this.props.whiteName && typeof this.props.whiteName === 'string') {
-      this.chess.metadata({white: this.props.whiteName});
+      this.chess.metadata.white = this.props.whiteName;
     }
     if(prevProps.blackName !== this.props.blackName && typeof this.props.blackName === 'string') {
-      this.chess.metadata({black: this.props.blackName});
+      this.chess.metadata.black = this.props.blackName;
     }
   }
   componentWillUnmount() {
@@ -377,7 +378,9 @@ export default class GamePlayer extends React.Component {
   }
   async move(moveObj, unselectPiece = false) {
     this.setState({loading: true});
-    this.chess.move(moveObj);
+    if(!this.props.disableLocal) {
+      this.chess.move(moveObj);
+    }
     if(typeof this.props.onMove === 'function') { this.props.onMove(moveObj); }
     this.setState({highlights: []});
     if(unselectPiece) { this.setState({selectedPiece: null}); }
@@ -390,7 +393,9 @@ export default class GamePlayer extends React.Component {
   }
   async undo() {
     this.setState({loading: true});
-    this.chess.undo();
+    if(!this.props.disableLocal) {
+      this.chess.undo();
+    }
     if(typeof this.props.onUndo === 'function') { this.props.onUndo(); }
     await this.boardSync();
     this.reverseHowl.volume(Options.get('sound').effect);
@@ -401,8 +406,10 @@ export default class GamePlayer extends React.Component {
   }
   async submit() {
     this.setState({loading: true});
-      if(this.state.submittable) {
-      this.chess.submit(true);
+    if(this.state.submittable) {
+      if(!this.props.disableLocal) {
+        this.chess.submit(true);
+      }
       if(typeof this.props.onSubmit === 'function') { this.props.onSubmit(); }
       this.setState({
         importedHistory: this.chess.export('object'),
@@ -420,6 +427,12 @@ export default class GamePlayer extends React.Component {
       }
     }
     this.setState({loading: false});
+  }
+  getNotation() {
+    this.setState({
+      importedHistory: this.chess.export('object'),
+      notation: this.chess.export('5dpgn_active_timeline')
+    });
   }
   async import(input) {
     if(this.props.canImport) {
