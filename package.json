@@ -4,7 +4,7 @@
     "name": "Shaun Wu",
     "email": "alexbay218@gmail.com"
   },
-  "version": "0.3.3",
+  "version": "0.3.4",
   "description": "Open source implementation of '5D Chess With Multiverse Time Travel'.",
   "private": true,
   "main": "public/electron.js",
@@ -14,9 +14,9 @@
     "productName": "Chess In 5D",
     "fileAssociations": [
       {
-        "ext": "c5d",
-        "name": "Chess In 5D Notation File",
-        "description": "Chess In 5D Notation File"
+        "ext": "5dpgn",
+        "name": "5D PGN File",
+        "description": "5D Portable Game Notation File"
       }
     ],
     "files": [
