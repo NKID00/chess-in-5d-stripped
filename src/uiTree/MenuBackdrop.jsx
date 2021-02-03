@@ -10,7 +10,7 @@ export default class MenuBackdrop extends React.Component {
   timer = null;
   state = {
     triggerDate: Date.now(),
-    board: this.chess.board,
+    board: new Chess().board,
     count: 0
   };
   boardSync() {
@@ -19,13 +19,13 @@ export default class MenuBackdrop extends React.Component {
       triggerDate: Date.now()
     });
   }
-  next() {
+  async next() {
     try {
       var moves = this.chess.moves('object', true, true, true);
       if(moves.length > 0) {
         this.chess.move(moves[Math.floor(Math.random() * moves.length)]);
-        if(this.chess.submittable()) {
-          this.chess.submit();
+        if(this.chess.submittable(true)) {
+          this.chess.submit(true);
         }
       }
       else {

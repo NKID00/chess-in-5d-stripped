@@ -64,24 +64,24 @@ class LocalComputerOnly extends React.Component {
     botFunc1: defaultBot,
     botFunc2: defaultBot
   };
-  async compute() {
+  compute() {
     if(!this.state.ended) {
       if(
-        (await this.timedGameRef.current.gameRef.current.chess.player === 'white' && this.state.debug1) ||
-        (await this.timedGameRef.current.gameRef.current.chess.player !== 'white' && this.state.debug2)
+        (this.timedGameRef.current.gameRef.current.chess.player === 'white' && this.state.debug1) ||
+        (this.timedGameRef.current.gameRef.current.chess.player !== 'white' && this.state.debug2)
       ) {
         try {
-          var botFunc = new Function('Chess', 'chessInstance', 'GPU', 'global', 'return ' + (await this.timedGameRef.current.gameRef.current.chess.player === 'white' ? this.state.botFunc1 : this.state.botFunc2))(); // eslint-disable-line no-new-func
-          var action = botFunc(Chess, new Chess(await this.timedGameRef.current.gameRef.current.chess.exportFunc()), undefined, (await this.timedGameRef.current.gameRef.current.chess.player === 'white' ? this.bot1Global : this.bot2Global));
+          var botFunc = new Function('Chess', 'chessInstance', 'GPU', 'global', 'return ' + (this.timedGameRef.current.gameRef.current.chess.player === 'white' ? this.state.botFunc1 : this.state.botFunc2))(); // eslint-disable-line no-new-func
+          var action = botFunc(Chess, (new Chess()).state(this.timedGameRef.current.gameRef.current.chess.state()), undefined, (this.timedGameRef.current.gameRef.current.chess.player === 'white' ? this.bot1Global : this.bot2Global));
           for(var i = 0;i < action.moves.length;i++) {
-            await this.timedGameRef.current.gameRef.current.move(action.moves[i]);
+            this.timedGameRef.current.gameRef.current.move(action.moves[i]);
           }
           window.setTimeout(() => {
             this.timedGameRef.current.gameRef.current.submit();
           }, 250);
         }
         catch(err) {
-          if(await this.timedGameRef.current.gameRef.current.chess.player === 'white') {
+          if(this.timedGameRef.current.gameRef.current.chess.player === 'white') {
             this.props.enqueueSnackbar('White Bot Error, see console for details', {variant: 'error'});
           }
           else {
@@ -92,10 +92,10 @@ class LocalComputerOnly extends React.Component {
         }
       }
       else {
-        if(await this.timedGameRef.current.gameRef.current.chess.player === 'white') {
-          bw1.compute(await this.timedGameRef.current.gameRef.current.chess.exportFunc('notation'), this.state.botFunc1).then(async (action) => {
+        if(this.timedGameRef.current.gameRef.current.chess.player === 'white') {
+          bw1.compute(this.timedGameRef.current.gameRef.current.chess.state(), this.state.botFunc1).then(async (action) => {
             for(var i = 0;i < action.moves.length;i++) {
-              await this.timedGameRef.current.gameRef.current.move(action.moves[i]);
+              this.timedGameRef.current.gameRef.current.move(action.moves[i]);
             }
             window.setTimeout(() => {
               this.timedGameRef.current.gameRef.current.submit();
@@ -108,9 +108,9 @@ class LocalComputerOnly extends React.Component {
           });
         }
         else {
-          bw2.compute(await this.timedGameRef.current.gameRef.current.chess.exportFunc('notation'), this.state.botFunc2).then(async (action) => {
+          bw2.compute(this.timedGameRef.current.gameRef.current.chess.state(), this.state.botFunc2).then(async (action) => {
             for(var i = 0;i < action.moves.length;i++) {
-              await this.timedGameRef.current.gameRef.current.move(action.moves[i]);
+              this.timedGameRef.current.gameRef.current.move(action.moves[i]);
             }
             window.setTimeout(() => {
               this.timedGameRef.current.gameRef.current.submit();

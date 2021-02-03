@@ -15,8 +15,6 @@ import WhiteQueen from 'assets/wQ.png';
 import WhiteKing from 'assets/wK.png';
 import * as PIXI from 'pixi.js-legacy';
 
-const deepcompare = require('deep-equal');
-
 export default class Piece extends React.Component {
   pieceRef = React.createRef();
   highlightRef = React.createRef();
@@ -86,8 +84,6 @@ export default class Piece extends React.Component {
   }
   componentDidUpdate(prevProps) {
     if(
-      !deepcompare(prevProps.palette, this.props.palette) ||
-      !deepcompare(prevProps.pieceObj, this.props.pieceObj) ||
       prevProps.x !== this.props.x ||
       prevProps.y !== this.props.y ||
       prevProps.selectedPiece !== this.props.selectedPiece

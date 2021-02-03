@@ -9,7 +9,7 @@ const tutorialArray = [
 Welcome to the world of Chess in 5D!
 
 Chess in 5D looks to faithfully implement the rules of the game
-'5D Chess with Multidimensional Time Travel' by Connor Peterson.
+'5D Chess With Multiverse Time Travel' by Conor Peterson.
 
 Here in these series of tutorials, we'll be learning how to play the game of Chess in 5D.
 

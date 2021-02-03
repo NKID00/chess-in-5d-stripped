@@ -1,4 +1,5 @@
 import React from 'react';
+import Chess from '5d-chess-js';
 import ChessWorker from 'workerize-loader!components/ChessWorker'; // eslint-disable-line import/no-webpack-loader-syntax
 
 import LinearProgress from '@material-ui/core/LinearProgress';
@@ -20,7 +21,8 @@ const deepcompare = require('deep-equal');
 const deepcopy = require('deep-copy');
 
 export default class GamePlayer extends React.Component {
-  chess = new ChessWorker();
+  chess = new Chess();
+  chessWorker = ChessWorker();
   boardRef = React.createRef();
   pieceHowl = new Howl({
     volume: 0,
@@ -40,6 +42,8 @@ export default class GamePlayer extends React.Component {
   });
   state = {
     selectedPiece: null,
+    allMoves: [],
+    nextMoves: [],
     highlights: [],
     hoverHighlights: [],
     triggerDate: Date.now(),
@@ -80,9 +84,7 @@ export default class GamePlayer extends React.Component {
       }
     }
     if(e.keyCode === 13 || e.keyCode === 70) {
-      if(this.state.submittable) {
-        this.submit();
-      }
+      this.submit();
     }
     if(e.keyCode === 37) {
       this.revert();
@@ -96,18 +98,16 @@ export default class GamePlayer extends React.Component {
       this.setState({settings: settings});
     }
   }
-  async moveArrowCalc() {
-    var actions = (await this.chess.actionHistory());
-    var chess = new ChessWorker();
-    try {
-      await chess.variant((await this.chess.metadata()).variant);
-    }
-    catch(err) {}
+  moveArrowCalc() {
+    var tmpChess = this.chess.copy();
+    var chess = new Chess();
+    chess.reset(tmpChess.metadata.board.replace(/_/g, ' '));
+    var actions = tmpChess.actionHistory;
     var res = [];
-    var newMoveArrow = async (currMove) => {
-      var prevTimelines = ((await chess.board()).timelines);
-      await chess.move(currMove);
-      var newTimelines = ((await chess.board()).timelines);
+    var newMoveArrow = (currMove) => {
+      var prevTimelines = (chess.board.timelines);
+      chess.move(currMove);
+      var newTimelines = (chess.board.timelines);
       if(prevTimelines.length !== newTimelines.length) {
         var newTimeline = newTimelines.filter((e) => { // eslint-disable-line no-loop-func
           return !prevTimelines.map((e2) => { return e2.timeline}).includes(e.timeline);
@@ -123,20 +123,23 @@ export default class GamePlayer extends React.Component {
       var currAction = actions[i];
       for(var j = 0;j < currAction.moves.length;j++) {
         var currMove = currAction.moves[j];
-        await newMoveArrow(currMove);
+        newMoveArrow(currMove);
         res.push(currMove);
       }
-      await chess.submit();
+      chess.submit();
     }
-    var moveBuffer = deepcopy(await this.chess.moveBuffer());
+    var moveBuffer = tmpChess.moveBuffer;
     for(var i = 0;i < moveBuffer.length;i++) { // eslint-disable-line no-redeclare
       var currMove = moveBuffer[i]; // eslint-disable-line no-redeclare
-      await newMoveArrow(currMove);
+      newMoveArrow(currMove);
       res.push(currMove);
     }
     return res;
   }
-  async addCheckGhost(boardObj, checks) {
+  addCheckGhost(boardObj, checks) {
+    if(this.props.fog) {
+      return boardObj;
+    }
     var newBoardObj = deepcopy(boardObj);
     for(var i = 0;this.state.settings.showCheckGhost && i < checks.length;i++) {
       var checksExists = false;
@@ -204,17 +207,22 @@ export default class GamePlayer extends React.Component {
     }
     return newBoardObj;
   }
+  async chessState(state) {
+    this.chess.state(state);
+    await this.boardSync();
+    this.getNotation();
+  }
   async boardSync() {
     var obj = {};
-    obj.submittable = await this.chess.submittable(true);
-    obj.undoable = await this.chess.undoable();
-    obj.player = await this.chess.player();
-    obj.check = await this.chess.inCheck();
-    obj.action = await this.chess.actionNumber();
-    obj.checks = await this.chess.checks();
-    obj.board = await this.addCheckGhost(await this.chess.board(), obj.checks);
+    obj.submittable = this.chess.submittable(true);
+    obj.undoable = this.chess.undoable();
+    obj.player = this.chess.player;
+    obj.check = this.chess.inCheck;
+    obj.action = this.chess.actionNumber;
+    obj.checks = this.chess.checks();
+    obj.board = this.addCheckGhost(this.chess.board, obj.checks);
     obj.triggerDate = Date.now();
-    obj.nextMoves = (await this.chess.moves('object', false, false, true)).filter((e) => {
+    obj.nextMoves = (this.chess.moves('object', false, false, true)).filter((e) => {
       if(e.promotion !== '' && e.promotion !== null) {
         /*
         if(e.promotion === 'K') { return true; }
@@ -227,16 +235,20 @@ export default class GamePlayer extends React.Component {
       }
       return true;
     });
-    obj.moveBuffer = await this.chess.moveBuffer();
-    obj.moveArrows = await this.moveArrowCalc();
-    obj.currentNotation = await this.chess.exportFunc('5dpgn_active_timeline');
-    obj.variant = (await this.chess.metadata()).variant;
-    obj.metadata = await this.chess.metadata();
+    obj.allMoves = this.state.allMoves.slice();
+    for(var i = 0;i < obj.nextMoves.length;i++) {
+      obj.allMoves.push(obj.nextMoves[i]);
+    }
+    obj.moveBuffer = this.chess.moveBuffer;
+    obj.moveArrows = this.moveArrowCalc();
+    obj.currentNotation = this.chess.export('5dpgn_active_timeline');
+    obj.variant = this.chess.metadata.board;
+    obj.metadata = this.chess.metadata;
     this.setState(obj);
     var win = {
-      player: await this.chess.player(),
-      checkmate: await this.chess.inCheckmate(),
-      stalemate: await this.chess.inStalemate()
+      player: this.chess.player,
+      checkmate: this.props.fog ? false : (await this.chessWorker.inCheckmate(this.chess.state())),
+      stalemate: this.chess.inStalemate
     };
     obj = {};
     if(!this.state.ended) {
@@ -303,14 +315,14 @@ export default class GamePlayer extends React.Component {
       this.setState({settings: settings});
     }
     if(prevState.settings.showCheckGhost !== this.state.settings.showCheckGhost) {
-      this.setState({board: await this.addCheckGhost(await this.chess.board(), await this.chess.checks()) });
+      this.setState({board: this.addCheckGhost(this.chess.board, this.chess.checks()) });
     }
     if((prevProps.defaultImport !== this.props.defaultImport) && (typeof this.props.defaultImport === 'string')) {
       this.import(this.props.defaultImport);
     }
     if(prevProps.variant !== this.props.variant && typeof this.props.variant === 'string') {
       this.setState({loading: true});
-      await this.chess.variant(this.props.variant);
+      this.chess.reset(this.props.variant);
       await this.boardSync();
       if(typeof this.props.onVariantLoad === 'function') {
         this.props.onVariantLoad();
@@ -318,10 +330,10 @@ export default class GamePlayer extends React.Component {
       this.setState({loading: false});
     }
     if(prevProps.whiteName !== this.props.whiteName && typeof this.props.whiteName === 'string') {
-      this.chess.metadata({white: this.props.whiteName});
+      this.chess.metadata.white = this.props.whiteName;
     }
     if(prevProps.blackName !== this.props.blackName && typeof this.props.blackName === 'string') {
-      this.chess.metadata({black: this.props.blackName});
+      this.chess.metadata.black = this.props.blackName;
     }
   }
   componentWillUnmount() {
@@ -334,7 +346,7 @@ export default class GamePlayer extends React.Component {
       var newPlayer = this.state.player;
       if(newPlayer === 'white') { newAction--; newPlayer = 'black'; }
       else { newPlayer = 'white'; }
-      await this.chess.importFunc(this.state.importedHistory.filter((e) => {
+      this.chess.import(this.state.importedHistory.filter((e) => {
         return (e.action * 2 + (e.player === 'white' ? 0 : 1)) < (newAction * 2 + (newPlayer === 'white' ? 0 : 1));
       }), this.state.variant, true);
       if(typeof this.props.onRevert === 'function') {
@@ -347,7 +359,7 @@ export default class GamePlayer extends React.Component {
   async forward() {
     if(this.props.canAnalyze) {
       this.setState({loading: true});
-      await this.chess.importFunc(this.state.importedHistory.filter((e) => {
+      this.chess.import(this.state.importedHistory.filter((e) => {
         return (e.action * 2 + (e.player === 'white' ? 0 : 1)) <= (this.state.action * 2 + (this.state.player === 'white' ? 0 : 1));
       }), this.state.variant, true);
       if(typeof this.props.onForward === 'function') {
@@ -366,7 +378,9 @@ export default class GamePlayer extends React.Component {
   }
   async move(moveObj, unselectPiece = false) {
     this.setState({loading: true});
-    await this.chess.move(moveObj, true);
+    if(!this.props.disableLocal) {
+      this.chess.move(moveObj);
+    }
     if(typeof this.props.onMove === 'function') { this.props.onMove(moveObj); }
     this.setState({highlights: []});
     if(unselectPiece) { this.setState({selectedPiece: null}); }
@@ -379,7 +393,9 @@ export default class GamePlayer extends React.Component {
   }
   async undo() {
     this.setState({loading: true});
-    await this.chess.undo();
+    if(!this.props.disableLocal) {
+      this.chess.undo();
+    }
     if(typeof this.props.onUndo === 'function') { this.props.onUndo(); }
     await this.boardSync();
     this.reverseHowl.volume(Options.get('sound').effect);
@@ -390,26 +406,41 @@ export default class GamePlayer extends React.Component {
   }
   async submit() {
     this.setState({loading: true});
-    await this.chess.submit(true);
-    if(typeof this.props.onSubmit === 'function') { this.props.onSubmit(); }
-    this.setState({
-      importedHistory: await this.chess.exportFunc('object'),
-      notation: await this.chess.exportFunc('5dpgn_active_timeline')
-    });
-    await this.boardSync();
-    this.submitHowl.volume(Options.get('sound').effect);
-    if(this.submitHowl.volume() > 0) {
-      this.submitHowl.play();
+    if(this.state.submittable) {
+      if(!this.props.disableLocal) {
+        this.chess.submit(true);
+      }
+      if(typeof this.props.onSubmit === 'function') { this.props.onSubmit(); }
+      this.setState({
+        importedHistory: this.chess.export('object'),
+        notation: this.chess.export('5dpgn_active_timeline')
+      });
+      await this.boardSync();
+      this.submitHowl.volume(Options.get('sound').effect);
+      if(this.submitHowl.volume() > 0) {
+        this.submitHowl.play();
+      }
+    }
+    else if(this.props.fog && this.state.check) {
+      if(typeof this.props.onFogEnd === 'function') {
+        this.props.onFogEnd(this.state.player);
+      }
     }
     this.setState({loading: false});
+  }
+  getNotation() {
+    this.setState({
+      importedHistory: this.chess.export('object'),
+      notation: this.chess.export('5dpgn_active_timeline')
+    });
   }
   async import(input) {
     if(this.props.canImport) {
       this.setState({loading: true});
-      await this.chess.importFunc(input, undefined, true);
+      this.chess.import(input, undefined, true);
       this.setState({
-        importedHistory: await this.chess.exportFunc('object'),
-        notation: await this.chess.exportFunc('5dpgn_active_timeline')
+        importedHistory: this.chess.export('object'),
+        notation: this.chess.export('5dpgn_active_timeline')
       });
       await this.boardSync();
       if(typeof this.props.onImport === 'function') { this.props.onImport(input); }
@@ -441,22 +472,26 @@ export default class GamePlayer extends React.Component {
               this.setState({ drawArrow: false, drawingArrow: false, drawArrows: [] });
             }}
           />
-          <NotationViewer
-            canImport={this.props.canImport}
-            notation={this.state.notation}
-            currentNotation={this.state.currentNotation}
-            player={this.state.player}
-            action={this.state.action}
-            onImport={(input) => { this.import(input); }}
-            onNotationClick={async (input) => {
-              if(this.props.canAnalyze) {
-                this.setState({loading: true});
-                await this.chess.importFunc(input, this.state.variant, true);
-                await this.boardSync();
-                this.setState({loading: false});
-              }
-            }}
-          />
+          {!this.props.fog ?
+            <NotationViewer
+              canImport={this.props.canImport}
+              notation={this.state.notation}
+              currentNotation={this.state.currentNotation}
+              player={this.state.player}
+              action={this.state.action}
+              onImport={(input) => { this.import(input); }}
+              onNotationClick={async (input) => {
+                if(this.props.canAnalyze) {
+                  this.setState({loading: true});
+                  this.chess.import(input, this.state.variant, true);
+                  await this.boardSync();
+                  this.setState({loading: false});
+                }
+              }}
+            />
+          :
+            <></>
+          }
           <Settings value={this.state.settings} onChange={(e) => {
             Options.set('settings', e);
             this.setState({settings: e});
@@ -498,7 +533,7 @@ export default class GamePlayer extends React.Component {
           }}
           onPieceOver={(piece) => {
             this.setState({hoverHighlights:
-              this.state.nextMoves.filter((e) => {
+              this.state.allMoves.filter((e) => {
                 return deepcompare(e.start, piece.position) && (this.state.selectedPiece ?
                   !deepcompare(this.state.selectedPiece, piece)
                 :
@@ -527,6 +562,13 @@ export default class GamePlayer extends React.Component {
           boardLabel={this.state.settings.boardLabel}
           drawArrow={this.state.drawArrow}
           drawArrows={this.state.drawArrows}
+          fog={this.props.fog}
+          fogMode={this.props.canControlWhite ?
+            'white'
+          :
+            'black'
+          }
+          allMoves={this.state.allMoves}
         />
         <Flex
           p={2}
@@ -608,7 +650,7 @@ export default class GamePlayer extends React.Component {
           :
             <></>
           }
-          {this.state.check && !this.state.checkmate ?
+          {this.state.check && !this.state.checkmate && !this.props.fog ?
             <Button
               variant='primary'
               disabled
@@ -642,8 +684,8 @@ export default class GamePlayer extends React.Component {
             Undo
           </Button>
           <Button
-            variant={this.state.submittable ? 'primary' : 'outline'}
-            disabled={!this.state.submittable}
+            variant={(this.state.submittable || this.props.fog) ? 'primary' : 'outline'}
+            disabled={!(this.state.submittable || this.props.fog)}
             onClick={() => {
               if((this.props.canControlWhite && this.state.player === 'white') || (this.props.canControlBlack && this.state.player === 'black')) { this.submit(); }
             }}
