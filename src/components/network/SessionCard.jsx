@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { Box, Flex, Text, Button } from 'rebass';
-import { Accordion, AccordionDetails, AccordionSummary, Grid, Typography } from '@material-ui/core';
+import { Box, Flex, Button } from 'rebass';
+import { Accordion, AccordionDetails, AccordionSummary, Grid, Typography, TextField } from '@material-ui/core';
 import { MdExpandMore } from 'react-icons/md';
 import LinkButton from 'components/LinkButton';
 import Options from 'Options';
@@ -13,9 +13,10 @@ const moment = require('moment');
 
 export default class SessionCard extends React.Component {
   state = {
+    addUsername: '',
     showDetails: false
   }
-  componentWillUnmount() {
+  componentDidMount() {
     if(typeof this.props.showDetails === 'boolean') {
       this.setState({showDetails: this.props.showDetails});
     }
@@ -95,37 +96,74 @@ export default class SessionCard extends React.Component {
                 <></>
               }
             </Grid>
-            <Grid item xs={6}>
-              {this.props.session.white !== '' ?
-                <Typography>
-                  <b>White Player:</b> {this.props.session.white !== null ?
-                    this.props.session.white
+            {this.props.session.white === this.props.session.black ?
+              <>
+                <Grid item xs={6}>
+                  {this.props.session.white !== '' ?
+                    <Typography>
+                      <b>White Player:</b> {this.props.session.white !== null ?
+                        this.props.session.white
+                      :
+                        <i>&lt;Player Slot&gt;</i>
+                      }
+                    </Typography>
                   :
-                    <i>&lt;Player Slot&gt;</i>
+                    <></>
                   }
-                </Typography>
-              :
-                <></>
-              }
-            </Grid>
-            <Grid item xs={6}>
-              {this.props.session.black !== '' ?
-                <Typography>
-                  <b>Black Player:</b> {this.props.session.black !== null ?
-                    this.props.session.black
+                </Grid>
+                <Grid item xs={6}>
+                  {this.props.session.black !== '' ?
+                    <Typography>
+                      <b>Black Player:</b> {this.props.session.black !== null ?
+                        this.props.session.black
+                      :
+                        <i>&lt;Player Slot&gt;</i>
+                      }
+                    </Typography>
                   :
-                    <i>&lt;Player Slot&gt;</i>
+                    <></>
                   }
-                </Typography>
-              :
-                <></>
-              }
-            </Grid>
+                </Grid>
+              </>
+            :
+              <></>
+            }
+            {this.props.showButton && this.props.session.host === this.props.username ?
+              <Grid item xs={12}>
+                <Flex>
+                  <TextField
+                    value={this.state.addUsername}
+                    onChange={(e) => {
+                      this.setState({ addUsername: e.target.value.toLocaleLowerCase().replace(/\s+/g,'_') });
+                    }}
+                  />
+                  <Button
+                    m={1}
+                    variant='secondary'
+                    disabled={this.state.addUsername.length <= 0}
+                    onClick={() => {
+                      var token = Options.get('name').token;
+                      axios.post(Options.get('server').url + '/sessions/' + this.props.session.id + '/addUser', {
+                        username: this.state.addUsername
+                      }, {
+                        headers: {
+                          'Authorization': token
+                        }
+                      });
+                    }}
+                  >
+                    Add User
+                  </Button>
+                </Flex>
+              </Grid>
+            :
+              <></>
+            }
             {this.props.showButton ?
               <Grid item xs={12}>
-                {this.props.isHost ?
-                  <Flex>
-                    <Box mx='auto' />
+                <Flex>
+                  <Box mx='auto' />
+                  {this.props.session.host === this.props.username ?
                     <Button
                       m={1}
                       variant='outline'
@@ -141,35 +179,38 @@ export default class SessionCard extends React.Component {
                     >
                       Remove
                     </Button>
+                  :
+                    <>
+                      <LinkButton
+                        m={1}
+                        variant='outline'
+                        to={'/network/server/spectate/' + this.props.session.id}
+                      >
+                        Spectate
+                      </LinkButton>
+                      {this.props.session.white === null || this.props.session.black === null ?
+                        <LinkButton
+                          m={1}
+                          to={'/network/server/join/' + this.props.session.id}
+                        >
+                          Join
+                        </LinkButton>
+                      :
+                        <></>
+                      }
+                    </>
+                  }
+                  {this.props.session.white === this.props.username || this.props.session.black === this.props.username ?
                     <LinkButton
                       m={1}
                       to={'/network/server/join/' + this.props.session.id}
                     >
                       Enter Game
                     </LinkButton>
-                  </Flex>
-                :
-                  <Flex>
-                    <Box mx='auto' />
-                    <LinkButton
-                      m={1}
-                      variant='outline'
-                      to={'/network/server/spectate/' + this.props.session.id}
-                    >
-                      Spectate
-                    </LinkButton>
-                    {this.props.session.white === null || this.props.session.black === null ?
-                      <LinkButton
-                        m={1}
-                        to={'/network/server/join/' + this.props.session.id}
-                      >
-                        Join
-                      </LinkButton>
-                    :
-                      <></>
-                    }
-                  </Flex>
-                }
+                  :
+                    <></>
+                  }
+                </Flex>
               </Grid>
             :
               <></>
