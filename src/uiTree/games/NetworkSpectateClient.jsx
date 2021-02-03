@@ -84,7 +84,7 @@ class NetworkSpectateClient extends React.Component {
         });
       }
       if(this.refresh) {
-        window.setTimeout(this.getSession.bind(this), 1000);
+        window.setTimeout(this.getSession.bind(this), 500);
       }
     }
     catch(err) {
