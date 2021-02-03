@@ -148,6 +148,7 @@ class NetworkPlayClient extends React.Component {
           start={this.state.session.started}
           ended={this.state.session.ended}
           hideAll
+          disableLocal
           disableTimed
           disableVariant
           disableStart={this.state.isHost ? this.state.status !== 'noStart' : this.state.status !== 'noReady' && this.state.status !== 'noStart'}

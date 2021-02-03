@@ -292,6 +292,9 @@ export default class TimedGamePlayer extends React.Component {
           canImport={this.props.canImport}
           canControlWhite={typeof this.props.canControlWhite === 'boolean' ? this.props.canControlWhite : !this.state.ended}
           canControlBlack={typeof this.props.canControlBlack === 'boolean' ? this.props.canControlBlack : !this.state.ended}
+          whiteName={this.props.whiteName}
+          blackName={this.props.blackName}
+          disableLocal={this.props.disableLocal}
           winner={this.props.winner ? this.props.winner : this.state.winner}
           variant={this.props.variant ? this.props.variant : this.state.variant}
           flip={this.props.flip}
