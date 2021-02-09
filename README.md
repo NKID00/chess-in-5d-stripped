@@ -49,7 +49,7 @@ const BotFunc = (chess) => {
   while(!valid) {
     actionMoves = [];
     var submit = false;
-    var tmpChess = new Chess(chess.export());
+    var tmpChess = chess.copy();
     while(!submit) {
       var moves = tmpChess.moves('object', true, true, true);
       if(moves.length > 0) {
