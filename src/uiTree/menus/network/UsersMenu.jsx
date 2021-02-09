@@ -1,6 +1,5 @@
 import React from 'react';
 
-import Options from 'Options';
 import UserCard from 'components/network/UserCard';
 import { withSnackbar } from 'notistack';
 import { getUsers } from 'db/Users';

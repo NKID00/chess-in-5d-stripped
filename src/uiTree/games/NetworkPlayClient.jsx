@@ -71,7 +71,7 @@ class NetworkPlayClient extends React.Component {
             }
             newChess.submit(true);
           }
-          for(var i = 0;i < newMoveBuffer.length;i++) {
+          for(var i = 0;i < newMoveBuffer.length;i++) { // eslint-disable-line no-redeclare
             if(!changed && newChess.compare(newMoveBuffer[i], oldMoveBuffer[i], 'move') !== 0) {
               changed = true;
             }
@@ -253,7 +253,7 @@ class NetworkPlayClient extends React.Component {
                 session={this.state.session}
                 showDetails
               />
-              {this.state.isHost && this.state.session.black === null || this.state.session.white === null ?
+              {this.state.isHost && (this.state.session.black === null || this.state.session.white === null) ?
                 <>
                   <Text p={2} fontWeight='bold'>Users requesting to join:</Text>
                   {this.state.requestJoin.length > 0 ?
