@@ -6,8 +6,6 @@ import NewSessionCard from 'components/network/NewSessionCard';
 import { withSnackbar } from 'notistack';
 import { getSessions } from 'db/Sessions';
 
-const axios = require('axios');
-
 class SessionMenu extends React.Component {
   state = {
     sessions: []
@@ -60,7 +58,7 @@ class SessionMenu extends React.Component {
           return session1.id.localeCompare(session2.id);
         }).map((session, i) => {
           return (
-            <SessionCard session={session} isHost={Options.get('name').username === session.host} key={i} showButton />
+            <SessionCard session={session} username={Options.get('name').username} key={i} showButton />
           );
         })}
       </>

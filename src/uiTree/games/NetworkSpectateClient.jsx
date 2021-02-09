@@ -2,7 +2,7 @@ import React from 'react';
 import Chess from '5d-chess-js';
 import { withRouter } from 'react-router';
 
-import { Box, Flex, Text, Button } from 'rebass';
+import { Text } from 'rebass';
 import TimedGamePlayer from 'components/TimedGamePlayer';
 import { withSnackbar } from 'notistack';
 import Options from 'Options';
@@ -53,7 +53,7 @@ class NetworkSpectateClient extends React.Component {
             }
             newChess.submit(true);
           }
-          for(var i = 0;i < newMoveBuffer.length;i++) {
+          for(var i = 0;i < newMoveBuffer.length;i++) { // eslint-disable-line no-redeclare
             if(!changed && newChess.compare(newMoveBuffer[i], oldMoveBuffer[i], 'move') !== 0) {
               changed = true;
             }

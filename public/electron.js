@@ -3,6 +3,7 @@ const { autoUpdater } = require('electron-updater');
 const fs = require('fs');
 const isDev = require('electron-is-dev');
 const path = require('path');
+const { compressLink } = require('../src/components/LinkCompression');
 
 if(!isDev) {
   autoUpdater.checkForUpdatesAndNotify();
@@ -13,9 +14,9 @@ var baseUrl = isDev ? 'http://localhost:3000/' : `file://${path.join(__dirname, 
 var mainUrl = baseUrl + '';
 
 app.on('open-file', (e, p) => {
-  if(p.includes('.c5d')) {
+  if(p.includes('.5dpgn')) {
     var data = fs.readFileSync(p, 'utf8');
-    mainUrl = baseUrl + '#/local/game/analyze?import=' + data.replace(/\n/g, ';').replace(/\s/g, '%20').replace(/>/g, '%3E').replace(/</g, '%3C').replace(/\+/g, '%2B');
+    mainUrl = compressLink(data);
     if(mainWindow !== null) {
       mainWindow.loadURL(mainUrl);
     }
@@ -30,9 +31,9 @@ app.on('ready', () => {
     show: false
   });
 
-  if(process.argv.length > 1 && process.argv[1].includes('.c5d')) {
+  if(process.argv.length > 1 && process.argv[1].includes('.5dpgn')) {
     var data = fs.readFileSync(process.argv[1], 'utf8');
-    mainUrl = baseUrl + '#/local/game/analyze?import=' + data.replace(/\n/g, ';').replace(/\s/g, '%20').replace(/>/g, '%3E').replace(/</g, '%3C').replace(/\+/g, '%2B');
+    mainUrl = compressLink(data);
   }
 
   mainWindow.loadURL(mainUrl);

@@ -12,8 +12,6 @@ import SessionMenu from 'uiTree/menus/network/SessionMenu';
 import LoginRedirect from 'components/network/LoginRedirect';
 import UserProfile from 'components/network/UserProfile';
 
-const axios = require('axios');
-
 export default class ServerMenu extends React.Component {
   state = {
     tab: 'users'

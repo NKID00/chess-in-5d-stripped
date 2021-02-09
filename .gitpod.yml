@@ -1,0 +1,4 @@
+image: electronuserland/builder:wine
+
+tasks:
+  - init: npm install

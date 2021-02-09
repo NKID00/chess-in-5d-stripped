@@ -13,7 +13,7 @@ import BotWorker from 'workerize-loader!uiTree/games/BotWorker'; // eslint-disab
 
 var bw = new BotWorker();
 
-const defaultBot = `(Chess, chessInstance) => {
+const defaultBot = `(chess) => {
   /*
     Notice: This bot/engine does not play competitively and is only here for demonstration purposes
 
@@ -24,8 +24,8 @@ const defaultBot = `(Chess, chessInstance) => {
     In the future, a better default bot will replace this one.
   */
   var action = {
-    action: chessInstance.actionNumber,
-    player: chessInstance.player,
+    action: chess.actionNumber,
+    player: chess.player,
     moves: []
   };
   var actionMoves = [];
@@ -33,9 +33,9 @@ const defaultBot = `(Chess, chessInstance) => {
   while(!valid) {
     actionMoves = [];
     var submit = false;
-    var tmpChess = new Chess(chessInstance.export());
+    var tmpChess = chess.copy();
     while(!submit) {
-      var moves = tmpChess.moves('object', true, true, true);
+      var moves = tmpChess.moves('object', true, true, false, true);
       if(moves.length > 0) {
         var move = moves[Math.floor(Math.random() * moves.length)];
         actionMoves.push(move);
@@ -67,10 +67,22 @@ class LocalComputer extends React.Component {
   };
   compute() {
     if(!this.state.ended) {
+      var timed = null;
+      if(this.timedGameRef.current) {
+        if(this.timedGameRef.current.state.timed) {
+          timed = {
+            whiteDurationLeft: this.timedGameRef.current.state.whiteDurationLeft,
+            blackDurationLeft: this.timedGameRef.current.state.blackDurationLeft,
+            startingDuration: this.timedGameRef.current.state.startingDuration,
+            perActionFlatIncrement: this.timedGameRef.current.state.perActionFlatIncrement,
+            perActionTimelineIncrement: this.timedGameRef.current.state.perActionTimelineIncrement
+          };
+        }
+      }
       if(this.state.debug) {
         try {
-          var botFunc = new Function('Chess', 'chessInstance', 'GPU', 'global', 'return ' + this.state.botFunc)(); // eslint-disable-line no-new-func
-          var action = botFunc(Chess, (new Chess()).state(this.timedGameRef.current.gameRef.current.chess.state()), undefined, this.botGlobal);
+          var botFunc = new Function('chess', 'timed', 'global', 'return ' + this.state.botFunc)(); // eslint-disable-line no-new-func
+          var action = botFunc((new Chess()).state(this.timedGameRef.current.gameRef.current.chess.state()), timed, this.botGlobal);
           for(var i = 0;i < action.moves.length;i++) {
             this.timedGameRef.current.gameRef.current.move(action.moves[i]);
           }
@@ -85,7 +97,7 @@ class LocalComputer extends React.Component {
         }
       }
       else {
-        bw.compute(this.timedGameRef.current.gameRef.current.chess.state(), this.state.botFunc).then(async (action) => {
+        bw.compute(this.timedGameRef.current.gameRef.current.chess.state(), timed, this.state.botFunc).then(async (action) => {
           for(var i = 0;i < action.moves.length;i++) {
             this.timedGameRef.current.gameRef.current.move(action.moves[i]);
           }

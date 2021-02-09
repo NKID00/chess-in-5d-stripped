@@ -222,7 +222,7 @@ export default class GamePlayer extends React.Component {
     obj.checks = this.chess.checks();
     obj.board = this.addCheckGhost(this.chess.board, obj.checks);
     obj.triggerDate = Date.now();
-    obj.nextMoves = (this.chess.moves('object', false, false, true)).filter((e) => {
+    obj.nextMoves = (this.chess.moves('object', false, false, false, true)).filter((e) => {
       if(e.promotion !== '' && e.promotion !== null) {
         /*
         if(e.promotion === 'K') { return true; }

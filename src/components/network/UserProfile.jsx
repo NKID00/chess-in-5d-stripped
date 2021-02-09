@@ -26,22 +26,25 @@ class UserProfile extends React.Component {
         var user = (await getUser(username));
         if(user === null) {
           this.props.enqueueSnackbar('User does not exist with name ' + username + '! Register first!', {variant: 'warning'});
+          window.setTimeout(this.getUser.bind(this), 10000);
         }
         else if(!this.state.retrieved) {
           this.setState({
-            username: user.username,
+            username: username,
             fullname: user.fullname,
             bio: user.bio,
             country: user.country,
             retrieved: true
           });
+          window.setTimeout(this.getUser.bind(this), 1000);
         }
         else {
           this.setState({
-            username: username
+            username: username,
+            retrieved: this.state.username === username
           });
+          window.setTimeout(this.getUser.bind(this), 1000);
         }
-        window.setTimeout(this.getUser.bind(this), 10000);
       }
       catch(err) {
         this.props.enqueueSnackbar('Network error occurred, open console for more details!', {variant: 'error'});
