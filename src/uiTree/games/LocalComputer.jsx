@@ -2,7 +2,6 @@ import React from 'react';
 
 import { Flex, Text } from 'rebass';
 import { withSnackbar } from 'notistack';
-import Chess from '5d-chess-js';
 import Checkbox from '@material-ui/core/Checkbox';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -13,7 +12,7 @@ import BotWorker from 'workerize-loader!uiTree/games/BotWorker'; // eslint-disab
 
 var bw = new BotWorker();
 
-const defaultBot = `(chess) => {
+const defaultBotRand = `(chess) => {
   /*
     Notice: This bot/engine does not play competitively and is only here for demonstration purposes
 
@@ -54,6 +53,8 @@ const defaultBot = `(chess) => {
   return action;
 };`;
 
+const defaultBot = require('neil-engine').botFuncString;
+
 class LocalComputer extends React.Component {
   timedGameRef = React.createRef();
   botGlobal = {};
@@ -82,7 +83,7 @@ class LocalComputer extends React.Component {
       if(this.state.debug) {
         try {
           var botFunc = new Function('chess', 'timed', 'global', 'return ' + this.state.botFunc)(); // eslint-disable-line no-new-func
-          var action = botFunc((new Chess()).state(this.timedGameRef.current.gameRef.current.chess.state()), timed, this.botGlobal);
+          var action = botFunc(this.timedGameRef.current.gameRef.current.chess.copy(), timed, this.botGlobal);
           for(var i = 0;i < action.moves.length;i++) {
             this.timedGameRef.current.gameRef.current.move(action.moves[i]);
           }
@@ -155,7 +156,7 @@ class LocalComputer extends React.Component {
                 </Select>
               </Flex>
               <Flex>
-                <Text p={2} fontWeight='bold'>Debug / GPU Mode</Text>
+                <Text p={2} fontWeight='bold'>Debug Mode</Text>
                 <Checkbox color='primary' checked={this.state.debug} onChange={(e) => { this.setState({debug: e.target.checked}); }} />
               </Flex>
             </>

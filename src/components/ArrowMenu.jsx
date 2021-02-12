@@ -81,6 +81,8 @@ export default class Settings extends React.Component {
     window.addEventListener('keydown', this.shortcutsDown);
     window.addEventListener('keyup', this.shortcutsUp);
     window.addEventListener('visibilitychange', this.visibilityListener);
+    window.addEventListener('focus', this.visibilityListener);
+    window.addEventListener('blur', this.visibilityListener);
   }
   componentDidUpdate(prevProps, prevState) {
     if(prevState.open !== this.state.open) {
@@ -94,6 +96,9 @@ export default class Settings extends React.Component {
   componentWillUnmount() {
     window.removeEventListener('keydown', this.shortcutsDown);
     window.removeEventListener('keyup', this.shortcutsUp);
+    window.removeEventListener('visibilitychange', this.visibilityListener);
+    window.removeEventListener('focus', this.visibilityListener);
+    window.removeEventListener('blur', this.visibilityListener);
   }
   render() {
     return (
