@@ -7,11 +7,12 @@ import Checkbox from '@material-ui/core/Checkbox';
 import TimedGamePlayer from 'components/TimedGamePlayer';
 import BotImport from 'components/BotImport';
 import BotWorker from 'workerize-loader!uiTree/games/BotWorker'; // eslint-disable-line import/no-webpack-loader-syntax
+const axios = require('axios');
 
 var bw1 = new BotWorker();
 var bw2 = new BotWorker();
 
-const defaultBotRand = `(chess) => {
+const defaultBot = `(chess) => {
   /*
     Notice: This bot/engine does not play competitively and is only here for demonstration purposes
 
@@ -52,8 +53,6 @@ const defaultBotRand = `(chess) => {
   return action;
 };`;
 
-const defaultBot = require('neil-engine').botFuncString;
-
 class LocalComputerOnly extends React.Component {
   timedGameRef = React.createRef();
   bot1Global = {};
@@ -65,6 +64,13 @@ class LocalComputerOnly extends React.Component {
     botFunc1: defaultBot,
     botFunc2: defaultBot
   };
+  async componentDidMount() {
+    var str = (await axios.get('http://alexbay218.gitlab.io/neil-engine/bot.js')).data;
+    this.setState({
+      botFunc1: str,
+      botFunc2: str
+    });
+  }
   compute() {
     if(!this.state.ended) {
       var timed = null;
