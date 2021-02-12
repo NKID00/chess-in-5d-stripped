@@ -73,7 +73,7 @@ const BotFunc = (chess) => {
 
 Here the function has three parameters: `chess`, `timed`, and `global`
  - `chess` - This is the instance of the Chess class (https://gitlab.com/alexbay218/5d-chess-js) representing the current game.
- - `timed` - Object containing timing information (`null` if game is not timed). All values are in milliseconds.
+ - `timed` - Object containing timing information (`null` if game is not timed). All values are in seconds.
    - `whiteDurationLeft` - Amount of time left for white to play.
    - `blackDurationLeft` - Amount of time left for black to play.
    - `startingDuration` - Amount of time to give to both players at the start of the game.
@@ -83,7 +83,7 @@ Here the function has three parameters: `chess`, `timed`, and `global`
 
 To be an actual bot, you then need to return an `Action` object as described here https://gitlab.com/alexbay218/5d-chess-js#schemas
 
-The Debug / GPU mode will run the function in the main thread, otherwise it will run it as a Web Worker to prevent hanging.
+The Debug mode will run the function in the main thread, otherwise it will run it as a Web Worker to prevent hanging.
 
 ## FAQ
 
