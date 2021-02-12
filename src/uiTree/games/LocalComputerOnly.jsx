@@ -2,7 +2,6 @@ import React from 'react';
 
 import { Flex, Text } from 'rebass';
 import { withSnackbar } from 'notistack';
-import Chess from '5d-chess-js';
 import Checkbox from '@material-ui/core/Checkbox';
 
 import TimedGamePlayer from 'components/TimedGamePlayer';
@@ -12,7 +11,7 @@ import BotWorker from 'workerize-loader!uiTree/games/BotWorker'; // eslint-disab
 var bw1 = new BotWorker();
 var bw2 = new BotWorker();
 
-const defaultBot = `(chess) => {
+const defaultBotRand = `(chess) => {
   /*
     Notice: This bot/engine does not play competitively and is only here for demonstration purposes
 
@@ -53,6 +52,8 @@ const defaultBot = `(chess) => {
   return action;
 };`;
 
+const defaultBot = require('neil-engine').botFuncString;
+
 class LocalComputerOnly extends React.Component {
   timedGameRef = React.createRef();
   bot1Global = {};
@@ -84,7 +85,7 @@ class LocalComputerOnly extends React.Component {
       ) {
         try {
           var botFunc = new Function('chess', 'timed', 'global', 'return ' + (this.timedGameRef.current.gameRef.current.chess.player === 'white' ? this.state.botFunc1 : this.state.botFunc2))(); // eslint-disable-line no-new-func
-          var action = botFunc((new Chess()).state(this.timedGameRef.current.gameRef.current.chess.state()), timed, (this.timedGameRef.current.gameRef.current.chess.player === 'white' ? this.bot1Global : this.bot2Global));
+          var action = botFunc(this.timedGameRef.current.gameRef.current.chess.copy(), timed, (this.timedGameRef.current.gameRef.current.chess.player === 'white' ? this.bot1Global : this.bot2Global));
           for(var i = 0;i < action.moves.length;i++) {
             this.timedGameRef.current.gameRef.current.move(action.moves[i]);
           }
@@ -153,11 +154,11 @@ class LocalComputerOnly extends React.Component {
           modalChildren={
             <>
               <Flex>
-                <Text p={2} fontWeight='bold'>White Bot Debug / GPU Mode</Text>
+                <Text p={2} fontWeight='bold'>White Bot Debug Mode</Text>
                 <Checkbox color='primary' checked={this.state.debug1} onChange={(e) => { this.setState({debug1: e.target.checked}); }} />
               </Flex>
               <Flex>
-                <Text p={2} fontWeight='bold'>Black Bot Debug / GPU Mode</Text>
+                <Text p={2} fontWeight='bold'>Black Bot Debug Mode</Text>
                 <Checkbox color='primary' checked={this.state.debug2} onChange={(e) => { this.setState({debug2: e.target.checked}); }} />
               </Flex>
             </>

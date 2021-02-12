@@ -214,7 +214,8 @@ export default class GamePlayer extends React.Component {
   }
   async boardSync() {
     var obj = {};
-    obj.submittable = this.chess.submittable(true);
+    this.chess.skipDetection = true;
+    obj.submittable = this.chess.submittable();
     obj.undoable = this.chess.undoable();
     obj.player = this.chess.player;
     obj.check = this.chess.inCheck;
@@ -222,7 +223,7 @@ export default class GamePlayer extends React.Component {
     obj.checks = this.chess.checks();
     obj.board = this.addCheckGhost(this.chess.board, obj.checks);
     obj.triggerDate = Date.now();
-    obj.nextMoves = (this.chess.moves('object', false, false, false, true)).filter((e) => {
+    obj.nextMoves = (this.chess.moves('object', false, false, false)).filter((e) => {
       if(e.promotion !== '' && e.promotion !== null) {
         /*
         if(e.promotion === 'K') { return true; }
@@ -235,6 +236,7 @@ export default class GamePlayer extends React.Component {
       }
       return true;
     });
+    this.chess.skipDetection = false;
     obj.allMoves = this.state.allMoves.slice();
     for(var i = 0;i < obj.nextMoves.length;i++) {
       obj.allMoves.push(obj.nextMoves[i]);
@@ -346,9 +348,11 @@ export default class GamePlayer extends React.Component {
       var newPlayer = this.state.player;
       if(newPlayer === 'white') { newAction--; newPlayer = 'black'; }
       else { newPlayer = 'white'; }
+      this.chess.skipDetection = true;
       this.chess.import(this.state.importedHistory.filter((e) => {
         return (e.action * 2 + (e.player === 'white' ? 0 : 1)) < (newAction * 2 + (newPlayer === 'white' ? 0 : 1));
-      }), this.state.variant, true);
+      }), this.state.variant);
+      this.chess.skipDetection = false;
       if(typeof this.props.onRevert === 'function') {
         this.props.onRevert();
       }
@@ -359,9 +363,11 @@ export default class GamePlayer extends React.Component {
   async forward() {
     if(this.props.canAnalyze) {
       this.setState({loading: true});
+      this.chess.skipDetection = true;
       this.chess.import(this.state.importedHistory.filter((e) => {
         return (e.action * 2 + (e.player === 'white' ? 0 : 1)) <= (this.state.action * 2 + (this.state.player === 'white' ? 0 : 1));
-      }), this.state.variant, true);
+      }), this.state.variant);
+      this.chess.skipDetection = false;
       if(typeof this.props.onForward === 'function') {
         this.props.onForward();
       }
@@ -408,7 +414,9 @@ export default class GamePlayer extends React.Component {
     this.setState({loading: true});
     if(this.state.submittable) {
       if(!this.props.disableLocal) {
-        this.chess.submit(true);
+        this.chess.skipDetection = false;
+        this.chess.submit();
+        this.chess.skipDetection = true;
       }
       if(typeof this.props.onSubmit === 'function') { this.props.onSubmit(); }
       this.setState({
@@ -483,7 +491,9 @@ export default class GamePlayer extends React.Component {
               onNotationClick={async (input) => {
                 if(this.props.canAnalyze) {
                   this.setState({loading: true});
-                  this.chess.import(input, this.state.variant, true);
+                  this.chess.skipDetection = true;
+                  this.chess.import(input, this.state.variant);
+                  this.chess.skipDetection = false;
                   await this.boardSync();
                   this.setState({loading: false});
                 }
