@@ -66,7 +66,7 @@ class LocalComputer extends React.Component {
     botFunc: defaultBot
   };
   async componentDidMount() {
-    var str = (await axios.get('http://alexbay218.gitlab.io/neil-engine/bot.js')).data;
+    var str = (await axios.get('https://alexbay218.gitlab.io/neil-engine/bot.js')).data;
     this.setState({
       botFunc: str
     });
