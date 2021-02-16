@@ -106,7 +106,7 @@ class TutorialGamePlayer extends React.Component {
                 var tutorialBuffer = this.props.tutorialArray[this.state.step].moveBuffer;
                 var valid = true;
                 if(typeof tutorialBuffer !== 'undefined') {
-                  var gameBuffer = await this.gameRef.current.chess.moveBuffer();
+                  var gameBuffer = await this.gameRef.current.chess.moveBuffer;
                   valid = tutorialBuffer.length === gameBuffer.length;
                   for(var i = 0;valid && i < tutorialBuffer.length;i++) {
                     if(!deepcompare(tutorialBuffer[i], gameBuffer[i])) {
@@ -126,7 +126,7 @@ class TutorialGamePlayer extends React.Component {
                 var tutorialBuffer = this.props.tutorialArray[this.state.step].moveBuffer;
                 var valid = true;
                 if(typeof tutorialBuffer !== 'undefined') {
-                  var gameBuffer = await this.gameRef.current.chess.moveBuffer();
+                  var gameBuffer = await this.gameRef.current.chess.moveBuffer;
                   valid = tutorialBuffer.length === gameBuffer.length;
                   for(var i = 0;valid && i < tutorialBuffer.length;i++) {
                     if(!deepcompare(tutorialBuffer[i], gameBuffer[i])) {
@@ -146,7 +146,7 @@ class TutorialGamePlayer extends React.Component {
                 var tutorialBuffer = this.props.tutorialArray[this.state.step].moveBuffer;
                 var valid = true;
                 if(typeof tutorialBuffer !== 'undefined') {
-                  var gameBuffer = await this.gameRef.current.chess.moveBuffer();
+                  var gameBuffer = await this.gameRef.current.chess.moveBuffer;
                   valid = tutorialBuffer.length === gameBuffer.length;
                   for(var i = 0;valid && i < tutorialBuffer.length;i++) {
                     if(!deepcompare(tutorialBuffer[i], gameBuffer[i])) {
@@ -186,7 +186,7 @@ class TutorialGamePlayer extends React.Component {
                     var tutorialBuffer = this.props.tutorialArray[this.state.step + 1].moveBuffer;
                     var valid = true;
                     if(typeof tutorialBuffer !== 'undefined') {
-                      var gameBuffer = await this.gameRef.current.chess.moveBuffer();
+                      var gameBuffer = await this.gameRef.current.chess.moveBuffer;
                       valid = tutorialBuffer.length === gameBuffer.length;
                       for(var i = 0;valid && i < tutorialBuffer.length;i++) {
                         if(!deepcompare(tutorialBuffer[i], gameBuffer[i])) {
@@ -208,7 +208,7 @@ class TutorialGamePlayer extends React.Component {
                 var tutorialBuffer = this.props.tutorialArray[this.state.step - 1].moveBuffer;
                 var valid = true;
                 if(typeof tutorialBuffer !== 'undefined') {
-                  var gameBuffer = await this.gameRef.current.chess.moveBuffer();
+                  var gameBuffer = await this.gameRef.current.chess.moveBuffer;
                   valid = tutorialBuffer.length === gameBuffer.length;
                   for(var i = 0;valid && i < tutorialBuffer.length;i++) {
                     if(!deepcompare(tutorialBuffer[i], gameBuffer[i])) {
