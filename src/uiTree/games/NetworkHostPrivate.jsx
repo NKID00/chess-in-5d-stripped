@@ -82,7 +82,7 @@ class NetworkHostPrivate extends React.Component {
       else if(data.type === 'heartbeat') {
         this.setState({heartbeat: Date.now()});
       }
-      if(await this.timedGameRef.current.gameRef.current.chess.player() !== this.state.host) {
+      if(await this.timedGameRef.current.gameRef.current.chess.player !== this.state.host) {
         try {
           if(data.type === 'move') {
             this.timedGameRef.current.gameRef.current.move(data.move, true);
@@ -271,33 +271,33 @@ class NetworkHostPrivate extends React.Component {
           this.sync();
         }}
         onMove={async (moveObj) => {
-          if(await this.timedGameRef.current.gameRef.current.chess.player() === this.state.host) {
+          if(await this.timedGameRef.current.gameRef.current.chess.player === this.state.host) {
             this.state.hostConnection.send({type: 'move', move: moveObj});
           }
           this.sync();
         }}
         onUndo={async () => {
-          if(await this.timedGameRef.current.gameRef.current.chess.player() === this.state.host) {
+          if(await this.timedGameRef.current.gameRef.current.chess.player === this.state.host) {
             this.state.hostConnection.send({type: 'undo'});
           }
           this.sync();
         }}
         onSubmit={async () => {
-          if(await this.timedGameRef.current.gameRef.current.chess.player() === 'white') {
+          if(await this.timedGameRef.current.gameRef.current.chess.player === 'white') {
             this.setState({
               whiteDurationLeft: this.timedGameRef.current.state.whiteDurationLeft +
               this.timedGameRef.current.state.perActionFlatIncrement +
-              this.timedGameRef.current.state.perActionTimelineIncrement * (await this.timedGameRef.current.gameRef.current.chess.board()).timelines.filter((e) => { return e.present; }).length
+              this.timedGameRef.current.state.perActionTimelineIncrement * (await this.timedGameRef.current.gameRef.current.chess.board).timelines.filter((e) => { return e.present; }).length
             });
           }
           else {
             this.setState({
               blackDurationLeft: this.timedGameRef.current.state.blackDurationLeft +
               this.timedGameRef.current.state.perActionFlatIncrement +
-              this.timedGameRef.current.state.perActionTimelineIncrement * (await this.timedGameRef.current.gameRef.current.chess.board()).timelines.filter((e) => { return e.present; }).length
+              this.timedGameRef.current.state.perActionTimelineIncrement * (await this.timedGameRef.current.gameRef.current.chess.board).timelines.filter((e) => { return e.present; }).length
             });
           }
-          if(await this.timedGameRef.current.gameRef.current.chess.player() !== this.state.host) {
+          if(await this.timedGameRef.current.gameRef.current.chess.player !== this.state.host) {
             this.state.hostConnection.send({type: 'submit'});
           }
           this.sync();

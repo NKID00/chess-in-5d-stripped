@@ -102,7 +102,7 @@ class NetworkClientPrivate extends React.Component {
       else if(data.type === 'heartbeat') {
         this.setState({heartbeat: Date.now()});
       }
-      if(await this.timedGameRef.current.gameRef.current.chess.player() === this.state.host) {
+      if(await this.timedGameRef.current.gameRef.current.chess.player === this.state.host) {
         if(data.type === 'move') {
           this.timedGameRef.current.gameRef.current.move(data.move, true);
         }
@@ -283,31 +283,31 @@ class NetworkClientPrivate extends React.Component {
           this.connectToHost();
         }}
         onMove={async (moveObj) => {
-          if(await this.timedGameRef.current.gameRef.current.chess.player() !== this.state.host) {
+          if(await this.timedGameRef.current.gameRef.current.chess.player !== this.state.host) {
             this.state.clientConnection.send({type: 'move', move: moveObj});
           }
         }}
         onUndo={async () => {
-          if(await this.timedGameRef.current.gameRef.current.chess.player() !== this.state.host) {
+          if(await this.timedGameRef.current.gameRef.current.chess.player !== this.state.host) {
             this.state.clientConnection.send({type: 'undo'});
           }
         }}
         onSubmit={async () => {
-          if(await this.timedGameRef.current.gameRef.current.chess.player() === 'white') {
+          if(await this.timedGameRef.current.gameRef.current.chess.player === 'white') {
             this.setState({
               whiteDurationLeft: this.state.whiteDurationLeft +
               this.state.perActionFlatIncrement +
-              this.state.perActionTimelineIncrement * (await this.timedGameRef.current.gameRef.current.chess.board()).timelines.filter((e) => { return e.present; }).length
+              this.state.perActionTimelineIncrement * (await this.timedGameRef.current.gameRef.current.chess.board).timelines.filter((e) => { return e.present; }).length
             });
           }
           else {
             this.setState({
               blackDurationLeft: this.state.blackDurationLeft +
               this.state.perActionFlatIncrement +
-              this.state.perActionTimelineIncrement * (await this.timedGameRef.current.gameRef.current.chess.board()).timelines.filter((e) => { return e.present; }).length
+              this.state.perActionTimelineIncrement * (await this.timedGameRef.current.gameRef.current.chess.board).timelines.filter((e) => { return e.present; }).length
             });
           }
-          if(await this.timedGameRef.current.gameRef.current.chess.player() === this.state.host) {
+          if(await this.timedGameRef.current.gameRef.current.chess.player === this.state.host) {
             this.state.clientConnection.send({type: 'submit'});
           }
         }}
