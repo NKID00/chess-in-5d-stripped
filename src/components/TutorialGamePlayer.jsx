@@ -77,6 +77,10 @@ class TutorialGamePlayer extends React.Component {
               var gameBuffer = this.gameRef.current.state.moveBuffer;
               valid = tutorialBuffer.length === gameBuffer.length;
               for(var i = 0;valid && i < tutorialBuffer.length;i++) {
+                delete gameBuffer[i].realEnd;
+                if(gameBuffer[i].castling !== null) {
+                  delete gameBuffer[i].castling.realEnd;
+                }
                 if(!deepcompare(tutorialBuffer[i], gameBuffer[i])) {
                   valid = false;
                 }
@@ -109,6 +113,10 @@ class TutorialGamePlayer extends React.Component {
                   var gameBuffer = await this.gameRef.current.chess.moveBuffer;
                   valid = tutorialBuffer.length === gameBuffer.length;
                   for(var i = 0;valid && i < tutorialBuffer.length;i++) {
+                    delete gameBuffer[i].realEnd;
+                    if(gameBuffer[i].castling !== null) {
+                      delete gameBuffer[i].castling.realEnd;
+                    }
                     if(!deepcompare(tutorialBuffer[i], gameBuffer[i])) {
                       valid = false;
                     }
@@ -129,6 +137,10 @@ class TutorialGamePlayer extends React.Component {
                   var gameBuffer = await this.gameRef.current.chess.moveBuffer;
                   valid = tutorialBuffer.length === gameBuffer.length;
                   for(var i = 0;valid && i < tutorialBuffer.length;i++) {
+                    delete gameBuffer[i].realEnd;
+                    if(gameBuffer[i].castling !== null) {
+                      delete gameBuffer[i].castling.realEnd;
+                    }
                     if(!deepcompare(tutorialBuffer[i], gameBuffer[i])) {
                       valid = false;
                     }
@@ -149,6 +161,10 @@ class TutorialGamePlayer extends React.Component {
                   var gameBuffer = await this.gameRef.current.chess.moveBuffer;
                   valid = tutorialBuffer.length === gameBuffer.length;
                   for(var i = 0;valid && i < tutorialBuffer.length;i++) {
+                    delete gameBuffer[i].realEnd;
+                    if(gameBuffer[i].castling !== null) {
+                      delete gameBuffer[i].castling.realEnd;
+                    }
                     if(!deepcompare(tutorialBuffer[i], gameBuffer[i])) {
                       valid = false;
                     }
@@ -189,6 +205,10 @@ class TutorialGamePlayer extends React.Component {
                       var gameBuffer = await this.gameRef.current.chess.moveBuffer;
                       valid = tutorialBuffer.length === gameBuffer.length;
                       for(var i = 0;valid && i < tutorialBuffer.length;i++) {
+                        delete gameBuffer[i].realEnd;
+                        if(gameBuffer[i].castling !== null) {
+                          delete gameBuffer[i].castling.realEnd;
+                        }
                         if(!deepcompare(tutorialBuffer[i], gameBuffer[i])) {
                           valid = false;
                         }
@@ -211,6 +231,10 @@ class TutorialGamePlayer extends React.Component {
                   var gameBuffer = await this.gameRef.current.chess.moveBuffer;
                   valid = tutorialBuffer.length === gameBuffer.length;
                   for(var i = 0;valid && i < tutorialBuffer.length;i++) {
+                    delete gameBuffer[i].realEnd;
+                    if(gameBuffer[i].castling !== null) {
+                      delete gameBuffer[i].castling.realEnd;
+                    }
                     if(!deepcompare(tutorialBuffer[i], gameBuffer[i])) {
                       valid = false;
                     }
