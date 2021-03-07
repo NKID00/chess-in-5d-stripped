@@ -101,7 +101,7 @@ export default class GamePlayer extends React.Component {
   moveArrowCalc() {
     var tmpChess = this.chess.copy();
     var chess = new Chess();
-    chess.reset(tmpChess.metadata.board.replace(/_/g, ' '));
+    chess.reset(tmpChess.metadata.board);
     var actions = tmpChess.actionHistory;
     var res = [];
     var newMoveArrow = (currMove) => {
