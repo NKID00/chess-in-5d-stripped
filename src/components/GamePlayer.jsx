@@ -219,6 +219,7 @@ export default class GamePlayer extends React.Component {
     obj.undoable = this.chess.undoable();
     obj.player = this.chess.player;
     obj.check = this.chess.inCheck;
+    if(obj.check) { obj.submittable = false; }
     obj.action = this.chess.actionNumber;
     obj.checks = this.chess.checks();
     obj.board = this.addCheckGhost(this.chess.board, obj.checks);
