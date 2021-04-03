@@ -3,7 +3,7 @@ const { autoUpdater } = require('electron-updater');
 const fs = require('fs');
 const isDev = require('electron-is-dev');
 const path = require('path');
-const { compressLink } = require('../src/components/LinkCompression');
+const { compressLink } = require('../src/components.old/LinkCompression');
 
 if(!isDev) {
   autoUpdater.checkForUpdatesAndNotify();
