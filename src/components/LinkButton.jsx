@@ -3,11 +3,10 @@ import { Redirect } from 'react-router';
 
 import { Button } from 'rebass';
 
-export default class SectionLink extends React.Component {
-  state = {redirect: false};
-  handleOnClick = () => {
+export default class LinkButton extends React.Component {
+  state = { redirect: false };
+  handleOnClick() {
     this.setState({redirect: true});
-    this.props.closeMenuCallback();
   }
   render() {
     return (

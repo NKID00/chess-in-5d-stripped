@@ -3,13 +3,14 @@ import { HashRouter } from 'react-router-dom';
 
 import { i18n } from '@lingui/core'
 import { I18nProvider } from '@lingui/react'
-import { messages } from 'locales/en/messages.js';
+import { messages as enMessages } from 'locales/en/messages.js';
+import { messages as frMessages } from 'locales/fr/messages.js';
 
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 
 import EmitterContext from 'EmitterContext';
-import muiTheme from 'components/theme';
+import * as muiTheme from 'state/theme';
 
 import Main from 'route/Main';
 
@@ -20,7 +21,8 @@ import 'App.css';
 const { createNanoEvents } = require('nanoevents');
 const store = require('store');
 
-i18n.load('en', messages);
+i18n.load('en', enMessages);
+i18n.load('fr', frMessages);
 if(typeof store.get('locale') === 'string') {
   i18n.activate(store.get('locale'));
 }

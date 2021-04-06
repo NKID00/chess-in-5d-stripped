@@ -5,11 +5,9 @@ import Paper from '@material-ui/core/Paper';
 
 import MainAppBar from 'route/MainAppBar';
 import Dashboard from 'route/Main/Dashboard';
-
-import EmitterContext from 'EmitterContext';
+import Settings from 'route/Main/Settings';
 
 export default class Main extends React.Component {
-  static contextType = EmitterContext;
   backgroundRef = React.createRef();
   componentDidMount() {
     window.onresize = this.resizeBackground.bind(this);
@@ -37,6 +35,9 @@ export default class Main extends React.Component {
         <Switch>
           <Route exact path='/'>
             <Dashboard />
+          </Route>
+          <Route exact path='/settings'>
+            <Settings />
           </Route>
         </Switch>
       </>

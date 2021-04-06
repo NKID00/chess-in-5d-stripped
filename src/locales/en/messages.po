@@ -17,6 +17,10 @@ msgstr ""
 msgid "Dashboard"
 msgstr "Dashboard"
 
+#: src/route/MainAppBar.jsx:42
+msgid "Login"
+msgstr "Login"
+
 #: src/route/Main/Dashboard.jsx:23
 msgid "This view is still a work in progress."
 msgstr "This view is still a work in progress."

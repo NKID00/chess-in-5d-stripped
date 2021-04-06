@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { Trans } from '@lingui/macro';
+
 import AppBar from '@material-ui/core/AppBar';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
@@ -36,7 +38,9 @@ export default class MainAppBar extends React.Component {
               Chess In 5D
             </Typography>
             <Box flexGrow={1} />
-            <Button color='inherit'>Login</Button>
+            <Button color='inherit'>
+              <Trans>Login</Trans>
+            </Button>
           </Toolbar>
         </AppBar>
         <SwipeableDrawer
