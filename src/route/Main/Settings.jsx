@@ -29,15 +29,12 @@ export default class Settings extends React.Component {
                 variant='fullWidth'
                 selectionFollowsFocus
               >
-                <Tab value='config' label={<Trans>Configuration</Trans>} />
+                <Tab value='general' label={<Trans>General</Trans>} />
                 <Tab value='theme' label={<Trans>Theme</Trans>} />
                 <Tab value='palette' label={<Trans>Palette</Trans>} />
-                <Tab value='gameplay' label={<Trans>Gameplay</Trans>} />
+                <Tab value='graphics' label={<Trans>Graphics</Trans>} />
               </TabList>
             </AppBar>
-            <TabPanel value='config'>
-
-            </TabPanel>
             <TabPanel value='palette'>
               <Palette />
             </TabPanel>

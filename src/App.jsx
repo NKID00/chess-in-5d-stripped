@@ -1,18 +1,21 @@
 import React from 'react';
 import { HashRouter } from 'react-router-dom';
 
-import { i18n } from '@lingui/core'
-import { I18nProvider } from '@lingui/react'
+import { i18n } from '@lingui/core';
+import { I18nProvider } from '@lingui/react';
 import { messages as enMessages } from 'locales/en/messages.js';
 import { messages as frMessages } from 'locales/fr/messages.js';
 
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+import { SnackbarProvider } from 'notistack';
+import AddToHomeScreen from '@ideasio/add-to-homescreen-react';
 
 import EmitterContext from 'EmitterContext';
 import * as muiTheme from 'state/theme';
 
 import Main from 'route/Main';
+import UpdateToast from 'route/UpdateToast';
 
 import '@fontsource/roboto';
 import '@fontsource/vollkorn';
@@ -21,6 +24,7 @@ import 'App.css';
 const { createNanoEvents } = require('nanoevents');
 const store = require('store');
 
+//Activate internationalization based on settings
 i18n.load('en', enMessages);
 i18n.load('fr', frMessages);
 if(typeof store.get('locale') === 'string') {
@@ -53,7 +57,11 @@ export default class App extends React.Component {
         <I18nProvider i18n={i18n}>
           <EmitterContext.Provider value={this.emitter}>
             <ThemeProvider theme={createMuiTheme(this.state.muiTheme)}>
-              <Main />
+              <SnackbarProvider maxSnack={2}>
+                <AddToHomeScreen />
+                <UpdateToast />
+                <Main />
+              </SnackbarProvider>
             </ThemeProvider>
           </EmitterContext.Provider>
         </I18nProvider>

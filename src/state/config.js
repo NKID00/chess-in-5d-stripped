@@ -1,4 +1,7 @@
+const deepmerge = require('deepmerge');
 const store = require('store');
+
+const defaultConfig = {};
 
 export const set = (config, emitter = null) => {
   store.set('config', config);
@@ -10,7 +13,7 @@ export const set = (config, emitter = null) => {
 export const get = () => {
   var storedConfig = store.get('config');
   if(typeof storedConfig === 'object') {
-    return storedConfig;
+    return deepmerge(defaultConfig, storedConfig);
   }
-  return {};
+  return defaultConfig;
 }

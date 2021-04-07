@@ -49,7 +49,9 @@ export default class MainAppBar extends React.Component {
           onOpen={() => { this.setState({ openMenu: true }); }}
           onClose={() => { this.setState({ openMenu: false }); }}
         >
-          <Menu />
+          <Menu
+            onClose={() => { this.setState({ openMenu: false }); }}
+          />
         </SwipeableDrawer>
       </React.Fragment>
     );

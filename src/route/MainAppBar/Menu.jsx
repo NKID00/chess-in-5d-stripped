@@ -15,6 +15,7 @@ import HomeIcon from '@material-ui/icons/Home';
 import { GiPawn } from 'react-icons/gi';
 import TimelineIcon from '@material-ui/icons/Timeline';
 import CreateIcon from '@material-ui/icons/Create';
+import MenuBookIcon from '@material-ui/icons/MenuBook';
 import SettingsIcon from '@material-ui/icons/Settings';
 
 class Menu extends React.Component {
@@ -23,7 +24,10 @@ class Menu extends React.Component {
       <List>
         <ListItem
           button
-          onClick={() => { this.props.history.push('/'); }}
+          onClick={() => {
+            this.props.history.push('/');
+            if(typeof this.props.onClose === 'function') { this.props.onClose(); }
+          }}
         >
           <ListItemIcon>
             <HomeIcon />
@@ -35,7 +39,10 @@ class Menu extends React.Component {
         </ListItem>
         <ListItem
           button
-          onClick={() => { this.props.history.push('/play'); }}
+          onClick={() => {
+            this.props.history.push('/play');
+            if(typeof this.props.onClose === 'function') { this.props.onClose(); }
+          }}
         >
           <ListItemIcon>
             <GiPawn size={25} />
@@ -47,7 +54,25 @@ class Menu extends React.Component {
         </ListItem>
         <ListItem
           button
-          onClick={() => { this.props.history.push('/analyze'); }}
+          onClick={() => {
+            this.props.history.push('/learn');
+            if(typeof this.props.onClose === 'function') { this.props.onClose(); }
+          }}
+        >
+          <ListItemIcon>
+            <MenuBookIcon />
+          </ListItemIcon>
+          <ListItemText>
+            <Trans>Learn</Trans>
+          </ListItemText>
+          <Box m={2} />
+        </ListItem>
+        <ListItem
+          button
+          onClick={() => {
+            this.props.history.push('/analyze');
+            if(typeof this.props.onClose === 'function') { this.props.onClose(); }
+          }}
         >
           <ListItemIcon>
             <TimelineIcon />
@@ -59,7 +84,10 @@ class Menu extends React.Component {
         </ListItem>
         <ListItem
           button
-          onClick={() => { this.props.history.push('/edit'); }}
+          onClick={() => {
+            this.props.history.push('/edit');
+            if(typeof this.props.onClose === 'function') { this.props.onClose(); }
+          }}
         >
           <ListItemIcon>
             <CreateIcon />
@@ -72,7 +100,10 @@ class Menu extends React.Component {
         <Divider />
         <ListItem
           button
-          onClick={() => { this.props.history.push('/settings'); }}
+          onClick={() => {
+            this.props.history.push('/settings');
+            if(typeof this.props.onClose === 'function') { this.props.onClose(); }
+          }}
         >
           <ListItemIcon>
             <SettingsIcon />
