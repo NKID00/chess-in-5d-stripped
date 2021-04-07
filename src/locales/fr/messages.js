@@ -1,1 +1,0 @@
-/*eslint-disable*/module.exports={messages:{"Dashboard":"Tableau de bord","Login":"Se connecter","This view is still a work in progress.":"Cet \xE9cran n'est pas encore fini.","Welcome to Chess In 5D!":"Bienvenue sur \xAB Chess in 5D \xBB !"}};

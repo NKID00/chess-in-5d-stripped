@@ -1,1 +1,0 @@
-/*eslint-disable*/module.exports={messages:{"Dashboard":"Dashboard","Login":"Login","This view is still a work in progress.":"This view is still a work in progress.","Welcome to Chess In 5D!":"Welcome to Chess In 5D!"}};
