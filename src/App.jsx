@@ -1,18 +1,17 @@
 import React from 'react';
 import { HashRouter } from 'react-router-dom';
 
-import { i18n } from '@lingui/core';
-import { I18nProvider } from '@lingui/react';
-import { messages as enMessages } from 'locales/en/messages.js';
-import { messages as frMessages } from 'locales/fr/messages.js';
-
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import { SnackbarProvider } from 'notistack';
 import AddToHomeScreen from '@ideasio/add-to-homescreen-react';
 
+import { I18nProvider } from '@lingui/react';
+import { i18n } from '@lingui/core';
+
 import EmitterContext from 'EmitterContext';
 import * as muiTheme from 'state/theme';
+import i18nInit from 'state/i18n';
 
 import Main from 'route/Main';
 import UpdateToast from 'route/UpdateToast';
@@ -22,18 +21,6 @@ import '@fontsource/vollkorn';
 import 'App.css';
 
 const { createNanoEvents } = require('nanoevents');
-const store = require('store');
-
-//Activate internationalization based on settings
-i18n.load('en', enMessages);
-i18n.load('fr', frMessages);
-if(typeof store.get('locale') === 'string') {
-  i18n.activate(store.get('locale'));
-}
-else {
-  i18n.activate('en');
-}
-
 
 export default class App extends React.Component {
   state = {
@@ -41,13 +28,11 @@ export default class App extends React.Component {
   };
   emitter = createNanoEvents();
   componentDidMount() {
+    i18nInit(this.emitter);
     this.emitter.on('themeUpdate', () => {
       this.setState({
         muiTheme: muiTheme.get()
       });
-    });
-    this.emitter.on('localeUpdate', () => {
-      i18n.activate(store.get('locale'));
     });
   }
   render() {

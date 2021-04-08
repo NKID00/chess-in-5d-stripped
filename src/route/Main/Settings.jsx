@@ -10,11 +10,12 @@ import TabList from '@material-ui/lab/TabList';
 import TabContext from '@material-ui/lab/TabContext';
 import TabPanel from '@material-ui/lab/TabPanel';
 
+import General from 'route/Main/Settings/General';
 import Palette from 'route/Main/Settings/Palette';
 
 export default class Settings extends React.Component {
   state = {
-    tab: 'palette'
+    tab: 'general'
   }
   render() {
     return (
@@ -35,6 +36,9 @@ export default class Settings extends React.Component {
                 <Tab value='graphics' label={<Trans>Graphics</Trans>} />
               </TabList>
             </AppBar>
+            <TabPanel value='general'>
+              <General />
+            </TabPanel>
             <TabPanel value='palette'>
               <Palette />
             </TabPanel>
