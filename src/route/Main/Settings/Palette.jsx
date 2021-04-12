@@ -92,7 +92,7 @@ export default class Palette extends React.Component {
                     <ColorPicker
                       color={this.state.palette.background.single}
                       onChange={(hex) => {
-                        this.setState(deepmerge(this.state.palette, { palette: { background: { single: hex } } }));
+                        this.setState(deepmerge(this.state, { palette: { background: { single: hex } } }));
                       }}
                     />
                   </Grid>
@@ -101,7 +101,7 @@ export default class Palette extends React.Component {
                     <ColorPicker
                       color={this.state.palette.background.lightRectangle}
                       onChange={(hex) => {
-                        this.setState(deepmerge(this.state.palette, { palette: { background: { lightRectangle: hex } } }));
+                        this.setState(deepmerge(this.state, { palette: { background: { lightRectangle: hex } } }));
                       }}
                     />
                   </Grid>
@@ -110,7 +110,7 @@ export default class Palette extends React.Component {
                     <ColorPicker
                       color={this.state.palette.background.darkRectangle}
                       onChange={(hex) => {
-                        this.setState(deepmerge(this.state.palette, { palette: { background: { darkRectangle: hex } } }));
+                        this.setState(deepmerge(this.state, { palette: { background: { darkRectangle: hex } } }));
                       }}
                     />
                   </Grid>
@@ -137,7 +137,7 @@ export default class Palette extends React.Component {
                     <ColorPicker
                       color={this.state.palette.background.lightStripeBlack}
                       onChange={(hex) => {
-                        this.setState(deepmerge(this.state.palette, { palette: { background: { lightStripeBlack: hex } } }));
+                        this.setState(deepmerge(this.state, { palette: { background: { lightStripeBlack: hex } } }));
                       }}
                     />
                   </Grid>
@@ -146,7 +146,7 @@ export default class Palette extends React.Component {
                     <ColorPicker
                       color={this.state.palette.background.lightStripeWhite}
                       onChange={(hex) => {
-                        this.setState(deepmerge(this.state.palette, { palette: { background: { lightStripeWhite: hex } } }));
+                        this.setState(deepmerge(this.state, { palette: { background: { lightStripeWhite: hex } } }));
                       }}
                     />
                   </Grid>
@@ -155,7 +155,7 @@ export default class Palette extends React.Component {
                     <ColorPicker
                       color={this.state.palette.background.darkStripeBlack}
                       onChange={(hex) => {
-                        this.setState(deepmerge(this.state.palette, { palette: { background: { darkStripeBlack: hex } } }));
+                        this.setState(deepmerge(this.state, { palette: { background: { darkStripeBlack: hex } } }));
                       }}
                     />
                   </Grid>
@@ -164,7 +164,7 @@ export default class Palette extends React.Component {
                     <ColorPicker
                       color={this.state.palette.background.darkStripeWhite}
                       onChange={(hex) => {
-                        this.setState(deepmerge(this.state.palette, { palette: { background: { darkStripeWhite: hex } } }));
+                        this.setState(deepmerge(this.state, { palette: { background: { darkStripeWhite: hex } } }));
                       }}
                     />
                   </Grid>
@@ -191,7 +191,7 @@ export default class Palette extends React.Component {
                     <ColorPicker
                       color={this.state.palette.board.whiteBorder}
                       onChange={(hex) => {
-                        this.setState(deepmerge(this.state.palette, { palette: { board: { whiteBorder: hex } } }));
+                        this.setState(deepmerge(this.state, { palette: { board: { whiteBorder: hex } } }));
                       }}
                     />
                   </Grid>
@@ -200,7 +200,7 @@ export default class Palette extends React.Component {
                     <ColorPicker
                       color={this.state.palette.board.whiteBorderOutline}
                       onChange={(hex) => {
-                        this.setState(deepmerge(this.state.palette, { palette: { board: { whiteBorderOutline: hex } } }));
+                        this.setState(deepmerge(this.state, { palette: { board: { whiteBorderOutline: hex } } }));
                       }}
                     />
                   </Grid>
@@ -209,7 +209,7 @@ export default class Palette extends React.Component {
                     <ColorPicker
                       color={this.state.palette.board.blackBorder}
                       onChange={(hex) => {
-                        this.setState(deepmerge(this.state.palette, { palette: { board: { blackBorder: hex } } }));
+                        this.setState(deepmerge(this.state, { palette: { board: { blackBorder: hex } } }));
                       }}
                     />
                   </Grid>
@@ -218,7 +218,7 @@ export default class Palette extends React.Component {
                     <ColorPicker
                       color={this.state.palette.board.blackBorderOutline}
                       onChange={(hex) => {
-                        this.setState(deepmerge(this.state.palette, { palette: { board: { blackBorderOutline: hex } } }));
+                        this.setState(deepmerge(this.state, { palette: { board: { blackBorderOutline: hex } } }));
                       }}
                     />
                   </Grid>
@@ -227,7 +227,7 @@ export default class Palette extends React.Component {
                     <ColorPicker
                       color={this.state.palette.board.checkBorder}
                       onChange={(hex) => {
-                        this.setState(deepmerge(this.state.palette, { palette: { board: { checkBorder: hex } } }));
+                        this.setState(deepmerge(this.state, { palette: { board: { checkBorder: hex } } }));
                       }}
                     />
                   </Grid>
@@ -236,7 +236,7 @@ export default class Palette extends React.Component {
                     <ColorPicker
                       color={this.state.palette.board.checkBorderOutline}
                       onChange={(hex) => {
-                        this.setState(deepmerge(this.state.palette, { palette: { board: { checkBorderOutline: hex } } }));
+                        this.setState(deepmerge(this.state, { palette: { board: { checkBorderOutline: hex } } }));
                       }}
                     />
                   </Grid>
@@ -245,7 +245,7 @@ export default class Palette extends React.Component {
                     <ColorPicker
                       color={this.state.palette.board.inactiveBorder}
                       onChange={(hex) => {
-                        this.setState(deepmerge(this.state.palette, { palette: { board: { inactiveBorder: hex } } }));
+                        this.setState(deepmerge(this.state, { palette: { board: { inactiveBorder: hex } } }));
                       }}
                     />
                   </Grid>
@@ -254,7 +254,7 @@ export default class Palette extends React.Component {
                     <ColorPicker
                       color={this.state.palette.board.inactiveBorderOutline}
                       onChange={(hex) => {
-                        this.setState(deepmerge(this.state.palette, { palette: { board: { inactiveBorderOutline: hex } } }));
+                        this.setState(deepmerge(this.state, { palette: { board: { inactiveBorderOutline: hex } } }));
                       }}
                     />
                   </Grid>
@@ -263,7 +263,7 @@ export default class Palette extends React.Component {
                     <ColorPicker
                       color={this.state.palette.boardShadow.shadow}
                       onChange={(hex) => {
-                        this.setState(deepmerge(this.state.palette, { palette: { boardShadow: { shadow: hex } } }));
+                        this.setState(deepmerge(this.state, { palette: { boardShadow: { shadow: hex } } }));
                       }}
                     />
                   </Grid>
@@ -290,7 +290,7 @@ export default class Palette extends React.Component {
                     <ColorPicker
                       color={this.state.palette.boardLabel.timeline}
                       onChange={(hex) => {
-                        this.setState(deepmerge(this.state.palette, { palette: { boardLabel: { timeline: hex } } }));
+                        this.setState(deepmerge(this.state, { palette: { boardLabel: { timeline: hex } } }));
                       }}
                     />
                   </Grid>
@@ -299,7 +299,7 @@ export default class Palette extends React.Component {
                     <ColorPicker
                       color={this.state.palette.boardLabel.turn}
                       onChange={(hex) => {
-                        this.setState(deepmerge(this.state.palette, { palette: { boardLabel: { turn: hex } } }));
+                        this.setState(deepmerge(this.state, { palette: { boardLabel: { turn: hex } } }));
                       }}
                     />
                   </Grid>
@@ -308,7 +308,7 @@ export default class Palette extends React.Component {
                     <ColorPicker
                       color={this.state.palette.boardLabel.whiteBoard}
                       onChange={(hex) => {
-                        this.setState(deepmerge(this.state.palette, { palette: { boardLabel: { whiteBoard: hex } } }));
+                        this.setState(deepmerge(this.state, { palette: { boardLabel: { whiteBoard: hex } } }));
                       }}
                     />
                   </Grid>
@@ -317,7 +317,7 @@ export default class Palette extends React.Component {
                     <ColorPicker
                       color={this.state.palette.boardLabel.blackBoard}
                       onChange={(hex) => {
-                        this.setState(deepmerge(this.state.palette, { palette: { boardLabel: { blackBoard: hex } } }));
+                        this.setState(deepmerge(this.state, { palette: { boardLabel: { blackBoard: hex } } }));
                       }}
                     />
                   </Grid>
@@ -326,7 +326,7 @@ export default class Palette extends React.Component {
                     <ColorPicker
                       color={this.state.palette.boardLabel.checkBoard}
                       onChange={(hex) => {
-                        this.setState(deepmerge(this.state.palette, { palette: { boardLabel: { checkBoard: hex } } }));
+                        this.setState(deepmerge(this.state, { palette: { boardLabel: { checkBoard: hex } } }));
                       }}
                     />
                   </Grid>
@@ -335,7 +335,7 @@ export default class Palette extends React.Component {
                     <ColorPicker
                       color={this.state.palette.boardLabel.inactiveBoard}
                       onChange={(hex) => {
-                        this.setState(deepmerge(this.state.palette, { palette: { boardLabel: { inactiveBoard: hex } } }));
+                        this.setState(deepmerge(this.state, { palette: { boardLabel: { inactiveBoard: hex } } }));
                       }}
                     />
                   </Grid>
@@ -362,7 +362,7 @@ export default class Palette extends React.Component {
                     <ColorPicker
                       color={this.state.palette.square.white}
                       onChange={(hex) => {
-                        this.setState(deepmerge(this.state.palette, { palette: { square: { white: hex } } }));
+                        this.setState(deepmerge(this.state, { palette: { square: { white: hex } } }));
                       }}
                     />
                   </Grid>
@@ -371,7 +371,7 @@ export default class Palette extends React.Component {
                     <ColorPicker
                       color={this.state.palette.square.black}
                       onChange={(hex) => {
-                        this.setState(deepmerge(this.state.palette, { palette: { square: { black: hex } } }));
+                        this.setState(deepmerge(this.state, { palette: { square: { black: hex } } }));
                       }}
                     />
                   </Grid>
@@ -398,7 +398,7 @@ export default class Palette extends React.Component {
                     <ColorPicker
                       color={this.state.palette.highlight.self}
                       onChange={(hex) => {
-                        this.setState(deepmerge(this.state.palette, { palette: { highlight: { self: hex } } }));
+                        this.setState(deepmerge(this.state, { palette: { highlight: { self: hex } } }));
                       }}
                     />
                   </Grid>
@@ -407,7 +407,7 @@ export default class Palette extends React.Component {
                     <ColorPicker
                       color={this.state.palette.highlight.move}
                       onChange={(hex) => {
-                        this.setState(deepmerge(this.state.palette, { palette: { highlight: { move: hex } } }));
+                        this.setState(deepmerge(this.state, { palette: { highlight: { move: hex } } }));
                       }}
                     />
                   </Grid>
@@ -416,7 +416,7 @@ export default class Palette extends React.Component {
                     <ColorPicker
                       color={this.state.palette.highlight.pastMove}
                       onChange={(hex) => {
-                        this.setState(deepmerge(this.state.palette, { palette: { highlight: { pastMove: hex } } }));
+                        this.setState(deepmerge(this.state, { palette: { highlight: { pastMove: hex } } }));
                       }}
                     />
                   </Grid>
@@ -425,7 +425,7 @@ export default class Palette extends React.Component {
                     <ColorPicker
                       color={this.state.palette.highlight.capture}
                       onChange={(hex) => {
-                        this.setState(deepmerge(this.state.palette, { palette: { highlight: { capture: hex } } }));
+                        this.setState(deepmerge(this.state, { palette: { highlight: { capture: hex } } }));
                       }}
                     />
                   </Grid>
@@ -434,7 +434,7 @@ export default class Palette extends React.Component {
                     <ColorPicker
                       color={this.state.palette.highlight.pastCapture}
                       onChange={(hex) => {
-                        this.setState(deepmerge(this.state.palette, { palette: { highlight: { pastCapture: hex } } }));
+                        this.setState(deepmerge(this.state, { palette: { highlight: { pastCapture: hex } } }));
                       }}
                     />
                   </Grid>
@@ -461,7 +461,7 @@ export default class Palette extends React.Component {
                     <ColorPicker
                       color={this.state.palette.arrow.move}
                       onChange={(hex) => {
-                        this.setState(deepmerge(this.state.palette, { palette: { arrow: { move: hex } } }));
+                        this.setState(deepmerge(this.state, { palette: { arrow: { move: hex } } }));
                       }}
                     />
                   </Grid>
@@ -470,7 +470,7 @@ export default class Palette extends React.Component {
                     <ColorPicker
                       color={this.state.palette.arrow.moveOutline}
                       onChange={(hex) => {
-                        this.setState(deepmerge(this.state.palette, { palette: { arrow: { moveOutline: hex } } }));
+                        this.setState(deepmerge(this.state, { palette: { arrow: { moveOutline: hex } } }));
                       }}
                     />
                   </Grid>
@@ -479,7 +479,7 @@ export default class Palette extends React.Component {
                     <ColorPicker
                       color={this.state.palette.arrow.check}
                       onChange={(hex) => {
-                        this.setState(deepmerge(this.state.palette, { palette: { arrow: { check: hex } } }));
+                        this.setState(deepmerge(this.state, { palette: { arrow: { check: hex } } }));
                       }}
                     />
                   </Grid>
@@ -488,7 +488,7 @@ export default class Palette extends React.Component {
                     <ColorPicker
                       color={this.state.palette.arrow.checkOutline}
                       onChange={(hex) => {
-                        this.setState(deepmerge(this.state.palette, { palette: { arrow: { checkOutline: hex } } }));
+                        this.setState(deepmerge(this.state, { palette: { arrow: { checkOutline: hex } } }));
                       }}
                     />
                   </Grid>
@@ -515,7 +515,7 @@ export default class Palette extends React.Component {
                     <ColorPicker
                       color={this.state.palette.arrow.custom}
                       onChange={(hex) => {
-                        this.setState(deepmerge(this.state.palette, { palette: { arrow: { custom: hex } } }));
+                        this.setState(deepmerge(this.state, { palette: { arrow: { custom: hex } } }));
                       }}
                     />
                   </Grid>
@@ -524,7 +524,7 @@ export default class Palette extends React.Component {
                     <ColorPicker
                       color={this.state.palette.arrow.customOutline}
                       onChange={(hex) => {
-                        this.setState(deepmerge(this.state.palette, { palette: { arrow: { customOutline: hex } } }));
+                        this.setState(deepmerge(this.state, { palette: { arrow: { customOutline: hex } } }));
                       }}
                     />
                   </Grid>
@@ -533,7 +533,7 @@ export default class Palette extends React.Component {
                     <ColorPicker
                       color={this.state.palette.arrow.custom1}
                       onChange={(hex) => {
-                        this.setState(deepmerge(this.state.palette, { palette: { arrow: { custom1: hex } } }));
+                        this.setState(deepmerge(this.state, { palette: { arrow: { custom1: hex } } }));
                       }}
                     />
                   </Grid>
@@ -542,7 +542,7 @@ export default class Palette extends React.Component {
                     <ColorPicker
                       color={this.state.palette.arrow.custom1Outline}
                       onChange={(hex) => {
-                        this.setState(deepmerge(this.state.palette, { palette: { arrow: { custom1Outline: hex } } }));
+                        this.setState(deepmerge(this.state, { palette: { arrow: { custom1Outline: hex } } }));
                       }}
                     />
                   </Grid>
@@ -551,7 +551,7 @@ export default class Palette extends React.Component {
                     <ColorPicker
                       color={this.state.palette.arrow.custom2}
                       onChange={(hex) => {
-                        this.setState(deepmerge(this.state.palette, { palette: { arrow: { custom2: hex } } }));
+                        this.setState(deepmerge(this.state, { palette: { arrow: { custom2: hex } } }));
                       }}
                     />
                   </Grid>
@@ -560,7 +560,7 @@ export default class Palette extends React.Component {
                     <ColorPicker
                       color={this.state.palette.arrow.custom2Outline}
                       onChange={(hex) => {
-                        this.setState(deepmerge(this.state.palette, { palette: { arrow: { custom2Outline: hex } } }));
+                        this.setState(deepmerge(this.state, { palette: { arrow: { custom2Outline: hex } } }));
                       }}
                     />
                   </Grid>
@@ -569,7 +569,7 @@ export default class Palette extends React.Component {
                     <ColorPicker
                       color={this.state.palette.arrow.custom3}
                       onChange={(hex) => {
-                        this.setState(deepmerge(this.state.palette, { palette: { arrow: { custom3: hex } } }));
+                        this.setState(deepmerge(this.state, { palette: { arrow: { custom3: hex } } }));
                       }}
                     />
                   </Grid>
@@ -578,7 +578,7 @@ export default class Palette extends React.Component {
                     <ColorPicker
                       color={this.state.palette.arrow.custom3Outline}
                       onChange={(hex) => {
-                        this.setState(deepmerge(this.state.palette, { palette: { arrow: { custom3Outline: hex } } }));
+                        this.setState(deepmerge(this.state, { palette: { arrow: { custom3Outline: hex } } }));
                       }}
                     />
                   </Grid>
@@ -587,7 +587,7 @@ export default class Palette extends React.Component {
                     <ColorPicker
                       color={this.state.palette.arrow.custom4}
                       onChange={(hex) => {
-                        this.setState(deepmerge(this.state.palette, { palette: { arrow: { custom4: hex } } }));
+                        this.setState(deepmerge(this.state, { palette: { arrow: { custom4: hex } } }));
                       }}
                     />
                   </Grid>
@@ -596,7 +596,7 @@ export default class Palette extends React.Component {
                     <ColorPicker
                       color={this.state.palette.arrow.custom4Outline}
                       onChange={(hex) => {
-                        this.setState(deepmerge(this.state.palette, { palette: { arrow: { custom4Outline: hex } } }));
+                        this.setState(deepmerge(this.state, { palette: { arrow: { custom4Outline: hex } } }));
                       }}
                     />
                   </Grid>

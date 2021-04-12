@@ -20,3 +20,7 @@ code {
 .react-codemirror2 {
   height: 100%;
 }
+
+#conversejs {
+  z-index: 2000;
+}

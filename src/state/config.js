@@ -4,7 +4,7 @@ const store = require('store');
 const defaultConfig = {};
 
 export const set = (config, emitter = null) => {
-  store.set('config', config);
+  store.set('config', deepmerge(store.get('config'), config));
   if(emitter !== null) {
     emitter.emit('configUpdate');
   }

@@ -1,4 +1,5 @@
 import React from 'react';
+import { withRouter } from 'react-router';
 
 import { Trans } from '@lingui/macro';
 
@@ -13,9 +14,23 @@ import TabPanel from '@material-ui/lab/TabPanel';
 import General from 'route/Main/Settings/General';
 import Palette from 'route/Main/Settings/Palette';
 
-export default class Settings extends React.Component {
+class Settings extends React.Component {
   state = {
     tab: 'general'
+  }
+  updateURLSearch() {
+    var search = new URLSearchParams(this.props.location.search);
+    if(search.has('tab')) {
+      this.setState({ tab: search.get('tab') });
+    }
+  }
+  componentDidMount() {
+    this.updateURLSearch();
+  }
+  componentDidUpdate(prevProps) {
+    if(prevProps.location.search !== this.props.location.search) {
+      this.updateURLSearch();
+    }
   }
   render() {
     return (
@@ -24,7 +39,10 @@ export default class Settings extends React.Component {
           <TabContext value={this.state.tab}>
             <AppBar position='static' color='default'>
               <TabList
-                onChange={(e,v) => { this.setState({ tab: v }); }}
+                onChange={(e,v) => {
+                  this.props.history.push({ search: `?tab=${v}` });
+                  this.setState({ tab: v });
+                }}
                 indicatorColor='primary'
                 textColor='primary'
                 variant='fullWidth'
@@ -48,3 +66,5 @@ export default class Settings extends React.Component {
     );
   }
 }
+
+export default withRouter(Settings);

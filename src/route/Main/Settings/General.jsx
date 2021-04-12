@@ -12,10 +12,9 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import Typography from '@material-ui/core/Typography';
+import TextField from '@material-ui/core/TextField';
 
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-
-import Flags from 'country-flag-icons/react/3x2';
 
 import EmitterContext from 'EmitterContext';
 import * as settings from 'state/settings';
@@ -30,7 +29,6 @@ export default class General extends React.Component {
     showSection: false,
     settings: settings.get()
   }
-  chessRenderer = React.createRef();
   componentDidMount() {
     //Update state if settings are changed
     this.settingsListener = this.context.on('settingsUpdate', () => {
@@ -68,17 +66,54 @@ export default class General extends React.Component {
               <AccordionDetails>
                 <Grid container spacing={2}>
                   <Grid item xs={12} lg={6}>
-                    <FormControl variant='outlined'>
+                    <FormControl variant='outlined' fullWidth>
                       <InputLabel><Trans>Locale</Trans></InputLabel>
                       <Select
                         value={this.state.settings.locale}
                         onChange={(event) => {
-                          this.setState(deepmerge(this.state.settings, { settings: { locale: event.target.value } }));
+                          this.setState(deepmerge(this.state, { settings: { locale: event.target.value } }));
                         }}
+                        label={<Trans>Locale</Trans>}
                       >
-                        <MenuItem value='en'><Flags.UK title='English' /> English</MenuItem>
-                        <MenuItem value='fr'><Flags.FR title='Français' /> Français</MenuItem>
+                        <MenuItem value='en'>
+                          English
+                        </MenuItem>
+                        <MenuItem value='fr'>
+                          Français
+                        </MenuItem>
                       </Select>
+                    </FormControl>
+                  </Grid>
+                </Grid>
+              </AccordionDetails>
+            </Accordion>
+          </Grid>
+          <Grid item xs={12}>
+            <Accordion
+              expanded={this.state.section === 'network' && this.state.showSection}
+              onChange={() => {
+                this.setState({ section: 'network', showSection: this.state.section !== 'network' ? true : !this.state.showSection });
+              }}
+              elevation={0}
+              style={{ margin: 0 }}
+              square={false}
+              TransitionProps={{ unmountOnExit: true }}
+            >
+              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                <Typography variant='h5'><Trans>Network</Trans></Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Grid container spacing={2}>
+                  <Grid item xs={12} lg={6}>
+                    <FormControl fullWidth>
+                      <TextField
+                        variant='outlined'
+                        value={this.state.settings.server}
+                        onChange={(event) => {
+                          this.setState(deepmerge(this.state, { settings: { server: event.target.value } }));
+                        }}
+                        label={<Trans>Server Url</Trans>}
+                      />
                     </FormControl>
                   </Grid>
                 </Grid>

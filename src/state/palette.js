@@ -62,7 +62,7 @@ const defaultPalette = {
 };
 
 export const set = (palette, emitter = null) => {
-  store.set('palette', palette);
+  store.set('palette', deepmerge(store.get('palette'), palette));
   if(emitter !== null) {
     emitter.emit('paletteUpdate');
   }

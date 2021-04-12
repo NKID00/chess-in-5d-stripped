@@ -8,6 +8,7 @@ import Chess from '5d-chess-js';
 import EmitterContext from 'EmitterContext';
 import * as crPalette from 'state/palette';
 import * as crConfig from 'state/config';
+import * as crTexture from 'state/texture';
 
 const deepmerge = require('deepmerge');
 const deepequal = require('fast-deep-equal');
@@ -18,11 +19,13 @@ export default class Renderer extends React.Component {
   chessRenderer = null;
   componentDidMount() {
     //Attach to div element
-    if(this.rootRef.current !== null) {
-      this.chessRenderer = new ChessRenderer(this.rootRef.current, { app: { interactive: false } });
-      this.chessRenderer.global.sync(new Chess());
-      this.chessRenderer.zoom.fullBoard();
-    }
+    this.chessRenderer = new ChessRenderer(
+      this.rootRef.current, 
+      deepmerge({ app: { interactive: false } }, crConfig.get()),
+      crPalette.get()
+    );
+    this.chessRenderer.global.sync(new Chess());
+    this.chessRenderer.zoom.fullBoard();
     //Listen for changes in palette and config settings
     this.paletteListener = this.context.on('paletteUpdate', () => {
       this.updatePalette();
@@ -55,6 +58,9 @@ export default class Renderer extends React.Component {
       newConfig = deepmerge(newConfig, crConfig.get());
       this.chessRenderer.global.config(newConfig);
     }
+  }
+  updateTexture() {
+    if(crTexture.get().highlight !== null) { this.chessRenderer.global.texture('highlight', crTexture.get().highlight); }
   }
   componentDidUpdate(prevProps) {
     //Look for changes in div width or height and update chessRenderer

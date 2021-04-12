@@ -1,7 +1,7 @@
 import React from 'react';
 import { Redirect } from 'react-router';
 
-import { Button } from 'rebass';
+import Button from '@material-ui/core/Button';
 
 export default class LinkButton extends React.Component {
   state = { redirect: false };

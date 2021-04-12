@@ -12,9 +12,11 @@ import { i18n } from '@lingui/core';
 import EmitterContext from 'EmitterContext';
 import * as muiTheme from 'state/theme';
 import i18nInit from 'state/i18n';
+import * as auth from 'network/auth';
 
 import Main from 'route/Main';
 import UpdateToast from 'route/UpdateToast';
+import ConverseManager from 'components/ConverseManager';
 
 import '@fontsource/roboto';
 import '@fontsource/vollkorn';
@@ -34,6 +36,7 @@ export default class App extends React.Component {
         muiTheme: muiTheme.get()
       });
     });
+    auth.init(this.emitter);
   }
   render() {
     return (
@@ -46,6 +49,7 @@ export default class App extends React.Component {
                 <AddToHomeScreen />
                 <UpdateToast />
                 <Main />
+                <ConverseManager />
               </SnackbarProvider>
             </ThemeProvider>
           </EmitterContext.Provider>

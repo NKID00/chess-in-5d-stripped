@@ -33,7 +33,7 @@ const defaultTheme = {
 };
 
 export const set = (theme, emitter = null) => {
-  store.set('theme', theme);
+  store.set('theme', deepmerge(store.get('theme'), theme));
   if(emitter !== null) {
     emitter.emit('themeUpdate');
   }
