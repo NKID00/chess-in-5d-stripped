@@ -88,6 +88,36 @@ export const login = async (username, password, emitter) => {
   }
 }
 
+export const register = async (username, password, emitter) => {
+  var serverUrl = settings.get().server;
+  try {
+    var res = (await axios.post(`${serverUrl}/register`, {
+      username: username,
+      password: password
+    }));
+    if(res.status === 200) {
+      var currentTime = Date.now();
+      authStore.set({
+        token: res.data,
+        lastOnline: currentTime,
+        lastAuthCheck: currentTime,
+        lastTokenRefresh: currentTime,
+      }, emitter);
+    }
+    else {
+      authStore.set({
+        token: null,
+        lastOnline: 0,
+        lastAuthCheck: 0,
+        lastTokenRefresh: 0,
+      }, emitter);
+    }
+  }
+  catch(err) {
+    throw err;
+  }
+}
+
 export const logout = (emitter) => {
   authStore.set({
     token: null

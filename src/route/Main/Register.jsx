@@ -24,13 +24,15 @@ import * as auth from 'network/auth';
 const deepmerge = require('deepmerge');
 const deepequal = require('fast-deep-equal');
 
-class Login extends React.Component {
+class Register extends React.Component {
   static contextType = EmitterContext;
   state = {
     auth: authStore.get(),
     usernameError: '',
     password: '',
     passwordError: '',
+    password2: '',
+    password2Error: '',
     serverUrl: settings.get().server,
   }
   componentDidMount() {
@@ -46,7 +48,7 @@ class Login extends React.Component {
       }
       this.setState({ auth: authStore.get() });
     });
-
+    
     //Update state if settings store is changed
     this.settingsListener = this.context.on('authUpdate', () => {
       this.setState({ serverUrl: settings.get().server });
@@ -74,10 +76,19 @@ class Login extends React.Component {
       this.props.history.replace('/');
     }
   }
-  async login() {
+  async register() {
     try {
-      await auth.login(this.state.auth.username, this.state.password, this.context);
-      this.redirect();
+      if(this.state.password !== this.state.password2) {
+        this.setState({
+          usernameError: '',
+          passwordError: '',
+          password2Error: 'Passwords do not match!',
+        });
+      }
+      else {
+        await auth.register(this.state.auth.username, this.state.password, this.context);
+        this.redirect();
+      }
     }
     catch(err) {
       //Describe error states and provide feedback
@@ -119,7 +130,7 @@ class Login extends React.Component {
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <Typography variant='h4'>
-                  <Trans>Sign In</Trans>
+                  <Trans>Sign Up</Trans>
                 </Typography>
               </Grid>
               <Grid item xs={12}>
@@ -155,7 +166,7 @@ class Login extends React.Component {
                 <FormControl fullWidth>
                   <TextField
                     variant='outlined'
-                    autoComplete='current-password'
+                    autoComplete='new-password'
                     type='password'
                     required
                     error={this.state.passwordError.length > 0}
@@ -169,8 +180,25 @@ class Login extends React.Component {
                 </FormControl>
               </Grid>
               <Grid item xs={12}>
-                <Link component={RouterLink} to='/register'>
-                  <Trans>Don't have an account?</Trans>
+                <FormControl fullWidth>
+                  <TextField
+                    variant='outlined'
+                    autoComplete='new-password'
+                    type='password'
+                    required
+                    error={this.state.password2Error.length > 0}
+                    helperText={this.state.password2Error}
+                    value={this.state.password2}
+                    onChange={(event) => {
+                      this.setState({ password2: event.target.value });
+                    }}
+                    label={<Trans>Confirm Password</Trans>}
+                  />
+                </FormControl>
+              </Grid>
+              <Grid item xs={12}>
+                <Link component={RouterLink} to='/login'>
+                  <Trans>Already have an account?</Trans>
                 </Link>
               </Grid>
               <Grid item xs={12}>
@@ -190,9 +218,9 @@ class Login extends React.Component {
                     <Button
                       fullWidth
                       variant='outlined'
-                      onClick={this.login.bind(this)}
+                      onClick={this.register.bind(this)}
                     >
-                      <Trans>Sign In</Trans>
+                      <Trans>Sign Up</Trans>
                     </Button>
                   </Grid>
                 </Grid>
@@ -205,4 +233,4 @@ class Login extends React.Component {
   }
 }
 
-export default withSnackbar(withRouter(Login));
+export default withSnackbar(withRouter(Register));

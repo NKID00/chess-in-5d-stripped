@@ -9,6 +9,7 @@ import 'converse.js/dist/converse.min.css';
 import 'converse.js/dist/icons';
 import 'converse.js/dist/emojis';
 import 'converse.js/dist/sounds/msg_received.ogg';
+import 'converse.js/dist/locales/fr-LC_MESSAGES-converse-po';
 import 'converse.js/logo/conversejs-filled.svg';
 
 export default class ConverseManager extends React.Component {
@@ -82,7 +83,7 @@ export default class ConverseManager extends React.Component {
           auto_reconnect: true,
           i18n: settings.get().locale,
           muc_nickname_from_jid: true,
-          omemo_default: true,
+          omemo_default: false,
           show_message_avatar: false,
           authentication: 'login',
           jid: storedAuth.xmpp.username,
@@ -102,6 +103,9 @@ export default class ConverseManager extends React.Component {
     //Update state if auth store is changed
     this.authListener = this.context.on('authUpdate', () => {
       this.converseInit();
+      if(this.isInitialized && !authStore.isLoggedIn()) {
+        this.isInitialized = false;
+      }
     });
     this.converseInit();
   }

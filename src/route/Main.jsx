@@ -5,6 +5,7 @@ import Paper from '@material-ui/core/Paper';
 
 import MainAppBar from 'route/MainAppBar';
 import Dashboard from 'route/Main/Dashboard';
+import Register from 'route/Main/Register';
 import Login from 'route/Main/Login';
 import Settings from 'route/Main/Settings';
 
@@ -39,6 +40,9 @@ export default class Main extends React.Component {
           </Route>
           <Route path='/settings'>
             <Settings />
+          </Route>
+          <Route path='/register'>
+            <Register />
           </Route>
           <Route path='/login'>
             <Login />
