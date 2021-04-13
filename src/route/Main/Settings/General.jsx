@@ -78,9 +78,6 @@ export default class General extends React.Component {
                         <MenuItem value='en'>
                           English
                         </MenuItem>
-                        <MenuItem value='fr'>
-                          Français
-                        </MenuItem>
                       </Select>
                     </FormControl>
                   </Grid>

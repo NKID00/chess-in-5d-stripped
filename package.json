@@ -140,6 +140,7 @@
     "lzutf8": "^0.5.8",
     "moment": "^2.29.1",
     "nanoevents": "^5.1.13",
+    "nedb-promises": "^4.1.2",
     "notistack": "^1.0.0",
     "react": "^16.13.1",
     "react-codemirror2": "^7.2.1",

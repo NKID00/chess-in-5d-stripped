@@ -55,7 +55,7 @@ export const init = (emitter) => {
   authCheck(emitter);
   window.setInterval(() => {
     authCheck(emitter);
-  }, 15*1000);
+  }, 30*1000);
 }
 
 export const login = async (username, password, emitter) => {
