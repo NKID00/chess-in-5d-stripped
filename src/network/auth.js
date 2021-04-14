@@ -22,6 +22,7 @@ const authCheck = async (emitter) => {
       if(storedAuth.xmpp === null) {
         xmpp(emitter);
       }
+      //Do token refresh every 30 minutes
       if(currentTime - storedAuth.lastTokenRefresh > 10*60*1000) {
         res = await axios.get(`${serverUrl}/refreshToken`, {
           headers: {
@@ -55,7 +56,7 @@ export const init = (emitter) => {
   authCheck(emitter);
   window.setInterval(() => {
     authCheck(emitter);
-  }, 30*1000);
+  }, 60*1000);
 }
 
 export const login = async (username, password, emitter) => {

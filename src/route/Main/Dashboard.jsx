@@ -81,7 +81,7 @@ class Motd extends React.Component {
   }
   async componentDidMount() {
     this.setState({
-      message: await motd.getMotd()
+      message: await motd.get()
     });
   }
   render() {

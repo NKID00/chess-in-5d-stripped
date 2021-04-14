@@ -3,6 +3,7 @@ import React from 'react';
 import { Trans } from '@lingui/macro';
 
 import LinkButton from 'components/LinkButton';
+import ProfileMenu from 'components/ProfileMenu';
 
 import EmitterContext from 'EmitterContext';
 import * as authStore from 'state/auth';
@@ -29,7 +30,7 @@ export default class LoginButton extends React.Component {
   render() {
     if(this.state.loggedIn) {
       return (
-        <>{this.state.auth.username}</>
+        <ProfileMenu username={this.state.auth.username} />
       );
     }
     else if(this.state.auth.username.length > 0) {

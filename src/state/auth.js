@@ -38,8 +38,8 @@ export const isLoggedIn = () => {
   if(storedAuth.token === null) { return false; }
   //If we have not properly communicated with the server for longer than 10 seconds, not logged in
   //if(currentTime - storedAuth.lastOnline > 10*1000) { return false; }
-  //If we have not done an auth check with the server for longer than 60 seconds, not logged in
-  if(currentTime - storedAuth.lastAuthCheck > 60*1000) { return false; }
+  //If we have not done an auth check with the server for longer than 2*60 seconds, not logged in
+  if(currentTime - storedAuth.lastAuthCheck > 2*60*1000) { return false; }
   //If we have not refreshed token in 30*60 seconds, not logged in
   if(currentTime - storedAuth.lastTokenRefresh > 30*60*1000) { return false; }
   return true;
