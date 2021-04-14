@@ -28,6 +28,7 @@ class Login extends React.Component {
   static contextType = EmitterContext;
   state = {
     auth: authStore.get(),
+    loading: false,
     usernameError: '',
     password: '',
     passwordError: '',
@@ -46,7 +47,7 @@ class Login extends React.Component {
       }
       this.setState({ auth: authStore.get() });
     });
-
+    
     //Update state if settings store is changed
     this.settingsListener = this.context.on('authUpdate', () => {
       this.setState({ serverUrl: settings.get().server });
@@ -75,6 +76,7 @@ class Login extends React.Component {
     }
   }
   async login() {
+    this.setState({ loading: true });
     try {
       await auth.login(this.state.auth.username, this.state.password, this.context);
       this.redirect();
@@ -109,6 +111,7 @@ class Login extends React.Component {
         }
       }
     }
+    this.setState({ loading: false });
   }
   render() {
     return (
@@ -123,7 +126,7 @@ class Login extends React.Component {
                 </Typography>
               </Grid>
               <Grid item xs={12}>
-                <Typography variant='body'>
+                <Typography variant='body2'>
                   <Trans>Connecting to:</Trans>
                   <Link
                     target='_blank'
@@ -169,7 +172,7 @@ class Login extends React.Component {
                 </FormControl>
               </Grid>
               <Grid item xs={12}>
-                <Link component={RouterLink} to='/register'>
+                <Link component={RouterLink} to='/login'>
                   <Trans>Don't have an account?</Trans>
                 </Link>
               </Grid>
@@ -189,6 +192,7 @@ class Login extends React.Component {
                   <Grid item xs={6} md={3}>
                     <Button
                       fullWidth
+                      disabled={this.state.loading}
                       variant='outlined'
                       onClick={this.login.bind(this)}
                     >

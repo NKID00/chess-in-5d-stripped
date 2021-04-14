@@ -90,7 +90,13 @@ class Motd extends React.Component {
         <CardContent>
           <Typography variant='h6'>
             <Trans>Message of the day from:</Trans>
-            <Link>{' ' + settings.get().server}</Link>
+            <Link
+              target='_blank'
+              rel='noopener'
+              href={settings.get().server}
+            >
+              {' ' + settings.get().server}
+            </Link>
           </Typography>
           <Typography variant='body2'>
             {this.state.message === null ?

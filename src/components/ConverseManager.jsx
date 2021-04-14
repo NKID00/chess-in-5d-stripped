@@ -9,7 +9,6 @@ import 'converse.js/dist/converse.min.css';
 import 'converse.js/dist/icons';
 import 'converse.js/dist/emojis';
 import 'converse.js/dist/sounds/msg_received.ogg';
-import 'converse.js/dist/locales/fr-LC_MESSAGES-converse-po';
 import 'converse.js/logo/conversejs-filled.svg';
 
 export default class ConverseManager extends React.Component {
@@ -30,7 +29,7 @@ export default class ConverseManager extends React.Component {
           var listeners = [];
 
           //Enter all the default rooms
-          var enterDefaultRooms = () => {
+          var enterRooms = () => {
             var defaultRooms = authStore.get().xmpp.defaultRooms;
             if(Array.isArray(defaultRooms)) {
               for(var i = 0;i < defaultRooms.length;i++) {
@@ -54,11 +53,13 @@ export default class ConverseManager extends React.Component {
           }
 
           //Add listeners to listen for auth store updates
-          listeners.push(emitter.on('authUpdate', enterDefaultRooms.bind(this)));
+          listeners.push(emitter.on('authUpdate', enterRooms.bind(this)));
           listeners.push(emitter.on('authUpdate', logoutCheck.bind(this)));
+          //Converse listeners
+          _converse.api.listen.on('chatBoxClosed', enterRooms.bind(this));
 
           //Initial function calls
-          enterDefaultRooms();
+          enterRooms();
           logoutCheck();
         });
       }

@@ -28,6 +28,7 @@ class Register extends React.Component {
   static contextType = EmitterContext;
   state = {
     auth: authStore.get(),
+    loading: false,
     usernameError: '',
     password: '',
     passwordError: '',
@@ -77,6 +78,7 @@ class Register extends React.Component {
     }
   }
   async register() {
+    this.setState({ loading: true });
     try {
       if(this.state.password !== this.state.password2) {
         this.setState({
@@ -89,6 +91,7 @@ class Register extends React.Component {
         await auth.register(this.state.auth.username, this.state.password, this.context);
         this.redirect();
       }
+      this.setState({ loading: false });
     }
     catch(err) {
       //Describe error states and provide feedback
@@ -97,22 +100,25 @@ class Register extends React.Component {
         this.props.enqueueSnackbar(err.message, {variant: 'error'});
       }
       else if(res.status === 403) {
-        if(res.data.error.includes('User not found!')) {
+        if(res.data.error.includes('Username already exists!')) {
           this.setState({
-            usernameError: 'User does not exist!',
-            passwordError: ''
+            usernameError: 'Username already taken!',
+            passwordError: '',
+            passwordError2: ''
           });
         }
         else if(res.data.error.includes('Username is invalid!')) {
           this.setState({
             usernameError: res.data.error,
-            passwordError: ''
+            passwordError: '',
+            passwordError2: ''
           });
         }
-        else if(res.data.error.includes('Password do not match!')) {
+        else if(res.data.error.includes('Username is blacklisted')) {
           this.setState({
-            usernameError: '',
-            passwordError: 'Password incorrect!'
+            usernameError: res.data.error,
+            passwordError: '',
+            passwordError2: ''
           });
         }
         else {
@@ -134,7 +140,7 @@ class Register extends React.Component {
                 </Typography>
               </Grid>
               <Grid item xs={12}>
-                <Typography variant='body'>
+                <Typography variant='body2'>
                   <Trans>Connecting to:</Trans>
                   <Link
                     target='_blank'
@@ -218,6 +224,7 @@ class Register extends React.Component {
                     <Button
                       fullWidth
                       variant='outlined'
+                      disabled={this.state.loading}
                       onClick={this.register.bind(this)}
                     >
                       <Trans>Sign Up</Trans>
