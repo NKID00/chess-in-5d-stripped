@@ -8,7 +8,11 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Hidden from '@material-ui/core/Hidden';
 import Grid from '@material-ui/core/Grid';
+import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
+
+import * as motd from 'network/motd';
+import * as settings from 'state/settings';
 
 class Welcome extends React.Component {
   render() {
@@ -71,6 +75,36 @@ class DiscordJoin extends React.Component {
   }
 }
 
+class Motd extends React.Component {
+  state = {
+    message: null
+  }
+  async componentDidMount() {
+    this.setState({
+      message: await motd.getMotd()
+    });
+  }
+  render() {
+    return (
+      <Card>
+        <CardContent>
+          <Typography variant='h6'>
+            <Trans>Message of the day from:</Trans>
+            <Link>{' ' + settings.get().server}</Link>
+          </Typography>
+          <Typography variant='body2'>
+            {this.state.message === null ?
+              ''
+            :
+              this.state.message
+            }
+          </Typography>
+        </CardContent>
+      </Card>
+    );
+  }
+}
+
 export default class Dashboard extends React.Component {
   render() {
     return (
@@ -88,6 +122,9 @@ export default class Dashboard extends React.Component {
               </Grid>
             </Grid>
             <Grid item xs={6}>
+              <Grid item xs={12}>
+                <Motd />
+              </Grid>
             </Grid>
           </Grid>
         </Hidden>
@@ -95,6 +132,9 @@ export default class Dashboard extends React.Component {
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <Welcome />
+            </Grid>
+            <Grid item xs={12}>
+              <Motd />
             </Grid>
             <Grid item xs={12}>
               <DiscordJoin />
