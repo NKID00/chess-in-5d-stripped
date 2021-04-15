@@ -12,7 +12,7 @@ import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 import ColorPicker from 'components/ColorPicker';
-import ChessRenderer from 'components/ChessRenderer';
+import Renderer from 'components/player/Renderer';
 import Chess from '5d-chess-js';
 
 import EmitterContext from 'EmitterContext';
@@ -65,7 +65,7 @@ export default class Palette extends React.Component {
       <Box m={2}>
         <Grid container spacing={4}>
           <Grid item xs={12} md={8}>
-            <ChessRenderer
+            <Renderer
               ref={this.chessRenderer}
               height='70vh'
               width={1}

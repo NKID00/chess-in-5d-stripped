@@ -12,6 +12,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Container from '@material-ui/core/Container';
 import FormControl from '@material-ui/core/FormControl';
 import Grid from '@material-ui/core/Grid';
+import LinearProgress from '@material-ui/core/LinearProgress';
 import Link from '@material-ui/core/Link';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
@@ -118,6 +119,11 @@ class Login extends React.Component {
       <Container maxWidth='sm'>
         <Box m={8} />
         <Card>
+          {this.state.loading ?
+            <LinearProgress />
+          :
+            <></>
+          }
           <CardContent>
             <Grid container spacing={2}>
               <Grid item xs={12}>
@@ -167,12 +173,25 @@ class Login extends React.Component {
                     onChange={(event) => {
                       this.setState({ password: event.target.value });
                     }}
+                    onKeyPress={(event) => {
+                      if(event.key === 'Enter') {
+                        this.login();
+                      }
+                    }}
                     label={<Trans>Password</Trans>}
                   />
                 </FormControl>
               </Grid>
               <Grid item xs={12}>
-                <Link component={RouterLink} to='/login'>
+                <Link component={RouterLink} 
+                  to={(() => {
+                    var search = new URLSearchParams(this.props.location.search);
+                    if(search.has('redirect')) {
+                      return `/register?redirect=${search.get('redirect')}`;
+                    }
+                    return '/register';
+                  })()}
+                >
                   <Trans>Don't have an account?</Trans>
                 </Link>
               </Grid>
@@ -185,6 +204,7 @@ class Login extends React.Component {
                   <Grid item xs={6} md={3}>
                     <Button
                       fullWidth
+                      onClick={this.redirect.bind(this)}
                     >
                       <Trans>Back</Trans>
                     </Button>

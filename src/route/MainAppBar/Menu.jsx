@@ -13,6 +13,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 
 import HomeIcon from '@material-ui/icons/Home';
 import { GiPawn } from 'react-icons/gi';
+import ExtensionIcon from '@material-ui/icons/Extension';
 import TimelineIcon from '@material-ui/icons/Timeline';
 import CreateIcon from '@material-ui/icons/Create';
 import MenuBookIcon from '@material-ui/icons/MenuBook';
@@ -49,6 +50,21 @@ class Menu extends React.Component {
           </ListItemIcon>
           <ListItemText>
             <Trans>Play</Trans>
+          </ListItemText>
+          <Box m={2} />
+        </ListItem>
+        <ListItem
+          button
+          onClick={() => {
+            this.props.history.push('/puzzles');
+            if(typeof this.props.onClose === 'function') { this.props.onClose(); }
+          }}
+        >
+          <ListItemIcon>
+            <ExtensionIcon />
+          </ListItemIcon>
+          <ListItemText>
+            <Trans>Puzzles</Trans>
           </ListItemText>
           <Box m={2} />
         </ListItem>

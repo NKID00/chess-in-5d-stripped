@@ -113,6 +113,18 @@ export default class General extends React.Component {
                       />
                     </FormControl>
                   </Grid>
+                  <Grid item xs={12} lg={6}>
+                    <FormControl fullWidth>
+                      <TextField
+                        variant='outlined'
+                        value={this.state.settings.key}
+                        onChange={(event) => {
+                          this.setState(deepmerge(this.state, { settings: { server: event.target.value } }));
+                        }}
+                        label={<Trans>Server Key</Trans>}
+                      />
+                    </FormControl>
+                  </Grid>
                 </Grid>
               </AccordionDetails>
             </Accordion>

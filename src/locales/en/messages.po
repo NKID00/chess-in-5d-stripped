@@ -13,18 +13,351 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/route/MainAppBar/Menu.jsx:25
+#: src/route/Main/Dashboard.jsx:54
+msgid "5DCWMTT Discord"
+msgstr "5DCWMTT Discord"
+
+#: src/route/Main/Register.jsx:219
+msgid "Already have an account?"
+msgstr "Already have an account?"
+
+#: src/route/MainAppBar/Menu.jsx:81
+msgid "Analyze"
+msgstr "Analyze"
+
+#: src/route/Main/Settings/Palette.jsx:455
+msgid "Arrows"
+msgstr "Arrows"
+
+#: src/route/Main/Login.jsx:201
+#: src/route/Main/Register.jsx:232
+msgid "Back"
+msgstr "Back"
+
+#: src/route/Main/Settings/Palette.jsx:86
+msgid "Background"
+msgstr "Background"
+
+#: src/route/Main/Settings/Palette.jsx:131
+msgid "Background Stripes"
+msgstr "Background Stripes"
+
+#: src/route/Main/Settings/Palette.jsx:208
+msgid "Black Board Border"
+msgstr "Black Board Border"
+
+#: src/route/Main/Settings/Palette.jsx:316
+msgid "Black Board Labels"
+msgstr "Black Board Labels"
+
+#: src/route/Main/Settings/Palette.jsx:217
+msgid "Black Board Outline"
+msgstr "Black Board Outline"
+
+#: src/route/Main/Settings/Palette.jsx:370
+msgid "Black Squares"
+msgstr "Black Squares"
+
+#: src/route/Main/Settings/Palette.jsx:185
+msgid "Board Borders"
+msgstr "Board Borders"
+
+#: src/route/Main/Settings/Palette.jsx:284
+msgid "Board Labels"
+msgstr "Board Labels"
+
+#: src/route/Main/Settings/Palette.jsx:262
+msgid "Board Shadow"
+msgstr "Board Shadow"
+
+#: src/route/Main/Settings/Palette.jsx:424
+msgid "Capture Move Highlights"
+msgstr "Capture Move Highlights"
+
+#: src/route/Main/Settings/Palette.jsx:226
+msgid "Check Board Border"
+msgstr "Check Board Border"
+
+#: src/route/Main/Settings/Palette.jsx:325
+msgid "Check Board Labels"
+msgstr "Check Board Labels"
+
+#: src/route/Main/Settings/Palette.jsx:235
+msgid "Check Board Outline"
+msgstr "Check Board Outline"
+
+#: src/route/Main/Settings/Palette.jsx:478
+msgid "Check Move Arrow"
+msgstr "Check Move Arrow"
+
+#: src/route/Main/Settings/Palette.jsx:487
+msgid "Check Move Arrow Outline"
+msgstr "Check Move Arrow Outline"
+
+#: src/route/Main/Settings/Palette.jsx:109
+msgid "Checkered Background - Dark Rectangle Color"
+msgstr "Checkered Background - Dark Rectangle Color"
+
+#: src/route/Main/Settings/Palette.jsx:100
+msgid "Checkered Background - Light Rectangle Color"
+msgstr "Checkered Background - Light Rectangle Color"
+
+#: src/route/Main/Register.jsx:207
+msgid "Confirm Password"
+msgstr "Confirm Password"
+
+#: src/route/Main/Login.jsx:136
+#: src/route/Main/Register.jsx:150
+msgid "Connecting to:"
+msgstr "Connecting to:"
+
+#: src/route/Main/Settings/Palette.jsx:532
+msgid "Custom Arrow #1"
+msgstr "Custom Arrow #1"
+
+#: src/route/Main/Settings/Palette.jsx:541
+msgid "Custom Arrow #1 Outline"
+msgstr "Custom Arrow #1 Outline"
+
+#: src/route/Main/Settings/Palette.jsx:550
+msgid "Custom Arrow #2"
+msgstr "Custom Arrow #2"
+
+#: src/route/Main/Settings/Palette.jsx:559
+msgid "Custom Arrow #2 Outline"
+msgstr "Custom Arrow #2 Outline"
+
+#: src/route/Main/Settings/Palette.jsx:568
+msgid "Custom Arrow #3"
+msgstr "Custom Arrow #3"
+
+#: src/route/Main/Settings/Palette.jsx:577
+msgid "Custom Arrow #3 Outline"
+msgstr "Custom Arrow #3 Outline"
+
+#: src/route/Main/Settings/Palette.jsx:586
+msgid "Custom Arrow #4"
+msgstr "Custom Arrow #4"
+
+#: src/route/Main/Settings/Palette.jsx:595
+msgid "Custom Arrow #4 Outline"
+msgstr "Custom Arrow #4 Outline"
+
+#: src/route/Main/Settings/Palette.jsx:509
+msgid "Custom Arrows"
+msgstr "Custom Arrows"
+
+#: src/route/Main/Settings/Palette.jsx:154
+msgid "Dark Rectangle - Black Stripe Color"
+msgstr "Dark Rectangle - Black Stripe Color"
+
+#: src/route/Main/Settings/Palette.jsx:163
+msgid "Dark Rectangle - White Stripe Color"
+msgstr "Dark Rectangle - White Stripe Color"
+
+#: src/route/MainAppBar/Menu.jsx:36
 msgid "Dashboard"
 msgstr "Dashboard"
 
-#: src/route/MainAppBar.jsx:42
-msgid "Login"
-msgstr "Login"
+#: src/route/Main/Settings/Palette.jsx:514
+msgid "Default Custom Arrow"
+msgstr "Default Custom Arrow"
 
-#: src/route/Main/Dashboard.jsx:23
+#: src/route/Main/Settings/Palette.jsx:523
+msgid "Default Custom Arrow Outline"
+msgstr "Default Custom Arrow Outline"
+
+#: src/route/Main/Login.jsx:188
+msgid "Don't have an account?"
+msgstr "Don't have an account?"
+
+#: src/route/MainAppBar/Menu.jsx:96
+msgid "Edit"
+msgstr "Edit"
+
+#: src/components/ProfileMenu.jsx:47
+msgid "Edit Profile"
+msgstr "Edit Profile"
+
+#: src/route/Main/Settings.jsx:51
+msgid "General"
+msgstr "General"
+
+#: src/route/Main/Settings.jsx:54
+msgid "Graphics"
+msgstr "Graphics"
+
+#: src/route/Main/Settings/Palette.jsx:244
+msgid "Inactive Board Border"
+msgstr "Inactive Board Border"
+
+#: src/route/Main/Settings/Palette.jsx:334
+msgid "Inactive Board Labels"
+msgstr "Inactive Board Labels"
+
+#: src/route/Main/Settings/Palette.jsx:253
+msgid "Inactive Board Outline"
+msgstr "Inactive Board Outline"
+
+#: src/route/Main/Dashboard.jsx:40
+msgid "Join the community!"
+msgstr "Join the community!"
+
+#: src/route/Main/Settings/General.jsx:64
+msgid "Language"
+msgstr "Language"
+
+#: src/route/MainAppBar/Menu.jsx:66
+msgid "Learn"
+msgstr "Learn"
+
+#: src/route/Main/Settings/Palette.jsx:136
+msgid "Light Rectangle - Black Stripe Color"
+msgstr "Light Rectangle - Black Stripe Color"
+
+#: src/route/Main/Settings/Palette.jsx:145
+msgid "Light Rectangle - White Stripe Color"
+msgstr "Light Rectangle - White Stripe Color"
+
+#: src/route/Main/Settings/General.jsx:70
+#: src/route/Main/Settings/General.jsx:76
+msgid "Locale"
+msgstr "Locale"
+
+#: src/components/ProfileMenu.jsx:54
+msgid "Log Out"
+msgstr "Log Out"
+
+#: src/route/MainAppBar.jsx:42
+#~ msgid "Login"
+#~ msgstr "Login"
+
+#: src/route/Main/Dashboard.jsx:45
+msgid "Looking for people to play with? Join the 5DCWMTT Discord!"
+msgstr "Looking for people to play with? Join the 5DCWMTT Discord!"
+
+#: src/route/Main/Dashboard.jsx:92
+msgid "Message of the day from:"
+msgstr "Message of the day from:"
+
+#: src/route/Main/Settings/Palette.jsx:460
+msgid "Move Arrow"
+msgstr "Move Arrow"
+
+#: src/route/Main/Settings/Palette.jsx:469
+msgid "Move Arrow Outline"
+msgstr "Move Arrow Outline"
+
+#: src/route/Main/Settings/Palette.jsx:406
+msgid "Move Highlights"
+msgstr "Move Highlights"
+
+#: src/route/Main/Settings/General.jsx:100
+msgid "Network"
+msgstr "Network"
+
+#: src/route/Main/Dashboard.jsx:68
+msgid "Open 5D Chess Discord"
+msgstr "Open 5D Chess Discord"
+
+#: src/route/Main/Settings.jsx:53
+msgid "Palette"
+msgstr "Palette"
+
+#: src/route/Main/Login.jsx:176
+#: src/route/Main/Register.jsx:190
+msgid "Password"
+msgstr "Password"
+
+#: src/route/Main/Settings/Palette.jsx:433
+msgid "Past Capture Move Highlights"
+msgstr "Past Capture Move Highlights"
+
+#: src/route/Main/Settings/Palette.jsx:415
+msgid "Past Move Highlights"
+msgstr "Past Move Highlights"
+
+#: src/route/Main/Settings/Palette.jsx:397
+msgid "Piece Highlights"
+msgstr "Piece Highlights"
+
+#: src/route/MainAppBar/Menu.jsx:51
+msgid "Play"
+msgstr "Play"
+
+#: src/route/Main/Settings/General.jsx:112
+msgid "Server Url"
+msgstr "Server Url"
+
+#: src/route/MainAppBar/Menu.jsx:112
+msgid "Settings"
+msgstr "Settings"
+
+#: src/components/LoginButton.jsx:41
+#: src/route/Main/Login.jsx:131
+#: src/route/Main/Login.jsx:211
+msgid "Sign In"
+msgstr "Sign In"
+
+#: src/components/LoginButton.jsx:50
+#: src/route/Main/Register.jsx:145
+#: src/route/Main/Register.jsx:242
+msgid "Sign Up"
+msgstr "Sign Up"
+
+#: src/route/Main/Settings/Palette.jsx:91
+msgid "Solid Background Color"
+msgstr "Solid Background Color"
+
+#: src/route/Main/Settings/Palette.jsx:356
+msgid "Square"
+msgstr "Square"
+
+#: src/route/Main/Settings/Palette.jsx:392
+msgid "Square Highlights"
+msgstr "Square Highlights"
+
+#: src/route/Main/Settings.jsx:52
+msgid "Theme"
+msgstr "Theme"
+
+#: src/route/Main/Dashboard.jsx:26
 msgid "This view is still a work in progress."
 msgstr "This view is still a work in progress."
 
-#: src/route/Main/Dashboard.jsx:20
+#: src/route/Main/Settings/Palette.jsx:289
+msgid "Timeline Labels"
+msgstr "Timeline Labels"
+
+#: src/route/Main/Settings/Palette.jsx:298
+msgid "Turn Labels"
+msgstr "Turn Labels"
+
+#: src/route/Main/Login.jsx:159
+#: src/route/Main/Register.jsx:173
+msgid "Username"
+msgstr "Username"
+
+#: src/route/Main/Dashboard.jsx:59
+msgid "Want to contribute? Working on a 5D Chess project? Join the Open 5D Chess Discord!"
+msgstr "Want to contribute? Working on a 5D Chess project? Join the Open 5D Chess Discord!"
+
+#: src/route/Main/Dashboard.jsx:23
 msgid "Welcome to Chess In 5D!"
 msgstr "Welcome to Chess In 5D!"
+
+#: src/route/Main/Settings/Palette.jsx:190
+msgid "White Board Border"
+msgstr "White Board Border"
+
+#: src/route/Main/Settings/Palette.jsx:307
+msgid "White Board Labels"
+msgstr "White Board Labels"
+
+#: src/route/Main/Settings/Palette.jsx:199
+msgid "White Board Outline"
+msgstr "White Board Outline"
+
+#: src/route/Main/Settings/Palette.jsx:361
+msgid "White Squares"
+msgstr "White Squares"

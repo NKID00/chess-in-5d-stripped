@@ -1,6 +1,8 @@
 const deepmerge = require('deepmerge');
 const store = require('store');
 
+var collections = require('network/db').init();
+
 const defaultTexture = {
   highlight: null,
   whiteSquare: null,

@@ -1,7 +1,10 @@
 import React from 'react';
+import { withRouter } from 'react-router';
 
 import { Trans } from '@lingui/macro';
 
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
+import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import Paper from '@material-ui/core/Paper';
 import Popper from '@material-ui/core/Popper';
@@ -13,7 +16,7 @@ import UserAvatar from 'components/UserAvatar';
 import EmitterContext from 'EmitterContext';
 import * as auth from 'network/auth';
 
-export default class ProfileMenu extends React.Component {
+class ProfileMenu extends React.Component {
   static contextType = EmitterContext;
   avatarRef = React.createRef();
   state = {
@@ -36,19 +39,35 @@ export default class ProfileMenu extends React.Component {
           style={{ zIndex: 1900 }}
         >
           <Paper>
-            <MenuList autoFocusItem={this.state.showMenu}>
-              <MenuItem>{this.props.username}</MenuItem>
-              <MenuItem
-                onClick={() => {
-                  auth.logout(this.context);
-                }}
-              >
-                <Trans>Log Out</Trans>
-              </MenuItem>
-            </MenuList>
+            <ClickAwayListener
+              onClickAway={() => {
+                this.setState({ showMenu: false });
+              }}
+            >
+              <MenuList autoFocusItem={this.state.showMenu}>
+                <MenuItem disabled>{this.props.username}</MenuItem>
+                <MenuItem
+                  onClick={() => {
+                    this.props.history.push('/profile');
+                  }}
+                >
+                  <Trans>Edit Profile</Trans>
+                </MenuItem>
+                <Divider />
+                <MenuItem
+                  onClick={() => {
+                    auth.logout(this.context);
+                  }}
+                >
+                  <Trans>Log Out</Trans>
+                </MenuItem>
+              </MenuList>
+            </ClickAwayListener>
           </Paper>
         </Popper>
       </>
     );
   }
 }
+
+export default withRouter(ProfileMenu);

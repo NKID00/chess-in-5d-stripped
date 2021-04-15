@@ -5,9 +5,10 @@ import Paper from '@material-ui/core/Paper';
 
 import MainAppBar from 'route/MainAppBar';
 import Dashboard from 'route/Main/Dashboard';
+import Play from 'route/Main/Play';
+import Settings from 'route/Main/Settings';
 import Register from 'route/Main/Register';
 import Login from 'route/Main/Login';
-import Settings from 'route/Main/Settings';
 
 export default class Main extends React.Component {
   backgroundRef = React.createRef();
@@ -37,6 +38,9 @@ export default class Main extends React.Component {
         <Switch>
           <Route exact path='/'>
             <Dashboard />
+          </Route>
+          <Route path='/play'>
+            <Play />
           </Route>
           <Route path='/settings'>
             <Settings />

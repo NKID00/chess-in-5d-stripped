@@ -8,7 +8,7 @@ import Chess from '5d-chess-js';
 import EmitterContext from 'EmitterContext';
 import * as crPalette from 'state/palette';
 import * as crConfig from 'state/config';
-import * as crTexture from 'state/texture';
+//import * as crTexture from 'state/texture';
 
 const deepmerge = require('deepmerge');
 const deepequal = require('fast-deep-equal');
@@ -20,7 +20,7 @@ export default class Renderer extends React.Component {
   componentDidMount() {
     //Attach to div element
     this.chessRenderer = new ChessRenderer(
-      this.rootRef.current, 
+      this.rootRef.current,
       deepmerge({ app: { interactive: false } }, crConfig.get()),
       crPalette.get()
     );
@@ -36,6 +36,8 @@ export default class Renderer extends React.Component {
     //Update palette and config right now
     this.updatePalette();
     this.updateConfig();
+    //Update renderer data
+    this.updateRenderer();
   }
   updatePalette() {
     //Update chessRenderer palette based on global palette settings and local palette props
@@ -60,7 +62,42 @@ export default class Renderer extends React.Component {
     }
   }
   updateTexture() {
-    if(crTexture.get().highlight !== null) { this.chessRenderer.global.texture('highlight', crTexture.get().highlight); }
+    //if(crTexture.get().highlight !== null) { this.chessRenderer.global.texture('highlight', crTexture.get().highlight); }
+  }
+  updateRenderer() {
+    if(typeof this.props.board === 'object') {
+      this.chessRenderer.global.board(this.props.board, true);
+    }
+    if(typeof this.props.actionHistory === 'object') {
+      this.chessRenderer.global.actionHistory(this.props.actionHistory, true);
+    }
+    if(typeof this.props.moveBuffer === 'object') {
+      this.chessRenderer.global.moveBuffer(this.props.moveBuffer, true);
+    }
+    if(typeof this.props.checks === 'object') {
+      this.chessRenderer.global.checks(this.props.checks, true);
+    }
+    if(typeof this.props.board === 'object') {
+      this.chessRenderer.global.emitter.emit('boardUpdate', this.props.board);
+    }
+    if(typeof this.props.actionHistory === 'object') {
+      this.chessRenderer.global.emitter.emit('actionHistoryUpdate', this.props.actionHistory);
+    }
+    if(typeof this.props.moveBuffer === 'object') {
+      this.chessRenderer.global.emitter.emit('moveBufferUpdate', this.props.moveBuffer);
+    }
+    if(typeof this.props.checks === 'object') {
+      this.chessRenderer.global.emitter.emit('checksUpdate', this.props.checks);
+    }
+    if(typeof this.props.availableMoves === 'object') {
+      this.chessRenderer.global.board(this.props.availableMoves);
+    }
+    if(typeof this.props.pastAvailableMoves === 'object') {
+      this.chessRenderer.global.board(this.props.pastAvailableMoves);
+    }
+  }
+  refreshAttach() {
+    this.chessRenderer.global.attach(this.rootRef.current);
   }
   componentDidUpdate(prevProps) {
     //Look for changes in div width or height and update chessRenderer
@@ -77,6 +114,8 @@ export default class Renderer extends React.Component {
     if(!deepequal(prevProps.config, this.props.config)) {
       this.updateConfig();
     }
+    //Update renderer data
+    this.updateRenderer();
   }
   componentWillUnmount() {
     //Stop listening to palette and config setting changes

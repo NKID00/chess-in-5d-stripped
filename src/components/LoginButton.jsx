@@ -1,14 +1,15 @@
 import React from 'react';
+import { withRouter } from 'react-router';
 
 import { Trans } from '@lingui/macro';
 
-import LinkButton from 'components/LinkButton';
+import Button from '@material-ui/core/Button';
 import ProfileMenu from 'components/ProfileMenu';
 
 import EmitterContext from 'EmitterContext';
 import * as authStore from 'state/auth';
 
-export default class LoginButton extends React.Component {
+class LoginButton extends React.Component {
   static contextType = EmitterContext;
   state = {
     loggedIn: authStore.isLoggedIn(),
@@ -35,21 +36,37 @@ export default class LoginButton extends React.Component {
     }
     else if(this.state.auth.username.length > 0) {
       return (
-        <LinkButton
-          to='/login'
+        <Button
+          onClick={(() => {
+            if(this.props.location.pathname.length > 0 && this.props.location.pathname !== '/login') {
+              this.props.history.push(`/login?redirect=${this.props.location.pathname+this.props.location.search}`);
+            }
+            else {
+              this.props.history.push('/login');
+            }
+          })}
         >
           <Trans>Sign In</Trans>
-        </LinkButton>
+        </Button>
       );
     }
     else {
       return (
-        <LinkButton
-          to='/register'
+        <Button
+          onClick={(() => {
+            if(this.props.location.pathname.length > 0 && this.props.location.pathname !== '/register') {
+              this.props.history.push(`/register?redirect=${this.props.location.pathname+this.props.location.search}`);
+            }
+            else {
+              this.props.history.push('/register');
+            }
+          })}
         >
           <Trans>Sign Up</Trans>
-        </LinkButton>
+        </Button>
       );
     }
   }
 }
+
+export default withRouter(LoginButton);
