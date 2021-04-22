@@ -49,6 +49,7 @@ export default class ConverseManager extends React.Component {
                 catch(err) {}
               }
               _converse.api.user.logout();
+              window.location.reload();
             }
           }
 
