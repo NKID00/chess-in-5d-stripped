@@ -34,21 +34,24 @@ export default class Palette extends React.Component {
     this.paletteListener = this.context.on('paletteUpdate', () => {
       this.setState({ palette: crPalette.get() });
     });
-    if(this.chessRenderer.current !== null) {
-      //Setup renderer with example
-      var cr = this.chessRenderer.current.chessRenderer;
-      var chess = new Chess();
-      chess.import(`[Board "Standard"]
+    //Setup renderer with example
+    var cr = this.chessRenderer.current.chessRenderer;
+    var chess = new Chess();
+    chess.import(`[Board "Standard"]
 [Mode "5D"]
 1. e3 / e6
 2. (0T2)Nb1>>(0T1)b3~ (>L1)`);
-      cr.global.sync(chess);
-      cr.global.availableMoves(chess.moves('object', false, false, false));
+    this.setState({
+      board: chess.board,
+      actionHistory: chess.actionHistory,
+      moveBuffer: chess.moveBuffer,
+      checks: chess.checks,
+      availableMoves: chess.moves('object', false, false, false)
+    });
+    cr.zoom.fullBoard();
+    cr.global.emitter.on('resizeEvent', () => {
       cr.zoom.fullBoard();
-      cr.global.emitter.on('resizeEvent', () => {
-        cr.zoom.fullBoard();
-      });
-    }
+    });
   }
   componentDidUpdate(prevProps, prevState) {
     //Update palette settings if state has changed
@@ -69,6 +72,12 @@ export default class Palette extends React.Component {
               ref={this.chessRenderer}
               height='70vh'
               width={1}
+              board={this.state.board}
+              actionHistory={this.state.actionHistory}
+              moveBuffer={this.state.moveBuffer}
+              checks={this.state.checks}
+              availableMoves={this.state.availableMoves}
+              pastAvailableMoves={this.state.pastAvailableMoves}
             />
           </Grid>
           <Grid item xs={12} md={4}>

@@ -17,28 +17,6 @@ export default class Renderer extends React.Component {
   static contextType = EmitterContext;
   rootRef = React.createRef();
   chessRenderer = null;
-  componentDidMount() {
-    //Attach to div element
-    this.chessRenderer = new ChessRenderer(
-      this.rootRef.current,
-      deepmerge({ app: { interactive: false } }, crConfig.get()),
-      crPalette.get()
-    );
-    this.chessRenderer.global.sync(new Chess());
-    this.chessRenderer.zoom.fullBoard();
-    //Listen for changes in palette and config settings
-    this.paletteListener = this.context.on('paletteUpdate', () => {
-      this.updatePalette();
-    });
-    this.configListener = this.context.on('configUpdate', () => {
-      this.updateConfig();
-    });
-    //Update palette and config right now
-    this.updatePalette();
-    this.updateConfig();
-    //Update renderer data
-    this.updateRenderer();
-  }
   updatePalette() {
     //Update chessRenderer palette based on global palette settings and local palette props
     if(typeof this.props.palette === 'object') {
@@ -90,14 +68,38 @@ export default class Renderer extends React.Component {
       this.chessRenderer.global.emitter.emit('checksUpdate', this.props.checks);
     }
     if(typeof this.props.availableMoves === 'object') {
-      this.chessRenderer.global.board(this.props.availableMoves);
+      this.chessRenderer.global.availableMoves(this.props.availableMoves);
     }
     if(typeof this.props.pastAvailableMoves === 'object') {
-      this.chessRenderer.global.board(this.props.pastAvailableMoves);
+      this.chessRenderer.global.pastAvailableMoves(this.props.pastAvailableMoves);
     }
   }
   refreshAttach() {
     this.chessRenderer.global.attach(this.rootRef.current);
+  }
+  componentDidMount() {
+    //Attach to div element
+    this.chessRenderer = new ChessRenderer(
+      this.rootRef.current,
+      deepmerge({ app: { interactive: false } }, crConfig.get()),
+      crPalette.get()
+    );
+    this.chessRenderer.global.sync(new Chess());
+    this.chessRenderer.zoom.fullBoard();
+    //Listen for changes in palette and config settings
+    this.paletteListener = this.context.on('paletteUpdate', () => {
+      this.updatePalette();
+    });
+    this.configListener = this.context.on('configUpdate', () => {
+      this.updateConfig();
+    });
+    //Update palette and config right now
+    this.updatePalette();
+    this.updateConfig();
+    //Update renderer data
+    this.updateRenderer();
+    window.cr = this.chessRenderer;
+    window.ra = this.refreshAttach.bind(this);
   }
   componentDidUpdate(prevProps) {
     //Look for changes in div width or height and update chessRenderer

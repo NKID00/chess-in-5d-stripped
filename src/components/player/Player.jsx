@@ -26,7 +26,7 @@ const rowHeight = 30;
 const rowMargin = 10;
 
 export default class Player extends React.Component {
-  rootRef=React.createRef();
+  rootRef = React.createRef();
   chessRenderer = React.createRef();
   state = {
     layouts: this.layouts(),
@@ -126,6 +126,9 @@ export default class Player extends React.Component {
           if(res[keys[j]][i].y < 0) {
             res[keys[j]][i].y = maxHeight + res[keys[j]][i].y;
           }
+          if(res[keys[j]][i].y < 2 && res[keys[j]][i].y >= 0) {
+            res[keys[j]][i].y = 2;
+          }
         }
       }
     }
@@ -134,6 +137,9 @@ export default class Player extends React.Component {
         for(var i = 0;i < res[keys[j]].length;i++) { // eslint-disable-line no-redeclare
           if(res[keys[j]][i].y > maxHeight / 2) {
             res[keys[j]][i].y = -(maxHeight - res[keys[j]][i].y);
+          }
+          if(res[keys[j]][i].y < 2 && res[keys[j]][i].y >= 0) {
+            res[keys[j]][i].y = 2;
           }
         }
       }
@@ -173,6 +179,12 @@ export default class Player extends React.Component {
             ref={this.chessRenderer}
             height={1}
             width={1}
+            board={this.props.board}
+            actionHistory={this.props.actionHistory}
+            moveBuffer={this.props.moveBuffer}
+            checks={this.props.checks}
+            availableMoves={this.props.availableMoves}
+            pastAvailableMoves={this.props.pastAvailableMoves}
           />
         </div>
         <div
@@ -182,7 +194,7 @@ export default class Player extends React.Component {
             left: 0,
             width: '100%',
             height: '100%',
-            zIndex: 3000,
+            zIndex: 20,
           }}
         >
           <ResponsiveGridLayout
