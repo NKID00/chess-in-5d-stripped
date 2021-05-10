@@ -106,7 +106,7 @@ Yes, the game '5D Chess With Multiverse Time Travel' is under copyright by Thunk
 Also of note is this article from the American Bar Association (https://www.americanbar.org/groups/intellectual_property_law/publications/landslide/2014-15/march-april/its_how_you_play_game_why_videogame_rules_are_not_expression_protected_copyright_law/).
 Chess in 5D in no way aims to violate any copyright laws, but instead aims to be an open source implementation of the original ideas as presented by '5D Chess With Multiverse Time Travel'.
 
-### Copyright
+## Copyright
 
 All source code is released under AGPL v3.0 (license can be found under the LICENSE file).
 
