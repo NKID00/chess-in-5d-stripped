@@ -109,5 +109,7 @@ Chess in 5D in no way aims to violate any copyright laws, but instead aims to be
 ### Copyright
 
 All source code is released under AGPL v3.0 (license can be found under the LICENSE file).
+
 Chess piece images were derived from SVG files released under CC BY-SA v3.0 (license can be found under the PIECE_LICENSE file).
+
 Any addition copyrightable material not covered under AGPL v3.0 is released under CC BY-SA v3.0.
