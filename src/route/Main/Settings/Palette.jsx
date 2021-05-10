@@ -6,6 +6,7 @@ import Accordion from '@material-ui/core/Accordion';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import Box from '@material-ui/core/Box';
+import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
@@ -29,6 +30,17 @@ export default class Palette extends React.Component {
     palette: crPalette.get()
   }
   chessRenderer = React.createRef();
+  resetView() {
+    var cr = this.chessRenderer.current.chessRenderer;
+    var chess = new Chess();
+    chess.import(`[Board "Standard"]
+[Mode "5D"]
+1. e3 / e6
+2. (0T2)Nb1>>(0T1)b3~ (>L1)`);
+    cr.global.sync(chess);
+    cr.global.availableMoves(chess.moves('object', false, false, false));
+    cr.zoom.fullBoard();
+  }
   componentDidMount() {
     //Update state if palette settings are changed
     this.paletteListener = this.context.on('paletteUpdate', () => {
@@ -37,14 +49,7 @@ export default class Palette extends React.Component {
     if(this.chessRenderer.current !== null) {
       //Setup renderer with example
       var cr = this.chessRenderer.current.chessRenderer;
-      var chess = new Chess();
-      chess.import(`[Board "Standard"]
-[Mode "5D"]
-1. e3 / e6
-2. (0T2)Nb1>>(0T1)b3~ (>L1)`);
-      cr.global.sync(chess);
-      cr.global.availableMoves(chess.moves('object', false, false, false));
-      cr.zoom.fullBoard();
+      this.resetView();
       cr.global.emitter.on('resizeEvent', () => {
         cr.zoom.fullBoard();
       });
@@ -63,13 +68,38 @@ export default class Palette extends React.Component {
   render() {
     return (
       <Box m={2}>
-        <Grid container spacing={4}>
+        <Grid container spacing={2}>
           <Grid item xs={12} md={8}>
-            <Renderer
-              ref={this.chessRenderer}
-              height='70vh'
-              width={1}
-            />
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <Renderer
+                  ref={this.chessRenderer}
+                  height='70vh'
+                  width={1}
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <Button
+                  variant='contained'
+                  onClick={this.resetView.bind(this)}
+                  fullWidth
+                >
+                  Reset Preview
+                </Button>
+              </Grid>
+              <Grid item xs={6}>
+                <Button
+                  variant='outlined'
+                  onClick={() =>{
+                    crPalette.reset(this.context);
+                    this.resetView();
+                  }}
+                  fullWidth
+                >
+                  Reset Palette
+                </Button>
+              </Grid>
+            </Grid>
           </Grid>
           <Grid item xs={12} md={4}>
             <Accordion
@@ -87,7 +117,7 @@ export default class Palette extends React.Component {
               </AccordionSummary>
               <AccordionDetails>
                 <Grid container spacing={2}>
-                  <Grid item xs={12} lg={6}>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
                     <Typography variant='h6'><Trans>Solid Background Color</Trans></Typography>
                     <ColorPicker
                       color={this.state.palette.background.single}
@@ -96,7 +126,7 @@ export default class Palette extends React.Component {
                       }}
                     />
                   </Grid>
-                  <Grid item xs={12} lg={6}>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
                     <Typography variant='h6'><Trans>Checkered Background - Light Rectangle Color</Trans></Typography>
                     <ColorPicker
                       color={this.state.palette.background.lightRectangle}
@@ -105,7 +135,7 @@ export default class Palette extends React.Component {
                       }}
                     />
                   </Grid>
-                  <Grid item xs={12} lg={6}>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
                     <Typography variant='h6'><Trans>Checkered Background - Dark Rectangle Color</Trans></Typography>
                     <ColorPicker
                       color={this.state.palette.background.darkRectangle}
@@ -132,7 +162,7 @@ export default class Palette extends React.Component {
               </AccordionSummary>
               <AccordionDetails>
                 <Grid container spacing={2}>
-                  <Grid item xs={12} lg={6}>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
                     <Typography variant='h6'><Trans>Light Rectangle - Black Stripe Color</Trans></Typography>
                     <ColorPicker
                       color={this.state.palette.background.lightStripeBlack}
@@ -141,7 +171,7 @@ export default class Palette extends React.Component {
                       }}
                     />
                   </Grid>
-                  <Grid item xs={12} lg={6}>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
                     <Typography variant='h6'><Trans>Light Rectangle - White Stripe Color</Trans></Typography>
                     <ColorPicker
                       color={this.state.palette.background.lightStripeWhite}
@@ -150,7 +180,7 @@ export default class Palette extends React.Component {
                       }}
                     />
                   </Grid>
-                  <Grid item xs={12} lg={6}>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
                     <Typography variant='h6'><Trans>Dark Rectangle - Black Stripe Color</Trans></Typography>
                     <ColorPicker
                       color={this.state.palette.background.darkStripeBlack}
@@ -159,7 +189,7 @@ export default class Palette extends React.Component {
                       }}
                     />
                   </Grid>
-                  <Grid item xs={12} lg={6}>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
                     <Typography variant='h6'><Trans>Dark Rectangle - White Stripe Color</Trans></Typography>
                     <ColorPicker
                       color={this.state.palette.background.darkStripeWhite}
@@ -186,7 +216,7 @@ export default class Palette extends React.Component {
               </AccordionSummary>
               <AccordionDetails>
                 <Grid container spacing={2}>
-                  <Grid item xs={12} lg={6}>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
                     <Typography variant='h6'><Trans>White Board Border</Trans></Typography>
                     <ColorPicker
                       color={this.state.palette.board.whiteBorder}
@@ -195,7 +225,7 @@ export default class Palette extends React.Component {
                       }}
                     />
                   </Grid>
-                  <Grid item xs={12} lg={6}>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
                     <Typography variant='h6'><Trans>White Board Outline</Trans></Typography>
                     <ColorPicker
                       color={this.state.palette.board.whiteBorderOutline}
@@ -204,7 +234,7 @@ export default class Palette extends React.Component {
                       }}
                     />
                   </Grid>
-                  <Grid item xs={12} lg={6}>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
                     <Typography variant='h6'><Trans>Black Board Border</Trans></Typography>
                     <ColorPicker
                       color={this.state.palette.board.blackBorder}
@@ -213,7 +243,7 @@ export default class Palette extends React.Component {
                       }}
                     />
                   </Grid>
-                  <Grid item xs={12} lg={6}>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
                     <Typography variant='h6'><Trans>Black Board Outline</Trans></Typography>
                     <ColorPicker
                       color={this.state.palette.board.blackBorderOutline}
@@ -222,7 +252,7 @@ export default class Palette extends React.Component {
                       }}
                     />
                   </Grid>
-                  <Grid item xs={12} lg={6}>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
                     <Typography variant='h6'><Trans>Check Board Border</Trans></Typography>
                     <ColorPicker
                       color={this.state.palette.board.checkBorder}
@@ -231,7 +261,7 @@ export default class Palette extends React.Component {
                       }}
                     />
                   </Grid>
-                  <Grid item xs={12} lg={6}>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
                     <Typography variant='h6'><Trans>Check Board Outline</Trans></Typography>
                     <ColorPicker
                       color={this.state.palette.board.checkBorderOutline}
@@ -240,7 +270,7 @@ export default class Palette extends React.Component {
                       }}
                     />
                   </Grid>
-                  <Grid item xs={12} lg={6}>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
                     <Typography variant='h6'><Trans>Inactive Board Border</Trans></Typography>
                     <ColorPicker
                       color={this.state.palette.board.inactiveBorder}
@@ -249,7 +279,7 @@ export default class Palette extends React.Component {
                       }}
                     />
                   </Grid>
-                  <Grid item xs={12} lg={6}>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
                     <Typography variant='h6'><Trans>Inactive Board Outline</Trans></Typography>
                     <ColorPicker
                       color={this.state.palette.board.inactiveBorderOutline}
@@ -258,7 +288,7 @@ export default class Palette extends React.Component {
                       }}
                     />
                   </Grid>
-                  <Grid item xs={12} lg={6}>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
                     <Typography variant='h6'><Trans>Board Shadow</Trans></Typography>
                     <ColorPicker
                       color={this.state.palette.boardShadow.shadow}
@@ -285,7 +315,7 @@ export default class Palette extends React.Component {
               </AccordionSummary>
               <AccordionDetails>
                 <Grid container spacing={2}>
-                  <Grid item xs={12} lg={6}>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
                     <Typography variant='h6'><Trans>Timeline Labels</Trans></Typography>
                     <ColorPicker
                       color={this.state.palette.boardLabel.timeline}
@@ -294,7 +324,7 @@ export default class Palette extends React.Component {
                       }}
                     />
                   </Grid>
-                  <Grid item xs={12} lg={6}>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
                     <Typography variant='h6'><Trans>Turn Labels</Trans></Typography>
                     <ColorPicker
                       color={this.state.palette.boardLabel.turn}
@@ -303,7 +333,7 @@ export default class Palette extends React.Component {
                       }}
                     />
                   </Grid>
-                  <Grid item xs={12} lg={6}>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
                     <Typography variant='h6'><Trans>White Board Labels</Trans></Typography>
                     <ColorPicker
                       color={this.state.palette.boardLabel.whiteBoard}
@@ -312,7 +342,7 @@ export default class Palette extends React.Component {
                       }}
                     />
                   </Grid>
-                  <Grid item xs={12} lg={6}>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
                     <Typography variant='h6'><Trans>Black Board Labels</Trans></Typography>
                     <ColorPicker
                       color={this.state.palette.boardLabel.blackBoard}
@@ -321,7 +351,7 @@ export default class Palette extends React.Component {
                       }}
                     />
                   </Grid>
-                  <Grid item xs={12} lg={6}>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
                     <Typography variant='h6'><Trans>Check Board Labels</Trans></Typography>
                     <ColorPicker
                       color={this.state.palette.boardLabel.checkBoard}
@@ -330,7 +360,7 @@ export default class Palette extends React.Component {
                       }}
                     />
                   </Grid>
-                  <Grid item xs={12} lg={6}>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
                     <Typography variant='h6'><Trans>Inactive Board Labels</Trans></Typography>
                     <ColorPicker
                       color={this.state.palette.boardLabel.inactiveBoard}
@@ -357,7 +387,7 @@ export default class Palette extends React.Component {
               </AccordionSummary>
               <AccordionDetails>
                 <Grid container spacing={2}>
-                  <Grid item xs={12} lg={6}>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
                     <Typography variant='h6'><Trans>White Squares</Trans></Typography>
                     <ColorPicker
                       color={this.state.palette.square.white}
@@ -366,7 +396,7 @@ export default class Palette extends React.Component {
                       }}
                     />
                   </Grid>
-                  <Grid item xs={12} lg={6}>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
                     <Typography variant='h6'><Trans>Black Squares</Trans></Typography>
                     <ColorPicker
                       color={this.state.palette.square.black}
@@ -393,7 +423,7 @@ export default class Palette extends React.Component {
               </AccordionSummary>
               <AccordionDetails>
                 <Grid container spacing={2}>
-                  <Grid item xs={12} lg={6}>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
                     <Typography variant='h6'><Trans>Piece Highlights</Trans></Typography>
                     <ColorPicker
                       color={this.state.palette.highlight.self}
@@ -402,7 +432,7 @@ export default class Palette extends React.Component {
                       }}
                     />
                   </Grid>
-                  <Grid item xs={12} lg={6}>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
                     <Typography variant='h6'><Trans>Move Highlights</Trans></Typography>
                     <ColorPicker
                       color={this.state.palette.highlight.move}
@@ -411,7 +441,7 @@ export default class Palette extends React.Component {
                       }}
                     />
                   </Grid>
-                  <Grid item xs={12} lg={6}>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
                     <Typography variant='h6'><Trans>Past Move Highlights</Trans></Typography>
                     <ColorPicker
                       color={this.state.palette.highlight.pastMove}
@@ -420,7 +450,7 @@ export default class Palette extends React.Component {
                       }}
                     />
                   </Grid>
-                  <Grid item xs={12} lg={6}>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
                     <Typography variant='h6'><Trans>Capture Move Highlights</Trans></Typography>
                     <ColorPicker
                       color={this.state.palette.highlight.capture}
@@ -429,7 +459,7 @@ export default class Palette extends React.Component {
                       }}
                     />
                   </Grid>
-                  <Grid item xs={12} lg={6}>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
                     <Typography variant='h6'><Trans>Past Capture Move Highlights</Trans></Typography>
                     <ColorPicker
                       color={this.state.palette.highlight.pastCapture}
@@ -456,7 +486,7 @@ export default class Palette extends React.Component {
               </AccordionSummary>
               <AccordionDetails>
                 <Grid container spacing={2}>
-                  <Grid item xs={12} lg={6}>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
                     <Typography variant='h6'><Trans>Move Arrow</Trans></Typography>
                     <ColorPicker
                       color={this.state.palette.arrow.move}
@@ -465,7 +495,7 @@ export default class Palette extends React.Component {
                       }}
                     />
                   </Grid>
-                  <Grid item xs={12} lg={6}>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
                     <Typography variant='h6'><Trans>Move Arrow Outline</Trans></Typography>
                     <ColorPicker
                       color={this.state.palette.arrow.moveOutline}
@@ -474,7 +504,7 @@ export default class Palette extends React.Component {
                       }}
                     />
                   </Grid>
-                  <Grid item xs={12} lg={6}>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
                     <Typography variant='h6'><Trans>Check Move Arrow</Trans></Typography>
                     <ColorPicker
                       color={this.state.palette.arrow.check}
@@ -483,7 +513,7 @@ export default class Palette extends React.Component {
                       }}
                     />
                   </Grid>
-                  <Grid item xs={12} lg={6}>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
                     <Typography variant='h6'><Trans>Check Move Arrow Outline</Trans></Typography>
                     <ColorPicker
                       color={this.state.palette.arrow.checkOutline}
@@ -510,7 +540,7 @@ export default class Palette extends React.Component {
               </AccordionSummary>
               <AccordionDetails>
                 <Grid container spacing={2}>
-                  <Grid item xs={12} lg={6}>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
                     <Typography variant='h6'><Trans>Default Custom Arrow</Trans></Typography>
                     <ColorPicker
                       color={this.state.palette.arrow.custom}
@@ -519,7 +549,7 @@ export default class Palette extends React.Component {
                       }}
                     />
                   </Grid>
-                  <Grid item xs={12} lg={6}>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
                     <Typography variant='h6'><Trans>Default Custom Arrow Outline</Trans></Typography>
                     <ColorPicker
                       color={this.state.palette.arrow.customOutline}
@@ -528,7 +558,7 @@ export default class Palette extends React.Component {
                       }}
                     />
                   </Grid>
-                  <Grid item xs={12} lg={6}>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
                     <Typography variant='h6'><Trans>Custom Arrow #1</Trans></Typography>
                     <ColorPicker
                       color={this.state.palette.arrow.custom1}
@@ -537,7 +567,7 @@ export default class Palette extends React.Component {
                       }}
                     />
                   </Grid>
-                  <Grid item xs={12} lg={6}>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
                     <Typography variant='h6'><Trans>Custom Arrow #1 Outline</Trans></Typography>
                     <ColorPicker
                       color={this.state.palette.arrow.custom1Outline}
@@ -546,7 +576,7 @@ export default class Palette extends React.Component {
                       }}
                     />
                   </Grid>
-                  <Grid item xs={12} lg={6}>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
                     <Typography variant='h6'><Trans>Custom Arrow #2</Trans></Typography>
                     <ColorPicker
                       color={this.state.palette.arrow.custom2}
@@ -555,7 +585,7 @@ export default class Palette extends React.Component {
                       }}
                     />
                   </Grid>
-                  <Grid item xs={12} lg={6}>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
                     <Typography variant='h6'><Trans>Custom Arrow #2 Outline</Trans></Typography>
                     <ColorPicker
                       color={this.state.palette.arrow.custom2Outline}
@@ -564,7 +594,7 @@ export default class Palette extends React.Component {
                       }}
                     />
                   </Grid>
-                  <Grid item xs={12} lg={6}>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
                     <Typography variant='h6'><Trans>Custom Arrow #3</Trans></Typography>
                     <ColorPicker
                       color={this.state.palette.arrow.custom3}
@@ -573,7 +603,7 @@ export default class Palette extends React.Component {
                       }}
                     />
                   </Grid>
-                  <Grid item xs={12} lg={6}>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
                     <Typography variant='h6'><Trans>Custom Arrow #3 Outline</Trans></Typography>
                     <ColorPicker
                       color={this.state.palette.arrow.custom3Outline}
@@ -582,7 +612,7 @@ export default class Palette extends React.Component {
                       }}
                     />
                   </Grid>
-                  <Grid item xs={12} lg={6}>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
                     <Typography variant='h6'><Trans>Custom Arrow #4</Trans></Typography>
                     <ColorPicker
                       color={this.state.palette.arrow.custom4}
@@ -591,7 +621,7 @@ export default class Palette extends React.Component {
                       }}
                     />
                   </Grid>
-                  <Grid item xs={12} lg={6}>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
                     <Typography variant='h6'><Trans>Custom Arrow #4 Outline</Trans></Typography>
                     <ColorPicker
                       color={this.state.palette.arrow.custom4Outline}

@@ -1,4 +1,4 @@
-var collections = require('network/db').init();
+var collections = require('state/db').init();
 
 export const set = async (key, texture, emitter = null) => {
   var newTexture = {
@@ -13,4 +13,11 @@ export const set = async (key, texture, emitter = null) => {
 
 export const get = async (key) => {
   return (await collections.textures.findOne({ key: key }));
+}
+
+export const reset = async (emitter = null) => {
+  await collections.textures.remove({}, { multi: true });
+  if(emitter !== null) {
+    emitter.emit('textureUpdate');
+  }
 }

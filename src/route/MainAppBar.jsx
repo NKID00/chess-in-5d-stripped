@@ -18,7 +18,7 @@ export default class MainAppBar extends React.Component {
   }
   render() {
     return (
-      <React.Fragment >
+      <React.Fragment>
         <AppBar position='sticky'>
           <Toolbar>
             <IconButton 

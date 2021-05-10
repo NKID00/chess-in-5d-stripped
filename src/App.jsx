@@ -16,8 +16,15 @@ import * as auth from 'network/auth';
 
 import Main from 'route/Main';
 import UpdateToast from 'route/UpdateToast';
-import ConverseManager from 'components/ConverseManager';
+import ConverseManager from 'route/ConverseManager';
 
+import '@fontsource/domine';
+import '@fontsource/exo';
+import '@fontsource/merriweather';
+import '@fontsource/newsreader';
+import '@fontsource/open-sans';
+import '@fontsource/playfair-display';
+import '@fontsource/roboto-condensed';
 import '@fontsource/roboto';
 import '@fontsource/vollkorn';
 import 'App.css';
