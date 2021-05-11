@@ -23,10 +23,9 @@ Props:
  - pastAvailableMoves
 */
 const rowHeight = 30;
-const rowMargin = 10;
+const rowMargin = 11;
 
 export default class Player extends React.Component {
-  rootRef = React.createRef();
   chessRenderer = React.createRef();
   state = {
     layouts: this.layouts(),
@@ -93,8 +92,6 @@ export default class Player extends React.Component {
     return this.transformLayout(this.defaultLayout());
   }
   resize() {
-    this.rootRef.current.style.width = `${window.innerWidth}px`;
-    this.rootRef.current.style.height = `${window.innerHeight}px`;
     this.chessRenderer.current.refreshAttach();
     this.setState({
       width: window.innerWidth,
@@ -157,12 +154,10 @@ export default class Player extends React.Component {
   render() {
     return (
       <div
-        ref={this.rootRef}
         style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          overflow: 'hidden'
+          overflow: 'hidden',
+          margin: 0,
+          padding: 0,
         }}
       >
         <div
@@ -172,7 +167,9 @@ export default class Player extends React.Component {
             left: 0,
             width: '100%',
             height: '100%',
-            zIndex: 10,
+            margin: 0,
+            padding: 0,
+            zIndex: 1,
           }}
         >
           <Renderer
@@ -194,7 +191,8 @@ export default class Player extends React.Component {
             left: 0,
             width: '100%',
             height: '100%',
-            zIndex: 20,
+            margin: 0,
+            padding: 0,
           }}
         >
           <ResponsiveGridLayout

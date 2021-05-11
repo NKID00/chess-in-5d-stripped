@@ -2,6 +2,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   margin: 0;
+  overflow-x: hidden;
 }
 
 code {
@@ -23,4 +24,8 @@ code {
 
 #conversejs {
   z-index: 2000;
+}
+
+.react-grid-item {
+  z-index: 20;
 }
