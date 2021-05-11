@@ -113,6 +113,7 @@
   "dependencies": {
     "@fontsource/domine": "^4.3.0",
     "@fontsource/exo": "^4.3.0",
+    "@fontsource/fira-sans": "^4.3.0",
     "@fontsource/merriweather": "^4.3.0",
     "@fontsource/newsreader": "^4.3.0",
     "@fontsource/open-sans": "^4.3.0",

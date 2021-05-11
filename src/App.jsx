@@ -20,6 +20,7 @@ import ConverseManager from 'route/ConverseManager';
 
 import '@fontsource/domine';
 import '@fontsource/exo';
+import '@fontsource/fira-sans';
 import '@fontsource/merriweather';
 import '@fontsource/newsreader';
 import '@fontsource/open-sans';

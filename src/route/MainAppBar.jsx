@@ -29,8 +29,8 @@ export default class MainAppBar extends React.Component {
             >
               <MenuIcon />
             </IconButton>
-            <Box m={2}>
-              <img src={LogoIcon} alt='Logo' />
+            <Box mx={2} my={1}>
+              <img src={LogoIcon} alt='Logo' style={{ height: 70 }} />
             </Box>
             <Typography variant='h6'>
               Chess In 5D

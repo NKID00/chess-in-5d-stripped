@@ -171,6 +171,9 @@ export default class Palette extends React.Component {
                         <MenuItem value='exo' style={{ fontFamily: 'exo' }}>
                           Exo
                         </MenuItem>
+                        <MenuItem value='fira-sans' style={{ fontFamily: 'fira-sans' }}>
+                          Fira Sans
+                        </MenuItem>
                         <MenuItem value='merriweather' style={{ fontFamily: 'merriweather' }}>
                           Merriweather
                         </MenuItem>
