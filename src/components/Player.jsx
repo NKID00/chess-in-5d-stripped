@@ -5,7 +5,7 @@ import { Responsive as ResponsiveGridLayout } from 'react-grid-layout';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 
-import Renderer from 'components/player/Renderer';
+import Renderer from 'components/Player/Renderer';
 
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';

@@ -2,6 +2,9 @@ import React from 'react';
 
 import { Trans } from '@lingui/macro';
 
+import Chess from '5d-chess-js';
+import { throttle } from 'throttle-debounce';
+
 import Accordion from '@material-ui/core/Accordion';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
@@ -13,8 +16,7 @@ import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 import ColorPicker from 'components/ColorPicker';
-import Renderer from 'components/player/Renderer';
-import Chess from '5d-chess-js';
+import Renderer from 'components/Player/Renderer';
 
 import EmitterContext from 'EmitterContext';
 import * as crPalette from 'state/palette';
@@ -118,30 +120,30 @@ export default class Palette extends React.Component {
               <AccordionDetails>
                 <Grid container spacing={2}>
                   <Grid item xs={12} sm={6} md={12} lg={6}>
-                    <Typography variant='h6'><Trans>Solid Background Color</Trans></Typography>
+                    <Typography variant='body1'><Trans>Solid Background Color</Trans></Typography>
                     <ColorPicker
                       color={this.state.palette.background.single}
-                      onChange={(hex) => {
+                      onChange={throttle(1000, (hex) => {
                         this.setState(deepmerge(this.state, { palette: { background: { single: hex } } }));
-                      }}
+                      })}
                     />
                   </Grid>
                   <Grid item xs={12} sm={6} md={12} lg={6}>
-                    <Typography variant='h6'><Trans>Checkered Background - Light Rectangle Color</Trans></Typography>
+                    <Typography variant='body1'><Trans>Checkered Background - Light Rectangle Color</Trans></Typography>
                     <ColorPicker
                       color={this.state.palette.background.lightRectangle}
-                      onChange={(hex) => {
+                      onChange={throttle(1000, (hex) => {
                         this.setState(deepmerge(this.state, { palette: { background: { lightRectangle: hex } } }));
-                      }}
+                      })}
                     />
                   </Grid>
                   <Grid item xs={12} sm={6} md={12} lg={6}>
-                    <Typography variant='h6'><Trans>Checkered Background - Dark Rectangle Color</Trans></Typography>
+                    <Typography variant='body1'><Trans>Checkered Background - Dark Rectangle Color</Trans></Typography>
                     <ColorPicker
                       color={this.state.palette.background.darkRectangle}
-                      onChange={(hex) => {
+                      onChange={throttle(1000, (hex) => {
                         this.setState(deepmerge(this.state, { palette: { background: { darkRectangle: hex } } }));
-                      }}
+                      })}
                     />
                   </Grid>
                 </Grid>
@@ -163,39 +165,39 @@ export default class Palette extends React.Component {
               <AccordionDetails>
                 <Grid container spacing={2}>
                   <Grid item xs={12} sm={6} md={12} lg={6}>
-                    <Typography variant='h6'><Trans>Light Rectangle - Black Stripe Color</Trans></Typography>
+                    <Typography variant='body1'><Trans>Light Rectangle - Black Stripe Color</Trans></Typography>
                     <ColorPicker
                       color={this.state.palette.background.lightStripeBlack}
-                      onChange={(hex) => {
+                      onChange={throttle(1000, (hex) => {
                         this.setState(deepmerge(this.state, { palette: { background: { lightStripeBlack: hex } } }));
-                      }}
+                      })}
                     />
                   </Grid>
                   <Grid item xs={12} sm={6} md={12} lg={6}>
-                    <Typography variant='h6'><Trans>Light Rectangle - White Stripe Color</Trans></Typography>
+                    <Typography variant='body1'><Trans>Light Rectangle - White Stripe Color</Trans></Typography>
                     <ColorPicker
                       color={this.state.palette.background.lightStripeWhite}
-                      onChange={(hex) => {
+                      onChange={throttle(1000, (hex) => {
                         this.setState(deepmerge(this.state, { palette: { background: { lightStripeWhite: hex } } }));
-                      }}
+                      })}
                     />
                   </Grid>
                   <Grid item xs={12} sm={6} md={12} lg={6}>
-                    <Typography variant='h6'><Trans>Dark Rectangle - Black Stripe Color</Trans></Typography>
+                    <Typography variant='body1'><Trans>Dark Rectangle - Black Stripe Color</Trans></Typography>
                     <ColorPicker
                       color={this.state.palette.background.darkStripeBlack}
-                      onChange={(hex) => {
+                      onChange={throttle(1000, (hex) => {
                         this.setState(deepmerge(this.state, { palette: { background: { darkStripeBlack: hex } } }));
-                      }}
+                      })}
                     />
                   </Grid>
                   <Grid item xs={12} sm={6} md={12} lg={6}>
-                    <Typography variant='h6'><Trans>Dark Rectangle - White Stripe Color</Trans></Typography>
+                    <Typography variant='body1'><Trans>Dark Rectangle - White Stripe Color</Trans></Typography>
                     <ColorPicker
                       color={this.state.palette.background.darkStripeWhite}
-                      onChange={(hex) => {
+                      onChange={throttle(1000, (hex) => {
                         this.setState(deepmerge(this.state, { palette: { background: { darkStripeWhite: hex } } }));
-                      }}
+                      })}
                     />
                   </Grid>
                 </Grid>
@@ -217,84 +219,84 @@ export default class Palette extends React.Component {
               <AccordionDetails>
                 <Grid container spacing={2}>
                   <Grid item xs={12} sm={6} md={12} lg={6}>
-                    <Typography variant='h6'><Trans>White Board Border</Trans></Typography>
+                    <Typography variant='body1'><Trans>White Board Border</Trans></Typography>
                     <ColorPicker
                       color={this.state.palette.board.whiteBorder}
-                      onChange={(hex) => {
+                      onChange={throttle(1000, (hex) => {
                         this.setState(deepmerge(this.state, { palette: { board: { whiteBorder: hex } } }));
-                      }}
+                      })}
                     />
                   </Grid>
                   <Grid item xs={12} sm={6} md={12} lg={6}>
-                    <Typography variant='h6'><Trans>White Board Outline</Trans></Typography>
+                    <Typography variant='body1'><Trans>White Board Outline</Trans></Typography>
                     <ColorPicker
                       color={this.state.palette.board.whiteBorderOutline}
-                      onChange={(hex) => {
+                      onChange={throttle(1000, (hex) => {
                         this.setState(deepmerge(this.state, { palette: { board: { whiteBorderOutline: hex } } }));
-                      }}
+                      })}
                     />
                   </Grid>
                   <Grid item xs={12} sm={6} md={12} lg={6}>
-                    <Typography variant='h6'><Trans>Black Board Border</Trans></Typography>
+                    <Typography variant='body1'><Trans>Black Board Border</Trans></Typography>
                     <ColorPicker
                       color={this.state.palette.board.blackBorder}
-                      onChange={(hex) => {
+                      onChange={throttle(1000, (hex) => {
                         this.setState(deepmerge(this.state, { palette: { board: { blackBorder: hex } } }));
-                      }}
+                      })}
                     />
                   </Grid>
                   <Grid item xs={12} sm={6} md={12} lg={6}>
-                    <Typography variant='h6'><Trans>Black Board Outline</Trans></Typography>
+                    <Typography variant='body1'><Trans>Black Board Outline</Trans></Typography>
                     <ColorPicker
                       color={this.state.palette.board.blackBorderOutline}
-                      onChange={(hex) => {
+                      onChange={throttle(1000, (hex) => {
                         this.setState(deepmerge(this.state, { palette: { board: { blackBorderOutline: hex } } }));
-                      }}
+                      })}
                     />
                   </Grid>
                   <Grid item xs={12} sm={6} md={12} lg={6}>
-                    <Typography variant='h6'><Trans>Check Board Border</Trans></Typography>
+                    <Typography variant='body1'><Trans>Check Board Border</Trans></Typography>
                     <ColorPicker
                       color={this.state.palette.board.checkBorder}
-                      onChange={(hex) => {
+                      onChange={throttle(1000, (hex) => {
                         this.setState(deepmerge(this.state, { palette: { board: { checkBorder: hex } } }));
-                      }}
+                      })}
                     />
                   </Grid>
                   <Grid item xs={12} sm={6} md={12} lg={6}>
-                    <Typography variant='h6'><Trans>Check Board Outline</Trans></Typography>
+                    <Typography variant='body1'><Trans>Check Board Outline</Trans></Typography>
                     <ColorPicker
                       color={this.state.palette.board.checkBorderOutline}
-                      onChange={(hex) => {
+                      onChange={throttle(1000, (hex) => {
                         this.setState(deepmerge(this.state, { palette: { board: { checkBorderOutline: hex } } }));
-                      }}
+                      })}
                     />
                   </Grid>
                   <Grid item xs={12} sm={6} md={12} lg={6}>
-                    <Typography variant='h6'><Trans>Inactive Board Border</Trans></Typography>
+                    <Typography variant='body1'><Trans>Inactive Board Border</Trans></Typography>
                     <ColorPicker
                       color={this.state.palette.board.inactiveBorder}
-                      onChange={(hex) => {
+                      onChange={throttle(1000, (hex) => {
                         this.setState(deepmerge(this.state, { palette: { board: { inactiveBorder: hex } } }));
-                      }}
+                      })}
                     />
                   </Grid>
                   <Grid item xs={12} sm={6} md={12} lg={6}>
-                    <Typography variant='h6'><Trans>Inactive Board Outline</Trans></Typography>
+                    <Typography variant='body1'><Trans>Inactive Board Outline</Trans></Typography>
                     <ColorPicker
                       color={this.state.palette.board.inactiveBorderOutline}
-                      onChange={(hex) => {
+                      onChange={throttle(1000, (hex) => {
                         this.setState(deepmerge(this.state, { palette: { board: { inactiveBorderOutline: hex } } }));
-                      }}
+                      })}
                     />
                   </Grid>
                   <Grid item xs={12} sm={6} md={12} lg={6}>
-                    <Typography variant='h6'><Trans>Board Shadow</Trans></Typography>
+                    <Typography variant='body1'><Trans>Board Shadow</Trans></Typography>
                     <ColorPicker
                       color={this.state.palette.boardShadow.shadow}
-                      onChange={(hex) => {
+                      onChange={throttle(1000, (hex) => {
                         this.setState(deepmerge(this.state, { palette: { boardShadow: { shadow: hex } } }));
-                      }}
+                      })}
                     />
                   </Grid>
                 </Grid>
@@ -316,57 +318,57 @@ export default class Palette extends React.Component {
               <AccordionDetails>
                 <Grid container spacing={2}>
                   <Grid item xs={12} sm={6} md={12} lg={6}>
-                    <Typography variant='h6'><Trans>Timeline Labels</Trans></Typography>
+                    <Typography variant='body1'><Trans>Timeline Labels</Trans></Typography>
                     <ColorPicker
                       color={this.state.palette.boardLabel.timeline}
-                      onChange={(hex) => {
+                      onChange={throttle(1000, (hex) => {
                         this.setState(deepmerge(this.state, { palette: { boardLabel: { timeline: hex } } }));
-                      }}
+                      })}
                     />
                   </Grid>
                   <Grid item xs={12} sm={6} md={12} lg={6}>
-                    <Typography variant='h6'><Trans>Turn Labels</Trans></Typography>
+                    <Typography variant='body1'><Trans>Turn Labels</Trans></Typography>
                     <ColorPicker
                       color={this.state.palette.boardLabel.turn}
-                      onChange={(hex) => {
+                      onChange={throttle(1000, (hex) => {
                         this.setState(deepmerge(this.state, { palette: { boardLabel: { turn: hex } } }));
-                      }}
+                      })}
                     />
                   </Grid>
                   <Grid item xs={12} sm={6} md={12} lg={6}>
-                    <Typography variant='h6'><Trans>White Board Labels</Trans></Typography>
+                    <Typography variant='body1'><Trans>White Board Labels</Trans></Typography>
                     <ColorPicker
                       color={this.state.palette.boardLabel.whiteBoard}
-                      onChange={(hex) => {
+                      onChange={throttle(1000, (hex) => {
                         this.setState(deepmerge(this.state, { palette: { boardLabel: { whiteBoard: hex } } }));
-                      }}
+                      })}
                     />
                   </Grid>
                   <Grid item xs={12} sm={6} md={12} lg={6}>
-                    <Typography variant='h6'><Trans>Black Board Labels</Trans></Typography>
+                    <Typography variant='body1'><Trans>Black Board Labels</Trans></Typography>
                     <ColorPicker
                       color={this.state.palette.boardLabel.blackBoard}
-                      onChange={(hex) => {
+                      onChange={throttle(1000, (hex) => {
                         this.setState(deepmerge(this.state, { palette: { boardLabel: { blackBoard: hex } } }));
-                      }}
+                      })}
                     />
                   </Grid>
                   <Grid item xs={12} sm={6} md={12} lg={6}>
-                    <Typography variant='h6'><Trans>Check Board Labels</Trans></Typography>
+                    <Typography variant='body1'><Trans>Check Board Labels</Trans></Typography>
                     <ColorPicker
                       color={this.state.palette.boardLabel.checkBoard}
-                      onChange={(hex) => {
+                      onChange={throttle(1000, (hex) => {
                         this.setState(deepmerge(this.state, { palette: { boardLabel: { checkBoard: hex } } }));
-                      }}
+                      })}
                     />
                   </Grid>
                   <Grid item xs={12} sm={6} md={12} lg={6}>
-                    <Typography variant='h6'><Trans>Inactive Board Labels</Trans></Typography>
+                    <Typography variant='body1'><Trans>Inactive Board Labels</Trans></Typography>
                     <ColorPicker
                       color={this.state.palette.boardLabel.inactiveBoard}
-                      onChange={(hex) => {
+                      onChange={throttle(1000, (hex) => {
                         this.setState(deepmerge(this.state, { palette: { boardLabel: { inactiveBoard: hex } } }));
-                      }}
+                      })}
                     />
                   </Grid>
                 </Grid>
@@ -388,21 +390,21 @@ export default class Palette extends React.Component {
               <AccordionDetails>
                 <Grid container spacing={2}>
                   <Grid item xs={12} sm={6} md={12} lg={6}>
-                    <Typography variant='h6'><Trans>White Squares</Trans></Typography>
+                    <Typography variant='body1'><Trans>White Squares</Trans></Typography>
                     <ColorPicker
                       color={this.state.palette.square.white}
-                      onChange={(hex) => {
+                      onChange={throttle(1000, (hex) => {
                         this.setState(deepmerge(this.state, { palette: { square: { white: hex } } }));
-                      }}
+                      })}
                     />
                   </Grid>
                   <Grid item xs={12} sm={6} md={12} lg={6}>
-                    <Typography variant='h6'><Trans>Black Squares</Trans></Typography>
+                    <Typography variant='body1'><Trans>Black Squares</Trans></Typography>
                     <ColorPicker
                       color={this.state.palette.square.black}
-                      onChange={(hex) => {
+                      onChange={throttle(1000, (hex) => {
                         this.setState(deepmerge(this.state, { palette: { square: { black: hex } } }));
-                      }}
+                      })}
                     />
                   </Grid>
                 </Grid>
@@ -424,48 +426,48 @@ export default class Palette extends React.Component {
               <AccordionDetails>
                 <Grid container spacing={2}>
                   <Grid item xs={12} sm={6} md={12} lg={6}>
-                    <Typography variant='h6'><Trans>Piece Highlights</Trans></Typography>
+                    <Typography variant='body1'><Trans>Piece Highlights</Trans></Typography>
                     <ColorPicker
                       color={this.state.palette.highlight.self}
-                      onChange={(hex) => {
+                      onChange={throttle(1000, (hex) => {
                         this.setState(deepmerge(this.state, { palette: { highlight: { self: hex } } }));
-                      }}
+                      })}
                     />
                   </Grid>
                   <Grid item xs={12} sm={6} md={12} lg={6}>
-                    <Typography variant='h6'><Trans>Move Highlights</Trans></Typography>
+                    <Typography variant='body1'><Trans>Move Highlights</Trans></Typography>
                     <ColorPicker
                       color={this.state.palette.highlight.move}
-                      onChange={(hex) => {
+                      onChange={throttle(1000, (hex) => {
                         this.setState(deepmerge(this.state, { palette: { highlight: { move: hex } } }));
-                      }}
+                      })}
                     />
                   </Grid>
                   <Grid item xs={12} sm={6} md={12} lg={6}>
-                    <Typography variant='h6'><Trans>Past Move Highlights</Trans></Typography>
+                    <Typography variant='body1'><Trans>Past Move Highlights</Trans></Typography>
                     <ColorPicker
                       color={this.state.palette.highlight.pastMove}
-                      onChange={(hex) => {
+                      onChange={throttle(1000, (hex) => {
                         this.setState(deepmerge(this.state, { palette: { highlight: { pastMove: hex } } }));
-                      }}
+                      })}
                     />
                   </Grid>
                   <Grid item xs={12} sm={6} md={12} lg={6}>
-                    <Typography variant='h6'><Trans>Capture Move Highlights</Trans></Typography>
+                    <Typography variant='body1'><Trans>Capture Move Highlights</Trans></Typography>
                     <ColorPicker
                       color={this.state.palette.highlight.capture}
-                      onChange={(hex) => {
+                      onChange={throttle(1000, (hex) => {
                         this.setState(deepmerge(this.state, { palette: { highlight: { capture: hex } } }));
-                      }}
+                      })}
                     />
                   </Grid>
                   <Grid item xs={12} sm={6} md={12} lg={6}>
-                    <Typography variant='h6'><Trans>Past Capture Move Highlights</Trans></Typography>
+                    <Typography variant='body1'><Trans>Past Capture Move Highlights</Trans></Typography>
                     <ColorPicker
                       color={this.state.palette.highlight.pastCapture}
-                      onChange={(hex) => {
+                      onChange={throttle(1000, (hex) => {
                         this.setState(deepmerge(this.state, { palette: { highlight: { pastCapture: hex } } }));
-                      }}
+                      })}
                     />
                   </Grid>
                 </Grid>
@@ -487,39 +489,39 @@ export default class Palette extends React.Component {
               <AccordionDetails>
                 <Grid container spacing={2}>
                   <Grid item xs={12} sm={6} md={12} lg={6}>
-                    <Typography variant='h6'><Trans>Move Arrow</Trans></Typography>
+                    <Typography variant='body1'><Trans>Move Arrow</Trans></Typography>
                     <ColorPicker
                       color={this.state.palette.arrow.move}
-                      onChange={(hex) => {
+                      onChange={throttle(1000, (hex) => {
                         this.setState(deepmerge(this.state, { palette: { arrow: { move: hex } } }));
-                      }}
+                      })}
                     />
                   </Grid>
                   <Grid item xs={12} sm={6} md={12} lg={6}>
-                    <Typography variant='h6'><Trans>Move Arrow Outline</Trans></Typography>
+                    <Typography variant='body1'><Trans>Move Arrow Outline</Trans></Typography>
                     <ColorPicker
                       color={this.state.palette.arrow.moveOutline}
-                      onChange={(hex) => {
+                      onChange={throttle(1000, (hex) => {
                         this.setState(deepmerge(this.state, { palette: { arrow: { moveOutline: hex } } }));
-                      }}
+                      })}
                     />
                   </Grid>
                   <Grid item xs={12} sm={6} md={12} lg={6}>
-                    <Typography variant='h6'><Trans>Check Move Arrow</Trans></Typography>
+                    <Typography variant='body1'><Trans>Check Move Arrow</Trans></Typography>
                     <ColorPicker
                       color={this.state.palette.arrow.check}
-                      onChange={(hex) => {
+                      onChange={throttle(1000, (hex) => {
                         this.setState(deepmerge(this.state, { palette: { arrow: { check: hex } } }));
-                      }}
+                      })}
                     />
                   </Grid>
                   <Grid item xs={12} sm={6} md={12} lg={6}>
-                    <Typography variant='h6'><Trans>Check Move Arrow Outline</Trans></Typography>
+                    <Typography variant='body1'><Trans>Check Move Arrow Outline</Trans></Typography>
                     <ColorPicker
                       color={this.state.palette.arrow.checkOutline}
-                      onChange={(hex) => {
+                      onChange={throttle(1000, (hex) => {
                         this.setState(deepmerge(this.state, { palette: { arrow: { checkOutline: hex } } }));
-                      }}
+                      })}
                     />
                   </Grid>
                 </Grid>
@@ -541,93 +543,93 @@ export default class Palette extends React.Component {
               <AccordionDetails>
                 <Grid container spacing={2}>
                   <Grid item xs={12} sm={6} md={12} lg={6}>
-                    <Typography variant='h6'><Trans>Default Custom Arrow</Trans></Typography>
+                    <Typography variant='body1'><Trans>Default Custom Arrow</Trans></Typography>
                     <ColorPicker
                       color={this.state.palette.arrow.custom}
-                      onChange={(hex) => {
+                      onChange={throttle(1000, (hex) => {
                         this.setState(deepmerge(this.state, { palette: { arrow: { custom: hex } } }));
-                      }}
+                      })}
                     />
                   </Grid>
                   <Grid item xs={12} sm={6} md={12} lg={6}>
-                    <Typography variant='h6'><Trans>Default Custom Arrow Outline</Trans></Typography>
+                    <Typography variant='body1'><Trans>Default Custom Arrow Outline</Trans></Typography>
                     <ColorPicker
                       color={this.state.palette.arrow.customOutline}
-                      onChange={(hex) => {
+                      onChange={throttle(1000, (hex) => {
                         this.setState(deepmerge(this.state, { palette: { arrow: { customOutline: hex } } }));
-                      }}
+                      })}
                     />
                   </Grid>
                   <Grid item xs={12} sm={6} md={12} lg={6}>
-                    <Typography variant='h6'><Trans>Custom Arrow #1</Trans></Typography>
+                    <Typography variant='body1'><Trans>Custom Arrow #1</Trans></Typography>
                     <ColorPicker
                       color={this.state.palette.arrow.custom1}
-                      onChange={(hex) => {
+                      onChange={throttle(1000, (hex) => {
                         this.setState(deepmerge(this.state, { palette: { arrow: { custom1: hex } } }));
-                      }}
+                      })}
                     />
                   </Grid>
                   <Grid item xs={12} sm={6} md={12} lg={6}>
-                    <Typography variant='h6'><Trans>Custom Arrow #1 Outline</Trans></Typography>
+                    <Typography variant='body1'><Trans>Custom Arrow #1 Outline</Trans></Typography>
                     <ColorPicker
                       color={this.state.palette.arrow.custom1Outline}
-                      onChange={(hex) => {
+                      onChange={throttle(1000, (hex) => {
                         this.setState(deepmerge(this.state, { palette: { arrow: { custom1Outline: hex } } }));
-                      }}
+                      })}
                     />
                   </Grid>
                   <Grid item xs={12} sm={6} md={12} lg={6}>
-                    <Typography variant='h6'><Trans>Custom Arrow #2</Trans></Typography>
+                    <Typography variant='body1'><Trans>Custom Arrow #2</Trans></Typography>
                     <ColorPicker
                       color={this.state.palette.arrow.custom2}
-                      onChange={(hex) => {
+                      onChange={throttle(1000, (hex) => {
                         this.setState(deepmerge(this.state, { palette: { arrow: { custom2: hex } } }));
-                      }}
+                      })}
                     />
                   </Grid>
                   <Grid item xs={12} sm={6} md={12} lg={6}>
-                    <Typography variant='h6'><Trans>Custom Arrow #2 Outline</Trans></Typography>
+                    <Typography variant='body1'><Trans>Custom Arrow #2 Outline</Trans></Typography>
                     <ColorPicker
                       color={this.state.palette.arrow.custom2Outline}
-                      onChange={(hex) => {
+                      onChange={throttle(1000, (hex) => {
                         this.setState(deepmerge(this.state, { palette: { arrow: { custom2Outline: hex } } }));
-                      }}
+                      })}
                     />
                   </Grid>
                   <Grid item xs={12} sm={6} md={12} lg={6}>
-                    <Typography variant='h6'><Trans>Custom Arrow #3</Trans></Typography>
+                    <Typography variant='body1'><Trans>Custom Arrow #3</Trans></Typography>
                     <ColorPicker
                       color={this.state.palette.arrow.custom3}
-                      onChange={(hex) => {
+                      onChange={throttle(1000, (hex) => {
                         this.setState(deepmerge(this.state, { palette: { arrow: { custom3: hex } } }));
-                      }}
+                      })}
                     />
                   </Grid>
                   <Grid item xs={12} sm={6} md={12} lg={6}>
-                    <Typography variant='h6'><Trans>Custom Arrow #3 Outline</Trans></Typography>
+                    <Typography variant='body1'><Trans>Custom Arrow #3 Outline</Trans></Typography>
                     <ColorPicker
                       color={this.state.palette.arrow.custom3Outline}
-                      onChange={(hex) => {
+                      onChange={throttle(1000, (hex) => {
                         this.setState(deepmerge(this.state, { palette: { arrow: { custom3Outline: hex } } }));
-                      }}
+                      })}
                     />
                   </Grid>
                   <Grid item xs={12} sm={6} md={12} lg={6}>
-                    <Typography variant='h6'><Trans>Custom Arrow #4</Trans></Typography>
+                    <Typography variant='body1'><Trans>Custom Arrow #4</Trans></Typography>
                     <ColorPicker
                       color={this.state.palette.arrow.custom4}
-                      onChange={(hex) => {
+                      onChange={throttle(1000, (hex) => {
                         this.setState(deepmerge(this.state, { palette: { arrow: { custom4: hex } } }));
-                      }}
+                      })}
                     />
                   </Grid>
                   <Grid item xs={12} sm={6} md={12} lg={6}>
-                    <Typography variant='h6'><Trans>Custom Arrow #4 Outline</Trans></Typography>
+                    <Typography variant='body1'><Trans>Custom Arrow #4 Outline</Trans></Typography>
                     <ColorPicker
                       color={this.state.palette.arrow.custom4Outline}
-                      onChange={(hex) => {
+                      onChange={throttle(1000, (hex) => {
                         this.setState(deepmerge(this.state, { palette: { arrow: { custom4Outline: hex } } }));
-                      }}
+                      })}
                     />
                   </Grid>
                 </Grid>

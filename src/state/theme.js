@@ -2,27 +2,45 @@ const deepmerge = require('deepmerge');
 const store = require('store');
 
 const defaultTheme = {
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 600,
+      md: 960,
+      lg: 1280,
+      xl: 1920,
+    }
+  },
   palette: {
     type: 'dark',
     primary: {
-      light: '#35baf6',
-      main: '#03a9f4',
-      dark: '#0276aa',
-      contrastText: '#ffffff',
+      main: '#03a9f4'
     },
     secondary: {
-      light: '#ff4081',
-      main: '#f50057',
-      dark: '#c51162',
-      contrastText: '#ffffff',
+      main: '#f50057'
+    },
+    error: {
+      main: '#f44336'
+    },
+    warning: {
+      main: '#ff9800'
+    },
+    info: {
+      main: '#2196f3'
+    },
+    success: {
+      main: '#4caf50'
     },
     background: {
-      paper: '#424242'
+      paper: '#424242',
+      default: '#303030'
     },
   },
   typography: {
-    fontFamily: 'vollkorn'
+    fontFamily: 'vollkorn',
+    fontSize: 14
   },
+  spacing: 8,
   overrides: {
     MuiPaper: {
       outlined: {
