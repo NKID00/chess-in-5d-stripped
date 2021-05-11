@@ -170,6 +170,7 @@ export default class Player extends React.Component {
             margin: 0,
             padding: 0,
             zIndex: 1,
+            overflow: 'hidden',
           }}
         >
           <Renderer
@@ -193,6 +194,7 @@ export default class Player extends React.Component {
             height: '100%',
             margin: 0,
             padding: 0,
+            overflow: 'hidden',
           }}
         >
           <ResponsiveGridLayout
