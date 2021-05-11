@@ -3,7 +3,7 @@ import * as settings from 'state/settings';
 
 const store = require('store');
 const axios = require('axios');
-var collections = require('network/db').init();
+var collections = require('state/db').init();
 
 export const get = async (query = {}, projection = {}, sort = {}, limit = 100) => {
   var currentDate = Date.now();

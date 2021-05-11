@@ -75,3 +75,10 @@ export const get = () => {
   }
   return defaultPalette;
 }
+
+export const reset = (emitter = null) => {
+  store.remove('palette');
+  if(emitter !== null) {
+    emitter.emit('paletteUpdate');
+  }
+}

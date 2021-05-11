@@ -12,6 +12,7 @@ import TabContext from '@material-ui/lab/TabContext';
 import TabPanel from '@material-ui/lab/TabPanel';
 
 import General from 'route/Main/Settings/General';
+import Theme from 'route/Main/Settings/Theme';
 import Palette from 'route/Main/Settings/Palette';
 
 class Settings extends React.Component {
@@ -56,6 +57,9 @@ class Settings extends React.Component {
             </AppBar>
             <TabPanel value='general'>
               <General />
+            </TabPanel>
+            <TabPanel value='theme'>
+              <Theme />
             </TabPanel>
             <TabPanel value='palette'>
               <Palette />

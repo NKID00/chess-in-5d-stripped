@@ -8,7 +8,7 @@ import Chess from '5d-chess-js';
 import EmitterContext from 'EmitterContext';
 import * as crPalette from 'state/palette';
 import * as crConfig from 'state/config';
-//import * as crTexture from 'state/texture';
+import * as crTexture from 'state/texture';
 
 const deepmerge = require('deepmerge');
 const deepequal = require('fast-deep-equal');
@@ -39,8 +39,39 @@ export default class Renderer extends React.Component {
       this.chessRenderer.global.config(newConfig);
     }
   }
-  updateTexture() {
-    //if(crTexture.get().highlight !== null) { this.chessRenderer.global.texture('highlight', crTexture.get().highlight); }
+  async updateTexture() {
+    var keylist = [
+      'highlight',
+      'whiteSquare',
+      'blackSquare',
+      'whiteBoardBorder',
+      'blackBoardBorder',
+      'checkBoardBorder',
+      'inactiveBoardBorder',
+      'blackP',
+      'blackW',
+      'blackB',
+      'blackN',
+      'blackR',
+      'blackS',
+      'blackQ',
+      'blackK',
+      'whiteP',
+      'whiteW',
+      'whiteB',
+      'whiteN',
+      'whiteR',
+      'whiteS',
+      'whiteQ',
+      'whiteK'
+    ];
+    for(var i = 0;i < keylist.length;i++) {
+      var currentKey = keylist[i];
+      var currentTexture = await crTexture.get(currentKey);
+      if(currentTexture !== null) {
+        this.chessRenderer.global.texture(currentKey, currentTexture);
+      }
+    }
   }
   updateRenderer() {
     if(typeof this.props.board === 'object') {
@@ -93,13 +124,15 @@ export default class Renderer extends React.Component {
     this.configListener = this.context.on('configUpdate', () => {
       this.updateConfig();
     });
+    this.textureListener = this.context.on('textureUpdate', () => {
+      this.updateTexture();
+    });
     //Update palette and config right now
     this.updatePalette();
     this.updateConfig();
+    this.updateTexture();
     //Update renderer data
     this.updateRenderer();
-    window.cr = this.chessRenderer;
-    window.ra = this.refreshAttach.bind(this);
   }
   componentDidUpdate(prevProps) {
     //Look for changes in div width or height and update chessRenderer
@@ -123,6 +156,7 @@ export default class Renderer extends React.Component {
     //Stop listening to palette and config setting changes
     if(typeof this.paletteListener === 'function') { this.paletteListener(); }
     if(typeof this.configListener === 'function') { this.configListener(); }
+    if(typeof this.textureListener === 'function') { this.textureListener(); }
     //Free up memory by destroying the chessRenderer instance
     this.chessRenderer.destroy();
   }

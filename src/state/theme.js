@@ -2,10 +2,6 @@ const deepmerge = require('deepmerge');
 const store = require('store');
 
 const defaultTheme = {
-  background: {
-    paper: '#424242',
-    default: '#303030',
-  },
   palette: {
     type: 'dark',
     primary: {
@@ -13,6 +9,15 @@ const defaultTheme = {
       main: '#03a9f4',
       dark: '#0276aa',
       contrastText: '#ffffff',
+    },
+    secondary: {
+      light: '#ff4081',
+      main: '#f50057',
+      dark: '#c51162',
+      contrastText: '#ffffff',
+    },
+    background: {
+      paper: '#424242'
     },
   },
   typography: {
@@ -45,4 +50,11 @@ export const get = () => {
     return deepmerge(defaultTheme, storedTheme);
   }
   return defaultTheme;
+}
+
+export const reset = (emitter = null) => {
+  store.remove('theme');
+  if(emitter !== null) {
+    emitter.emit('themeUpdate');
+  }
 }

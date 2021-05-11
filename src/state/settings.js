@@ -21,3 +21,10 @@ export const get = () => {
   }
   return defaultSettings;
 }
+
+export const reset = (emitter = null) => {
+  store.remove('settings');
+  if(emitter !== null) {
+    emitter.emit('settingsUpdate');
+  }
+}

@@ -65,7 +65,7 @@ export default class General extends React.Component {
               </AccordionSummary>
               <AccordionDetails>
                 <Grid container spacing={2}>
-                  <Grid item xs={12} lg={6}>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
                     <FormControl variant='outlined' fullWidth>
                       <InputLabel><Trans>Locale</Trans></InputLabel>
                       <Select
@@ -101,7 +101,7 @@ export default class General extends React.Component {
               </AccordionSummary>
               <AccordionDetails>
                 <Grid container spacing={2}>
-                  <Grid item xs={12} lg={6}>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
                     <FormControl fullWidth>
                       <TextField
                         variant='outlined'
@@ -113,7 +113,7 @@ export default class General extends React.Component {
                       />
                     </FormControl>
                   </Grid>
-                  <Grid item xs={12} lg={6}>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
                     <FormControl fullWidth>
                       <TextField
                         variant='outlined'

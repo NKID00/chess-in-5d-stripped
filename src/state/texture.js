@@ -1,45 +1,23 @@
-const deepmerge = require('deepmerge');
-const store = require('store');
+var collections = require('state/db').init();
 
-var collections = require('network/db').init();
-
-const defaultTexture = {
-  highlight: null,
-  whiteSquare: null,
-  blackSquare: null,
-  whiteBoardBorder: null,
-  blackBoardBorder: null,
-  checkBoardBorder: null,
-  inactiveBoardBorder: null,
-  blackP: null,
-  blackW: null,
-  blackB: null,
-  blackN: null,
-  blackR: null,
-  blackS: null,
-  blackQ: null,
-  blackK: null,
-  whiteP: null,
-  whiteW: null,
-  whiteB: null,
-  whiteN: null,
-  whiteR: null,
-  whiteS: null,
-  whiteQ: null,
-  whiteK: null,
-};
-
-export const set = (texture, emitter = null) => {
-  store.set('texture', deepmerge(store.get('texture'), texture));
+export const set = async (key, texture, emitter = null) => {
+  var newTexture = {
+    key: key,
+    texture: texture
+  };
+  await collections.textures.update({ key: key }, { $set: newTexture }, { upsert: true });
   if(emitter !== null) {
     emitter.emit('textureUpdate');
   }
 }
 
-export const get = () => {
-  var storedTexture = store.get('texture');
-  if(typeof storedTexture === 'object') {
-    return deepmerge(defaultTexture, storedTexture);
+export const get = async (key) => {
+  return (await collections.textures.findOne({ key: key }));
+}
+
+export const reset = async (emitter = null) => {
+  await collections.textures.remove({}, { multi: true });
+  if(emitter !== null) {
+    emitter.emit('textureUpdate');
   }
-  return defaultTexture;
 }
