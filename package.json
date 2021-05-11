@@ -123,6 +123,7 @@
     "@fontsource/playfair-display": "^4.3.0",
     "@fontsource/roboto": "^4.2.2",
     "@fontsource/roboto-condensed": "^4.3.0",
+    "@fontsource/roboto-mono": "^4.3.0",
     "@fontsource/vollkorn": "^4.2.2",
     "@ideasio/add-to-homescreen-react": "^1.0.7",
     "@lingui/react": "^3.8.2",

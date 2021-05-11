@@ -23,6 +23,7 @@ import TextField from '@material-ui/core/TextField';
 
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
+import Clock from 'components/Player/Clock';
 import ColorPicker from 'components/ColorPicker';
 
 import EmitterContext from 'EmitterContext';
@@ -135,17 +136,18 @@ export default class Palette extends React.Component {
                           />
                         </FormControl>
                         <Box width={1} my={2}>
-                          <Alert fullwidth severity='error'><Trans>Error - example error alert!</Trans></Alert>
+                          <Alert fullWidth severity='error'><Trans>Error - example error alert!</Trans></Alert>
                         </Box>
                         <Box width={1} my={2}>
-                          <Alert fullwidth severity='warning'><Trans>Warning - example warning alert!</Trans></Alert>
+                          <Alert fullWidth severity='warning'><Trans>Warning - example warning alert!</Trans></Alert>
                         </Box>
                         <Box width={1} my={2}>
-                          <Alert fullwidth severity='info'><Trans>Info - example info alert!</Trans></Alert>
+                          <Alert fullWidth severity='info'><Trans>Info - example info alert!</Trans></Alert>
                         </Box>
                         <Box width={1} my={2}>
-                          <Alert fullwidth severity='success'><Trans>Success - example success alert!</Trans></Alert>
+                          <Alert fullWidth severity='success'><Trans>Success - example success alert!</Trans></Alert>
                         </Box>
+                        <Clock />
                       </CardContent>
                     </Card>
                   </Box>

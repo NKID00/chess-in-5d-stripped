@@ -53,6 +53,7 @@ class Settings extends React.Component {
                 <Tab value='theme' label={<Trans>Theme</Trans>} />
                 <Tab value='palette' label={<Trans>Palette</Trans>} />
                 <Tab value='graphics' label={<Trans>Graphics</Trans>} />
+                <Tab value='import' label={<Trans>Import / Export</Trans>} />
               </TabList>
             </AppBar>
             <TabPanel value='general'>

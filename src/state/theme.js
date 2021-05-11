@@ -53,6 +53,11 @@ const defaultTheme = {
       }
     }
   },
+  extra: {
+    clock: {
+      fontFamily: 'roboto mono'
+    }
+  }
 };
 
 export const set = (theme, emitter = null) => {

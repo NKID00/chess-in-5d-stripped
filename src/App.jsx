@@ -29,6 +29,9 @@ import '@fontsource/playfair-display';
 import '@fontsource/roboto-condensed';
 import '@fontsource/roboto';
 import '@fontsource/vollkorn';
+
+import '@fontsource/roboto-mono';
+
 import 'App.css';
 
 const { createNanoEvents } = require('nanoevents');
