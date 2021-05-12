@@ -371,7 +371,7 @@ export default class Palette extends React.Component {
               <AccordionDetails>
                 <Grid container spacing={2}>
                   <Grid item xs={12} sm={6} md={12} lg={6}>
-                    <Typography variant='body1'><Trans>Menubar Color</Trans></Typography>
+                    <Typography variant='body1'><Trans>Appbar Color</Trans></Typography>
                     <ColorPicker
                       colorStr={this.state.theme.overrides.MuiToolbar.root.backgroundColor}
                       onChange={(hex, hexStr) => {
@@ -380,7 +380,7 @@ export default class Palette extends React.Component {
                     />
                   </Grid>
                   <Grid item xs={12} sm={6} md={12} lg={6}>
-                    <Typography variant='body1'><Trans>Secondary Menubar Color</Trans></Typography>
+                    <Typography variant='body1'><Trans>Menubar Color</Trans></Typography>
                     <ColorPicker
                       colorStr={this.state.theme.palette.background.default}
                       onChange={(hex, hexStr) => {

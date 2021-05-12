@@ -41,6 +41,7 @@ export const Timed2Hr = () => {
     <Sandbox>
       <div style={{ width: 500 }}>
         <Clock
+          whiteActive
           whiteTimeLeft={2*60*60*1000}
         />
       </div>
@@ -53,6 +54,7 @@ export const Timed1Hr = () => {
     <Sandbox>
       <div style={{ width: 500 }}>
         <Clock
+          whiteActive
           whiteTimeLeft={60*60*1000}
         />
       </div>
@@ -65,7 +67,22 @@ export const Timed2Min = () => {
     <Sandbox>
       <div style={{ width: 500 }}>
         <Clock
+          whiteActive
           whiteTimeLeft={2*60*1000}
+        />
+      </div>
+    </Sandbox>
+  );
+}
+
+export const Timed2MinBlack = () => {
+  return (
+    <Sandbox>
+      <div style={{ width: 500 }}>
+        <Clock
+          whiteActive={false}
+          whiteTimeLeft={2*60*1000}
+          blackTimeLeft={2*60*1000}
         />
       </div>
     </Sandbox>
@@ -77,6 +94,7 @@ export const Timed1Min = () => {
     <Sandbox>
       <div style={{ width: 500 }}>
         <Clock
+          whiteActive
           whiteTimeLeft={60*1000}
           blackTimeLeft={60*1000}
         />
@@ -90,6 +108,7 @@ export const Timed1MinDelay1Min = () => {
     <Sandbox>
       <div style={{ width: 500 }}>
         <Clock
+          whiteActive
           whiteTimeLeft={60*1000}
           whiteDelayLeft={60*1000}
         />
@@ -103,6 +122,7 @@ export const Timed1Sec = () => {
     <Sandbox>
       <div style={{ width: 500 }}>
         <Clock
+          whiteActive
           whiteTimeLeft={1000}
         />
       </div>
@@ -115,6 +135,7 @@ export const Timed1SecDelay5Sec = () => {
     <Sandbox>
       <div style={{ width: 500 }}>
         <Clock
+          whiteActive
           whiteTimeLeft={1000}
           whiteDelayLeft={5*1000}
         />

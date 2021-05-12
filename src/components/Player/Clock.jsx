@@ -1,7 +1,6 @@
 import React from 'react';
 
 import Box from '@material-ui/core/Box';
-import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import Grid from '@material-ui/core/Grid';
 
@@ -11,7 +10,8 @@ import * as muiTheme from 'state/theme';
 export default class Clock extends React.Component {
   static contextType = EmitterContext;
   state = {
-    clockFont: muiTheme.get().extra.clock.fontFamily
+    clockFontFamily: muiTheme.get().extra.clock.fontFamily,
+    clockFontSize: muiTheme.get().extra.clock.fontSize
   };
   whiteClock = React.createRef();
   blackClock = React.createRef();
@@ -264,34 +264,44 @@ export default class Clock extends React.Component {
         <Box m={1}>
           <Grid container spacing={1}>
             <Grid item xs={6}>
-              <Button
+              <Box
                 fullWidth
+                p={0.75}
+                textAlign='center'
                 style={{
-                  fontFamily: this.state.clockFont,
+                  fontFamily: this.state.clockFontFamily,
+                  fontSize: this.state.clockFontSize,
                   color: '#ffffff',
                   backgroundColor: '#000000',
                 }}
-                disableElevation
+                border={5}
+                borderRadius={5}
+                borderColor={this.props.whiteActive === false ? '#ffffff' : '#000000'}
               >
                 <div ref={this.blackClock}>
                   0:00
                 </div>
-              </Button>
+              </Box>
             </Grid>
             <Grid item xs={6}>
-              <Button
+              <Box
                 fullWidth
+                p={0.75}
+                textAlign='center'
                 style={{
-                  fontFamily: this.state.clockFont,
+                  fontFamily: this.state.clockFontFamily,
+                  fontSize: this.state.clockFontSize,
                   color: '#000000',
                   backgroundColor: '#ffffff',
                 }}
-                disableElevation
+                border={5}
+                borderRadius={5}
+                borderColor={this.props.whiteActive === false ? '#ffffff' : '#000000'}
               >
                 <div ref={this.whiteClock}>
                   0:00
                 </div>
-              </Button>
+              </Box>
             </Grid>
           </Grid>
         </Box>

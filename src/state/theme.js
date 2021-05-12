@@ -55,7 +55,8 @@ const defaultTheme = {
   },
   extra: {
     clock: {
-      fontFamily: 'roboto mono'
+      fontFamily: 'roboto mono',
+      fontSize: 16
     }
   }
 };
