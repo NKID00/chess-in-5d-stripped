@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Player from 'components/Player';
+import Player from 'components/Player2';
 
 import Chess from '5d-chess-js';
 

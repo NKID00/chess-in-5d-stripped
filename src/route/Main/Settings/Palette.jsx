@@ -16,7 +16,7 @@ import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 import ColorPicker from 'components/ColorPicker';
-import Renderer from 'components/Player/Renderer';
+import Renderer from 'components/Player2/Renderer';
 
 import EmitterContext from 'EmitterContext';
 import * as crPalette from 'state/palette';

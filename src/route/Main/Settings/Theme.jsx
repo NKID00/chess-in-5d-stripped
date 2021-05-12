@@ -23,7 +23,7 @@ import TextField from '@material-ui/core/TextField';
 
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
-import Clock from 'components/Player/Clock';
+import Clock from 'components/Player2/Clock';
 import ColorPicker from 'components/ColorPicker';
 
 import EmitterContext from 'EmitterContext';
