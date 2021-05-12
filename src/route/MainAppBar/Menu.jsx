@@ -55,6 +55,7 @@ class Menu extends React.Component {
         </ListItem>
         <ListItem
           button
+          disabled
           onClick={() => {
             this.props.history.push('/puzzles');
             if(typeof this.props.onClose === 'function') { this.props.onClose(); }
@@ -70,6 +71,7 @@ class Menu extends React.Component {
         </ListItem>
         <ListItem
           button
+          disabled
           onClick={() => {
             this.props.history.push('/learn');
             if(typeof this.props.onClose === 'function') { this.props.onClose(); }
@@ -85,6 +87,7 @@ class Menu extends React.Component {
         </ListItem>
         <ListItem
           button
+          disabled
           onClick={() => {
             this.props.history.push('/analyze');
             if(typeof this.props.onClose === 'function') { this.props.onClose(); }
@@ -100,6 +103,7 @@ class Menu extends React.Component {
         </ListItem>
         <ListItem
           button
+          disabled
           onClick={() => {
             this.props.history.push('/edit');
             if(typeof this.props.onClose === 'function') { this.props.onClose(); }

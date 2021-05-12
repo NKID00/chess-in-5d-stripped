@@ -52,8 +52,8 @@ class Settings extends React.Component {
                 <Tab value='general' label={<Trans>General</Trans>} />
                 <Tab value='theme' label={<Trans>Theme</Trans>} />
                 <Tab value='palette' label={<Trans>Palette</Trans>} />
-                <Tab value='graphics' label={<Trans>Graphics</Trans>} />
-                <Tab value='import' label={<Trans>Import / Export</Trans>} />
+                <Tab value='graphics' disabled label={<Trans>Graphics</Trans>} />
+                <Tab value='import' disabled label={<Trans>Import / Export</Trans>} />
               </TabList>
             </AppBar>
             <TabPanel value='general'>

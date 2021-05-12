@@ -184,13 +184,13 @@ export default class Palette extends React.Component {
                 <Grid container spacing={2}>
                   <Grid item xs={12} sm={6} md={12} lg={6}>
                     <FormControl variant='outlined' fullWidth>
-                      <InputLabel><Trans>Font Family</Trans></InputLabel>
+                      <InputLabel><Trans>Main - Font Family</Trans></InputLabel>
                       <Select
                         value={this.state.theme.typography.fontFamily}
                         onChange={(event) => {
                           this.setState(deepmerge(this.state, { theme: { typography: { fontFamily: event.target.value } } }));
                         }}
-                        label={<Trans>Font Family</Trans>}
+                        label={<Trans>Main - Font Family</Trans>}
                       >
                         <MenuItem value='domine' style={{ fontFamily: 'domine' }}>
                           Domine
@@ -198,10 +198,10 @@ export default class Palette extends React.Component {
                         <MenuItem value='exo' style={{ fontFamily: 'exo' }}>
                           Exo
                         </MenuItem>
-                        <MenuItem value='fira-sans' style={{ fontFamily: 'fira sans' }}>
+                        <MenuItem value='fira sans' style={{ fontFamily: 'fira sans' }}>
                           Fira Sans
                         </MenuItem>
-                        <MenuItem value='eb-garamond' style={{ fontFamily: 'eb garamond' }}>
+                        <MenuItem value='eb garamond' style={{ fontFamily: 'eb garamond' }}>
                           EB Garamond
                         </MenuItem>
                         <MenuItem value='merriweather' style={{ fontFamily: 'merriweather' }}>
@@ -224,6 +224,22 @@ export default class Palette extends React.Component {
                         </MenuItem>
                         <MenuItem value='vollkorn' style={{ fontFamily: 'vollkorn' }}>
                           Vollkorn
+                        </MenuItem>
+                      </Select>
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
+                    <FormControl variant='outlined' fullWidth>
+                      <InputLabel><Trans>Clock - Font Family</Trans></InputLabel>
+                      <Select
+                        value={this.state.theme.extra.clock.fontFamily}
+                        onChange={(event) => {
+                          this.setState(deepmerge(this.state, { theme: { extra: { clock: { fontFamily: event.target.value } } } }));
+                        }}
+                        label={<Trans>Clock - Font Family</Trans>}
+                      >
+                        <MenuItem value='roboto mono' style={{ fontFamily: 'roboto mono' }}>
+                          Roboto Mono
                         </MenuItem>
                       </Select>
                     </FormControl>

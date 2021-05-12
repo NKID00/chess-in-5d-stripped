@@ -51,42 +51,6 @@ export default class General extends React.Component {
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <Accordion
-              expanded={this.state.section === 'language' && this.state.showSection}
-              onChange={() => {
-                this.setState({ section: 'language', showSection: this.state.section !== 'language' ? true : !this.state.showSection });
-              }}
-              elevation={0}
-              style={{ margin: 0 }}
-              square={false}
-              TransitionProps={{ unmountOnExit: true }}
-            >
-              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                <Typography variant='h5'><Trans>Language</Trans></Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <Grid container spacing={2}>
-                  <Grid item xs={12} sm={6} md={12} lg={6}>
-                    <FormControl variant='outlined' fullWidth>
-                      <InputLabel><Trans>Locale</Trans></InputLabel>
-                      <Select
-                        value={this.state.settings.locale}
-                        onChange={(event) => {
-                          this.setState(deepmerge(this.state, { settings: { locale: event.target.value } }));
-                        }}
-                        label={<Trans>Locale</Trans>}
-                      >
-                        <MenuItem value='en'>
-                          English
-                        </MenuItem>
-                      </Select>
-                    </FormControl>
-                  </Grid>
-                </Grid>
-              </AccordionDetails>
-            </Accordion>
-          </Grid>
-          <Grid item xs={12}>
-            <Accordion
               expanded={this.state.section === 'network' && this.state.showSection}
               onChange={() => {
                 this.setState({ section: 'network', showSection: this.state.section !== 'network' ? true : !this.state.showSection });
@@ -123,6 +87,42 @@ export default class General extends React.Component {
                         }}
                         label={<Trans>Server Key</Trans>}
                       />
+                    </FormControl>
+                  </Grid>
+                </Grid>
+              </AccordionDetails>
+            </Accordion>
+          </Grid>
+          <Grid item xs={12}>
+            <Accordion
+              expanded={this.state.section === 'language' && this.state.showSection}
+              onChange={() => {
+                this.setState({ section: 'language', showSection: this.state.section !== 'language' ? true : !this.state.showSection });
+              }}
+              elevation={0}
+              style={{ margin: 0 }}
+              square={false}
+              TransitionProps={{ unmountOnExit: true }}
+            >
+              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                <Typography variant='h5'><Trans>Language</Trans></Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Grid container spacing={2}>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
+                    <FormControl variant='outlined' fullWidth>
+                      <InputLabel><Trans>Locale</Trans></InputLabel>
+                      <Select
+                        value={this.state.settings.locale}
+                        onChange={(event) => {
+                          this.setState(deepmerge(this.state, { settings: { locale: event.target.value } }));
+                        }}
+                        label={<Trans>Locale</Trans>}
+                      >
+                        <MenuItem value='en'>
+                          English
+                        </MenuItem>
+                      </Select>
                     </FormControl>
                   </Grid>
                 </Grid>
