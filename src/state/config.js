@@ -1,7 +1,16 @@
 const deepmerge = require('deepmerge');
 const store = require('store');
 
-const defaultConfig = {};
+const defaultConfig = {
+  notation: {
+    activateTimelineToken: {
+      show: true
+    },
+    newTimelineToken: {
+      show: true
+    }
+  }
+};
 
 export const set = (config, emitter = null) => {
   store.set('config', deepmerge(store.get('config'), config));

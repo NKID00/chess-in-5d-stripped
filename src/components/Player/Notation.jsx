@@ -90,10 +90,10 @@ export default class Notation extends React.Component {
                     notationLine={e}
                     fontFamily={this.state.theme.extra.notation.fontFamily}
                     fontSize={this.state.theme.extra.notation.fontSize}
-                    activateTimelineToken={this.state.theme.extra.notation.activateTimelineToken.show}
+                    activateTimelineToken={this.state.config.notation.activateTimelineToken.show}
                     activateTimelineTokenBackgroundColor={this.state.theme.extra.notation.activateTimelineToken.backgroundColor}
                     activateTimelineTokenColor={this.state.theme.extra.notation.activateTimelineToken.color}
-                    newTimelineToken={this.state.theme.extra.notation.newTimelineToken.show}
+                    newTimelineToken={this.state.config.notation.newTimelineToken.show}
                     newTimelineTokenBackgroundColor={this.state.theme.extra.notation.newTimelineToken.backgroundColor}
                     newTimelineTokenColor={this.state.theme.extra.notation.newTimelineToken.color}
                     onClick={(str) => {

@@ -14,7 +14,7 @@ export default {
     fontFamily: 'roboto mono',
     fontSize: 12,
     activateTimelineToken: true,
-    activateTimelineTokenBackgroundColor: '#007800',
+    activateTimelineTokenBackgroundColor: '#56b056',
     activateTimelineTokenColor: '#ffffff',
     newTimelineToken: true,
     newTimelineTokenBackgroundColor: '#1f8ed5',

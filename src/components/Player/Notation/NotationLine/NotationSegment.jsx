@@ -33,6 +33,7 @@ export default class NotationSegment extends React.Component {
       return (
         <Box h={1}>
           <Tooltip
+            arrow
             title={
               <Box
                 style={{
@@ -109,6 +110,7 @@ export default class NotationSegment extends React.Component {
       }
       return (
         <Tooltip
+          arrow
           title={
             <Box
               style={{
@@ -144,6 +146,7 @@ export default class NotationSegment extends React.Component {
       }
       return (
         <Tooltip
+          arrow
           title={
             <Box
               style={{
@@ -312,6 +315,7 @@ export default class NotationSegment extends React.Component {
     }))(Badge);
     return (
       <Tooltip
+        arrow
         title={newPresentTimeline ?
           <Box
             style={{
