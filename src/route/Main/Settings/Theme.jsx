@@ -23,6 +23,7 @@ import TextField from '@material-ui/core/TextField';
 
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
+import Notation from 'components/Player/Notation';
 import Clock from 'components/Player/Clock';
 import ColorPicker from 'components/ColorPicker';
 
@@ -31,6 +32,14 @@ import * as muiTheme from 'state/theme';
 
 const deepmerge = require('deepmerge');
 const deepequal = require('fast-deep-equal');
+
+const defaultTestNotation = `1. b3 / g5
+2. h4 / Bg7
+8. Qd3 {test comment here} / (0T8)Qd8>>(0T7)e8~ (>L-1)
+9. (-1T8)Bh2 / (-1T8)Qd8>>(0T8)e7 (>L-2);another test comment
+10. (-1T9)f3 (0T9)Nc3 / (0T9)d5 (-1T9)g3
+15. (-4T11)Qd1>(-5T11)c1 (2T11)Ke1>>(2T10)d2~ (>L4) / (4T10)b5 ; another test comment
+22. (4T12)Qe3>(3T12)f4 (-4T12)a4 (8T12)Qg5>>(3T12)g5~ (~T11) (>L11) (-12T11)Ke1>(-11T12)d1 / (-12T11)c5`;
 
 export default class Palette extends React.Component {
   static contextType = EmitterContext;
@@ -148,6 +157,8 @@ export default class Palette extends React.Component {
                           <Alert fullWidth severity='success'><Trans>Success - example success alert!</Trans></Alert>
                         </Box>
                         <Clock />
+                        <Box my={1} />
+                        <Notation notation={defaultTestNotation} />
                       </CardContent>
                     </Card>
                   </Box>

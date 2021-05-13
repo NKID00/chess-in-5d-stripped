@@ -57,6 +57,20 @@ const defaultTheme = {
     clock: {
       fontFamily: 'roboto mono',
       fontSize: 16
+    },
+    notation: {
+      fontFamily: 'roboto mono',
+      fontSize: 12,
+      activateTimelineToken: {
+        show: true,
+        backgroundColor: '#007800',
+        color: '#ffffff',
+      },
+      newTimelineToken: {
+        show: true,
+        backgroundColor: '#1f8ed5',
+        color: '#ffffff',
+      }
     }
   }
 };

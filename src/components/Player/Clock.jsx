@@ -141,7 +141,9 @@ export default class Clock extends React.Component {
           res += (Math.floor(this.whiteDelayLeft / 1000 % 60 % 60)).toFixed();
         }
       }
-      whiteElem.innerText = res;
+      if(typeof whiteElem !== 'undefined' && whiteElem !== null) {
+        whiteElem.innerText = res;
+      }
     }
     if(this.blackClock.current !== null) {
       var blackElem = this.blackClock.current;
@@ -213,7 +215,9 @@ export default class Clock extends React.Component {
           res += (Math.floor(this.blackDelayLeft / 1000 % 60 % 60)).toFixed();
         }
       }
-      blackElem.innerText = res;
+      if(typeof blackElem !== 'undefined' && blackElem !== null) {
+        blackElem.innerText = res;
+      }
     }
   }
   componentDidMount() {
