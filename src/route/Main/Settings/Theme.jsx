@@ -240,6 +240,18 @@ export default class Palette extends React.Component {
                     </FormControl>
                   </Grid>
                   <Grid item xs={12} sm={6} md={12} lg={6}>
+                    <FormControl fullWidth>
+                      <TextField
+                        variant='outlined'
+                        value={this.state.theme.typography.fontSize}
+                        onChange={(event) => {
+                          this.setState(deepmerge(this.state, { theme: { typography: { fontSize: event.target.value } } }));
+                        }}
+                        label={<Trans>Main - Font Size</Trans>}
+                      />
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
                     <FormControl variant='outlined' fullWidth>
                       <InputLabel><Trans>Clock - Font Family</Trans></InputLabel>
                       <Select
@@ -259,11 +271,11 @@ export default class Palette extends React.Component {
                     <FormControl fullWidth>
                       <TextField
                         variant='outlined'
-                        value={this.state.theme.typography.fontSize}
+                        value={this.state.theme.extra.clock.fontSize}
                         onChange={(event) => {
-                          this.setState(deepmerge(this.state, { theme: { typography: { fontSize: event.target.value } } }));
+                          this.setState(deepmerge(this.state, { theme: { extra: { clock: { fontSize: event.target.value } } } }));
                         }}
-                        label={<Trans>Font Size</Trans>}
+                        label={<Trans>Clock - Font Size</Trans>}
                       />
                     </FormControl>
                   </Grid>
