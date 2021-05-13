@@ -3,7 +3,7 @@ import React from 'react';
 import StorybookSandbox from 'components/StorybookSandbox';
 import NotationLine from 'components/Player/Notation/NotationLine';
 
-const defaultTestNotation = `22. (4T12)Qe3>(3T12)f4 (-4T12)a4=Q (8T12)Qg5>>(3T12)g5~ (~T11) (>L11) (-12T11)O-O / (-12T11)c5 (8T12)O-O-O {test comment here}`;
+const defaultTestNotation = `22. (4T12)Qe3>(3T12)f4 (-4T12)a4=Q (8T12)Qg5>>(3T12)g5~ (~T11) (>L11) (-12T11)O-O / (-12T11)c5 (8T12)O-O-O {Test super long comment with a lot of words to see if tooltips will concatenate properly. Real comments may be even longer than this}`;
 
 export default {
   title: 'components/Player/NotationLine',

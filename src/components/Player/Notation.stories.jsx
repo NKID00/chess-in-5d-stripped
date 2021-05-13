@@ -46,7 +46,8 @@ export default {
   title: 'components/Player/Notation',
   component: Notation,
   args: {
-    notation: defaultTestNotation
+    notation: defaultTestNotation,
+    onClick: (e) => { console.log(e) }
   }
 };
 

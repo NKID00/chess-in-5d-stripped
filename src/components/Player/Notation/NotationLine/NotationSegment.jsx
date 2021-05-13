@@ -6,6 +6,7 @@ import Badge from '@material-ui/core/Badge';
 import Box from '@material-ui/core/Box';
 import Chip from '@material-ui/core/Chip';
 import IconButton from '@material-ui/core/IconButton';
+import Popover from '@material-ui/core/Popover';
 import Tooltip from '@material-ui/core/Tooltip';
 
 import CommentIcon from '@material-ui/icons/Comment';
@@ -14,6 +15,16 @@ import { FiArrowRight } from 'react-icons/fi';
 import { BsArrowLeftRight } from 'react-icons/bs'
 
 export default class NotationSegment extends React.Component {
+  state = {
+    openComment: false,
+    comment: '',
+    commentAnchor: null
+  }
+  clickHandler() {
+    if(typeof this.props.onClick === 'function') {
+      this.props.onClick();
+    }
+  }
   render() {
     //Check if segement is comment
     //Return comment displaying icon if it is
@@ -25,22 +36,52 @@ export default class NotationSegment extends React.Component {
             title={
               <Box
                 style={{
-                  fontFamily: this.props.fontFamily,
-                  fontSize: this.props.fontSize,
+                  fontFamily: this.props.fontFamily
                 }}
               >
-                {comment}
+                {comment.length > 30 ? `${comment.substr(0, 30)}...` : comment}
               </Box>
             }
             placement='top'
           >
             <IconButton
               size='small'
-              disableRipple
+              onClick={(e) => {
+                this.setState({
+                  openComment: !this.state.openComment,
+                  comment: comment,
+                  commentAnchor: e.currentTarget
+                });
+              }}
             >
               <CommentIcon fontSize='small' />
             </IconButton>
           </Tooltip>
+          <Popover
+            open={this.state.openComment}
+            anchorEl={this.state.commentAnchor}
+            style={{
+              fontFamily: this.props.fontFamily,
+              fontSize: this.props.fontSize,
+            }}
+            onClose={(e) => {
+              this.setState({
+                openComment: false
+              });
+            }}
+            anchorOrigin={{
+              vertical: 'top',
+              horizontal: 'center',
+            }}
+            transformOrigin={{
+              vertical: 'top',
+              horizontal: 'center',
+            }}
+          >
+            <Box p={1}>
+              {this.state.comment}
+            </Box>
+          </Popover>
         </Box>
       );
     }
@@ -52,8 +93,6 @@ export default class NotationSegment extends React.Component {
           label={this.props.notationSegment}
           size='small'
           style={{
-            backgroundColor: (this.props.isWhite ? '#ffffff' : '#000000'),
-            color: (this.props.isWhite ? '#000000' : '#ffffff'),
             fontFamily: this.props.fontFamily,
             fontSize: this.props.fontSize,
           }}
@@ -99,7 +138,7 @@ export default class NotationSegment extends React.Component {
     //Return new timeline indication chip if it is
     if(this.props.notationSegment.match(/^\(>L-?\+?\d+\)/) !== null) {
       if(!this.props.newTimelineToken) { return (<></>); }
-      var timeline = this.props.notationSegment.match(/^\(>L(-?\+?\d+)\)/)[1];
+      var timeline = this.props.notationSegment.match(/^\(>L(-?\+?\d+)\)/)[1]; // eslint-disable-line no-redeclare
       if(!timeline.includes('+') && !timeline.includes('-')) {
         timeline = `+${timeline}`;
       }
@@ -179,7 +218,7 @@ export default class NotationSegment extends React.Component {
     }
     //Looking for piece (promotion) and selecting appropriate chess icons
     if(this.props.notationSegment.match(/=[KCQYSNRBUD]+/) !== null) {
-      var piece = this.props.notationSegment.match(/=([KCQYSNRBUD]+)/)[1];
+      var piece = this.props.notationSegment.match(/=([KCQYSNRBUD]+)/)[1]; // eslint-disable-line no-redeclare
       if(
         piece === 'K' ||
         piece === 'C'
@@ -263,7 +302,7 @@ export default class NotationSegment extends React.Component {
       );
     }
     //Check if move activates new timeline and show tooltip + badge if the case
-    var newPresentTimeline = this.props.notationSegment.includes('~');
+    var newPresentTimeline = this.props.notationSegment.includes('~') && this.props.activateTimelineToken;
     var CustomNewActiveTimelineBadge = withStyles(() => ({
       badge: {
         right: 2,
@@ -305,6 +344,7 @@ export default class NotationSegment extends React.Component {
               fontFamily: this.props.fontFamily,
               fontSize: this.props.fontSize,
             }}
+            onClick={this.clickHandler.bind(this)}
           />
         </CustomNewActiveTimelineBadge>
       </Tooltip>

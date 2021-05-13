@@ -26,6 +26,7 @@ export default class Notation extends React.Component {
       tmpNotation = tmpNotation.replace(/;\s*([^\n]*)\n/g, '{$1}\n');
       tmpNotation = tmpNotation.replace(/([^\s]){/g, '$1 {');
       tmpNotation = tmpNotation.replace(/}([^\s])/g, '} $1');
+      //TODO: Remove newlines between {} style comments
       tmpNotation = tmpNotation.replace(/\s+(\d*\.)/g, '\n$1');
       var tmpNotationArr = tmpNotation.split('\n');
       for(var i = 0;i < tmpNotationArr.length;i++) {
@@ -39,7 +40,7 @@ export default class Notation extends React.Component {
     var updateNeeded = true;
     if(this.state.notationArr.length === res.length) {
       updateNeeded = false;
-      for(var i = 0;!updateNeeded && i < res.length;i++) {
+      for(var i = 0;!updateNeeded && i < res.length;i++) { // eslint-disable-line no-redeclare
         if(res[i] !== this.state.notationArr[i]) {
           updateNeeded = true;
         }
@@ -95,6 +96,16 @@ export default class Notation extends React.Component {
                     newTimelineToken={this.state.theme.extra.notation.newTimelineToken.show}
                     newTimelineTokenBackgroundColor={this.state.theme.extra.notation.newTimelineToken.backgroundColor}
                     newTimelineTokenColor={this.state.theme.extra.notation.newTimelineToken.color}
+                    onClick={(str) => {
+                      var res = '';
+                      for(var j = 0;j < i && j < this.state.notationArr.length;j++) {
+                        res += this.state.notationArr[j] + '\n';
+                      }
+                      res += str;
+                      if(typeof this.props.onClick === 'function') {
+                        this.props.onClick(res.trim());
+                      }
+                    }}
                   />
                   {i + 1 < this.state.notationArr.length ? <Divider /> : <></>}
                 </Grid>

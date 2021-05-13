@@ -41,7 +41,7 @@ const defaultTestNotation = `1. b3 / g5
 15. (-4T11)Qd1>(-5T11)c1 (2T11)Ke1>>(2T10)d2~ (>L4) / (4T10)b5 ; another test comment
 22. (4T12)Qe3>(3T12)f4 (-4T12)a4 (8T12)Qg5>>(3T12)g5~ (~T11) (>L11) (-12T11)Ke1>(-11T12)d1 / (-12T11)c5`;
 
-export default class Palette extends React.Component {
+export default class Theme extends React.Component {
   static contextType = EmitterContext;
   state = {
     section: 'typography',
@@ -276,6 +276,34 @@ export default class Palette extends React.Component {
                           this.setState(deepmerge(this.state, { theme: { extra: { clock: { fontSize: event.target.value } } } }));
                         }}
                         label={<Trans>Clock - Font Size</Trans>}
+                      />
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
+                    <FormControl variant='outlined' fullWidth>
+                      <InputLabel><Trans>Notation - Font Family</Trans></InputLabel>
+                      <Select
+                        value={this.state.theme.extra.clock.fontFamily}
+                        onChange={(event) => {
+                          this.setState(deepmerge(this.state, { theme: { extra: { notation: { fontFamily: event.target.value } } } }));
+                        }}
+                        label={<Trans>Notation - Font Family</Trans>}
+                      >
+                        <MenuItem value='roboto mono' style={{ fontFamily: 'roboto mono' }}>
+                          Roboto Mono
+                        </MenuItem>
+                      </Select>
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
+                    <FormControl fullWidth>
+                      <TextField
+                        variant='outlined'
+                        value={this.state.theme.extra.clock.fontSize}
+                        onChange={(event) => {
+                          this.setState(deepmerge(this.state, { theme: { extra: { notation: { fontSize: event.target.value } } } }));
+                        }}
+                        label={<Trans>Notation - Font Size</Trans>}
                       />
                     </FormControl>
                   </Grid>

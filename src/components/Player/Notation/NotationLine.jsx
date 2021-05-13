@@ -1,7 +1,6 @@
 import React from 'react';
 
 import Box from '@material-ui/core/Box';
-import Chip from '@material-ui/core/Chip';
 
 import NotationSegment from 'components/Player/Notation/NotationLine/NotationSegment';
 
@@ -58,14 +57,14 @@ export default class NotationLine extends React.Component {
     var updateNeeded = true;
     if(this.state.notationArrWhite.length === resWhite.length) {
       updateNeeded = false;
-      for(var i = 0;!updateNeeded && i < resWhite.length;i++) {
+      for(var i = 0;!updateNeeded && i < resWhite.length;i++) { // eslint-disable-line no-redeclare
         if(resWhite[i] !== this.state.notationArrWhite[i]) {
           updateNeeded = true;
         }
       }
     }
     if(!updateNeeded && this.state.notationArrBlack.length === resBlack.length) {
-      for(var i = 0;!updateNeeded && i < resBlack.length;i++) {
+      for(var i = 0;!updateNeeded && i < resBlack.length;i++) { // eslint-disable-line no-redeclare
         if(resBlack[i] !== this.state.notationArrBlack[i]) {
           updateNeeded = true;
         }
@@ -103,6 +102,15 @@ export default class NotationLine extends React.Component {
                 newTimelineToken={this.props.newTimelineToken}
                 newTimelineTokenBackgroundColor={this.props.newTimelineTokenBackgroundColor}
                 newTimelineTokenColor={this.props.newTimelineTokenColor}
+                onClick={(str) => {
+                  var res = '';
+                  for(var j = 0;j <= i && j < this.state.notationArrWhite.length;j++) {
+                    res += this.state.notationArrWhite[j] + ' ';
+                  }
+                  if(typeof this.props.onClick === 'function') {
+                    this.props.onClick(res.trim());
+                  }
+                }}
               />
             </Box>
           );
@@ -115,6 +123,18 @@ export default class NotationLine extends React.Component {
                 notationSegment={e}
                 fontFamily={this.props.fontFamily}
                 fontSize={this.props.fontSize}
+                onClick={(str) => {
+                  var res = '';
+                  for(var j = 0;j < this.state.notationArrWhite.length;j++) {
+                    res += this.state.notationArrWhite[j] + ' ';
+                  }
+                  for(var j = 0;j <= i && j < this.state.notationArrBlack.length;j++) { // eslint-disable-line no-redeclare
+                    res += this.state.notationArrBlack[j] + ' ';
+                  }
+                  if(typeof this.props.onClick === 'function') {
+                    this.props.onClick(res.trim());
+                  }
+                }}
               />
             </Box>
           );
