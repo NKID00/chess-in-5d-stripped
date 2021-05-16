@@ -26,10 +26,23 @@ export default class Notation extends React.Component {
       tmpNotation = tmpNotation.replace(/;\s*([^\n]*)\n/g, '{$1}\n');
       tmpNotation = tmpNotation.replace(/([^\s]){/g, '$1 {');
       tmpNotation = tmpNotation.replace(/}([^\s])/g, '} $1');
-      //TODO: Remove newlines between {} style comments
+      tmpNotation = tmpNotation.replace(/\r\n/g, '\n');
+      var commentMode = false;
+      for(var i = 0;i < tmpNotation.length;i++) {
+        if(tmpNotation[i] === '{') {
+          commentMode = true;
+        }
+        else if(commentMode && tmpNotation[i] === '\n') {
+          tmpNotation.splice(i,1);
+          i--;
+        }
+        else if(tmpNotation[i] === '}') {
+          commentMode = false;
+        }
+      }
       tmpNotation = tmpNotation.replace(/\s+(\d*\.)/g, '\n$1');
       var tmpNotationArr = tmpNotation.split('\n');
-      for(var i = 0;i < tmpNotationArr.length;i++) {
+      for(var i = 0;i < tmpNotationArr.length;i++) { // eslint-disable-line no-redeclare
         if(tmpNotationArr[i].length > 0) {
           res.push(tmpNotationArr[i]);
         }

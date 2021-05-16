@@ -14,7 +14,7 @@ const defaultTheme = {
   palette: {
     type: 'dark',
     primary: {
-      main: '#03a9f4'
+      main: '#0085c3'
     },
     secondary: {
       main: '#f50057'

@@ -23,7 +23,7 @@ const defaultTestNotation = `[Board "Standard"]
 4. d4 / g4
 5. b4 / Kf8
 6. Bf4 / Ne7 7. c4 / Ng8
-8. Qd3 {test comment here} / (0T8)Qd8>>(0T7)e8~ (>L-1)
+8. Qd3 {test comment here [test tag]} / (0T8)Qd8>>(0T7)e8~ (>L-1)
 9. (-1T8)Bh2 / (-1T8)Qd8>>(0T8)e7 (>L-2);another test comment
 10. (-1T9)f3 (0T9)Nc3 / (0T9)d5 (-1T9)g3
 11. (0T10)Kd1 (-1T10)Qd1>>(-1T9)d2~ (>L1) (-2T9)Qd3>>(-1T8)e3~ (>L2) / (2T8)exf4

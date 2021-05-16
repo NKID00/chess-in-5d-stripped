@@ -4,7 +4,6 @@ import { HashRouter } from 'react-router-dom';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import { SnackbarProvider } from 'notistack';
-import AddToHomeScreen from '@ideasio/add-to-homescreen-react';
 
 import { I18nProvider } from '@lingui/react';
 import { i18n } from '@lingui/core';
@@ -58,7 +57,6 @@ export default class App extends React.Component {
           <EmitterContext.Provider value={this.emitter}>
             <ThemeProvider theme={createMuiTheme(this.state.muiTheme)}>
               <SnackbarProvider maxSnack={2}>
-                <AddToHomeScreen />
                 <UpdateToast />
                 <Main />
                 <ConverseManager />

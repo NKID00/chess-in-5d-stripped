@@ -3,12 +3,9 @@ import ReactDOM from 'react-dom';
 
 import App from 'App';
 
-const store = require('store');
+import * as version from 'state/version';
 
-//Check if data from old version exists (clear if yes)
-if(typeof store.get('peerjs') === 'object') {
-  store.clearAll();
-}
+version.init();
 
 ReactDOM.render(
   <React.StrictMode>

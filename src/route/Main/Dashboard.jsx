@@ -9,6 +9,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Hidden from '@material-ui/core/Hidden';
 import Grid from '@material-ui/core/Grid';
 import Link from '@material-ui/core/Link';
+import LinearProgress from '@material-ui/core/LinearProgress';
 import Typography from '@material-ui/core/Typography';
 
 import * as motd from 'network/motd';
@@ -98,13 +99,13 @@ class Motd extends React.Component {
               {' ' + settings.get().server}
             </Link>
           </Typography>
-          <Typography variant='body2'>
             {this.state.message === null ?
-              ''
+              <LinearProgress />
             :
-              this.state.message
+              <Typography variant='body2'>
+                {this.state.message}
+              </Typography>
             }
-          </Typography>
         </CardContent>
       </Card>
     );
