@@ -3,7 +3,6 @@ const { autoUpdater } = require('electron-updater');
 const fs = require('fs');
 const isDev = require('electron-is-dev');
 const path = require('path');
-const { compressLink } = require('../src/components.old/LinkCompression');
 
 if(!isDev) {
   autoUpdater.checkForUpdatesAndNotify();
@@ -16,9 +15,9 @@ var mainUrl = baseUrl + '';
 app.on('open-file', (e, p) => {
   if(p.includes('.5dpgn')) {
     var data = fs.readFileSync(p, 'utf8');
-    mainUrl = compressLink(data);
+    //mainUrl = compressLink(data);
     if(mainWindow !== null) {
-      mainWindow.loadURL(mainUrl);
+      //mainWindow.loadURL(mainUrl);
     }
   }
 });

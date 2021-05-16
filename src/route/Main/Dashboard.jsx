@@ -15,7 +15,7 @@ import Typography from '@material-ui/core/Typography';
 import * as motd from 'network/motd';
 import * as settings from 'state/settings';
 
-class Welcome extends React.Component {
+export class Welcome extends React.Component {
   render() {
     return (
       <Card>
@@ -32,7 +32,7 @@ class Welcome extends React.Component {
   }
 }
 
-class DiscordJoin extends React.Component {
+export class DiscordJoin extends React.Component {
   render() {
     return (
       <Card>
@@ -76,7 +76,7 @@ class DiscordJoin extends React.Component {
   }
 }
 
-class Motd extends React.Component {
+export class Motd extends React.Component {
   state = {
     message: null
   }
@@ -100,7 +100,9 @@ class Motd extends React.Component {
             </Link>
           </Typography>
             {this.state.message === null ?
-              <LinearProgress />
+              <Box m={1}>
+                <LinearProgress />
+              </Box>
             :
               <Typography variant='body2'>
                 {this.state.message}

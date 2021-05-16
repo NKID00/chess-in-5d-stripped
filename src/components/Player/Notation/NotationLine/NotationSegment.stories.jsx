@@ -13,12 +13,15 @@ export default {
     isWhite: true,
     fontFamily: 'roboto mono',
     fontSize: 12,
-    activateTimelineToken: true,
-    activateTimelineTokenBackgroundColor: '#56b056',
-    activateTimelineTokenColor: '#ffffff',
+    newPresentToken: true,
+    newPresentTokenBackgroundColor: '#56b056',
+    newPresentTokenColor: '#ffffff',
     newTimelineToken: true,
     newTimelineTokenBackgroundColor: '#1f8ed5',
     newTimelineTokenColor: '#ffffff',
+    highlight: false,
+    highlightSize: 3,
+    highlightColor: '#b194e1',
   }
 };
 

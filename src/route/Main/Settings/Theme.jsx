@@ -13,6 +13,7 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Grid from '@material-ui/core/Grid';
 import InputLabel from '@material-ui/core/InputLabel';
+import LinearProgress from '@material-ui/core/LinearProgress';
 import MenuItem from '@material-ui/core/MenuItem';
 import Paper from '@material-ui/core/Paper';
 import Select from '@material-ui/core/Select';
@@ -156,11 +157,15 @@ export default class Theme extends React.Component {
                         <Box width={1} my={2}>
                           <Alert fullWidth severity='success'><Trans>Success - example success alert!</Trans></Alert>
                         </Box>
-                        <Clock />
-                        <Box my={1} />
-                        <Notation notation={defaultTestNotation} />
+                        <Box mt={2}>
+                          <LinearProgress />
+                        </Box>
                       </CardContent>
                     </Card>
+                    <Box my={2} />
+                    <Clock />
+                    <Box my={2} />
+                    <Notation notation={defaultTestNotation} />
                   </Box>
                 </Paper>
               </Grid>

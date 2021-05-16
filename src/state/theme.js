@@ -61,7 +61,11 @@ const defaultTheme = {
     notation: {
       fontFamily: 'roboto mono',
       fontSize: 12,
-      activateTimelineToken: {
+      highlight: {
+        size: 3,
+        color: '#b194e1',
+      },
+      newPresentToken: {
         backgroundColor: '#56b056',
         color: '#ffffff',
       },

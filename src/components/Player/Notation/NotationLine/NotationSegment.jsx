@@ -103,11 +103,8 @@ export default class NotationSegment extends React.Component {
     //Check if segement is timeline activation token
     //Return timeline activation indication chip if it is
     if(this.props.notationSegment.match(/^\(~T-?\+?\d+\)/) !== null) {
-      if(!this.props.activateTimelineToken) { return (<></>); }
-      var timeline = this.props.notationSegment.match(/^\(~T(-?\+?\d+)\)/)[1];
-      if(!timeline.includes('+') && !timeline.includes('-')) {
-        timeline = `+${timeline}`;
-      }
+      if(!this.props.newPresentToken) { return (<></>); }
+      var turn = this.props.notationSegment.match(/^\(~T(-?\+?\d+)\)/)[1];
       return (
         <Tooltip
           arrow
@@ -118,7 +115,7 @@ export default class NotationSegment extends React.Component {
                 fontSize: this.props.fontSize,
               }}
             >
-              {timeline} Timeline Activated!
+              Turn {turn} New Present!
             </Box>
           }
           placement='top'
@@ -127,8 +124,8 @@ export default class NotationSegment extends React.Component {
             label={this.props.notationSegment}
             size='small'
             style={{
-              backgroundColor: this.props.activateTimelineTokenBackgroundColor,
-              color: this.props.activateTimelineTokenColor,
+              backgroundColor: this.props.newPresentTokenBackgroundColor,
+              color: this.props.newPresentTokenColor,
               fontFamily: this.props.fontFamily,
               fontSize: this.props.fontSize,
             }}
@@ -140,7 +137,7 @@ export default class NotationSegment extends React.Component {
     //Return new timeline indication chip if it is
     if(this.props.notationSegment.match(/^\(>L-?\+?\d+\)/) !== null) {
       if(!this.props.newTimelineToken) { return (<></>); }
-      var timeline = this.props.notationSegment.match(/^\(>L(-?\+?\d+)\)/)[1]; // eslint-disable-line no-redeclare
+      var timeline = this.props.notationSegment.match(/^\(>L(-?\+?\d+)\)/)[1];
       if(!timeline.includes('+') && !timeline.includes('-')) {
         timeline = `+${timeline}`;
       }
@@ -305,12 +302,12 @@ export default class NotationSegment extends React.Component {
       );
     }
     //Check if move activates new timeline and show tooltip + badge if the case
-    var newPresentTimeline = this.props.notationSegment.includes('~') && this.props.activateTimelineToken;
+    var newPresentTimeline = this.props.notationSegment.includes('~') && this.props.newPresentToken;
     var CustomNewActiveTimelineBadge = withStyles(() => ({
       badge: {
         right: 2,
         top: 2,
-        backgroundColor: this.props.activateTimelineTokenBackgroundColor
+        backgroundColor: this.props.newPresentTokenBackgroundColor
       }
     }))(Badge);
     return (
@@ -345,6 +342,9 @@ export default class NotationSegment extends React.Component {
             style={{
               backgroundColor: (this.props.isWhite ? '#ffffff' : '#000000'),
               color: (this.props.isWhite ? '#000000' : '#ffffff'),
+              borderWidth: (this.props.highlight ? this.props.highlightSize : 0),
+              borderColor: this.props.highlightColor,
+              borderStyle: 'solid',
               fontFamily: this.props.fontFamily,
               fontSize: this.props.fontSize,
             }}

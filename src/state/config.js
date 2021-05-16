@@ -3,7 +3,7 @@ const store = require('store');
 
 const defaultConfig = {
   notation: {
-    activateTimelineToken: {
+    newPresentToken: {
       show: true
     },
     newTimelineToken: {

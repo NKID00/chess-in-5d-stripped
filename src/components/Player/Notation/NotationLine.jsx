@@ -96,9 +96,9 @@ export default class NotationLine extends React.Component {
                 fontFamily={this.props.fontFamily}
                 fontSize={this.props.fontSize}
                 isWhite
-                activateTimelineToken={this.props.activateTimelineToken}
-                activateTimelineTokenBackgroundColor={this.props.activateTimelineTokenBackgroundColor}
-                activateTimelineTokenColor={this.props.activateTimelineTokenColor}
+                newPresentToken={this.props.newPresentToken}
+                newPresentTokenBackgroundColor={this.props.newPresentTokenBackgroundColor}
+                newPresentTokenColor={this.props.newPresentTokenColor}
                 newTimelineToken={this.props.newTimelineToken}
                 newTimelineTokenBackgroundColor={this.props.newTimelineTokenBackgroundColor}
                 newTimelineTokenColor={this.props.newTimelineTokenColor}

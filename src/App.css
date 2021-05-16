@@ -3,6 +3,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   margin: 0;
   overflow-x: hidden;
+  overflow-y: auto;
 }
 
 code {
