@@ -25,6 +25,7 @@ Props:
 const rowHeight = 30;
 const rowMargin = 11;
 
+//TODO: Rework layout system to fit vertically
 export default class Player extends React.Component {
   chessRenderer = React.createRef();
   state = {

@@ -10,8 +10,6 @@ import SkipNextIcon from '@material-ui/icons/SkipNext';
 import FastRewindIcon from '@material-ui/icons/FastRewind';
 import FastForwardIcon from '@material-ui/icons/FastForward';
 
-const deepmerge = require('deepmerge');
-
 export default class Analyze extends React.Component {
   render() {
     return (

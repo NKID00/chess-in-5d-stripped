@@ -89,9 +89,8 @@ export default class NotationLine extends React.Component {
       <Box display='flex' flexWrap='wrap' m={0.5}>
         {this.state.notationArrWhite.map((e, i) => {
           return (
-            <Box m={0.25}>
+            <Box m={0.25} key={i}>
               <NotationSegment
-                key={i}
                 notationSegment={e}
                 fontFamily={this.props.fontFamily}
                 fontSize={this.props.fontSize}
@@ -102,6 +101,9 @@ export default class NotationLine extends React.Component {
                 newTimelineToken={this.props.newTimelineToken}
                 newTimelineTokenBackgroundColor={this.props.newTimelineTokenBackgroundColor}
                 newTimelineTokenColor={this.props.newTimelineTokenColor}
+                highlight={this.props.highlightNotationSegment === e}
+                highlightSize={this.props.highlightSize}
+                highlightColor={this.props.highlightColor}
                 onClick={(str) => {
                   var res = '';
                   for(var j = 0;j <= i && j < this.state.notationArrWhite.length;j++) {
@@ -117,12 +119,20 @@ export default class NotationLine extends React.Component {
         })}
         {this.state.notationArrBlack.map((e, i) => {
           return (
-            <Box m={0.25}>
+            <Box m={0.25} key={i}>
               <NotationSegment
-                key={i}
                 notationSegment={e}
                 fontFamily={this.props.fontFamily}
                 fontSize={this.props.fontSize}
+                newPresentToken={this.props.newPresentToken}
+                newPresentTokenBackgroundColor={this.props.newPresentTokenBackgroundColor}
+                newPresentTokenColor={this.props.newPresentTokenColor}
+                newTimelineToken={this.props.newTimelineToken}
+                newTimelineTokenBackgroundColor={this.props.newTimelineTokenBackgroundColor}
+                newTimelineTokenColor={this.props.newTimelineTokenColor}
+                highlight={this.props.highlightNotationSegment === e}
+                highlightSize={this.props.highlightSize}
+                highlightColor={this.props.highlightColor}
                 onClick={(str) => {
                   var res = '';
                   for(var j = 0;j < this.state.notationArrWhite.length;j++) {

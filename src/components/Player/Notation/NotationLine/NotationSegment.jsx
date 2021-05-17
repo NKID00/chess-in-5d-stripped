@@ -14,6 +14,8 @@ import { FaChessPawn, FaChessKnight, FaChessBishop, FaChessRook, FaChessQueen, F
 import { FiArrowRight } from 'react-icons/fi';
 import { BsArrowLeftRight } from 'react-icons/bs'
 
+import 'components/Player/Notation/NotationLine/NotationSegment.css';
+
 export default class NotationSegment extends React.Component {
   state = {
     openComment: false,
@@ -115,7 +117,7 @@ export default class NotationSegment extends React.Component {
                 fontSize: this.props.fontSize,
               }}
             >
-              Turn {turn} New Present!
+              Present Moved To Turn {turn}!
             </Box>
           }
           placement='top'
@@ -336,6 +338,8 @@ export default class NotationSegment extends React.Component {
           }}
         >
           <Chip
+            className='borderBlink'
+            animate={this.props.highlight ? 1 : 0}
             label={this.props.notationSegment}
             size='small'
             icon={icon}

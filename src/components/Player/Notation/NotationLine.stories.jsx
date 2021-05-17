@@ -18,6 +18,9 @@ export default {
     newTimelineToken: true,
     newTimelineTokenBackgroundColor: '#1f8ed5',
     newTimelineTokenColor: '#ffffff',
+    highlightNotationSegment: '(8T12)O-O-O',
+    highlightSize: 3,
+    highlightColor: '#b194e1',
   }
 };
 

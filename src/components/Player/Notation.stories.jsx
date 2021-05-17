@@ -47,6 +47,7 @@ export default {
   component: Notation,
   args: {
     notation: defaultTestNotation,
+    highlightNotation: defaultTestNotation,
     onClick: (e) => { console.log(e) }
   }
 };

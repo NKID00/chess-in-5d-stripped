@@ -7,11 +7,10 @@ import Grid from '@material-ui/core/Grid';
 
 import NotationLine from 'components/Player/Notation/NotationLine';
 
+import Chess from '5d-chess-js';
 import EmitterContext from 'EmitterContext';
 import * as crConfig from 'state/config';
 import * as muiTheme from 'state/theme';
-
-//TODO: Highlight system
 
 export default class Notation extends React.Component {
   static contextType = EmitterContext;
@@ -19,9 +18,64 @@ export default class Notation extends React.Component {
     config: crConfig.get(),
     theme: muiTheme.get(),
     notationArr: [],
+    highlightNotationSegment: null,
   };
+  //TODO: Improve cpu usage of extractHighlightNotation (web worker?)
+  async extractHighlightNotation(notationArr) {
+    var validHighlight = false;
+    //Searching for last move and looking for notation string to highlight
+    if(Array.isArray(notationArr) && typeof this.props.notation === 'string' && typeof this.props.highlightNotation === 'string') {
+      try {
+        var highlightChess = new Chess();
+        highlightChess.skipDetection = true;
+        highlightChess.import(this.props.highlightNotation);
+        var highlightHash = highlightChess.hash.slice();
+
+        //Check if highlight matches current displayed notation (skip if matches)
+        highlightChess.import(this.props.notation);
+        if(highlightHash !== highlightChess.hash) {
+          var currTmpChess = new Chess();
+          currTmpChess.skipDetection = true;
+
+          //Create array of notation segments
+          var tmpNotationArr = [];
+          for(var i = 0;i < notationArr.length;i++) {
+            tmpNotationArr.push(notationArr[i].split(' '));
+          }
+          tmpNotationArr = tmpNotationArr.flat();
+
+          //Test notation segments to see if imported board hash matches
+          for(var i = 0;!validHighlight && i < tmpNotationArr.length;i++) { // eslint-disable-line no-redeclare
+            var currTmpNotation = '';
+            for(var j = 0;j <= i;j++) {
+              currTmpNotation += tmpNotationArr[j] + ' ';
+            }
+            try {
+              currTmpChess.import(currTmpNotation);
+              if(currTmpChess.hash === highlightHash) {
+                if(this.state.highlightNotationSegment !== tmpNotationArr[i]) {
+                  this.setState({ highlightNotationSegment: tmpNotationArr[i] });
+                }
+                validHighlight = true;
+              }
+            }
+            catch(err) {}
+          }
+        }
+      }
+      catch(err) {}
+    }
+
+    //Check if highlightNotationSegment is not null and update to null if needed
+    if(!validHighlight) {
+      if(this.state.highlightNotationSegment) {
+        this.setState({ highlightNotationSegment: null });
+      }
+    }
+  }
   extractNotationArr() {
     var res = [];
+    //Process notation into string arrays
     if(typeof this.props.notation === 'string') {
       var tmpNotation = this.props.notation.slice();
       tmpNotation = tmpNotation.replace(/\[[^\]]*\]/g, '');
@@ -29,6 +83,7 @@ export default class Notation extends React.Component {
       tmpNotation = tmpNotation.replace(/([^\s]){/g, '$1 {');
       tmpNotation = tmpNotation.replace(/}([^\s])/g, '} $1');
       tmpNotation = tmpNotation.replace(/\r\n/g, '\n');
+      //Remove newline within comments
       var commentMode = false;
       for(var i = 0;i < tmpNotation.length;i++) {
         if(tmpNotation[i] === '{') {
@@ -66,6 +121,9 @@ export default class Notation extends React.Component {
     if(updateNeeded) {
       this.setState({ notationArr: res });
     }
+    
+    //Look for highlights
+    this.extractHighlightNotation(res);
   }
   componentDidMount() {
     //Update state if config settings are changed
@@ -84,6 +142,9 @@ export default class Notation extends React.Component {
   }
   componentDidUpdate(prevProps) {
     if(this.props.notation !== prevProps.notation) {
+      this.extractNotationArr();
+    }
+    if(this.props.highlightNotation !== prevProps.highlightNotation) {
       this.extractNotationArr();
     }
   }
@@ -111,6 +172,9 @@ export default class Notation extends React.Component {
                     newTimelineToken={this.state.config.notation.newTimelineToken.show}
                     newTimelineTokenBackgroundColor={this.state.theme.extra.notation.newTimelineToken.backgroundColor}
                     newTimelineTokenColor={this.state.theme.extra.notation.newTimelineToken.color}
+                    highlightNotationSegment={this.state.highlightNotationSegment}
+                    highlightSize={this.state.theme.extra.notation.highlight.size}
+                    highlightColor={this.state.theme.extra.notation.highlight.color}
                     onClick={(str) => {
                       var res = '';
                       for(var j = 0;j < i && j < this.state.notationArr.length;j++) {

@@ -26,6 +26,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 import Notation from 'components/Player/Notation';
 import Clock from 'components/Player/Clock';
+import SubmitMenu from 'components/Player/SubmitMenu';
 import ColorPicker from 'components/ColorPicker';
 
 import EmitterContext from 'EmitterContext';
@@ -36,11 +37,47 @@ const deepequal = require('fast-deep-equal');
 
 const defaultTestNotation = `1. b3 / g5
 2. h4 / Bg7
-8. Qd3 {test comment here} / (0T8)Qd8>>(0T7)e8~ (>L-1)
+3. a3 / e5
+4. d4 / g4
+5. b4 / Kf8
+6. Bf4 / Ne7 7. c4 / Ng8
+8. Qd3 {test comment here [test tag]} / (0T8)Qd8>>(0T7)e8~ (>L-1)
 9. (-1T8)Bh2 / (-1T8)Qd8>>(0T8)e7 (>L-2);another test comment
 10. (-1T9)f3 (0T9)Nc3 / (0T9)d5 (-1T9)g3
+11. (0T10)Kd1 (-1T10)Qd1>>(-1T9)d2~ (>L1) (-2T9)Qd3>>(-1T8)e3~ (>L2) / (2T8)exf4
+12. (2T9)Rh3 / (1T9)Qe8>>(0T9)e7~ (>L-3) (-2T9)b6 (2T9)h6
+13. (-3T10)Nc3>>(-1T10)d3~ (>L3) (1T10)Qg5 (2T10)Qg3 (-2T10)Bg3 / (3T10)Bh6 (-1T10)c6 (1T10)Kf8>>(1T9)g8~ (>L-4)
+14. (-4T10)e4 / (0T10)Bc8>>(1T10)d8 (>L-5) (2T10)Qd8>>(3T10)d8 (>L-6) (-3T10)Kf8>(-2T10)e8 (-4T10)Qd8
 15. (-4T11)Qd1>(-5T11)c1 (2T11)Ke1>>(2T10)d2~ (>L4) / (4T10)b5 ; another test comment
+16. (4T11)Ng1>x(3T11)g3 (-3T11)Qd3>(-2T11)c2 (0T11)Qd3>>(0T9)f3~ (>L5) / (5T9)e4
+17. (5T10)Bxc7 / (5T10)Kf8>(4T11)g8
+18. (1T11)Qg5>>x(0T11)g4~ (>L6) (5T11)Bc7>>x(5T10)b7~ (>L7) / (7T10)d6
+19. (-6T11)Ng1>>(-5T11)g3 (>L8) (-1T11)Pf3>>(-2T11)f3 (>L9) (7T11)Qfe3 / (5T11)Nb8>x(7T11)b7 (-2T11)Qe7>>(-2T10)e8~ (>L-7)
+20. (-7T11)Bf1>>(-3T11)f5 (>L10) / (2T11)Ne7>>(0T10)e7~ (>L-8)
+21. (-8T11)Bg5 / (-4T11)Bg7>>(-2T11)g5~ (>L-9) (9T11)Nc6 (3T11)Nb8>>(4T11)b6~ (>L-10) (1T11)f6 (8T11)Bc8>>(5T11)f8~ (>L-11) (-8T11)Nf5 (-6T11)Bf6 (-3T11)Qe7>>(-2T10)e8 (>L-12) (-5T11)Bg7>>(-6T11)g6 (>L-13) (10T11)Bg7>>x(8T11)g5 (>L-14) (0T11)h5 (-1T11)Qe8>>(0T11)e8 (>L-15) (-7T11)Qe7>>(-8T11)e8 (>L-16) (6T11)dxc4
 22. (4T12)Qe3>(3T12)f4 (-4T12)a4 (8T12)Qg5>>(3T12)g5~ (~T11) (>L11) (-12T11)Ke1>(-11T12)d1 / (-12T11)c5`;
+
+const defaultTestHighlightNotation = `1. b3 / g5
+2. h4 / Bg7
+3. a3 / e5
+4. d4 / g4
+5. b4 / Kf8
+6. Bf4 / Ne7 7. c4 / Ng8
+8. Qd3 {test comment here [test tag]} / (0T8)Qd8>>(0T7)e8~ (>L-1)
+9. (-1T8)Bh2 / (-1T8)Qd8>>(0T8)e7 (>L-2);another test comment
+10. (-1T9)f3 (0T9)Nc3 / (0T9)d5 (-1T9)g3
+11. (0T10)Kd1 (-1T10)Qd1>>(-1T9)d2~ (>L1) (-2T9)Qd3>>(-1T8)e3~ (>L2) / (2T8)exf4
+12. (2T9)Rh3 / (1T9)Qe8>>(0T9)e7~ (>L-3) (-2T9)b6 (2T9)h6
+13. (-3T10)Nc3>>(-1T10)d3~ (>L3) (1T10)Qg5 (2T10)Qg3 (-2T10)Bg3 / (3T10)Bh6 (-1T10)c6 (1T10)Kf8>>(1T9)g8~ (>L-4)
+14. (-4T10)e4 / (0T10)Bc8>>(1T10)d8 (>L-5) (2T10)Qd8>>(3T10)d8 (>L-6) (-3T10)Kf8>(-2T10)e8 (-4T10)Qd8
+15. (-4T11)Qd1>(-5T11)c1 (2T11)Ke1>>(2T10)d2~ (>L4) / (4T10)b5 ; another test comment
+16. (4T11)Ng1>x(3T11)g3 (-3T11)Qd3>(-2T11)c2 (0T11)Qd3>>(0T9)f3~ (>L5) / (5T9)e4
+17. (5T10)Bxc7 / (5T10)Kf8>(4T11)g8
+18. (1T11)Qg5>>x(0T11)g4~ (>L6) (5T11)Bc7>>x(5T10)b7~ (>L7) / (7T10)d6
+19. (-6T11)Ng1>>(-5T11)g3 (>L8) (-1T11)Pf3>>(-2T11)f3 (>L9) (7T11)Qfe3 / (5T11)Nb8>x(7T11)b7 (-2T11)Qe7>>(-2T10)e8~ (>L-7)
+20. (-7T11)Bf1>>(-3T11)f5 (>L10) / (2T11)Ne7>>(0T10)e7~ (>L-8)
+21. (-8T11)Bg5 / (-4T11)Bg7>>(-2T11)g5~ (>L-9) (9T11)Nc6 (3T11)Nb8>>(4T11)b6~ (>L-10) (1T11)f6 (8T11)Bc8>>(5T11)f8~ (>L-11) (-8T11)Nf5 (-6T11)Bf6 (-3T11)Qe7>>(-2T10)e8 (>L-12) (-5T11)Bg7>>(-6T11)g6 (>L-13) (10T11)Bg7>>x(8T11)g5 (>L-14) (0T11)h5 (-1T11)Qe8>>(0T11)e8 (>L-15) (-7T11)Qe7>>(-8T11)e8 (>L-16) (6T11)dxc4
+22. (4T12)Qe3>(3T12)f4 (-4T12)a4 (8T12)Qg5>>(3T12)g5~ (~T11) (>L11) (-12T11)Ke1>(-11T12)d1`;
 
 export default class Theme extends React.Component {
   static contextType = EmitterContext;
@@ -165,7 +202,9 @@ export default class Theme extends React.Component {
                     <Box my={2} />
                     <Clock />
                     <Box my={2} />
-                    <Notation notation={defaultTestNotation} />
+                    <Notation notation={defaultTestNotation} highlightNotation={defaultTestHighlightNotation} />
+                    <Box my={2} />
+                    <SubmitMenu />
                   </Box>
                 </Paper>
               </Grid>
@@ -309,6 +348,19 @@ export default class Theme extends React.Component {
                           this.setState(deepmerge(this.state, { theme: { extra: { notation: { fontSize: event.target.value } } } }));
                         }}
                         label={<Trans>Notation - Font Size</Trans>}
+                      />
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
+                    <FormControl fullWidth>
+                      <TextField
+                        variant='outlined'
+                        type='number'
+                        value={this.state.theme.extra.notation.highlight.size}
+                        onChange={(event) => {
+                          this.setState(deepmerge(this.state, { theme: { extra: { notation: { highlight: { size: Number(event.target.value) } } } } }));
+                        }}
+                        label={<Trans>Notation - Highlight Size</Trans>}
                       />
                     </FormControl>
                   </Grid>
@@ -547,6 +599,51 @@ export default class Theme extends React.Component {
                       colorStr={this.state.theme.palette.success.main}
                       onChange={(hex, hexStr) => {
                         this.setState(deepmerge(this.state, { theme: { palette: { success: { main: hexStr } } } }));
+                      }}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
+                    <Typography variant='body1'><Trans>Notation - Highlight</Trans></Typography>
+                    <ColorPicker
+                      colorStr={this.state.theme.extra.notation.highlight.color}
+                      onChange={(hex, hexStr) => {
+                        this.setState(deepmerge(this.state, { theme: { extra: { notation: { highlight: { color: hexStr } } } } }));
+                      }}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
+                    <Typography variant='body1'><Trans>Notation - New Present Token - Background Color</Trans></Typography>
+                    <ColorPicker
+                      colorStr={this.state.theme.extra.notation.newPresentToken.backgroundColor}
+                      onChange={(hex, hexStr) => {
+                        this.setState(deepmerge(this.state, { theme: { extra: { notation: { newPresentToken: { backgroundColor: hexStr } } } } }));
+                      }}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
+                    <Typography variant='body1'><Trans>Notation - New Present Token - Text Color</Trans></Typography>
+                    <ColorPicker
+                      colorStr={this.state.theme.extra.notation.newPresentToken.color}
+                      onChange={(hex, hexStr) => {
+                        this.setState(deepmerge(this.state, { theme: { extra: { notation: { newPresentToken: { color: hexStr } } } } }));
+                      }}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
+                    <Typography variant='body1'><Trans>Notation - New Timeline Token - Background Color</Trans></Typography>
+                    <ColorPicker
+                      colorStr={this.state.theme.extra.notation.newTimelineToken.backgroundColor}
+                      onChange={(hex, hexStr) => {
+                        this.setState(deepmerge(this.state, { theme: { extra: { notation: { newTimelineToken: { backgroundColor: hexStr } } } } }));
+                      }}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
+                    <Typography variant='body1'><Trans>Notation - New Timeline Token - Text Color</Trans></Typography>
+                    <ColorPicker
+                      colorStr={this.state.theme.extra.notation.newTimelineToken.color}
+                      onChange={(hex, hexStr) => {
+                        this.setState(deepmerge(this.state, { theme: { extra: { notation: { newTimelineToken: { color: hexStr } } } } }));
                       }}
                     />
                   </Grid>
