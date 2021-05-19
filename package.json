@@ -144,7 +144,7 @@
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
     "5d-chess-js": "^1.0.28",
-    "5d-chess-renderer": "^1.0.6",
+    "5d-chess-renderer": "^1.0.10",
     "axios": "^0.21.0",
     "codemirror": "^5.58.3",
     "converse.js": "^7.0.5",
