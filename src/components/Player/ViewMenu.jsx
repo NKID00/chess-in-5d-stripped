@@ -5,7 +5,7 @@ import Card from '@material-ui/core/Card';
 import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 
-import CenterFocusWeakIcon from '@material-ui/icons/CenterFocusWeak';
+import SelectAllIcon from '@material-ui/icons/SelectAll';
 import ZoomOutMapIcon from '@material-ui/icons/ZoomOutMap';
 
 export default class ViewMenu extends React.Component {
@@ -15,7 +15,7 @@ export default class ViewMenu extends React.Component {
         <Box m={1}>
           <ButtonGroup fullWidth>
             <Button
-              startIcon={<CenterFocusWeakIcon />}
+              startIcon={<SelectAllIcon />}
               onClick={() => {
                 if(typeof this.props.onUndo === 'function') {
                   this.props.onPresentZoom();

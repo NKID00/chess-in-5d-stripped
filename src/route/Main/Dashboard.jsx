@@ -12,6 +12,8 @@ import Link from '@material-ui/core/Link';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Typography from '@material-ui/core/Typography';
 
+import PwaInstall from 'route/Main/Dashboard/PwaInstall';
+
 import * as motd from 'network/motd';
 import * as settings from 'state/settings';
 
@@ -57,7 +59,7 @@ export class DiscordJoin extends React.Component {
             </Grid>
             <Grid item xs={7}>
               <Typography variant='body2' component='p'>
-                <Trans>Want to contribute? Working on a 5D Chess project? Join the Open 5D Chess Discord!</Trans>
+                <Trans>Want to contribute? Working on an open source 5D Chess project? Join the Open 5D Chess Discord!</Trans>
               </Typography>
             </Grid>
             <Grid item xs={5}>
@@ -131,8 +133,13 @@ export default class Dashboard extends React.Component {
               </Grid>
             </Grid>
             <Grid item xs={6}>
-              <Grid item xs={12}>
-                <Motd />
+              <Grid container spacing={2}>
+                <Grid item xs={12}>
+                  <Motd />
+                </Grid>
+                <Grid item xs={12}>
+                  <PwaInstall />
+                </Grid>
               </Grid>
             </Grid>
           </Grid>
@@ -147,6 +154,9 @@ export default class Dashboard extends React.Component {
             </Grid>
             <Grid item xs={12}>
               <DiscordJoin />
+            </Grid>
+            <Grid item xs={12}>
+              <PwaInstall />
             </Grid>
           </Grid>
         </Hidden>

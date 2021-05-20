@@ -17,10 +17,21 @@ Props:
 */
 
 export default class Player extends React.Component {
-  chessRenderer = React.createRef();
-  state = {};
+  rootRef = React.createRef();
+  chessRendererRef = React.createRef();
+  state = {
+    rowOffset: 0
+  };
   resize() {
-    this.chessRenderer.current.refreshAttach();
+    this.chessRendererRef.current.refreshAttach();
+    if(this.rootRef.current) {
+      var top = this.rootRef.current.getBoundingClientRect().top;
+      if(top !== this.state.rowOffset) {
+        this.setState({
+          rowOffset: top
+        })
+      }
+    }
   }
   componentDidMount() {
     this.resize();
@@ -33,6 +44,7 @@ export default class Player extends React.Component {
   render() {
     return (
       <div
+        ref={this.rootRef}
         style={{
           overflow: 'hidden',
           margin: 0,
@@ -53,7 +65,7 @@ export default class Player extends React.Component {
           }}
         >
           <Renderer
-            ref={this.chessRenderer}
+            ref={this.chessRendererRef}
             height={1}
             width={1}
             board={this.props.board}
@@ -64,7 +76,7 @@ export default class Player extends React.Component {
             pastAvailableMoves={this.props.pastAvailableMoves}
           />
         </div>
-        <Layout>
+        <Layout rowOffset={this.state.rowOffset}>
           <Card key='menu'>
             <CardContent>Menu</CardContent>
           </Card>

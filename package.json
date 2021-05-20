@@ -123,6 +123,8 @@
     ]
   },
   "dependencies": {
+    "5d-chess-js": "^1.0.28",
+    "5d-chess-renderer": "^1.0.10",
     "@fontsource/domine": "^4.3.0",
     "@fontsource/eb-garamond": "^4.3.0",
     "@fontsource/exo": "^4.3.0",
@@ -135,7 +137,6 @@
     "@fontsource/roboto-condensed": "^4.3.0",
     "@fontsource/roboto-mono": "^4.3.0",
     "@fontsource/vollkorn": "^4.2.2",
-    "@ideasio/add-to-homescreen-react": "^1.0.7",
     "@lingui/react": "^3.8.2",
     "@material-ui/core": "^4.11.0",
     "@material-ui/icons": "^4.11.2",
@@ -143,8 +144,6 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
-    "5d-chess-js": "^1.0.28",
-    "5d-chess-renderer": "^1.0.10",
     "axios": "^0.21.0",
     "codemirror": "^5.58.3",
     "converse.js": "^7.0.5",
@@ -175,6 +174,7 @@
     "react-icons": "^4.2.0",
     "react-jdenticon": "0.0.9",
     "react-markdown": "^4.3.1",
+    "react-pwa-install": "^1.0.10",
     "react-redux": "^7.2.1",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",

@@ -8,7 +8,7 @@ import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 
-import LogoIcon from 'assets/logo.svg';
+import Logo from 'assets/logo.png';
 import LoginButton from 'components/LoginButton';
 import Menu from 'route/MainAppBar/Menu';
 
@@ -30,7 +30,7 @@ export default class MainAppBar extends React.Component {
               <MenuIcon />
             </IconButton>
             <Box mx={2} my={1}>
-              <img src={LogoIcon} alt='Logo' style={{ height: 70 }} />
+              <img src={Logo} alt='Logo' style={{ height: 70 }} />
             </Box>
             <Typography variant='h6'>
               Chess In 5D
