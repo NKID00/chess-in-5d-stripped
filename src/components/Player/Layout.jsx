@@ -2,6 +2,8 @@ import React from 'react';
 
 import { Responsive as ResponsiveGridLayout } from 'react-grid-layout';
 
+import EmitterContext from 'EmitterContext';
+
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
 
@@ -18,8 +20,9 @@ Props:
  - pastAvailableMoves
 */
 
-//TODO: Fix reopen layout fix
+//TODO: Find better layout update system
 export default class Layout extends React.Component {
+  static contextType = EmitterContext;
   lastUserChange = 0;
   state = {
     layouts: this.layouts(),
@@ -27,58 +30,59 @@ export default class Layout extends React.Component {
     rowHeight: 0,
     rowMargin: 0,
     rowOffset: 0,
+    triggerUpdate: 0,
   };
   defaultLayout() {
     return {
       lg: [
-        {i: 'menu', x: 0, y: 0, w: 33, h: 10},
-        {i: 'clock', x: 33, y: 0, w: 34, h: 10},
-        {i: 'analyze', x: 33, y: 10, w: 34, h: 10},
-        {i: 'tutorial', x: 67, y: 0, w: 33, h: 40},
-        {i: 'settings', x: 0, y: 10, w: 33, h: 30},
-        {i: 'notation', x: 0, y: -40, w: 33, h: 40},
-        {i: 'view', x: 33, y: -10, w: 34, h: 10},
-        {i: 'submit', x: 67, y: -10, w: 33, h: 10},
+        {i: 'menu', x: 1, y: 1, w: 32, h: 9},
+        {i: 'clock', x: 34, y: 1, w: 32, h: 9},
+        {i: 'analyze', x: 34, y: 11, w: 32, h: 9},
+        {i: 'tutorial', x: 67, y: 1, w: 32, h: 39},
+        {i: 'settings', x: 1, y: 11, w: 32, h: 29},
+        {i: 'notation', x: 1, y: -40, w: 32, h: 39},
+        {i: 'view', x: 34, y: -10, w: 32, h: 9},
+        {i: 'submit', x: 67, y: -10, w: 32, h: 9},
       ],
       md: [
-        {i: 'menu', x: 0, y: 0, w: 33, h: 10},
-        {i: 'clock', x: 33, y: 0, w: 34, h: 10},
-        {i: 'analyze', x: 33, y: 10, w: 34, h: 10},
-        {i: 'tutorial', x: 67, y: 0, w: 33, h: 40},
-        {i: 'settings', x: 0, y: 10, w: 33, h: 30},
-        {i: 'notation', x: 0, y: -40, w: 33, h: 40},
-        {i: 'view', x: 33, y: -10, w: 34, h: 10},
-        {i: 'submit', x: 67, y: -10, w: 33, h: 10},
+        {i: 'menu', x: 1, y: 1, w: 32, h: 9},
+        {i: 'clock', x: 34, y: 1, w: 32, h: 9},
+        {i: 'analyze', x: 34, y: 11, w: 32, h: 9},
+        {i: 'tutorial', x: 67, y: 1, w: 32, h: 39},
+        {i: 'settings', x: 1, y: 11, w: 32, h: 29},
+        {i: 'notation', x: 1, y: -40, w: 32, h: 39},
+        {i: 'view', x: 34, y: -10, w: 32, h: 9},
+        {i: 'submit', x: 67, y: -10, w: 32, h: 9},
       ],
       sm: [
-        {i: 'menu', x: 0, y: 0, w: 33, h: 10},
-        {i: 'clock', x: 33, y: 0, w: 34, h: 10},
-        {i: 'analyze', x: 33, y: 10, w: 34, h: 10},
-        {i: 'tutorial', x: 67, y: 0, w: 33, h: 40},
-        {i: 'settings', x: 0, y: 10, w: 33, h: 30},
-        {i: 'notation', x: 0, y: -40, w: 33, h: 40},
-        {i: 'view', x: 33, y: -10, w: 34, h: 10},
-        {i: 'submit', x: 67, y: -10, w: 33, h: 10},
+        {i: 'menu', x: 1, y: 1, w: 32, h: 9},
+        {i: 'clock', x: 34, y: 1, w: 32, h: 9},
+        {i: 'analyze', x: 34, y: 11, w: 32, h: 9},
+        {i: 'tutorial', x: 67, y: 1, w: 32, h: 39},
+        {i: 'settings', x: 1, y: 11, w: 32, h: 29},
+        {i: 'notation', x: 1, y: -40, w: 32, h: 39},
+        {i: 'view', x: 34, y: -10, w: 32, h: 9},
+        {i: 'submit', x: 67, y: -10, w: 32, h: 9},
       ],
       xs: [
-        {i: 'menu', x: 0, y: 2, w: 6, h: 2},
-        {i: 'clock', x: 6, y: 2, w: 6, h: 2},
-        {i: 'analyze', x: 6, y: 4, w: 6, h: 2},
-        {i: 'tutorial', x: 6, y: -9, w: 6, h: 7},
-        {i: 'settings', x: 0, y: 4, w: 4, h: 6},
-        {i: 'notation', x: 0, y: -9, w: 6, h: 7},
-        {i: 'view', x: 2, y: -2, w: 5, h: 2},
-        {i: 'submit', x: 7, y: -2, w: 5, h: 2},
+        {i: 'menu', x: 1, y: 1, w: 32, h: 9},
+        {i: 'clock', x: 34, y: 1, w: 32, h: 9},
+        {i: 'analyze', x: 34, y: 11, w: 32, h: 9},
+        {i: 'tutorial', x: 67, y: 1, w: 32, h: 39},
+        {i: 'settings', x: 1, y: 11, w: 32, h: 29},
+        {i: 'notation', x: 1, y: -40, w: 32, h: 39},
+        {i: 'view', x: 34, y: -10, w: 32, h: 9},
+        {i: 'submit', x: 67, y: -10, w: 32, h: 9},
       ],
       xxs: [
-        {i: 'menu', x: 0, y: 2, w: 6, h: 2},
-        {i: 'clock', x: 6, y: 2, w: 6, h: 2},
-        {i: 'analyze', x: 0, y: 4, w: 12, h: 2},
-        {i: 'tutorial', x: 0, y: -7, w: 12, h: 5},
-        {i: 'settings', x: 0, y: 6, w: 5, h: 5},
-        {i: 'notation', x: 5, y: 6, w: 7, h: 6},
-        {i: 'view', x: 0, y: -2, w: 6, h: 2},
-        {i: 'submit', x: 6, y: -2, w: 6, h: 2},
+        {i: 'menu', x: 1, y: 1, w: 32, h: 9},
+        {i: 'clock', x: 34, y: 1, w: 32, h: 9},
+        {i: 'analyze', x: 34, y: 11, w: 32, h: 9},
+        {i: 'tutorial', x: 67, y: 1, w: 32, h: 39},
+        {i: 'settings', x: 1, y: 11, w: 32, h: 29},
+        {i: 'notation', x: 1, y: -40, w: 32, h: 39},
+        {i: 'view', x: 34, y: -10, w: 32, h: 9},
+        {i: 'submit', x: 67, y: -10, w: 32, h: 9},
       ],
     };
   }
@@ -200,6 +204,12 @@ export default class Layout extends React.Component {
     this.resize();
     this.resizeListener = this.resize.bind(this);
     window.addEventListener('resize', this.resizeListener);
+    //Update state if layouts are changed externally (mainly for when layout is cleared)
+    this.layoutListener = this.context.on('layoutUpdate', () => {
+      this.setState({
+        layouts: this.layouts()
+      });
+    });
   }
   componentDidUpdate(prevProps, prevState) {
     if(prevProps.rowOffset !== this.props.rowOffset) {
@@ -214,9 +224,17 @@ export default class Layout extends React.Component {
         layouts: this.layouts()
       });
     }
+    //Dumbest update system since RGL is trash with checking for updates (forceUpdate did not work)
+    if(prevState.triggerUpdate === 0 && this.state.triggerUpdate === 2) {
+      this.setState({
+        triggerUpdate: 1
+      });
+    }
   }
   componentWillUnmount() {
     window.removeEventListener('resize', this.resizeListener);
+    //Stop listening to external layout changes
+    if(typeof this.layoutListener === 'function') { this.layoutListener(); }
   }
   render() {
     return (
@@ -233,23 +251,31 @@ export default class Layout extends React.Component {
         }}
       >
         <ResponsiveGridLayout
-          width={this.state.width}
+          width={this.state.triggerUpdate > 1 ? this.state.width * 0.999 : this.state.width}
+          autoSize={false}
           breakpoints={{lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0}}
           cols={{lg: 100, md: 100, sm: 100, xs: 100, xxs: 100}}
           compactType={null}
           margin={[this.state.rowMargin,this.state.rowMargin]}
-          rowHeight={this.state.rowHeight}
           layouts={this.state.layouts}
+          rowHeight={this.state.rowHeight}
           onLayoutChange={(l,ls) => {
             //Detecting if layout change was from user resizing
             if(Date.now() - this.lastUserChange < 100) {
               store.set('player/layouts', this.transformLayout(ls, false));
             }
-            console.log(ls)
-            console.log(this.layouts())
-            this.setState({
-              layouts: this.layouts()
-            });
+            //Trigger a render update since most likely a new element was created (or destroyed)
+            if(this.state.triggerUpdate === 0) {
+              this.setState({
+                layouts: this.layouts(),
+                triggerUpdate: 2
+              });
+            }
+            else if(this.state.triggerUpdate === 1) {
+              this.setState({
+                triggerUpdate: 0
+              });
+            }
           }}
           onDragStop={() => { this.lastUserChange = Date.now(); }}
           onResizeStop={() => { this.lastUserChange = Date.now(); }}

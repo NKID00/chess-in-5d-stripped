@@ -12,7 +12,13 @@ export default {
   args: {
     rowOffset: 0,
     showMenu: true,
-    showClock: true
+    showClock: true,
+    showAnalyze: true,
+    showTutorial: true,
+    showSettings: true,
+    showNotation: true,
+    showView: true,
+    showSubmit: true
   }
 };
 
@@ -32,29 +38,53 @@ export const Main = (args) => {
       </Card>
     );
   }
+  if(args.showAnalyze) {
+    displayComponents.push(
+      <Card key='analyze'>
+        <CardContent>Analyze</CardContent>
+      </Card>
+    );
+  }
+  if(args.showTutorial) {
+    displayComponents.push(
+      <Card key='tutorial'>
+        <CardContent>Tutorial</CardContent>
+      </Card>
+    );
+  }
+  if(args.showSettings) {
+    displayComponents.push(
+      <Card key='settings'>
+        <CardContent>Settings</CardContent>
+      </Card>
+    );
+  }
+  if(args.showNotation) {
+    displayComponents.push(
+      <Card key='notation'>
+        <CardContent>Notation</CardContent>
+      </Card>
+    );
+  }
+  if(args.showView) {
+    displayComponents.push(
+      <Card key='view'>
+        <CardContent>View</CardContent>
+      </Card>
+    );
+  }
+  if(args.showSubmit) {
+    displayComponents.push(
+      <Card key='submit'>
+        <CardContent>Submit</CardContent>
+      </Card>
+    );
+  }
   return (
     <StorybookSandbox>
-      <Layout {...args}>
-        {displayComponents}
-        <Card key='analyze'>
-          <CardContent>Analyze</CardContent>
-        </Card>
-        <Card key='tutorial'>
-          <CardContent>Tutorial</CardContent>
-        </Card>
-        <Card key='settings'>
-          <CardContent>Settings</CardContent>
-        </Card>
-        <Card key='notation'>
-          <CardContent>Notation</CardContent>
-        </Card>
-        <Card key='view'>
-          <CardContent>View</CardContent>
-        </Card>
-        <Card key='submit'>
-          <CardContent>Submit</CardContent>
-        </Card>
-      </Layout>
+        <Layout {...args}>
+          {displayComponents}
+        </Layout>
     </StorybookSandbox>
   );
 }
