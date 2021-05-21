@@ -9,14 +9,14 @@ const clearIDB = async () => {
   });
 }
 
-exports.init = () => {
+export const init = () => {
   var storedVersion = store.get('version');
   var currVersion = process.env.REACT_APP_VERSION;
 
   //Clear storage if no version detected
   if(typeof storedVersion === 'undefined' || storedVersion === null) {
     store.clearAll();
-    localStorage.clear();
+    window.localStorage.clear();
     clearIDB();
   }
 
