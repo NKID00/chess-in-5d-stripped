@@ -252,7 +252,7 @@ export default class Layout extends React.Component {
       >
         <ResponsiveGridLayout
           width={this.state.triggerUpdate > 1 ? this.state.width * 0.999 : this.state.width}
-          autoSize={false}
+          autoSize
           breakpoints={{lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0}}
           cols={{lg: 100, md: 100, sm: 100, xs: 100, xxs: 100}}
           compactType={null}

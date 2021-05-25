@@ -1,5 +1,7 @@
 import React from 'react';
 
+import Card from '@material-ui/core/Card';
+
 import StorybookSandbox from 'components/StorybookSandbox';
 import Menu from 'components/Player/Menu';
 
@@ -7,15 +9,25 @@ export default {
   title: 'components/Player/Menu',
   component: Menu,
   args: {
+    showSubmit: false,
+    showSubmitButton: true,
     showClock: false,
-    showNotation: false
+    showClockButton: true,
+    showNotation: false,
+    showNotationButton: true,
+    showAnalyze: false,
+    showAnalyzeButton: true,
+    showSettings: false,
+    showSettingsButton: true,
   }
 };
 
 export const Main = (args) => {
   return (
     <StorybookSandbox>
-      <Menu {...args} />
+      <Card>
+        <Menu {...args} />
+      </Card>
     </StorybookSandbox>
   );
 }
@@ -24,7 +36,9 @@ export const Squeezed500px = (args) => {
   return (
     <StorybookSandbox>
       <div style={{ width: 500 }}>
-        <Menu {...args} />
+        <Card>
+          <Menu {...args} />
+        </Card>
       </div>
     </StorybookSandbox>
   );
@@ -34,7 +48,9 @@ export const Squeezed250px = (args) => {
   return (
     <StorybookSandbox>
       <div style={{ width: 250 }}>
-        <Menu {...args} />
+        <Card>
+          <Menu {...args} />
+        </Card>
       </div>
     </StorybookSandbox>
   );

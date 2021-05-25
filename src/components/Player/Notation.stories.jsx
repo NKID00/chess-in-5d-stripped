@@ -1,5 +1,7 @@
 import React from 'react';
 
+import Card from '@material-ui/core/Card';
+
 import StorybookSandbox from 'components/StorybookSandbox';
 import Notation from 'components/Player/Notation';
 
@@ -55,7 +57,9 @@ export default {
 export const Main = (args) => {
   return (
     <StorybookSandbox>
-      <Notation {...args} />
+      <Card>
+        <Notation {...args} />
+      </Card>
     </StorybookSandbox>
   );
 }
@@ -64,7 +68,9 @@ export const Squeezed500px = (args) => {
   return (
     <StorybookSandbox>
       <div style={{ width: 500 }}>
-        <Notation {...args} />
+        <Card>
+          <Notation {...args} />
+        </Card>
       </div>
     </StorybookSandbox>
   );
@@ -74,7 +80,9 @@ export const Squeezed250px = (args) => {
   return (
     <StorybookSandbox>
       <div style={{ width: 250 }}>
-        <Notation {...args} />
+        <Card>
+          <Notation {...args} />
+        </Card>
       </div>
     </StorybookSandbox>
   );

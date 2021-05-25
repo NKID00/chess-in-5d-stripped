@@ -5,6 +5,19 @@ import CardContent from '@material-ui/core/CardContent';
 
 import StorybookSandbox from 'components/StorybookSandbox';
 import Layout from 'components/Player/Layout';
+import Menu from 'components/Player/Menu';
+import Clock from 'components/Player/Clock';
+import Notation from 'components/Player/Notation';
+
+const defaultTestNotation = `[Board "Standard"]
+[Mode "5D"]
+1. b3 / g5
+2. h4 / Bg7
+3. a3 / e5
+4. d4 / g4
+5. b4 / Kf8
+6. Bf4 / Ne7 7. c4 / Ng8
+8. Qd3 {test comment here [test tag]}`;
 
 export default {
   title: 'components/Player/Layout',
@@ -27,14 +40,14 @@ export const Main = (args) => {
   if(args.showMenu) {
     displayComponents.push(
       <Card key='menu'>
-        <CardContent>Menu</CardContent>
+        <Menu />
       </Card>
     );
   }
   if(args.showClock) {
     displayComponents.push(
       <Card key='clock'>
-        <CardContent>Clock</CardContent>
+        <Clock />
       </Card>
     );
   }
@@ -62,7 +75,7 @@ export const Main = (args) => {
   if(args.showNotation) {
     displayComponents.push(
       <Card key='notation'>
-        <CardContent>Notation</CardContent>
+        <Notation notation={defaultTestNotation} />
       </Card>
     );
   }

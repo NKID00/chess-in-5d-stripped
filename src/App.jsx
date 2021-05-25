@@ -68,9 +68,11 @@ export default class App extends React.Component {
             <ThemeProvider theme={createMuiTheme(this.state.muiTheme)}>
               <SnackbarProvider maxSnack={2}>
                 <ReactPWAInstallProvider>
-                  <UpdateToast />
-                  <Main />
-                  <ConverseManager />
+                  <div>
+                    <UpdateToast />
+                    <Main />
+                    <ConverseManager />
+                  </div>
                 </ReactPWAInstallProvider>
               </SnackbarProvider>
             </ThemeProvider>

@@ -1,7 +1,6 @@
 import React from 'react';
 
 import Box from '@material-ui/core/Box';
-import Card from '@material-ui/core/Card';
 import Grid from '@material-ui/core/Grid';
 
 import EmitterContext from 'EmitterContext';
@@ -264,52 +263,50 @@ export default class Clock extends React.Component {
   }
   render() {
     return (
-      <Card>
-        <Box m={1}>
-          <Grid container spacing={1}>
-            <Grid item xs={6}>
-              <Box
-                fullWidth
-                p={0.75}
-                textAlign='center'
-                style={{
-                  fontFamily: this.state.clockFontFamily,
-                  fontSize: this.state.clockFontSize,
-                  color: '#ffffff',
-                  backgroundColor: '#000000',
-                }}
-                border={5}
-                borderRadius={5}
-                borderColor={this.props.whiteActive === false ? '#ffffff' : '#000000'}
-              >
-                <div ref={this.blackClock}>
-                  0:00
-                </div>
-              </Box>
-            </Grid>
-            <Grid item xs={6}>
-              <Box
-                fullWidth
-                p={0.75}
-                textAlign='center'
-                style={{
-                  fontFamily: this.state.clockFontFamily,
-                  fontSize: this.state.clockFontSize,
-                  color: '#000000',
-                  backgroundColor: '#ffffff',
-                }}
-                border={5}
-                borderRadius={5}
-                borderColor={this.props.whiteActive === false ? '#ffffff' : '#000000'}
-              >
-                <div ref={this.whiteClock}>
-                  0:00
-                </div>
-              </Box>
-            </Grid>
+      <Box m={1}>
+        <Grid container spacing={1}>
+          <Grid item xs={6}>
+            <Box
+              fullWidth
+              p={0.75}
+              textAlign='center'
+              style={{
+                fontFamily: this.state.clockFontFamily,
+                fontSize: this.state.clockFontSize,
+                color: '#ffffff',
+                backgroundColor: '#000000',
+              }}
+              border={5}
+              borderRadius={5}
+              borderColor={this.props.whiteActive === false ? '#ffffff' : '#000000'}
+            >
+              <div ref={this.blackClock}>
+                0:00
+              </div>
+            </Box>
           </Grid>
-        </Box>
-      </Card>
+          <Grid item xs={6}>
+            <Box
+              fullWidth
+              p={0.75}
+              textAlign='center'
+              style={{
+                fontFamily: this.state.clockFontFamily,
+                fontSize: this.state.clockFontSize,
+                color: '#000000',
+                backgroundColor: '#ffffff',
+              }}
+              border={5}
+              borderRadius={5}
+              borderColor={this.props.whiteActive === false ? '#ffffff' : '#000000'}
+            >
+              <div ref={this.whiteClock}>
+                0:00
+              </div>
+            </Box>
+          </Grid>
+        </Grid>
+      </Box>
     );
   }
 }
