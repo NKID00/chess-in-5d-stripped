@@ -10,17 +10,6 @@ import 'react-resizable/css/styles.css';
 const deepcopy = require('deepcopy');
 const store = require('store');
 
-/*
-Props:
- - board
- - actionHistory
- - moveBuffer
- - checks
- - availableMoves
- - pastAvailableMoves
-*/
-
-//TODO: Find better layout update system
 export default class Layout extends React.Component {
   static contextType = EmitterContext;
   lastUserChange = 0;
@@ -277,8 +266,14 @@ export default class Layout extends React.Component {
               });
             }
           }}
-          onDragStop={() => { this.lastUserChange = Date.now(); }}
-          onResizeStop={() => { this.lastUserChange = Date.now(); }}
+          onDragStop={() => {
+            this.context.emit('layoutDragUpdate');
+            this.lastUserChange = Date.now();
+          }}
+          onResizeStop={() => {
+            this.context.emit('layoutResizeUpdate');
+            this.lastUserChange = Date.now();
+          }}
         >
           {this.props.children}
         </ResponsiveGridLayout>

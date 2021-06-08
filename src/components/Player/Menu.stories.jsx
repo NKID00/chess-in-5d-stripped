@@ -11,8 +11,12 @@ export default {
   args: {
     showSubmit: false,
     showSubmitButton: true,
+    showView: false,
+    showViewButton: true,
     showClock: false,
     showClockButton: true,
+    showTutorial: false,
+    showTutorialButton: true,
     showNotation: false,
     showNotationButton: true,
     showAnalyze: false,

@@ -4,10 +4,13 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 
 import StorybookSandbox from 'components/StorybookSandbox';
+import AnalyzeMenu from 'components/Player/AnalyzeMenu';
+import Clock from 'components/Player/Clock';
 import Layout from 'components/Player/Layout';
 import Menu from 'components/Player/Menu';
-import Clock from 'components/Player/Clock';
 import Notation from 'components/Player/Notation';
+import SubmitMenu from 'components/Player/SubmitMenu';
+import ViewMenu from 'components/Player/ViewMenu';
 
 const defaultTestNotation = `[Board "Standard"]
 [Mode "5D"]
@@ -40,7 +43,16 @@ export const Main = (args) => {
   if(args.showMenu) {
     displayComponents.push(
       <Card key='menu'>
-        <Menu />
+        <Menu
+          {...args}
+          showSubmitButton
+          showViewButton
+          showClockButton
+          showTutorialButton
+          showNotationButton
+          showAnalyzeButton
+          showSettingsButton
+        />
       </Card>
     );
   }
@@ -54,7 +66,7 @@ export const Main = (args) => {
   if(args.showAnalyze) {
     displayComponents.push(
       <Card key='analyze'>
-        <CardContent>Analyze</CardContent>
+        <AnalyzeMenu />
       </Card>
     );
   }
@@ -82,14 +94,14 @@ export const Main = (args) => {
   if(args.showView) {
     displayComponents.push(
       <Card key='view'>
-        <CardContent>View</CardContent>
+        <ViewMenu />
       </Card>
     );
   }
   if(args.showSubmit) {
     displayComponents.push(
       <Card key='submit'>
-        <CardContent>Submit</CardContent>
+        <SubmitMenu />
       </Card>
     );
   }

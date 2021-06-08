@@ -4,25 +4,47 @@ import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 
-import SendIcon from '@material-ui/icons/Send';
-import AvTimerIcon from '@material-ui/icons/AvTimer';
 import FormatListNumberedIcon from '@material-ui/icons/FormatListNumbered';
-import CompareArrowsIcon from '@material-ui/icons/CompareArrows';
+import HourglassEmptyIcon from '@material-ui/icons/HourglassEmpty';
+import MenuBookIcon from '@material-ui/icons/MenuBook';
+import SendIcon from '@material-ui/icons/Send';
 import SettingsIcon from '@material-ui/icons/Settings';
+import VisibilityIcon from '@material-ui/icons/Visibility';
+import YoutubeSearchedForIcon from '@material-ui/icons/YoutubeSearchedFor';
 
 const deepmerge = require('deepmerge');
 
 export default class Menu extends React.Component {
   state = {
+    showSubmit: false,
+    showView: false,
     showClock: false,
+    showTutorial: false,
     showNotation: false,
+    showAnalyze: false,
+    showSettings: false,
   }
   propSync() {
+    if(this.state.showSubmit !== this.props.showSubmit) {
+      this.setState({ showSubmit: this.props.showSubmit });
+    }
+    if(this.state.showView !== this.props.showView) {
+      this.setState({ showView: this.props.showView });
+    }
     if(this.state.showClock !== this.props.showClock) {
       this.setState({ showClock: this.props.showClock });
     }
+    if(this.state.showTutorial !== this.props.showTutorial) {
+      this.setState({ showTutorial: this.props.showTutorial });
+    }
     if(this.state.showNotation !== this.props.showNotation) {
       this.setState({ showNotation: this.props.showNotation });
+    }
+    if(this.state.showAnalyze !== this.props.showAnalyze) {
+      this.setState({ showAnalyze: this.props.showAnalyze });
+    }
+    if(this.state.showSettings !== this.props.showSettings) {
+      this.setState({ showSettings: this.props.showSettings });
     }
   }
   componentDidMount() {
@@ -47,6 +69,20 @@ export default class Menu extends React.Component {
         </Button>
       );
     }
+    if(this.props.showViewButton) {
+      availableButtons.push(
+        <Button
+          variant={this.state.showView ? 'contained' : 'default'}
+          onClick={() => {
+            if(typeof this.props.onChange === 'function') {
+              this.props.onChange(deepmerge(this.state, { showView: !this.state.showView }));
+            }
+          }}
+        >
+          <VisibilityIcon />
+        </Button>
+      );
+    }
     if(this.props.showClockButton) {
       availableButtons.push(
         <Button
@@ -57,7 +93,21 @@ export default class Menu extends React.Component {
             }
           }}
         >
-          <AvTimerIcon />
+          <HourglassEmptyIcon />
+        </Button>
+      );
+    }
+    if(this.props.showTutorialButton) {
+      availableButtons.push(
+        <Button
+          variant={this.state.showTutorial ? 'contained' : 'default'}
+          onClick={() => {
+            if(typeof this.props.onChange === 'function') {
+              this.props.onChange(deepmerge(this.state, { showTutorial: !this.state.showTutorial }));
+            }
+          }}
+        >
+          <MenuBookIcon />
         </Button>
       );
     }
@@ -85,7 +135,7 @@ export default class Menu extends React.Component {
             }
           }}
         >
-          <CompareArrowsIcon />
+          <YoutubeSearchedForIcon />
         </Button>
       );
     }
@@ -104,8 +154,8 @@ export default class Menu extends React.Component {
       );
     }
     return (
-      <Box m={1} style={{ overflowX: 'auto', width: '100%' }}>
-        <ButtonGroup>
+      <Box m={1}>
+        <ButtonGroup fullWidth>
           {availableButtons}
         </ButtonGroup>
       </Box>

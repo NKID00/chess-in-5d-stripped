@@ -3,7 +3,6 @@ import React from 'react';
 import { Trans } from '@lingui/macro';
 
 import Box from '@material-ui/core/Box';
-import Card from '@material-ui/core/Card';
 import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 
@@ -34,42 +33,40 @@ export default class SubmitMenu extends React.Component {
   }
   render() {
     return (
-      <Card ref={this.rootRef}>
-        <Box m={1}>
-          <ButtonGroup fullWidth>
-            <Button
-              startIcon={this.state.showText ? <UndoIcon /> : null}
-              onClick={() => {
-                if(typeof this.props.onUndo === 'function') {
-                  this.props.onUndo();
-                }
-              }}
-            >
-              {this.state.showText ?
-                <Trans>Undo</Trans>
-              :
-                <UndoIcon />
+      <Box m={1} ref={this.rootRef}>
+        <ButtonGroup fullWidth>
+          <Button
+            startIcon={this.state.showText ? <UndoIcon /> : null}
+            onClick={() => {
+              if(typeof this.props.onUndo === 'function') {
+                this.props.onUndo();
               }
-            </Button>
-            <Button
-              variant='contained'
-              color='primary'
-              endIcon={this.state.showText ? <SendIcon /> : null}
-              onClick={() => {
-                if(typeof this.props.onSubmit === 'function') {
-                  this.props.onSubmit();
-                }
-              }}
-            >
-              {this.state.showText ?
-                <Trans>Submit</Trans>
-              :
-                <SendIcon />
+            }}
+          >
+            {this.state.showText ?
+              <Trans>Undo</Trans>
+            :
+              <UndoIcon />
+            }
+          </Button>
+          <Button
+            variant='contained'
+            color='primary'
+            endIcon={this.state.showText ? <SendIcon /> : null}
+            onClick={() => {
+              if(typeof this.props.onSubmit === 'function') {
+                this.props.onSubmit();
               }
-            </Button>
-          </ButtonGroup>
-        </Box>
-      </Card>
+            }}
+          >
+            {this.state.showText ?
+              <Trans>Submit</Trans>
+            :
+              <SendIcon />
+            }
+          </Button>
+        </ButtonGroup>
+      </Box>
     );
   }
 }

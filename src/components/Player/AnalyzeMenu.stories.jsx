@@ -1,17 +1,21 @@
 import React from 'react';
 
+import Card from '@material-ui/core/Card';
+
 import StorybookSandbox from 'components/StorybookSandbox';
-import Analyze from 'components/Player/Analyze';
+import AnalyzeMenu from 'components/Player/AnalyzeMenu';
 
 export default {
-  title: 'components/Player/Analyze',
-  component: Analyze
+  title: 'components/Player/AnalyzeMenu',
+  component: AnalyzeMenu
 };
 
 export const Main = (args) => {
   return (
     <StorybookSandbox>
-      <Analyze {...args} />
+      <Card>
+        <AnalyzeMenu {...args} />
+      </Card>
     </StorybookSandbox>
   );
 }
@@ -20,7 +24,9 @@ export const Squeezed500px = (args) => {
   return (
     <StorybookSandbox>
       <div style={{ width: 500 }}>
-        <Analyze {...args} />
+        <Card>
+          <AnalyzeMenu {...args} />
+        </Card>
       </div>
     </StorybookSandbox>
   );
@@ -30,7 +36,9 @@ export const Squeezed250px = (args) => {
   return (
     <StorybookSandbox>
       <div style={{ width: 250 }}>
-        <Analyze {...args} />
+        <Card>
+          <AnalyzeMenu {...args} />
+        </Card>
       </div>
     </StorybookSandbox>
   );
