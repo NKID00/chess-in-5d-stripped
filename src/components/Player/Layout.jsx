@@ -152,13 +152,16 @@ export default class Layout extends React.Component {
               res[keys[j]][i].y = 100 - res[keys[j]][i].h;
             }
             else {
-              res[keys[j]][i].y = 99;
-              res[keys[j]][i].h = 1;
+              res[keys[j]][i].y = 95;
+              res[keys[j]][i].h = 5;
             }
           }
           if(this.state) {
             res[keys[j]][i].y += this.state.rowOffset;
           }
+          //Min Size
+          if(res[keys[j]][i].h < 5) { res[keys[j]][i].h = 5; }
+          if(res[keys[j]][i].w < 5) { res[keys[j]][i].w = 5; }
         }
       }
     }
@@ -177,8 +180,8 @@ export default class Layout extends React.Component {
               res[keys[j]][i].y = 100 - res[keys[j]][i].h;
             }
             else {
-              res[keys[j]][i].y = 99;
-              res[keys[j]][i].h = 1;
+              res[keys[j]][i].y = 95;
+              res[keys[j]][i].h = 5;
             }
           }
           if(res[keys[j]][i].y > 50) {

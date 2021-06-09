@@ -2,8 +2,6 @@ import React from 'react';
 
 import { Trans } from '@lingui/macro';
 
-import EmitterContext from 'EmitterContext';
-
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
@@ -11,6 +9,8 @@ import ButtonGroup from '@material-ui/core/ButtonGroup';
 import SwapVertIcon from '@material-ui/icons/SwapVert';
 import SelectAllIcon from '@material-ui/icons/SelectAll';
 import ZoomOutMapIcon from '@material-ui/icons/ZoomOutMap';
+
+import EmitterContext from 'EmitterContext';
 
 const widthThreshold = 300;
 const heightThreshold = 50;

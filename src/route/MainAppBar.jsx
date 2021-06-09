@@ -30,7 +30,7 @@ export default class MainAppBar extends React.Component {
               <MenuIcon />
             </IconButton>
             <Box mx={2} my={1}>
-              <img src={Logo} alt='Logo' style={{ height: 70 }} />
+              <img src={Logo} alt='Logo' style={{ height: 40 }} />
             </Box>
             <Typography variant='h6'>
               Chess In 5D

@@ -9,8 +9,12 @@ import ButtonGroup from '@material-ui/core/ButtonGroup';
 import SendIcon from '@material-ui/icons/Send';
 import UndoIcon from '@material-ui/icons/Undo';
 
+import EmitterContext from 'EmitterContext';
+
 const widthThreshold = 300;
+const heightThreshold = 50;
 export default class SubmitMenu extends React.Component {
+  static contextType = EmitterContext;
   rootRef = React.createRef();
   state = {
     showText: true
@@ -18,8 +22,9 @@ export default class SubmitMenu extends React.Component {
   resize() {
     if(this.rootRef.current) {
       var width = this.rootRef.current.getBoundingClientRect().width;
+      var height = this.rootRef.current.getBoundingClientRect().height;
       this.setState({
-        showText: width > widthThreshold
+        showText: width > widthThreshold && height > heightThreshold
       });
     }
   }
@@ -27,9 +32,13 @@ export default class SubmitMenu extends React.Component {
     this.resize();
     this.resizeListener = this.resize.bind(this);
     window.addEventListener('resize', this.resizeListener);
+    //Listen to layout resize updates
+    this.layoutListener = this.context.on('layoutResizeUpdate', this.resizeListener);
   }
   componentWillUnmount() {
     window.removeEventListener('resize', this.resizeListener);
+    //Stop listening to layout resize updates
+    if(typeof this.layoutListener === 'function') { this.layoutListener(); }
   }
   render() {
     return (
