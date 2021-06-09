@@ -36,13 +36,13 @@ export default class TutorialMenu extends React.Component {
   }
   render() {
     return (
-      <Box m={2} ref={this.rootRef} style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
-        <Box style={{ overflowY: 'auto', flex: 1 }}>
+      <Box p={1} ref={this.rootRef} style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+        <Box p={1} style={{ overflowY: 'auto', flex: 1 }}>
           <Markdown>
             {this.props.displayText}
           </Markdown>
         </Box>
-        <Box style={{ flexBasis: 'auto' }}>
+        <Box pt={1} style={{ flexBasis: 'auto' }}>
           <ButtonGroup fullWidth>
             <Button
               variant='contained'

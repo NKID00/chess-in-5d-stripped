@@ -154,8 +154,8 @@ export default class Menu extends React.Component {
       );
     }
     return (
-      <Box m={1}>
-        <ButtonGroup fullWidth>
+      <Box p={1} style={{ height: '100%' }}>
+        <ButtonGroup fullWidth style={{ height: '100%' }}>
           {availableButtons}
         </ButtonGroup>
       </Box>

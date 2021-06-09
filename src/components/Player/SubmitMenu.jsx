@@ -33,8 +33,8 @@ export default class SubmitMenu extends React.Component {
   }
   render() {
     return (
-      <Box m={1} ref={this.rootRef}>
-        <ButtonGroup fullWidth>
+      <Box p={1} ref={this.rootRef} style={{ height: '100%' }}>
+        <ButtonGroup fullWidth style={{ height: '100%' }}>
           <Button
             startIcon={this.state.showText ? <UndoIcon /> : null}
             onClick={() => {

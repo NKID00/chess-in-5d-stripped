@@ -10,6 +10,7 @@ import Layout from 'components/Player/Layout';
 import Menu from 'components/Player/Menu';
 import Notation from 'components/Player/Notation';
 import SubmitMenu from 'components/Player/SubmitMenu';
+import TutorialMenu from 'components/Player/TutorialMenu';
 import ViewMenu from 'components/Player/ViewMenu';
 
 const defaultTestNotation = `[Board "Standard"]
@@ -21,6 +22,13 @@ const defaultTestNotation = `[Board "Standard"]
 5. b4 / Kf8
 6. Bf4 / Ne7 7. c4 / Ng8
 8. Qd3 {test comment here [test tag]}`;
+
+const defaultText = `# h1 Heading
+## h2 Heading
+### h3 Heading
+#### h4 Heading
+##### h5 Heading
+###### h6 Heading`;
 
 export default {
   title: 'components/Player/Layout',
@@ -73,7 +81,7 @@ export const Main = (args) => {
   if(args.showTutorial) {
     displayComponents.push(
       <Card key='tutorial'>
-        <CardContent>Tutorial</CardContent>
+        <TutorialMenu displayText={defaultText} allowNext allowBack />
       </Card>
     );
   }

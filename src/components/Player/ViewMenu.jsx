@@ -13,6 +13,7 @@ import SelectAllIcon from '@material-ui/icons/SelectAll';
 import ZoomOutMapIcon from '@material-ui/icons/ZoomOutMap';
 
 const widthThreshold = 300;
+const heightThreshold = 50;
 export default class ViewMenu extends React.Component {
   static contextType = EmitterContext;
   rootRef = React.createRef();
@@ -22,8 +23,9 @@ export default class ViewMenu extends React.Component {
   resize() {
     if(this.rootRef.current) {
       var width = this.rootRef.current.getBoundingClientRect().width;
+      var height = this.rootRef.current.getBoundingClientRect().height;
       this.setState({
-        showText: width > widthThreshold
+        showText: width > widthThreshold && height > heightThreshold
       });
     }
   }
@@ -41,8 +43,8 @@ export default class ViewMenu extends React.Component {
   }
   render() {
     return (
-      <Box m={1} ref={this.rootRef}>
-        <ButtonGroup fullWidth>
+      <Box p={1} ref={this.rootRef} style={{ height: '100%' }}>
+        <ButtonGroup fullWidth style={{ height: '100%' }}>
           <Button
             startIcon={this.state.showText ? <SwapVertIcon /> : null}
             onClick={() => {

@@ -263,44 +263,48 @@ export default class Clock extends React.Component {
   }
   render() {
     return (
-      <Box m={1}>
-        <Grid container spacing={1}>
-          <Grid item xs={6}>
+      <Box p={1} pb={0} style={{ height: '100%' }}>
+        <Grid container spacing={1} style={{ height: '100%' }}>
+          <Grid item xs={6} style={{ height: '100%' }}>
             <Box
               fullWidth
               p={0.75}
               textAlign='center'
               style={{
+                height: '100%',
                 fontFamily: this.state.clockFontFamily,
                 fontSize: this.state.clockFontSize,
                 color: '#ffffff',
                 backgroundColor: '#000000',
+                margin: 0
               }}
               border={5}
               borderRadius={5}
               borderColor={this.props.whiteActive === false ? '#ffffff' : '#000000'}
             >
-              <div ref={this.blackClock}>
+              <div ref={this.blackClock} style={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 0:00
               </div>
             </Box>
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={6} style={{ height: '100%' }}>
             <Box
               fullWidth
               p={0.75}
               textAlign='center'
               style={{
+                height: '100%',
                 fontFamily: this.state.clockFontFamily,
                 fontSize: this.state.clockFontSize,
                 color: '#000000',
                 backgroundColor: '#ffffff',
+                margin: 0
               }}
               border={5}
               borderRadius={5}
               borderColor={this.props.whiteActive === false ? '#ffffff' : '#000000'}
             >
-              <div ref={this.whiteClock}>
+              <div ref={this.whiteClock} style={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 0:00
               </div>
             </Box>
