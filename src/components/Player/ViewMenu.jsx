@@ -48,8 +48,8 @@ export default class ViewMenu extends React.Component {
           <Button
             startIcon={this.state.showText ? <SwapVertIcon /> : null}
             onClick={() => {
-              if(typeof this.props.onUndo === 'function') {
-                this.props.onPresentZoom();
+              if(typeof this.props.onFlip === 'function') {
+                this.props.onFlip();
               }
             }}
           >
@@ -62,7 +62,7 @@ export default class ViewMenu extends React.Component {
           <Button
             startIcon={this.state.showText ? <SelectAllIcon /> : null}
             onClick={() => {
-              if(typeof this.props.onUndo === 'function') {
+              if(typeof this.props.onPresentZoom === 'function') {
                 this.props.onPresentZoom();
               }
             }}
@@ -76,7 +76,7 @@ export default class ViewMenu extends React.Component {
           <Button
             startIcon={this.state.showText ? <ZoomOutMapIcon /> : null}
             onClick={() => {
-              if(typeof this.props.onSubmit === 'function') {
+              if(typeof this.props.onFullboardZoom === 'function') {
                 this.props.onFullboardZoom();
               }
             }}

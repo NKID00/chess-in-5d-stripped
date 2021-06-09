@@ -12,7 +12,7 @@ const defaultText = `# h1 Heading
 ##### h5 Heading
 ###### h6 Heading
 
-## Horizontal Rules
+#### Horizontal Rules
 
 ___
 
@@ -20,7 +20,7 @@ ___
 
 ***
 
-## Emphasis
+#### Emphasis
 
 **This is bold text**
 
@@ -30,14 +30,14 @@ __This is bold text__
 
 _This is italic text_
 
-## Blockquotes
+#### Blockquotes
 
 > Blockquotes can also be nested...
 >> ...by using additional greater-than signs right next to each other...
 > > > ...or with spaces between arrows.
 
 
-## Lists
+#### Lists
 
 Unordered
 
@@ -64,7 +64,7 @@ Start numbering with offset:
 57. foo
 1. bar
 
-## Code
+#### Code
 
 Inline \`code\`
 
@@ -82,21 +82,11 @@ Block code "fences"
 Sample text here...
 \`\`\`
 
-Syntax highlighting
-
-\`\`\` js
-var foo = function (bar) {
-  return bar++;
-};
-
-console.log(foo(5));
-\`\`\`
-
-## Links
+#### Links
 
 [link text](https://google.com)
 
-## Images
+#### Images
 
 ![Minion](https://octodex.github.com/images/minion.png)
 ![Stormtroopocat](https://octodex.github.com/images/stormtroopocat.jpg "The Stormtroopocat")

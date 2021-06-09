@@ -120,7 +120,7 @@ export default class Notation extends React.Component {
     if(updateNeeded) {
       this.setState({ notationArr: res });
     }
-    
+
     //Look for highlights
     this.extractHighlightNotation(res);
   }

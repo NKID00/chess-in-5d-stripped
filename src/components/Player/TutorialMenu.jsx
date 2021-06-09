@@ -6,8 +6,9 @@ import Markdown from 'react-markdown';
 
 import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
-import CardContent from '@material-ui/core/CardContent';
 import Box from '@material-ui/core/Box';
+import Link from '@material-ui/core/Link';
+import Typography from '@material-ui/core/Typography';
 
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
@@ -38,7 +39,24 @@ export default class TutorialMenu extends React.Component {
     return (
       <Box p={1} ref={this.rootRef} style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
         <Box p={1} style={{ overflowY: 'auto', flex: 1 }}>
-          <Markdown>
+          <Markdown
+            className='MuiTypography-root'
+            components={{
+              a: Link,
+              blockquote: (node) => <blockquote><Typography variant='body2' {...node} /></blockquote>,
+              em: Typography,
+              h1: (node) => <Typography variant='h1' {...node} />,
+              h2: (node) => <Typography variant='h2' {...node} />,
+              h3: (node) => <Typography variant='h3' {...node} />,
+              h4: (node) => <Typography variant='h4' {...node} />,
+              h5: (node) => <Typography variant='h5' {...node} />,
+              h6: (node) => <Typography variant='h6' {...node} />,
+              ol: (node) => <ol><Typography {...node} /></ol>,
+              ul: (node) => <ul><Typography {...node} /></ul>,
+              p: Typography,
+            }}
+            linkTarget='_blank'
+          >
             {this.props.displayText}
           </Markdown>
         </Box>

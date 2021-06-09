@@ -4,12 +4,13 @@ import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 
+import CreateIcon from '@material-ui/icons/Create';
 import FormatListNumberedIcon from '@material-ui/icons/FormatListNumbered';
 import HourglassEmptyIcon from '@material-ui/icons/HourglassEmpty';
 import MenuBookIcon from '@material-ui/icons/MenuBook';
 import SendIcon from '@material-ui/icons/Send';
 import SettingsIcon from '@material-ui/icons/Settings';
-import VisibilityIcon from '@material-ui/icons/Visibility';
+import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
 import YoutubeSearchedForIcon from '@material-ui/icons/YoutubeSearchedFor';
 
 const deepmerge = require('deepmerge');
@@ -22,8 +23,9 @@ export default class Menu extends React.Component {
     showTutorial: false,
     showNotation: false,
     showAnalyze: false,
+    showDraw: false,
     showSettings: false,
-  }
+  };
   propSync() {
     if(this.state.showSubmit !== this.props.showSubmit) {
       this.setState({ showSubmit: this.props.showSubmit });
@@ -43,6 +45,9 @@ export default class Menu extends React.Component {
     if(this.state.showAnalyze !== this.props.showAnalyze) {
       this.setState({ showAnalyze: this.props.showAnalyze });
     }
+    if(this.state.showDraw !== this.props.showDraw) {
+      this.setState({ showDraw: this.props.showDraw });
+    }
     if(this.state.showSettings !== this.props.showSettings) {
       this.setState({ showSettings: this.props.showSettings });
     }
@@ -58,7 +63,7 @@ export default class Menu extends React.Component {
     if(this.props.showSubmitButton) {
       availableButtons.push(
         <Button
-          variant={this.state.showSubmit ? 'contained' : 'default'}
+          variant={this.state.showSubmit ? 'contained' : 'outlined'}
           onClick={() => {
             if(typeof this.props.onChange === 'function') {
               this.props.onChange(deepmerge(this.state, { showSubmit: !this.state.showSubmit }));
@@ -72,21 +77,21 @@ export default class Menu extends React.Component {
     if(this.props.showViewButton) {
       availableButtons.push(
         <Button
-          variant={this.state.showView ? 'contained' : 'default'}
+          variant={this.state.showView ? 'contained' : 'outlined'}
           onClick={() => {
             if(typeof this.props.onChange === 'function') {
               this.props.onChange(deepmerge(this.state, { showView: !this.state.showView }));
             }
           }}
         >
-          <VisibilityIcon />
+          <VisibilityOutlinedIcon />
         </Button>
       );
     }
     if(this.props.showClockButton) {
       availableButtons.push(
         <Button
-          variant={this.state.showClock ? 'contained' : 'default'}
+          variant={this.state.showClock ? 'contained' : 'outlined'}
           onClick={() => {
             if(typeof this.props.onChange === 'function') {
               this.props.onChange(deepmerge(this.state, { showClock: !this.state.showClock }));
@@ -100,7 +105,7 @@ export default class Menu extends React.Component {
     if(this.props.showTutorialButton) {
       availableButtons.push(
         <Button
-          variant={this.state.showTutorial ? 'contained' : 'default'}
+          variant={this.state.showTutorial ? 'contained' : 'outlined'}
           onClick={() => {
             if(typeof this.props.onChange === 'function') {
               this.props.onChange(deepmerge(this.state, { showTutorial: !this.state.showTutorial }));
@@ -114,7 +119,7 @@ export default class Menu extends React.Component {
     if(this.props.showNotationButton) {
       availableButtons.push(
         <Button
-          variant={this.state.showNotation ? 'contained' : 'default'}
+          variant={this.state.showNotation ? 'contained' : 'outlined'}
           onClick={() => {
             if(typeof this.props.onChange === 'function') {
               this.props.onChange(deepmerge(this.state, { showNotation: !this.state.showNotation }));
@@ -128,7 +133,7 @@ export default class Menu extends React.Component {
     if(this.props.showAnalyzeButton) {
       availableButtons.push(
         <Button
-          variant={this.state.showAnalyze ? 'contained' : 'default'}
+          variant={this.state.showAnalyze ? 'contained' : 'outlined'}
           onClick={() => {
             if(typeof this.props.onChange === 'function') {
               this.props.onChange(deepmerge(this.state, { showAnalyze: !this.state.showAnalyze }));
@@ -139,10 +144,24 @@ export default class Menu extends React.Component {
         </Button>
       );
     }
+    if(this.props.showDrawButton) {
+      availableButtons.push(
+        <Button
+          variant={this.state.showDraw ? 'contained' : 'outlined'}
+          onClick={() => {
+            if(typeof this.props.onChange === 'function') {
+              this.props.onChange(deepmerge(this.state, { showDraw: !this.state.showDraw }));
+            }
+          }}
+        >
+          <CreateIcon />
+        </Button>
+      );
+    }
     if(this.props.showSettingsButton) {
       availableButtons.push(
         <Button
-          variant={this.state.showSettings ? 'contained' : 'default'}
+          variant={this.state.showSettings ? 'contained' : 'outlined'}
           onClick={() => {
             if(typeof this.props.onChange === 'function') {
               this.props.onChange(deepmerge(this.state, { showSettings: !this.state.showSettings }));

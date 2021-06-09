@@ -6,6 +6,7 @@ import CardContent from '@material-ui/core/CardContent';
 import StorybookSandbox from 'components/StorybookSandbox';
 import AnalyzeMenu from 'components/Player/AnalyzeMenu';
 import Clock from 'components/Player/Clock';
+import DrawMenu from 'components/Player/DrawMenu';
 import Layout from 'components/Player/Layout';
 import Menu from 'components/Player/Menu';
 import Notation from 'components/Player/Notation';
@@ -23,10 +24,7 @@ const defaultTestNotation = `[Board "Standard"]
 6. Bf4 / Ne7 7. c4 / Ng8
 8. Qd3 {test comment here [test tag]}`;
 
-const defaultText = `# h1 Heading
-## h2 Heading
-### h3 Heading
-#### h4 Heading
+const defaultText = `#### h4 Heading
 ##### h5 Heading
 ###### h6 Heading`;
 
@@ -37,6 +35,7 @@ export default {
     rowOffset: 0,
     showMenu: true,
     showClock: true,
+    showDraw: true,
     showAnalyze: true,
     showTutorial: true,
     showSettings: true,
@@ -59,6 +58,7 @@ export const Main = (args) => {
           showTutorialButton
           showNotationButton
           showAnalyzeButton
+          showDrawButton
           showSettingsButton
         />
       </Card>
@@ -82,6 +82,13 @@ export const Main = (args) => {
     displayComponents.push(
       <Card key='tutorial'>
         <TutorialMenu displayText={defaultText} allowNext allowBack />
+      </Card>
+    );
+  }
+  if(args.showDraw) {
+    displayComponents.push(
+      <Card key='draw'>
+        <DrawMenu />
       </Card>
     );
   }

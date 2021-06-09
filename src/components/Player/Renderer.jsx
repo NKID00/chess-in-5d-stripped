@@ -56,6 +56,10 @@ export default class Renderer extends React.Component {
       'blackS',
       'blackQ',
       'blackK',
+      'blackC',
+      'blackY',
+      'blackU',
+      'blackD',
       'whiteP',
       'whiteW',
       'whiteB',
@@ -63,7 +67,11 @@ export default class Renderer extends React.Component {
       'whiteR',
       'whiteS',
       'whiteQ',
-      'whiteK'
+      'whiteK',
+      'whiteC',
+      'whiteY',
+      'whiteU',
+      'whiteD'
     ];
     for(var i = 0;i < keylist.length;i++) {
       var currentKey = keylist[i];
@@ -115,8 +123,15 @@ export default class Renderer extends React.Component {
       deepmerge({ app: { interactive: false } }, crConfig.get()),
       crPalette.get()
     );
+    //Initialization
     this.chessRenderer.global.sync(new Chess());
-    this.chessRenderer.zoom.fullBoard();
+    this.chessRenderer.zoom.present(true, 1.75);
+    //Renderer listener
+    this.chessRenderer.on('moveSelect', (move) => {
+      if(typeof this.props.onMove === 'function') {
+        this.props.onMove(move);
+      }
+    });
     //Listen for changes in palette and config settings
     this.paletteListener = this.context.on('paletteUpdate', () => {
       this.updatePalette();

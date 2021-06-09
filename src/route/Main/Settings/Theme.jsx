@@ -535,7 +535,11 @@ export default class Theme extends React.Component {
                   <Grid item xs={12} sm={6} md={12} lg={6}>
                     <Typography variant='body1'><Trans>Palette Mode</Trans></Typography>
                     <Grid container alignItems='center' spacing={1}>
-                      <Grid item><Trans>Light</Trans></Grid>
+                      <Grid item>
+                        <Typography>
+                          <Trans>Light</Trans>
+                        </Typography>
+                      </Grid>
                       <Grid item>
                         <Switch
                           color='primary'
@@ -545,7 +549,11 @@ export default class Theme extends React.Component {
                           }}
                         />
                       </Grid>
-                      <Grid item><Trans>Dark</Trans></Grid>
+                      <Grid item>
+                        <Typography>
+                          <Trans>Dark</Trans>
+                        </Typography>
+                      </Grid>
                     </Grid>
                   </Grid>
                   <Grid item xs={12} sm={6} md={12} lg={6}>

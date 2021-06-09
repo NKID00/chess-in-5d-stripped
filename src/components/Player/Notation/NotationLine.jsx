@@ -63,11 +63,16 @@ export default class NotationLine extends React.Component {
         }
       }
     }
-    if(!updateNeeded && this.state.notationArrBlack.length === resBlack.length) {
-      for(var i = 0;!updateNeeded && i < resBlack.length;i++) { // eslint-disable-line no-redeclare
-        if(resBlack[i] !== this.state.notationArrBlack[i]) {
-          updateNeeded = true;
+    if(!updateNeeded) {
+      if(this.state.notationArrBlack.length === resBlack.length) {
+        for(var i = 0;!updateNeeded && i < resBlack.length;i++) { // eslint-disable-line no-redeclare
+          if(resBlack[i] !== this.state.notationArrBlack[i]) {
+            updateNeeded = true;
+          }
         }
+      }
+      else {
+        updateNeeded = true;
       }
     }
 

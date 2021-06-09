@@ -2,6 +2,10 @@ const deepmerge = require('deepmerge');
 const store = require('store');
 
 const defaultConfig = {
+  board:{
+    flipTimeline: false,
+    flipRank: false
+  },
   notation: {
     newPresentToken: {
       show: true
