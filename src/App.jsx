@@ -24,21 +24,8 @@ import Main from 'route/Main';
 import UpdateToast from 'route/UpdateToast';
 import ConverseManager from 'route/ConverseManager';
 
-//Available non-monospaced fonts
-import '@fontsource/domine';
-import '@fontsource/exo';
-import '@fontsource/fira-sans';
-import '@fontsource/eb-garamond';
-import '@fontsource/merriweather';
-import '@fontsource/newsreader';
-import '@fontsource/open-sans';
-import '@fontsource/playfair-display';
-import '@fontsource/roboto-condensed';
-import '@fontsource/roboto';
-import '@fontsource/vollkorn';
-
-//Available monospaced fonts
-import '@fontsource/roboto-mono';
+//Importing fonts preemptively
+import 'components/FontLists';
 
 //Custom CSS for integration
 import 'App.css';

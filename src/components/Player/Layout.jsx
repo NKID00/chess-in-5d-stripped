@@ -133,7 +133,9 @@ export default class Layout extends React.Component {
           }
         }
         if(!includesItem) {
-          res[keys[j]].push(defaultLayout[keys[j]][k]);
+          var newItem = defaultLayout[keys[j]][k];
+          newItem.default = true;
+          res[keys[j]].push(newItem);
         }
       }
     }
@@ -141,27 +143,29 @@ export default class Layout extends React.Component {
     if(importMode) {
       for(var j = 0;j < keys.length;j++) { // eslint-disable-line no-redeclare
         for(var i = 0;i < res[keys[j]].length;i++) { // eslint-disable-line no-redeclare
+          //Min Size
+          if(res[keys[j]][i].h < 5) { res[keys[j]][i].h = 5; }
+          if(res[keys[j]][i].w < 5) { res[keys[j]][i].w = 5; }
           if(res[keys[j]][i].y < 0) {
-            res[keys[j]][i].y = 100 + res[keys[j]][i].y;
+            res[keys[j]][i].y = Math.abs(100 + res[keys[j]][i].y) % 100;
           }
-          if(res[keys[j]][i].y + res[keys[j]][i].h > 100) {
-            if(res[keys[j]][i].y < 100) {
-              res[keys[j]][i].h = 100 - res[keys[j]][i].y;
-            }
-            else if(res[keys[j]][i].h < 100) {
-              res[keys[j]][i].y = 100 - res[keys[j]][i].h;
-            }
-            else {
-              res[keys[j]][i].y = 95;
-              res[keys[j]][i].h = 5;
+          if(!res[keys[j]][i].default) {
+            if(res[keys[j]][i].y + res[keys[j]][i].h > 100) {
+              if(res[keys[j]][i].y < 95) {
+                res[keys[j]][i].h = 100 - res[keys[j]][i].y;
+              }
+              else if(res[keys[j]][i].h < 100) {
+                res[keys[j]][i].y = 100 - res[keys[j]][i].h;
+              }
+              else {
+                res[keys[j]][i].y = 95;
+                res[keys[j]][i].h = 5;
+              }
             }
           }
           if(this.state) {
             res[keys[j]][i].y += this.state.rowOffset;
           }
-          //Min Size
-          if(res[keys[j]][i].h < 5) { res[keys[j]][i].h = 5; }
-          if(res[keys[j]][i].w < 5) { res[keys[j]][i].w = 5; }
         }
       }
     }
@@ -169,23 +173,25 @@ export default class Layout extends React.Component {
     else {
       for(var j = 0;j < keys.length;j++) { // eslint-disable-line no-redeclare
         for(var i = 0;i < res[keys[j]].length;i++) { // eslint-disable-line no-redeclare
-          if(this.state) {
-            res[keys[j]][i].y -= this.state.rowOffset;
-          }
-          if(res[keys[j]][i].y + res[keys[j]][i].h > 100) {
-            if(res[keys[j]][i].y < 100) {
-              res[keys[j]][i].h = 100 - res[keys[j]][i].y;
+          if(!res[keys[j]][i].default) {
+            if(this.state) {
+              res[keys[j]][i].y -= this.state.rowOffset;
             }
-            else if(res[keys[j]][i].h < 100) {
-              res[keys[j]][i].y = 100 - res[keys[j]][i].h;
+            if(res[keys[j]][i].y + res[keys[j]][i].h > 100) {
+              if(res[keys[j]][i].y < 95) {
+                res[keys[j]][i].h = 100 - res[keys[j]][i].y;
+              }
+              else if(res[keys[j]][i].h < 100) {
+                res[keys[j]][i].y = 100 - res[keys[j]][i].h;
+              }
+              else {
+                res[keys[j]][i].y = 95;
+                res[keys[j]][i].h = 5;
+              }
             }
-            else {
-              res[keys[j]][i].y = 95;
-              res[keys[j]][i].h = 5;
+            if(res[keys[j]][i].y > 50) {
+              res[keys[j]][i].y = -(100 - res[keys[j]][i].y);
             }
-          }
-          if(res[keys[j]][i].y > 50) {
-            res[keys[j]][i].y = -(100 - res[keys[j]][i].y);
           }
           //Removing 'null' keys
           if(res[keys[j]][i].i === 'null') {

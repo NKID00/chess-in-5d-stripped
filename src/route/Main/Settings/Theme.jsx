@@ -14,7 +14,6 @@ import CardContent from '@material-ui/core/CardContent';
 import Grid from '@material-ui/core/Grid';
 import InputLabel from '@material-ui/core/InputLabel';
 import LinearProgress from '@material-ui/core/LinearProgress';
-import MenuItem from '@material-ui/core/MenuItem';
 import Paper from '@material-ui/core/Paper';
 import Select from '@material-ui/core/Select';
 import Switch from '@material-ui/core/Switch';
@@ -24,10 +23,11 @@ import TextField from '@material-ui/core/TextField';
 
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
-import Notation from 'components/Player/Notation';
 import Clock from 'components/Player/Clock';
-import SubmitMenu from 'components/Player/SubmitMenu';
 import ColorPicker from 'components/ColorPicker';
+import { RegularFont, MonospaceFont } from 'components/FontLists';
+import Notation from 'components/Player/Notation';
+import SubmitMenu from 'components/Player/SubmitMenu';
 
 import EmitterContext from 'EmitterContext';
 import * as muiTheme from 'state/theme';
@@ -247,39 +247,7 @@ export default class Theme extends React.Component {
                         }}
                         label={<Trans>Main - Font Family</Trans>}
                       >
-                        <MenuItem value='domine' style={{ fontFamily: 'domine' }}>
-                          Domine
-                        </MenuItem>
-                        <MenuItem value='exo' style={{ fontFamily: 'exo' }}>
-                          Exo
-                        </MenuItem>
-                        <MenuItem value='fira sans' style={{ fontFamily: 'fira sans' }}>
-                          Fira Sans
-                        </MenuItem>
-                        <MenuItem value='eb garamond' style={{ fontFamily: 'eb garamond' }}>
-                          EB Garamond
-                        </MenuItem>
-                        <MenuItem value='merriweather' style={{ fontFamily: 'merriweather' }}>
-                          Merriweather
-                        </MenuItem>
-                        <MenuItem value='newsreader' style={{ fontFamily: 'newsreader' }}>
-                          Newsreader
-                        </MenuItem>
-                        <MenuItem value='open sans' style={{ fontFamily: 'open sans' }}>
-                          Open Sans
-                        </MenuItem>
-                        <MenuItem value='playfair display' style={{ fontFamily: 'playfair display' }}>
-                          Playfair Display
-                        </MenuItem>
-                        <MenuItem value='roboto condensed' style={{ fontFamily: 'roboto condensed' }}>
-                          Roboto Condensed
-                        </MenuItem>
-                        <MenuItem value='roboto' style={{ fontFamily: 'roboto' }}>
-                          Roboto
-                        </MenuItem>
-                        <MenuItem value='vollkorn' style={{ fontFamily: 'vollkorn' }}>
-                          Vollkorn
-                        </MenuItem>
+                        {RegularFont}
                       </Select>
                     </FormControl>
                   </Grid>
@@ -305,9 +273,7 @@ export default class Theme extends React.Component {
                         }}
                         label={<Trans>Clock - Font Family</Trans>}
                       >
-                        <MenuItem value='roboto mono' style={{ fontFamily: 'roboto mono' }}>
-                          Roboto Mono
-                        </MenuItem>
+                        {MonospaceFont}
                       </Select>
                     </FormControl>
                   </Grid>
@@ -333,9 +299,8 @@ export default class Theme extends React.Component {
                         }}
                         label={<Trans>Notation - Font Family</Trans>}
                       >
-                        <MenuItem value='roboto mono' style={{ fontFamily: 'roboto mono' }}>
-                          Roboto Mono
-                        </MenuItem>
+                        {RegularFont}
+                        {MonospaceFont}
                       </Select>
                     </FormControl>
                   </Grid>

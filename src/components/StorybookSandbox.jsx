@@ -12,19 +12,7 @@ import EmitterContext from 'EmitterContext';
 import * as muiTheme from 'state/theme';
 import i18nInit from 'state/i18n';
 
-import '@fontsource/domine';
-import '@fontsource/exo';
-import '@fontsource/fira-sans';
-import '@fontsource/eb-garamond';
-import '@fontsource/merriweather';
-import '@fontsource/newsreader';
-import '@fontsource/open-sans';
-import '@fontsource/playfair-display';
-import '@fontsource/roboto-condensed';
-import '@fontsource/roboto';
-import '@fontsource/vollkorn';
-
-import '@fontsource/roboto-mono';
+import 'components/FontLists';
 
 import 'App.css';
 
