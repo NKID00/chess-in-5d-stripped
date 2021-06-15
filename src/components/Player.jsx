@@ -10,6 +10,7 @@ import Layout from 'components/Player/Layout';
 import Menu from 'components/Player/Menu';
 import Notation from 'components/Player/Notation';
 import Renderer from 'components/Player/Renderer';
+import Status from 'components/Player/Status';
 import SubmitMenu from 'components/Player/SubmitMenu';
 import TutorialMenu from 'components/Player/TutorialMenu';
 import ViewMenu from 'components/Player/ViewMenu';
@@ -34,6 +35,13 @@ Notation Props:
  - notationHighlight
  - notationOnSelect
 
+Status Props:
+ - statusWhitePlayerName
+ - statusWhitePlayerType
+ - statusBlackPlayerName
+ - statusBlackPlayerType
+ - statusWhiteActive
+
 Analyze Props:
  - allowAnalyze
  - analyzeOnPreviousAction
@@ -47,7 +55,6 @@ Clock Props:
  - clockWhiteDelayLeft
  - clockBlackTimeLeft
  - clockBlackDelayLeft
- - clockWhiteActive
 
 Tutorial Props:
  - allowTutorial
@@ -69,6 +76,7 @@ export default class Player extends React.Component {
     menu: {
       showSubmit: true,
       showView: true,
+      showStatus: true,
       showClock: true,
       showTutorial: true,
       showNotation: true,
@@ -123,7 +131,7 @@ export default class Player extends React.Component {
             whiteDelayLeft={this.props.clockWhiteDelayLeft}
             blackTimeLeft={this.props.clockBlackTimeLeft}
             blackDelayLeft={this.props.clockBlackDelayLeft}
-            whiteActive={this.props.clockWhiteActive}
+            whiteActive={this.props.statusWhiteActive}
           />
         </Card>
       );
@@ -205,6 +213,19 @@ export default class Player extends React.Component {
             notation={this.props.notation}
             highlightNotation={this.props.notationHighlight}
             onClick={this.props.notationOnSelect}
+          />
+        </Card>
+      );
+    }
+    if(this.state.menu.showStatus) {
+      layoutComponents.push(
+        <Card key='status'>
+          <Status
+            whitePlayerName={this.props.statusWhitePlayerName}
+            whitePlayerType={this.props.statusWhitePlayerType}
+            blackPlayerName={this.props.statusBlackPlayerName}
+            blackPlayerType={this.props.statusBlackPlayerType}
+            whiteActive={this.props.statusWhiteActive}
           />
         </Card>
       );

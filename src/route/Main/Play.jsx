@@ -16,6 +16,7 @@ export default class Play extends React.Component {
     tmpChess.pass();
     this.futureAvailableMoves = tmpChess.moves('object', false, false, false);
     this.setState({
+      player: this.chess.player,
       board: this.chess.board,
       actionHistory: this.chess.actionHistory,
       moveBuffer: this.chess.moveBuffer,
@@ -26,8 +27,11 @@ export default class Play extends React.Component {
     });
   }
   componentDidMount() {
-    this.currAvailableMoves = this.chess.moves('object', false, false, false);
-    this.sync();
+    try {
+      this.currAvailableMoves = this.chess.moves('object', false, false, false);
+      this.sync();
+    }
+    catch(err) {}
   }
   render() {
     return (
@@ -38,22 +42,36 @@ export default class Play extends React.Component {
         checks={this.state.checks}
         availableMoves={this.state.availableMoves}
         pastAvailableMoves={this.state.pastAvailableMoves}
-        notation={this.state.notation}
-        notationHighlight={this.state.notation}
         onMove={(move) => {
-          this.chess.move(move);
-          this.sync();
+          try {
+            this.chess.move(move);
+            this.sync();
+          }
+          catch(err) {}
         }}
         onUndo={() => {
-          this.chess.undo();
-          this.sync();
+          try {
+            this.chess.undo();
+            this.sync();
+          }
+          catch(err) {}
         }}
         onSubmit={() => {
-          this.chess.submit();
-          this.pastAvailableMoves = [this.pastAvailableMoves, this.currAvailableMoves].flat();
-          this.currAvailableMoves = this.chess.moves('object', false, false, false);
-          this.sync();
+          try {
+            this.chess.submit();
+            this.pastAvailableMoves = [this.pastAvailableMoves, this.currAvailableMoves].flat();
+            this.currAvailableMoves = this.chess.moves('object', false, false, false);
+            this.sync();
+          }
+          catch(err) {}
         }}
+        notation={this.state.notation}
+        notationHighlight={this.state.notation}
+        statusWhitePlayerName='White'
+        statusWhitePlayerType='human'
+        statusBlackPlayerName='Black'
+        statusBlackPlayerType='human'
+        statusWhiteActive={this.state.player === 'white'}
       />
     );
   }

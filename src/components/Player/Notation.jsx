@@ -6,10 +6,12 @@ import Grid from '@material-ui/core/Grid';
 
 import NotationLine from 'components/Player/Notation/NotationLine';
 
-import Chess from '5d-chess-js';
+import HighlightNotationWorker from 'workerize-loader!components/Player/Notation/HighlightNotationWorker'; // eslint-disable-line import/no-webpack-loader-syntax
 import EmitterContext from 'EmitterContext';
 import * as crConfig from 'state/config';
 import * as muiTheme from 'state/theme';
+
+const highlightNotationWorker = new HighlightNotationWorker();
 
 export default class Notation extends React.Component {
   static contextType = EmitterContext;
@@ -19,57 +21,15 @@ export default class Notation extends React.Component {
     notationArr: [],
     highlightNotationSegment: null,
   };
-  //TODO: Improve cpu usage of extractHighlightNotation (web worker?)
   async extractHighlightNotation(notationArr) {
-    var validHighlight = false;
-    //Searching for last move and looking for notation string to highlight
     if(Array.isArray(notationArr) && typeof this.props.notation === 'string' && typeof this.props.highlightNotation === 'string') {
       try {
-        var highlightChess = new Chess();
-        highlightChess.skipDetection = true;
-        highlightChess.import(this.props.highlightNotation);
-        var highlightHash = highlightChess.hash.slice();
-
-        //Check if highlight matches current displayed notation (skip if matches)
-        highlightChess.import(this.props.notation);
-        if(highlightHash !== highlightChess.hash) {
-          var currTmpChess = new Chess();
-          currTmpChess.skipDetection = true;
-
-          //Create array of notation segments
-          var tmpNotationArr = [];
-          for(var i = 0;i < notationArr.length;i++) {
-            tmpNotationArr.push(notationArr[i].split(' '));
-          }
-          tmpNotationArr = tmpNotationArr.flat();
-
-          //Test notation segments to see if imported board hash matches
-          for(var i = 0;!validHighlight && i < tmpNotationArr.length;i++) { // eslint-disable-line no-redeclare
-            var currTmpNotation = '';
-            for(var j = 0;j <= i;j++) {
-              currTmpNotation += tmpNotationArr[j] + ' ';
-            }
-            try {
-              currTmpChess.import(currTmpNotation);
-              if(currTmpChess.hash === highlightHash) {
-                if(this.state.highlightNotationSegment !== tmpNotationArr[i]) {
-                  this.setState({ highlightNotationSegment: tmpNotationArr[i] });
-                }
-                validHighlight = true;
-              }
-            }
-            catch(err) {}
-          }
-        }
+        var highlightNotationSegment = (await highlightNotationWorker.extractHighlightNotation(notationArr, this.props.notation, this.props.highlightNotation));
+        this.setState({
+          highlightNotationSegment: highlightNotationSegment
+        });
       }
       catch(err) {}
-    }
-
-    //Check if highlightNotationSegment is not null and update to null if needed
-    if(!validHighlight) {
-      if(this.state.highlightNotationSegment) {
-        this.setState({ highlightNotationSegment: null });
-      }
     }
   }
   extractNotationArr() {
