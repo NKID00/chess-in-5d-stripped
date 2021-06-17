@@ -13,7 +13,8 @@ export default {
     whitePlayerType: 'human',
     blackPlayerName: 'Test2',
     blackPlayerType: 'bot',
-    whiteActive: true
+    whiteActive: true,
+    isCheck: false,
   }
 };
 

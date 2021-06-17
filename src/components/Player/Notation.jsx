@@ -116,39 +116,41 @@ export default class Notation extends React.Component {
   render() {
     return (
       <Box p={1} style={{ height: '100%' }}>
-        <Grid container spacing={0} style={{ overflowY: 'auto', height: '100%' }}>
-          {this.state.notationArr.map((e, i) => {
-            return (
-              <Grid key={i} item xs={12}>
-                <NotationLine 
-                  notationLine={e}
-                  fontFamily={this.state.theme.extra.notation.fontFamily}
-                  fontSize={this.state.theme.extra.notation.fontSize}
-                  newPresentToken={this.state.config.notation.newPresentToken.show}
-                  newPresentTokenBackgroundColor={this.state.theme.extra.notation.newPresentToken.backgroundColor}
-                  newPresentTokenColor={this.state.theme.extra.notation.newPresentToken.color}
-                  newTimelineToken={this.state.config.notation.newTimelineToken.show}
-                  newTimelineTokenBackgroundColor={this.state.theme.extra.notation.newTimelineToken.backgroundColor}
-                  newTimelineTokenColor={this.state.theme.extra.notation.newTimelineToken.color}
-                  highlightNotationSegment={this.state.highlightNotationSegment}
-                  highlightSize={this.state.theme.extra.notation.highlight.size}
-                  highlightColor={this.state.theme.extra.notation.highlight.color}
-                  onClick={(str) => {
-                    var res = '';
-                    for(var j = 0;j < i && j < this.state.notationArr.length;j++) {
-                      res += this.state.notationArr[j] + '\n';
-                    }
-                    res += str;
-                    if(typeof this.props.onClick === 'function') {
-                      this.props.onClick(res.trim());
-                    }
-                  }}
-                />
-                {i + 1 < this.state.notationArr.length ? <Divider /> : <></>}
-              </Grid>
-            );
-          })}
-        </Grid>
+        <Box style={{ overflowY: 'auto', height: '100%' }}>
+          <Grid container spacing={0}>
+            {this.state.notationArr.map((e, i) => {
+              return (
+                <Grid key={i} item xs={12}>
+                  <NotationLine 
+                    notationLine={e}
+                    fontFamily={this.state.theme.extra.notation.fontFamily}
+                    fontSize={this.state.theme.extra.notation.fontSize}
+                    newPresentToken={this.state.config.notation.newPresentToken.show}
+                    newPresentTokenBackgroundColor={this.state.theme.extra.notation.newPresentToken.backgroundColor}
+                    newPresentTokenColor={this.state.theme.extra.notation.newPresentToken.color}
+                    newTimelineToken={this.state.config.notation.newTimelineToken.show}
+                    newTimelineTokenBackgroundColor={this.state.theme.extra.notation.newTimelineToken.backgroundColor}
+                    newTimelineTokenColor={this.state.theme.extra.notation.newTimelineToken.color}
+                    highlightNotationSegment={this.state.highlightNotationSegment}
+                    highlightSize={this.state.theme.extra.notation.highlight.size}
+                    highlightColor={this.state.theme.extra.notation.highlight.color}
+                    onClick={(str) => {
+                      var res = '';
+                      for(var j = 0;j < i && j < this.state.notationArr.length;j++) {
+                        res += this.state.notationArr[j] + '\n';
+                      }
+                      res += str;
+                      if(typeof this.props.onClick === 'function') {
+                        this.props.onClick(res.trim());
+                      }
+                    }}
+                  />
+                  {i + 1 < this.state.notationArr.length ? <Divider /> : <></>}
+                </Grid>
+              );
+            })}
+          </Grid>
+        </Box>
       </Box>
     );
   }

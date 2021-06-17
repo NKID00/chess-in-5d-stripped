@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { Trans } from '@lingui/macro';
 import { withStyles } from '@material-ui/core/styles';
 
 import Badge from '@material-ui/core/Badge';
@@ -32,6 +33,15 @@ export default class NotationSegment extends React.Component {
     //Return comment displaying icon if it is
     if(this.props.notationSegment.includes('{')) {
       var comment = this.props.notationSegment.replace(/\{/g,'').replace(/\}/g,'');
+      var truncComment = comment;
+      if(truncComment.length > 30) {
+        if(truncComment[29] === '.') {
+          truncComment = `${comment.substr(0, 30)}..`;
+        }
+        else {
+          truncComment = `${comment.substr(0, 30)}...`;
+        }
+      }
       return (
         <Box h={1}>
           <Tooltip
@@ -117,7 +127,7 @@ export default class NotationSegment extends React.Component {
                 fontSize: this.props.fontSize,
               }}
             >
-              Present Moved To Turn {turn}!
+              <Trans>Present Moved To Turn {turn}!</Trans>
             </Box>
           }
           placement='top'
@@ -153,7 +163,7 @@ export default class NotationSegment extends React.Component {
                 fontSize: this.props.fontSize,
               }}
             >
-              {timeline} Timeline Created!
+              <Trans>{timeline} Timeline Created!</Trans>
             </Box>
           }
           placement='top'
@@ -322,7 +332,7 @@ export default class NotationSegment extends React.Component {
               fontSize: this.props.fontSize,
             }}
           >
-            New Timeline Activating!
+            <Trans>New Timeline Activating!</Trans>
           </Box>
         :
           ''

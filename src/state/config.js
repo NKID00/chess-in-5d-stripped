@@ -28,7 +28,8 @@ const defaultConfig = {
     }
   },
   extra: {
-    autoRecenter: false
+    autoRecenter: false,
+    autoSubmit: false
   }
 };
 

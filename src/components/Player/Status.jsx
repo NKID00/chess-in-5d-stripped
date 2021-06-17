@@ -1,8 +1,11 @@
 import React from 'react';
 
 import { Trans } from '@lingui/macro';
+import { withStyles } from '@material-ui/core/styles';
 
+import Badge from '@material-ui/core/Badge';
 import Box from '@material-ui/core/Box';
+import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 
@@ -20,7 +23,17 @@ Props:
  - blackPlayerName
  - blackPlayerType ('human' or 'bot')
  - whiteActive
+ - isCheckmate
+ - isStalemate
+ - isCheck
 */
+const CustomCheckBadge = withStyles(() => ({
+  badge: {
+    right: 7,
+    top: 7,
+    backgroundColor: 'red'
+  }
+}))(Badge);
 const widthThreshold = 300;
 const heightThreshold = 50;
 export default class Status extends React.Component {
@@ -67,11 +80,22 @@ export default class Status extends React.Component {
         blackIcon = <Box mx={1}><PersonIcon /></Box>;
       }
     }
-    return (
-      <Box p={1} pb={this.state.wideMode ? 0 : 1} ref={this.rootRef} style={{ height: '100%' }}>
-        {this.state.wideMode ?
-          <Grid container spacing={1} style={{ height: '100%' }}>
-            <Grid item xs style={{ height: '100%' }}>
+    if(this.props.isCheckmate) {
+      return (
+        <Box p={1} ref={this.rootRef} style={{ height: '100%' }}>
+          <Tooltip
+            arrow
+            title={<Trans>In Checkmate</Trans>}
+            placement='top'
+          >
+            <CustomCheckBadge
+              badgeContent='!'
+              style={{ width: '100%' }}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+            >
               <Box
                 className='borderBlink'
                 animate={1}
@@ -83,17 +107,94 @@ export default class Status extends React.Component {
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  color: '#000000',
-                  backgroundColor: '#ffffff',
+                  color: !this.props.whiteActive ? '#000000' : '#ffffff',
+                  backgroundColor: !this.props.whiteActive ? '#ffffff' : '#000000',
                   margin: 0
                 }}
                 border={5}
                 borderRadius={5}
-                borderColor={this.props.whiteActive === false ? '#ffffff' : '#000000'}
+                borderColor={!this.props.whiteActive ? '#ffffff' : '#000000'}
               >
-                {whiteIcon}
-                <Typography>{this.props.whitePlayerName}</Typography>
+                {!this.props.whiteActive ? whiteIcon : blackIcon}
+                <Typography>{!this.props.whiteActive ? this.props.whitePlayerName : this.props.blackPlayerName} Wins!</Typography>
               </Box>
+            </CustomCheckBadge>
+          </Tooltip>
+        </Box>
+      );
+    }
+    if(this.props.isStalemate) {
+      return (
+        <Box p={1} ref={this.rootRef} style={{ height: '100%' }}>
+          <Box
+            fullWidth
+            py={0.75}
+            textAlign='center'
+            style={{
+              height: '100%',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              color: '#ffffff',
+              backgroundColor: '#aaaaaa',
+              margin: 0
+            }}
+            border={5}
+            borderRadius={5}
+            borderColor='#aaaaaa'
+          >
+            <Typography><Trans>Draw</Trans></Typography>
+          </Box>
+        </Box>
+      );
+    }
+    return (
+      <Box p={1} pb={this.state.wideMode ? 0 : 1} ref={this.rootRef} style={{ height: '100%' }}>
+        {this.state.wideMode ?
+          <Grid container spacing={1} style={{ height: '100%' }}>
+            <Grid item xs style={{ height: '100%' }}>
+              <Tooltip
+                arrow
+                title={!this.props.isCheck || !this.props.whiteActive ?
+                  <Trans>In Check</Trans>
+                :
+                  ''
+                }
+                placement='top'
+              >
+                <CustomCheckBadge
+                  badgeContent='!'
+                  style={{ width: '100%' }}
+                  invisible={!this.props.isCheck || !this.props.whiteActive}
+                  anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                >
+                  <Box
+                    className='borderBlink'
+                    animate={1}
+                    py={0.75}
+                    textAlign='center'
+                    style={{
+                      height: '100%',
+                      width: '100%',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      color: '#000000',
+                      backgroundColor: '#ffffff',
+                      margin: 0
+                    }}
+                    border={5}
+                    borderRadius={5}
+                    borderColor={this.props.whiteActive === false ? '#ffffff' : '#000000'}
+                  >
+                    {whiteIcon}
+                    <Typography>{this.props.whitePlayerName}</Typography>
+                  </Box>
+                </CustomCheckBadge>
+              </Tooltip>
             </Grid>
             <Grid item xs={1} style={{ height: '100%' }}>
               <Box
@@ -115,6 +216,69 @@ export default class Status extends React.Component {
               </Box>
             </Grid>
             <Grid item xs style={{ height: '100%' }}>
+              <Tooltip
+                arrow
+                title={!this.props.isCheck || this.props.whiteActive ?
+                  <Trans>In Check</Trans>
+                :
+                  ''
+                }
+                placement='top'
+              >
+                <CustomCheckBadge
+                  badgeContent='!'
+                  style={{ width: '100%' }}
+                  invisible={!this.props.isCheck || this.props.whiteActive}
+                  anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                >
+                  <Box
+                    className='borderBlink'
+                    animate={1}
+                    py={0.75}
+                    textAlign='center'
+                    style={{
+                      height: '100%',
+                      width: '100%',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      color: '#ffffff',
+                      backgroundColor: '#000000',
+                      margin: 0
+                    }}
+                    border={5}
+                    borderRadius={5}
+                    borderColor={this.props.whiteActive === false ? '#ffffff' : '#000000'}
+                  >
+                    {blackIcon}
+                    <Typography>{this.props.blackPlayerName}</Typography>
+                  </Box>
+                </CustomCheckBadge>
+              </Tooltip>
+            </Grid>
+          </Grid>
+        :
+          <Tooltip
+            arrow
+            title={!this.props.isCheck ?
+              <Trans>In Check</Trans>
+            :
+              ''
+            }
+            placement='top'
+          >
+            <CustomCheckBadge
+              badgeContent='!'
+              style={{ width: '100%' }}
+              invisible={!this.props.isCheck}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+            >
               <Box
                 className='borderBlink'
                 animate={1}
@@ -126,42 +290,19 @@ export default class Status extends React.Component {
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  color: '#ffffff',
-                  backgroundColor: '#000000',
+                  color: this.props.whiteActive ? '#000000' : '#ffffff',
+                  backgroundColor: this.props.whiteActive ? '#ffffff' : '#000000',
                   margin: 0
                 }}
                 border={5}
                 borderRadius={5}
-                borderColor={this.props.whiteActive === false ? '#ffffff' : '#000000'}
+                borderColor={this.props.whiteActive ? '#ffffff' : '#000000'}
               >
-                {blackIcon}
-                <Typography>{this.props.blackPlayerName}</Typography>
+                {this.props.whiteActive ? whiteIcon : blackIcon}
+                <Typography>{this.props.whiteActive ? this.props.whitePlayerName : this.props.blackPlayerName}</Typography>
               </Box>
-            </Grid>
-          </Grid>
-        :
-          <Box
-            className='borderBlink'
-            animate={1}
-            fullWidth
-            py={0.75}
-            textAlign='center'
-            style={{
-              height: '100%',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              color: this.props.whiteActive ? '#000000' : '#ffffff',
-              backgroundColor: this.props.whiteActive ? '#ffffff' : '#000000',
-              margin: 0
-            }}
-            border={5}
-            borderRadius={5}
-            borderColor={this.props.whiteActive ? '#ffffff' : '#000000'}
-          >
-            {this.props.whiteActive ? whiteIcon : blackIcon}
-            <Typography>{this.props.whiteActive ? this.props.whitePlayerName : this.props.blackPlayerName}</Typography>
-          </Box>
+            </CustomCheckBadge>
+          </Tooltip>
         }
       </Box>
     );

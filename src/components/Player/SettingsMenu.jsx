@@ -121,8 +121,8 @@ export default class SettingsMenu extends React.Component {
                 }}
               >
                 <MenuItem value='all'><Trans>All</Trans></MenuItem>
-                <MenuItem value='spatial'><Trans>Spatial Only</Trans></MenuItem>
                 <MenuItem value='nonSpatial'><Trans>Non-Spatial Only</Trans></MenuItem>
+                <MenuItem value='spatial'><Trans>Spatial Only</Trans></MenuItem>
                 <MenuItem value='none'><Trans>None</Trans></MenuItem>
               </Select>
             </FormControl>
@@ -136,6 +136,20 @@ export default class SettingsMenu extends React.Component {
                   checked={this.state.config.extra.autoRecenter}
                   onChange={(event) => {
                     this.setState(deepmerge(this.state, { config: { extra: { autoRecenter: event.target.checked } } }));
+                  }}
+                />
+              }
+            />
+          </Grid>
+          <Grid item xs={this.state.wideMode ? 6 : 12}>
+            <FormControlLabel
+              label={<Trans>Automatic Submit</Trans>}
+              control={
+                <Checkbox
+                  color='primary'
+                  checked={this.state.config.extra.autoSubmit}
+                  onChange={(event) => {
+                    this.setState(deepmerge(this.state, { config: { extra: { autoSubmit: event.target.checked } } }));
                   }}
                 />
               }

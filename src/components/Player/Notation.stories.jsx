@@ -44,6 +44,16 @@ const defaultTestNotation = `[Board "Standard"]
 24. (-9T12)Bg3>(-14T12)b3 (6T12)Kd1>(5T12)c2 (-3T12)Bf4>(-2T12)e4 (-13T12)Qd1>(-15T12)b3 (1T12)Qd1>(0T12)c2 (-5T12)Qg5>>(-2T9)d2~ (>L13) / (13T9)Qxh4
 25. (13T10)Bh2 / (13T10)Ke7`;
 
+const smallNotation = `[Board "Standard"]
+[Mode "5D"]
+1. b3 / g5
+2. h4 / Bg7
+3. a3 / e5
+4. d4 / g4
+5. b4 / Kf8
+6. Bf4 / Ne7 7. c4 / Ng8
+8. Qd3 {test comment here [test tag]} / (0T8)Qd8>>(0T7)e8~ (>L-1)`;
+
 export default {
   title: 'components/Player/Notation',
   component: Notation,
@@ -82,6 +92,30 @@ export const Squeezed250px = (args) => {
       <div style={{ width: 250 }}>
         <Card>
           <Notation {...args} />
+        </Card>
+      </div>
+    </StorybookSandbox>
+  );
+}
+
+export const SmallNotationLong250px = (args) => {
+  return (
+    <StorybookSandbox>
+      <div style={{ width: 250, height: 750 }}>
+        <Card style={{ width: 250, height: 750 }}>
+          <Notation {...args} notation={smallNotation} highlightNotation={smallNotation} />
+        </Card>
+      </div>
+    </StorybookSandbox>
+  );
+}
+
+export const SmallNotationSqueezed250px = (args) => {
+  return (
+    <StorybookSandbox>
+      <div style={{ width: 250, height: 250 }}>
+        <Card style={{ width: 250, height: 250 }}>
+          <Notation {...args} notation={smallNotation} highlightNotation={smallNotation} />
         </Card>
       </div>
     </StorybookSandbox>
