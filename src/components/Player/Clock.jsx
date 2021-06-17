@@ -6,6 +6,8 @@ import Grid from '@material-ui/core/Grid';
 import EmitterContext from 'EmitterContext';
 import * as muiTheme from 'state/theme';
 
+import 'components/Player/Blink.css';
+
 export default class Clock extends React.Component {
   static contextType = EmitterContext;
   state = {
@@ -267,6 +269,8 @@ export default class Clock extends React.Component {
         <Grid container spacing={1} style={{ height: '100%' }}>
           <Grid item xs={6} style={{ height: '100%' }}>
             <Box
+              className='borderBlink'
+              animate={1}
               fullWidth
               py={0.75}
               textAlign='center'
@@ -282,13 +286,23 @@ export default class Clock extends React.Component {
               borderRadius={5}
               borderColor={this.props.whiteActive === false ? '#ffffff' : '#000000'}
             >
-              <div ref={this.whiteClock} style={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <div
+                ref={this.whiteClock}
+                style={{
+                  height: '100%',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}
+              >
                 0:00
               </div>
             </Box>
           </Grid>
           <Grid item xs={6} style={{ height: '100%' }}>
             <Box
+              className='borderBlink'
+              animate={1}
               fullWidth
               py={0.75}
               textAlign='center'
@@ -304,7 +318,15 @@ export default class Clock extends React.Component {
               borderRadius={5}
               borderColor={this.props.whiteActive === false ? '#ffffff' : '#000000'}
             >
-              <div ref={this.blackClock} style={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <div
+                ref={this.blackClock}
+                style={{
+                  height: '100%',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}
+              >
                 0:00
               </div>
             </Box>

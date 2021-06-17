@@ -45,6 +45,7 @@ export default class SubmitMenu extends React.Component {
       <Box p={1} ref={this.rootRef} style={{ height: '100%' }}>
         <ButtonGroup fullWidth style={{ height: '100%' }}>
           <Button
+            disabled={!this.props.canUndo}
             startIcon={this.state.showText ? <UndoIcon /> : null}
             onClick={() => {
               if(typeof this.props.onUndo === 'function') {
@@ -60,7 +61,8 @@ export default class SubmitMenu extends React.Component {
           </Button>
           <Button
             variant='contained'
-            color='primary'
+            color={this.props.canSubmit ? 'primary' : 'default'}
+            disabled={!this.props.canSubmit}
             endIcon={this.state.showText ? <SendIcon /> : null}
             onClick={() => {
               if(typeof this.props.onSubmit === 'function') {

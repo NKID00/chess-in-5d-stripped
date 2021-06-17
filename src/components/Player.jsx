@@ -1,7 +1,6 @@
 import React from 'react';
 
 import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
 
 import AnalyzeMenu from 'components/Player/AnalyzeMenu';
 import Clock from 'components/Player/Clock';
@@ -10,6 +9,7 @@ import Layout from 'components/Player/Layout';
 import Menu from 'components/Player/Menu';
 import Notation from 'components/Player/Notation';
 import Renderer from 'components/Player/Renderer';
+import SettingsMenu from 'components/Player/SettingsMenu';
 import Status from 'components/Player/Status';
 import SubmitMenu from 'components/Player/SubmitMenu';
 import TutorialMenu from 'components/Player/TutorialMenu';
@@ -27,8 +27,12 @@ Basic Props:
  - availableMoves
  - pastAvailableMoves
  - onMove
- - onUndo
- - onSubmit
+
+Submit Props:
+ - submitCanUndo
+ - submitCanSubmit
+ - submitOnUndo
+ - submitOnSubmit
 
 Notation Props:
  - notation
@@ -72,7 +76,12 @@ export default class Player extends React.Component {
   rootRef = React.createRef();
   chessRendererRef = React.createRef();
   state = {
-    rowOffset: 0,
+    overlay: {
+      x: 0,
+      y: 0,
+      width: window.innerWidth,
+      height: window.innerHeight
+    },
     menu: {
       showSubmit: true,
       showView: true,
@@ -87,12 +96,15 @@ export default class Player extends React.Component {
   };
   resize() {
     if(this.rootRef.current) {
-      var top = this.rootRef.current.getBoundingClientRect().top;
-      if(top !== this.state.rowOffset) {
-        this.setState({
-          rowOffset: top
-        })
-      }
+      var rect = this.rootRef.current.getBoundingClientRect();
+      this.setState({
+        overlay: {
+          x: rect.x,
+          y: rect.y,
+          width: rect.width,
+          height: window.innerHeight - rect.y
+        }
+      });
     }
   }
   componentDidMount() {
@@ -109,6 +121,7 @@ export default class Player extends React.Component {
       <Card key='menu'>
         <Menu
           {...this.state.menu}
+          showStatusButton
           showSubmitButton
           showViewButton
           showClockButton={this.props.allowClock}
@@ -202,7 +215,7 @@ export default class Player extends React.Component {
     if(this.state.menu.showSettings) {
       layoutComponents.push(
         <Card key='settings'>
-          <CardContent>Settings</CardContent>
+          <SettingsMenu />
         </Card>
       );
     }
@@ -261,8 +274,10 @@ export default class Player extends React.Component {
       layoutComponents.push(
         <Card key='submit'>
           <SubmitMenu
-            onUndo={this.props.onUndo}
-            onSubmit={this.props.onSubmit}
+            canUndo={this.props.submitCanUndo}
+            canSubmit={this.props.submitCanSubmit}
+            onUndo={this.props.submitOnUndo}
+            onSubmit={this.props.submitOnSubmit}
           />
         </Card>
       );
@@ -302,7 +317,12 @@ export default class Player extends React.Component {
             onMove={this.props.onMove}
           />
         </div>
-        <Layout rowOffset={this.state.rowOffset}>
+        <Layout
+          x={this.state.overlay.x}
+          y={this.state.overlay.y}
+          width={this.state.overlay.width}
+          height={this.state.overlay.height}
+        >
           {layoutComponents}
         </Layout>
       </div>

@@ -14,7 +14,7 @@ import { FaChessPawn, FaChessKnight, FaChessBishop, FaChessRook, FaChessQueen, F
 import { FiArrowRight } from 'react-icons/fi';
 import { BsArrowLeftRight } from 'react-icons/bs'
 
-import 'components/Player/Notation/NotationLine/NotationSegment.css';
+import 'components/Player/Blink.css';
 
 export default class NotationSegment extends React.Component {
   state = {

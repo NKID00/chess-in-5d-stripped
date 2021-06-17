@@ -1,6 +1,6 @@
 import React from 'react';
 
-import CardContent from '@material-ui/core/CardContent';
+import Box from '@material-ui/core/Box';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 
@@ -115,7 +115,7 @@ export default class Notation extends React.Component {
   }
   render() {
     return (
-      <CardContent style={{ height: '100%' }}>
+      <Box p={1} style={{ height: '100%' }}>
         <Grid container spacing={0} style={{ overflowY: 'auto', height: '100%' }}>
           {this.state.notationArr.map((e, i) => {
             return (
@@ -149,7 +149,7 @@ export default class Notation extends React.Component {
             );
           })}
         </Grid>
-      </CardContent>
+      </Box>
     );
   }
 }

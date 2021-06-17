@@ -27,13 +27,16 @@ import Clock from 'components/Player/Clock';
 import ColorPicker from 'components/ColorPicker';
 import { RegularFont, MonospaceFont } from 'components/FontLists';
 import Notation from 'components/Player/Notation';
+import Status from 'components/Player/Status';
 import SubmitMenu from 'components/Player/SubmitMenu';
+import ViewMenu from 'components/Player/ViewMenu';
 
 import EmitterContext from 'EmitterContext';
 import * as muiTheme from 'state/theme';
 
 const deepmerge = require('deepmerge');
 const deepequal = require('fast-deep-equal');
+const store = require('store');
 
 const defaultTestNotation = `1. b3 / g5
 2. h4 / Bg7
@@ -200,23 +203,55 @@ export default class Theme extends React.Component {
                       </CardContent>
                     </Card>
                     <Box my={2} />
-                    <Clock />
+                    <Card>
+                      <Box pb={1}><Clock /></Box>
+                    </Card>
                     <Box my={2} />
-                    <Notation notation={defaultTestNotation} highlightNotation={defaultTestHighlightNotation} />
+                    <Card>
+                      <Notation notation={defaultTestNotation} highlightNotation={defaultTestHighlightNotation} />
+                    </Card>
                     <Box my={2} />
-                    <SubmitMenu />
+                    <Card>
+                      <SubmitMenu />
+                    </Card>
+                    <Box my={2} />
+                    <Card>
+                      <Box pb={1}>
+                        <Status
+                          whitePlayerName='White'
+                          whitePlayerType='human'
+                          blackPlayerName='Black'
+                          blackPlayerType='bot'
+                        />
+                      </Box>
+                    </Card>
+                    <Box my={2} />
+                    <Card>
+                      <Box pb={1}><ViewMenu /></Box>
+                    </Card>
                   </Box>
                 </Paper>
               </Grid>
-              <Grid item xs={12}>
+              <Grid item xs={12} md={6}>
                 <Button
-                  variant='outlined'
+                  variant='contained'
                   onClick={() =>{
                     muiTheme.reset(this.context);
                   }}
                   fullWidth
                 >
-                  Reset Theme
+                  <Trans>Restore Default Theme</Trans>
+                </Button>
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <Button
+                  variant='outlined'
+                  onClick={() =>{
+                    store.remove('player/layouts');
+                  }}
+                  fullWidth
+                >
+                  <Trans>Restore Default Layout</Trans>
                 </Button>
               </Grid>
             </Grid>

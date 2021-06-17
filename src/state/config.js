@@ -2,9 +2,22 @@ const deepmerge = require('deepmerge');
 const store = require('store');
 
 const defaultConfig = {
+  arrow: {
+    showSpatial: false,
+    showNonSpatial: false
+  },
   board:{
+    showGhost: true,
+    showWhite: true,
+    showBlack: true,
     flipTimeline: false,
     flipRank: false
+  },
+  boardLabel: {
+    showTimeline: true,
+    showTurn: true,
+    showFile: true,
+    showRank: true
   },
   notation: {
     newPresentToken: {
@@ -13,6 +26,9 @@ const defaultConfig = {
     newTimelineToken: {
       show: true
     }
+  },
+  extra: {
+    autoRecenter: false
   }
 };
 

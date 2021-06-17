@@ -23,6 +23,8 @@ export default class Play extends React.Component {
       checks: this.chess.checks,
       availableMoves: this.chess.moves('object', false, false, false),
       pastAvailableMoves: [this.pastAvailableMoves,this.futureAvailableMoves].flat(),
+      undoable: this.chess.undoable(),
+      submittable: this.chess.submittable(),
       notation: tmpChess.export('5dpgn_active_timeline')
     });
   }
@@ -49,14 +51,16 @@ export default class Play extends React.Component {
           }
           catch(err) {}
         }}
-        onUndo={() => {
+        submitCanUndo={this.state.undoable}
+        submitCanSubmit={this.state.submittable}
+        submitOnUndo={() => {
           try {
             this.chess.undo();
             this.sync();
           }
           catch(err) {}
         }}
-        onSubmit={() => {
+        submitOnSubmit={() => {
           try {
             this.chess.submit();
             this.pastAvailableMoves = [this.pastAvailableMoves, this.currAvailableMoves].flat();

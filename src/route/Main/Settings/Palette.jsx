@@ -86,7 +86,7 @@ export default class Palette extends React.Component {
                   onClick={this.resetView.bind(this)}
                   fullWidth
                 >
-                  Reset Preview
+                  <Trans>Reset Preview</Trans>
                 </Button>
               </Grid>
               <Grid item xs={6}>
@@ -98,7 +98,7 @@ export default class Palette extends React.Component {
                   }}
                   fullWidth
                 >
-                  Reset Palette
+                  <Trans>Restore Default Palette</Trans>
                 </Button>
               </Grid>
             </Grid>

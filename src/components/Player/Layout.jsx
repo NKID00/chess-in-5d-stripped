@@ -24,64 +24,64 @@ export default class Layout extends React.Component {
   defaultLayout() {
     return {
       lg: [
-        {i: 'menu', x: 1, y: 1, w: 32, h: 9},
-        {i: 'clock', x: 34, y: 1, w: 32, h: 9},
-        {i: 'analyze', x: 34, y: 1, w: 32, h: 9},
-        {i: 'tutorial', x: 67, y: 1, w: 32, h: 39},
-        {i: 'draw', x: 1, y: 11, w: 32, h: 9},
-        {i: 'settings', x: 1, y: 11, w: 32, h: 29},
-        {i: 'notation', x: 1, y: -40, w: 32, h: 39},
-        {i: 'status', x: 34, y: -21, w: 32, h: 9},
-        {i: 'view', x: 34, y: -10, w: 32, h: 9},
-        {i: 'submit', x: 67, y: -10, w: 32, h: 9},
+        {i: 'menu', x: 0, y: 0, w: 4, h: 1},
+        {i: 'clock', x: 4, y: 0, w: 4, h: 1},
+        {i: 'analyze', x: 4, y: 0, w: 4, h: 1},
+        {i: 'tutorial', x: 8, y: 0, w: 4, h: 4},
+        {i: 'draw', x: 0, y: 1, w: 4, h: 1},
+        {i: 'settings', x: 0, y: 1, w: 4, h: 3},
+        {i: 'notation', x: 0, y: -4, w: 4, h: 4},
+        {i: 'status', x: 4, y: -2, w: 4, h: 1},
+        {i: 'view', x: 4, y: -1, w: 4, h: 1},
+        {i: 'submit', x: 8, y: -1, w: 4, h: 1},
       ],
       md: [
-        {i: 'menu', x: 1, y: 1, w: 32, h: 9},
-        {i: 'clock', x: 34, y: 1, w: 32, h: 9},
-        {i: 'analyze', x: 34, y: 1, w: 32, h: 9},
-        {i: 'tutorial', x: 67, y: 1, w: 32, h: 39},
-        {i: 'draw', x: 1, y: 11, w: 32, h: 9},
-        {i: 'settings', x: 1, y: 11, w: 32, h: 29},
-        {i: 'notation', x: 1, y: -40, w: 32, h: 39},
-        {i: 'status', x: 34, y: -21, w: 32, h: 9},
-        {i: 'view', x: 34, y: -10, w: 32, h: 9},
-        {i: 'submit', x: 67, y: -10, w: 32, h: 9},
+        {i: 'menu', x: 0, y: 0, w: 4, h: 1},
+        {i: 'clock', x: 4, y: 0, w: 4, h: 1},
+        {i: 'analyze', x: 4, y: 0, w: 4, h: 1},
+        {i: 'tutorial', x: 8, y: 0, w: 4, h: 4},
+        {i: 'draw', x: 0, y: 1, w: 4, h: 1},
+        {i: 'settings', x: 0, y: 1, w: 4, h: 3},
+        {i: 'notation', x: 0, y: -4, w: 4, h: 4},
+        {i: 'status', x: 4, y: -2, w: 4, h: 1},
+        {i: 'view', x: 4, y: -1, w: 4, h: 1},
+        {i: 'submit', x: 8, y: -1, w: 4, h: 1},
       ],
       sm: [
-        {i: 'menu', x: 1, y: 1, w: 32, h: 9},
-        {i: 'clock', x: 34, y: 1, w: 32, h: 9},
-        {i: 'analyze', x: 34, y: 1, w: 32, h: 9},
-        {i: 'tutorial', x: 67, y: 1, w: 32, h: 39},
-        {i: 'draw', x: 1, y: 11, w: 32, h: 9},
-        {i: 'settings', x: 1, y: 11, w: 32, h: 29},
-        {i: 'notation', x: 1, y: -40, w: 32, h: 39},
-        {i: 'status', x: 34, y: -21, w: 32, h: 9},
-        {i: 'view', x: 34, y: -10, w: 32, h: 9},
-        {i: 'submit', x: 67, y: -10, w: 32, h: 9},
+        {i: 'menu', x: 0, y: 0, w: 4, h: 1},
+        {i: 'clock', x: 4, y: 0, w: 4, h: 1},
+        {i: 'analyze', x: 4, y: 0, w: 4, h: 1},
+        {i: 'tutorial', x: 8, y: 0, w: 4, h: 4},
+        {i: 'draw', x: 0, y: 1, w: 4, h: 1},
+        {i: 'settings', x: 0, y: 1, w: 4, h: 3},
+        {i: 'notation', x: 0, y: -4, w: 4, h: 4},
+        {i: 'status', x: 4, y: -2, w: 4, h: 1},
+        {i: 'view', x: 4, y: -1, w: 4, h: 1},
+        {i: 'submit', x: 8, y: -1, w: 4, h: 1},
       ],
       xs: [
-        {i: 'menu', x: 1, y: 1, w: 32, h: 9},
-        {i: 'clock', x: 34, y: 1, w: 32, h: 9},
-        {i: 'analyze', x: 34, y: 1, w: 32, h: 9},
-        {i: 'tutorial', x: 67, y: 1, w: 32, h: 39},
-        {i: 'draw', x: 1, y: 11, w: 32, h: 9},
-        {i: 'settings', x: 1, y: 11, w: 32, h: 29},
-        {i: 'notation', x: 1, y: -40, w: 32, h: 39},
-        {i: 'status', x: 34, y: -21, w: 32, h: 9},
-        {i: 'view', x: 34, y: -10, w: 32, h: 9},
-        {i: 'submit', x: 67, y: -10, w: 32, h: 9},
+        {i: 'menu', x: 0, y: 0, w: 4, h: 1},
+        {i: 'clock', x: 4, y: 0, w: 4, h: 1},
+        {i: 'analyze', x: 4, y: 0, w: 4, h: 1},
+        {i: 'tutorial', x: 8, y: 0, w: 4, h: 4},
+        {i: 'draw', x: 0, y: 1, w: 4, h: 1},
+        {i: 'settings', x: 0, y: 1, w: 4, h: 3},
+        {i: 'notation', x: 0, y: -4, w: 4, h: 4},
+        {i: 'status', x: 4, y: -2, w: 4, h: 1},
+        {i: 'view', x: 4, y: -1, w: 4, h: 1},
+        {i: 'submit', x: 8, y: -1, w: 4, h: 1},
       ],
       xxs: [
-        {i: 'menu', x: 1, y: 1, w: 32, h: 9},
-        {i: 'clock', x: 34, y: 1, w: 32, h: 9},
-        {i: 'analyze', x: 34, y: 11, w: 32, h: 9},
-        {i: 'tutorial', x: 67, y: 1, w: 32, h: 39},
-        {i: 'draw', x: 1, y: 11, w: 32, h: 9},
-        {i: 'settings', x: 1, y: 11, w: 32, h: 29},
-        {i: 'notation', x: 1, y: -40, w: 32, h: 39},
-        {i: 'status', x: 34, y: -21, w: 32, h: 9},
-        {i: 'view', x: 34, y: -10, w: 32, h: 9},
-        {i: 'submit', x: 67, y: -10, w: 32, h: 9},
+        {i: 'menu', x: 0, y: 0, w: 4, h: 1},
+        {i: 'clock', x: 4, y: 0, w: 4, h: 1},
+        {i: 'analyze', x: 4, y: 0, w: 4, h: 1},
+        {i: 'tutorial', x: 8, y: 0, w: 4, h: 4},
+        {i: 'draw', x: 0, y: 1, w: 4, h: 1},
+        {i: 'settings', x: 0, y: 1, w: 4, h: 3},
+        {i: 'notation', x: 0, y: -4, w: 4, h: 4},
+        {i: 'status', x: 4, y: -2, w: 4, h: 1},
+        {i: 'view', x: 4, y: -1, w: 4, h: 1},
+        {i: 'submit', x: 8, y: -1, w: 4, h: 1},
       ],
     };
   }
@@ -92,16 +92,16 @@ export default class Layout extends React.Component {
     return this.transformLayout(this.defaultLayout());
   }
   resize() {
-    var rowOffset = this.props.rowOffset ? this.props.rowOffset : 0;
-    var rowHeight = (window.innerHeight - rowOffset) / 100;
-    var rowMargin = rowHeight * 0.25;
-    var layoutRowHeight = rowHeight - rowMargin;
-    var layoutRowOffset = Math.ceil(rowOffset / (layoutRowHeight + rowMargin));
+    var rowHeight = window.innerHeight / 12;
+    if(typeof this.props.height === 'number') {
+      rowHeight = this.props.height / 12;
+    }
+    var rowMargin = rowHeight * 0.15;
+    var layoutRowHeight = rowHeight - rowMargin - (rowMargin * (1/12));
     this.setState({
-      width: window.innerWidth,
+      width: this.props.width ? this.props.width : window.innerWidth,
       rowHeight: layoutRowHeight,
       rowMargin: rowMargin,
-      rowOffset: layoutRowOffset,
     });
   }
   transformLayout(layout, importMode = true) {
@@ -148,23 +148,20 @@ export default class Layout extends React.Component {
     if(importMode) {
       for(var j = 0;j < keys.length;j++) { // eslint-disable-line no-redeclare
         for(var i = 0;i < res[keys[j]].length;i++) { // eslint-disable-line no-redeclare
-          //Min Size
-          if(res[keys[j]][i].h < 5) { res[keys[j]][i].h = 5; }
-          if(res[keys[j]][i].w < 5) { res[keys[j]][i].w = 5; }
           if(res[keys[j]][i].y < 0) {
-            res[keys[j]][i].y = Math.abs(100 + res[keys[j]][i].y) % 100;
+            res[keys[j]][i].y = Math.abs(12 + res[keys[j]][i].y) % 12;
           }
           if(!res[keys[j]][i].default) {
-            if(res[keys[j]][i].y + res[keys[j]][i].h > 100) {
-              if(res[keys[j]][i].y < 95) {
-                res[keys[j]][i].h = 100 - res[keys[j]][i].y;
+            if(res[keys[j]][i].y + res[keys[j]][i].h > 12) {
+              if(res[keys[j]][i].y < 12) {
+                res[keys[j]][i].h = 12 - res[keys[j]][i].y;
               }
-              else if(res[keys[j]][i].h < 100) {
-                res[keys[j]][i].y = 100 - res[keys[j]][i].h;
+              else if(res[keys[j]][i].h < 12) {
+                res[keys[j]][i].y = 12 - res[keys[j]][i].h;
               }
               else {
-                res[keys[j]][i].y = 95;
-                res[keys[j]][i].h = 5;
+                res[keys[j]][i].y = 11;
+                res[keys[j]][i].h = 1;
               }
             }
           }
@@ -180,22 +177,25 @@ export default class Layout extends React.Component {
         for(var i = 0;i < res[keys[j]].length;i++) { // eslint-disable-line no-redeclare
           if(!res[keys[j]][i].default) {
             if(this.state) {
+              if(res[keys[j]][i].y < this.state.rowOffset) {
+                res[keys[j]][i].y += this.state.rowOffset;
+              }
               res[keys[j]][i].y -= this.state.rowOffset;
             }
-            if(res[keys[j]][i].y + res[keys[j]][i].h > 100) {
-              if(res[keys[j]][i].y < 95) {
-                res[keys[j]][i].h = 100 - res[keys[j]][i].y;
+            if(res[keys[j]][i].y + res[keys[j]][i].h > 12) {
+              if(res[keys[j]][i].y < 12) {
+                res[keys[j]][i].h = 12 - res[keys[j]][i].y;
               }
-              else if(res[keys[j]][i].h < 100) {
-                res[keys[j]][i].y = 100 - res[keys[j]][i].h;
+              else if(res[keys[j]][i].h < 12) {
+                res[keys[j]][i].y = 12 - res[keys[j]][i].h;
               }
               else {
-                res[keys[j]][i].y = 95;
-                res[keys[j]][i].h = 5;
+                res[keys[j]][i].y = -1;
+                res[keys[j]][i].h = 1;
               }
             }
-            if(res[keys[j]][i].y > 50) {
-              res[keys[j]][i].y = -(100 - res[keys[j]][i].y);
+            if(res[keys[j]][i].y > 6) {
+              res[keys[j]][i].y = -(12 - res[keys[j]][i].y);
             }
           }
           //Removing 'null' keys
@@ -220,7 +220,12 @@ export default class Layout extends React.Component {
     });
   }
   componentDidUpdate(prevProps, prevState) {
-    if(prevProps.rowOffset !== this.props.rowOffset) {
+    if(
+      prevProps.x !== this.props.x ||
+      prevProps.y !== this.props.y ||
+      prevProps.width !== this.props.width ||
+      prevProps.height !== this.props.height
+    ) {
       this.resize();
     }
     if(
@@ -249,10 +254,10 @@ export default class Layout extends React.Component {
       <div
         style={{
           position: 'absolute',
-          top: 0,
-          left: 0,
-          width: '100%',
-          height: '100%',
+          left: this.props.x ? this.props.x : 0,
+          top: this.props.y ? this.props.y : 0,
+          width: this.props.width ? `${this.props.width}px` : '100%',
+          height: this.props.height ? `${this.props.height}px` : '100%',
           margin: 0,
           padding: 0,
           overflow: 'hidden',
@@ -263,7 +268,7 @@ export default class Layout extends React.Component {
           autoSize
           preventCollision
           breakpoints={{lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0}}
-          cols={{lg: 100, md: 100, sm: 100, xs: 100, xxs: 100}}
+          cols={{lg: 12, md: 12, sm: 12, xs: 12, xxs: 12}}
           compactType={null}
           margin={[this.state.rowMargin,this.state.rowMargin]}
           layouts={this.state.layouts}

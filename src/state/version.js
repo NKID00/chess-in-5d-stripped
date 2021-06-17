@@ -20,6 +20,13 @@ export const init = () => {
     clearIDB();
   }
 
+  //TODO: Temp storage clearing every new version (dev purposes only)
+  if(storedVersion === currVersion) {
+    store.clearAll();
+    window.localStorage.clear();
+    clearIDB();
+  }
+
   //TODO: Use version system to smoothly update
 
   //Store current version

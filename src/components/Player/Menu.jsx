@@ -7,6 +7,7 @@ import ButtonGroup from '@material-ui/core/ButtonGroup';
 import CreateIcon from '@material-ui/icons/Create';
 import FormatListNumberedIcon from '@material-ui/icons/FormatListNumbered';
 import HourglassEmptyIcon from '@material-ui/icons/HourglassEmpty';
+import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import MenuBookIcon from '@material-ui/icons/MenuBook';
 import SendIcon from '@material-ui/icons/Send';
 import SettingsIcon from '@material-ui/icons/Settings';
@@ -17,6 +18,7 @@ const deepmerge = require('deepmerge');
 
 export default class Menu extends React.Component {
   state = {
+    showStatus: false,
     showSubmit: false,
     showView: false,
     showClock: false,
@@ -27,6 +29,9 @@ export default class Menu extends React.Component {
     showSettings: false,
   };
   propSync() {
+    if(this.state.showStatus !== this.props.showStatus) {
+      this.setState({ showStatus: this.props.showStatus });
+    }
     if(this.state.showSubmit !== this.props.showSubmit) {
       this.setState({ showSubmit: this.props.showSubmit });
     }
@@ -60,6 +65,20 @@ export default class Menu extends React.Component {
   }
   render() {
     var availableButtons = [];
+    if(this.props.showStatusButton) {
+      availableButtons.push(
+        <Button
+          variant={this.state.showStatus ? 'contained' : 'outlined'}
+          onClick={() => {
+            if(typeof this.props.onChange === 'function') {
+              this.props.onChange(deepmerge(this.state, { showStatus: !this.state.showStatus }));
+            }
+          }}
+        >
+          <InfoOutlinedIcon />
+        </Button>
+      );
+    }
     if(this.props.showSubmitButton) {
       availableButtons.push(
         <Button

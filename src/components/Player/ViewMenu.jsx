@@ -13,7 +13,7 @@ import ZoomOutMapIcon from '@material-ui/icons/ZoomOutMap';
 import EmitterContext from 'EmitterContext';
 
 const widthThreshold = 300;
-const heightThreshold = 50;
+const heightThreshold = 75;
 export default class ViewMenu extends React.Component {
   static contextType = EmitterContext;
   rootRef = React.createRef();

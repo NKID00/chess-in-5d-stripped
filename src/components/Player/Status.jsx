@@ -11,6 +11,8 @@ import PersonIcon from '@material-ui/icons/Person';
 
 import EmitterContext from 'EmitterContext';
 
+import 'components/Player/Blink.css';
+
 /*
 Props:
  - whitePlayerName
@@ -66,11 +68,13 @@ export default class Status extends React.Component {
       }
     }
     return (
-      <Box p={1} pb={0} ref={this.rootRef} style={{ height: '100%' }}>
+      <Box p={1} pb={this.state.wideMode ? 0 : 1} ref={this.rootRef} style={{ height: '100%' }}>
         {this.state.wideMode ?
           <Grid container spacing={1} style={{ height: '100%' }}>
             <Grid item xs style={{ height: '100%' }}>
               <Box
+                className='borderBlink'
+                animate={1}
                 fullWidth
                 py={0.75}
                 textAlign='center'
@@ -112,6 +116,8 @@ export default class Status extends React.Component {
             </Grid>
             <Grid item xs style={{ height: '100%' }}>
               <Box
+                className='borderBlink'
+                animate={1}
                 fullWidth
                 py={0.75}
                 textAlign='center'
@@ -135,6 +141,8 @@ export default class Status extends React.Component {
           </Grid>
         :
           <Box
+            className='borderBlink'
+            animate={1}
             fullWidth
             py={0.75}
             textAlign='center'

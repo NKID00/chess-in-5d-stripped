@@ -9,7 +9,9 @@ import Clock from 'components/Player/Clock';
 import DrawMenu from 'components/Player/DrawMenu';
 import Layout from 'components/Player/Layout';
 import Menu from 'components/Player/Menu';
+import Status from 'components/Player/Status';
 import Notation from 'components/Player/Notation';
+import SettingsMenu from 'components/Player/SettingsMenu';
 import SubmitMenu from 'components/Player/SubmitMenu';
 import TutorialMenu from 'components/Player/TutorialMenu';
 import ViewMenu from 'components/Player/ViewMenu';
@@ -40,6 +42,7 @@ export default {
     showTutorial: true,
     showSettings: true,
     showNotation: true,
+    showStatus: true,
     showView: true,
     showSubmit: true
   }
@@ -52,6 +55,7 @@ export const Main = (args) => {
       <Card key='menu'>
         <Menu
           {...args}
+          showStatusButton
           showSubmitButton
           showViewButton
           showClockButton
@@ -95,7 +99,20 @@ export const Main = (args) => {
   if(args.showSettings) {
     displayComponents.push(
       <Card key='settings'>
-        <CardContent>Settings</CardContent>
+        <SettingsMenu />
+      </Card>
+    );
+  }
+  if(args.showStatus) {
+    displayComponents.push(
+      <Card key='status'>
+        <Status
+          whitePlayerName='White'
+          whitePlayerType='human'
+          blackPlayerName='Black'
+          blackPlayerType='human'
+          whiteActive={true}
+        />
       </Card>
     );
   }

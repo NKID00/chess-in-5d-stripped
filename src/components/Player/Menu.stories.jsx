@@ -9,6 +9,8 @@ export default {
   title: 'components/Player/Menu',
   component: Menu,
   args: {
+    showStatus: false,
+    showStatusButton: true,
     showSubmit: false,
     showSubmitButton: true,
     showView: false,

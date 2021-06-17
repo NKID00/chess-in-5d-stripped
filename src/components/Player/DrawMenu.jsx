@@ -15,6 +15,8 @@ import * as crPalette from 'state/palette';
 
 import * as PIXI from 'pixi.js';
 
+import 'components/Player/Blink.css';
+
 export default class DrawMenu extends React.Component {
   static contextType = EmitterContext;
   state = {
@@ -57,6 +59,8 @@ export default class DrawMenu extends React.Component {
           </Grid>
           <Grid item xs={1} style={{ height: '100%' }}>
             <Box
+              className='borderBlink'
+              animate={1}
               fullWidth
               style={{
                 height: '100%',
@@ -88,6 +92,8 @@ export default class DrawMenu extends React.Component {
           </Grid>
           <Grid item xs={1} style={{ height: '100%' }}>
             <Box
+              className='borderBlink'
+              animate={1}
               fullWidth
               style={{
                 height: '100%',
@@ -119,6 +125,8 @@ export default class DrawMenu extends React.Component {
           </Grid>
           <Grid item xs={1} style={{ height: '100%' }}>
             <Box
+              className='borderBlink'
+              animate={1}
               fullWidth
               style={{
                 height: '100%',
@@ -150,6 +158,8 @@ export default class DrawMenu extends React.Component {
           </Grid>
           <Grid item xs={1} style={{ height: '100%' }}>
             <Box
+              className='borderBlink'
+              animate={1}
               fullWidth
               style={{
                 height: '100%',
