@@ -14,7 +14,11 @@ export default {
     blackPlayerName: 'Test2',
     blackPlayerType: 'bot',
     whiteActive: true,
+    isLoading: false,
+    isLoadingPlayer: false,
     isCheck: false,
+    isCheckmate: false,
+    isStalemate: false,
   }
 };
 

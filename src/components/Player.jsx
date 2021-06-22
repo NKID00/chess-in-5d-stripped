@@ -45,6 +45,11 @@ Status Props:
  - statusBlackPlayerName
  - statusBlackPlayerType
  - statusWhiteActive
+ - statusIsLoading
+ - statusIsLoadingPlayer
+ - statusIsCheckmate
+ - statusIsStalemate
+ - statusIsCheck
 
 Analyze Props:
  - allowAnalyze
@@ -239,6 +244,11 @@ export default class Player extends React.Component {
             blackPlayerName={this.props.statusBlackPlayerName}
             blackPlayerType={this.props.statusBlackPlayerType}
             whiteActive={this.props.statusWhiteActive}
+            isLoading={this.props.statusIsLoading}
+            isLoadingPlayer={this.props.statusIsLoadingPlayer}
+            isCheckmate={this.props.statusIsCheckmate}
+            isStalemate={this.props.statusIsStalemate}
+            isCheck={this.props.statusIsCheck}
           />
         </Card>
       );

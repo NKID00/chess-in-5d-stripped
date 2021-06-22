@@ -5,6 +5,8 @@ import { withStyles } from '@material-ui/core/styles';
 
 import Badge from '@material-ui/core/Badge';
 import Box from '@material-ui/core/Box';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import LinearProgress from '@material-ui/core/LinearProgress';
 import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
@@ -23,6 +25,8 @@ Props:
  - blackPlayerName
  - blackPlayerType ('human' or 'bot')
  - whiteActive
+ - isLoading
+ - isLoadingPlayer
  - isCheckmate
  - isStalemate
  - isCheck
@@ -80,6 +84,14 @@ export default class Status extends React.Component {
         blackIcon = <Box mx={1}><PersonIcon /></Box>;
       }
     }
+    if(this.props.isLoadingPlayer) {
+      if(this.props.whiteActive) {
+        whiteIcon = <Box mx={1}><CircularProgress size={25} thickness={4} /></Box>;
+      }
+      else {
+        blackIcon = <Box mx={1}><CircularProgress size={25} thickness={4} /></Box>;
+      }
+    }
     if(this.props.isCheckmate) {
       return (
         <Box p={1} ref={this.rootRef} style={{ height: '100%' }}>
@@ -104,6 +116,7 @@ export default class Status extends React.Component {
                 textAlign='center'
                 style={{
                   height: '100%',
+                  width: '100%',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
@@ -136,12 +149,12 @@ export default class Status extends React.Component {
               alignItems: 'center',
               justifyContent: 'center',
               color: '#ffffff',
-              backgroundColor: '#aaaaaa',
+              backgroundColor: '#777777',
               margin: 0
             }}
             border={5}
             borderRadius={5}
-            borderColor='#aaaaaa'
+            borderColor='#777777'
           >
             <Typography><Trans>Draw</Trans></Typography>
           </Box>
@@ -149,13 +162,20 @@ export default class Status extends React.Component {
       );
     }
     return (
-      <Box p={1} pb={this.state.wideMode ? 0 : 1} ref={this.rootRef} style={{ height: '100%' }}>
+      <Box p={1} pt={0} pb={this.state.wideMode ? 0 : 1} ref={this.rootRef} style={{ height: '100%' }}>
+        <Box w={1} mx={-1} mb={this.props.isLoading ? 0.5 : 1}>
+          {this.props.isLoading ?
+            <LinearProgress />
+          :
+            null
+          }
+        </Box>
         {this.state.wideMode ?
           <Grid container spacing={1} style={{ height: '100%' }}>
             <Grid item xs style={{ height: '100%' }}>
               <Tooltip
                 arrow
-                title={!this.props.isCheck || !this.props.whiteActive ?
+                title={this.props.isCheck && this.props.whiteActive ?
                   <Trans>In Check</Trans>
                 :
                   ''
@@ -218,7 +238,7 @@ export default class Status extends React.Component {
             <Grid item xs style={{ height: '100%' }}>
               <Tooltip
                 arrow
-                title={!this.props.isCheck || this.props.whiteActive ?
+                title={this.props.isCheck && !this.props.whiteActive ?
                   <Trans>In Check</Trans>
                 :
                   ''
@@ -263,7 +283,7 @@ export default class Status extends React.Component {
         :
           <Tooltip
             arrow
-            title={!this.props.isCheck ?
+            title={this.props.isCheck ?
               <Trans>In Check</Trans>
             :
               ''
@@ -287,6 +307,7 @@ export default class Status extends React.Component {
                 textAlign='center'
                 style={{
                   height: '100%',
+                  width: '100%',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
