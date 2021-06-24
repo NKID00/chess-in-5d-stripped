@@ -1,8 +1,13 @@
 import React from 'react';
 
+import { Trans } from '@lingui/macro';
+
 import Box from '@material-ui/core/Box';
+import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
+
+import GetAppIcon from '@material-ui/icons/GetApp';
 
 import NotationLine from 'components/Player/Notation/NotationLine';
 
@@ -149,6 +154,22 @@ export default class Notation extends React.Component {
                 </Grid>
               );
             })}
+            <Grid item xs={12}>
+              <Box w={1} mb={1} />
+              <Button
+                fullWidth
+                variant='contained'
+                color='primary'
+                startIcon={<GetAppIcon />}
+                onClick={() => {
+                  if(typeof this.props.onExport === 'function') {
+                    this.props.onExport();
+                  }
+                }}
+              >
+                <Trans>Export Game</Trans>
+              </Button>
+            </Grid>
           </Grid>
         </Box>
       </Box>

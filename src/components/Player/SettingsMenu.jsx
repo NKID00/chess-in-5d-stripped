@@ -129,7 +129,7 @@ export default class SettingsMenu extends React.Component {
           </Grid>
           <Grid item xs={this.state.wideMode ? 6 : 12}>
             <FormControlLabel
-              label={<Trans>Automatic Recenter</Trans>}
+              label={<Trans><s>Automatic Recenter</s> (WIP)</Trans>}
               control={
                 <Checkbox
                   color='primary'
@@ -143,7 +143,7 @@ export default class SettingsMenu extends React.Component {
           </Grid>
           <Grid item xs={this.state.wideMode ? 6 : 12}>
             <FormControlLabel
-              label={<Trans>Automatic Submit</Trans>}
+              label={<Trans><s>Automatic Submit</s> (WIP)</Trans>}
               control={
                 <Checkbox
                   color='primary'
