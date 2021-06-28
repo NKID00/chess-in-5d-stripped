@@ -102,7 +102,7 @@ export default class Status extends React.Component {
           >
             <CustomCheckBadge
               badgeContent='!'
-              style={{ width: '100%' }}
+              style={{ height: '100%', width: '100%' }}
               anchorOrigin={{
                 vertical: 'top',
                 horizontal: 'right',
@@ -162,7 +162,7 @@ export default class Status extends React.Component {
       );
     }
     return (
-      <Box p={1} pt={0} pb={this.state.wideMode ? 0 : 1} ref={this.rootRef} style={{ height: '100%' }}>
+      <Box p={1} pt={0} pb={this.state.wideMode ? 1 : 2} ref={this.rootRef} style={{ height: '100%' }}>
         <Box w={1} mx={-1} mb={this.props.isLoading ? 0.5 : 1}>
           {this.props.isLoading ?
             <LinearProgress />
@@ -184,7 +184,7 @@ export default class Status extends React.Component {
               >
                 <CustomCheckBadge
                   badgeContent='!'
-                  style={{ width: '100%' }}
+                  style={{ height: '100%', width: '100%' }}
                   invisible={!this.props.isCheck || !this.props.whiteActive}
                   anchorOrigin={{
                     vertical: 'top',
@@ -247,7 +247,7 @@ export default class Status extends React.Component {
               >
                 <CustomCheckBadge
                   badgeContent='!'
-                  style={{ width: '100%' }}
+                  style={{ height: '100%', width: '100%' }}
                   invisible={!this.props.isCheck || this.props.whiteActive}
                   anchorOrigin={{
                     vertical: 'top',
@@ -292,7 +292,7 @@ export default class Status extends React.Component {
           >
             <CustomCheckBadge
               badgeContent='!'
-              style={{ width: '100%' }}
+              style={{ height: '100%', width: '100%' }}
               invisible={!this.props.isCheck}
               anchorOrigin={{
                 vertical: 'top',
