@@ -111,7 +111,6 @@ export default class Status extends React.Component {
               <Box
                 className='borderBlink'
                 animate={1}
-                fullWidth
                 py={0.75}
                 textAlign='center'
                 style={{
@@ -140,7 +139,6 @@ export default class Status extends React.Component {
       return (
         <Box p={1} ref={this.rootRef} style={{ height: '100%' }}>
           <Box
-            fullWidth
             py={0.75}
             textAlign='center'
             style={{
@@ -218,11 +216,11 @@ export default class Status extends React.Component {
             </Grid>
             <Grid item xs={1} style={{ height: '100%' }}>
               <Box
-                fullWidth
                 py={0.75}
                 textAlign='center'
                 style={{
                   height: '100%',
+                  width: '100%',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
@@ -302,7 +300,6 @@ export default class Status extends React.Component {
               <Box
                 className='borderBlink'
                 animate={1}
-                fullWidth
                 py={0.75}
                 textAlign='center'
                 style={{

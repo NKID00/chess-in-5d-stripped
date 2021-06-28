@@ -1,7 +1,6 @@
 import React from 'react';
 
 import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
 
 import StorybookSandbox from 'components/StorybookSandbox';
 import AnalyzeMenu from 'components/Player/AnalyzeMenu';

@@ -271,11 +271,11 @@ export default class Clock extends React.Component {
             <Box
               className='borderBlink'
               animate={1}
-              fullWidth
               py={0.75}
               textAlign='center'
               style={{
                 height: '100%',
+                widht: '100%',
                 fontFamily: this.state.clockFontFamily,
                 fontSize: this.state.clockFontSize,
                 color: '#000000',
@@ -303,11 +303,11 @@ export default class Clock extends React.Component {
             <Box
               className='borderBlink'
               animate={1}
-              fullWidth
               py={0.75}
               textAlign='center'
               style={{
                 height: '100%',
+                widht: '100%',
                 fontFamily: this.state.clockFontFamily,
                 fontSize: this.state.clockFontSize,
                 color: '#ffffff',

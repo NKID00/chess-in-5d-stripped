@@ -4,7 +4,8 @@ const store = require('store');
 const defaultSettings = {
   locale: 'en',
   server: 'https://server.chessin5d.net',
-  key: 'ff104801-d3da-49b5-ae3c-11a3198f6c22'
+  key: 'ff104801-d3da-49b5-ae3c-11a3198f6c22',
+  eruda: false
 };
 
 export const set = (settings, emitter = null) => {

@@ -129,6 +129,20 @@ export default class SettingsMenu extends React.Component {
           </Grid>
           <Grid item xs={this.state.wideMode ? 6 : 12}>
             <FormControlLabel
+              label={<Trans>Interactive (Debug)</Trans>}
+              control={
+                <Checkbox
+                  color='primary'
+                  checked={this.state.config.app.interactive}
+                  onChange={(event) => {
+                    this.setState(deepmerge(this.state, { config: { app: { interactive: event.target.checked } } }));
+                  }}
+                />
+              }
+            />
+          </Grid>
+          <Grid item xs={this.state.wideMode ? 6 : 12}>
+            <FormControlLabel
               label={<Trans><s>Automatic Recenter</s> (WIP)</Trans>}
               control={
                 <Checkbox

@@ -61,9 +61,9 @@ export default class DrawMenu extends React.Component {
             <Box
               className='borderBlink'
               animate={1}
-              fullWidth
               style={{
                 height: '100%',
+                widht: '100%',
                 backgroundColor: PIXI.utils.hex2string(this.state.palette.arrow.custom1),
                 margin: 0
               }}
@@ -94,9 +94,9 @@ export default class DrawMenu extends React.Component {
             <Box
               className='borderBlink'
               animate={1}
-              fullWidth
               style={{
                 height: '100%',
+                widht: '100%',
                 backgroundColor: PIXI.utils.hex2string(this.state.palette.arrow.custom2),
                 margin: 0
               }}
@@ -127,9 +127,9 @@ export default class DrawMenu extends React.Component {
             <Box
               className='borderBlink'
               animate={1}
-              fullWidth
               style={{
                 height: '100%',
+                widht: '100%',
                 backgroundColor: PIXI.utils.hex2string(this.state.palette.arrow.custom3),
                 margin: 0
               }}
@@ -160,9 +160,9 @@ export default class DrawMenu extends React.Component {
             <Box
               className='borderBlink'
               animate={1}
-              fullWidth
               style={{
                 height: '100%',
+                widht: '100%',
                 backgroundColor: PIXI.utils.hex2string(this.state.palette.arrow.custom4),
                 margin: 0
               }}

@@ -23,6 +23,7 @@ import * as auth from 'network/auth';
 import Main from 'route/Main';
 import UpdateToast from 'route/UpdateToast';
 import ConverseManager from 'route/ConverseManager';
+import Eruda from 'route/Eruda';
 
 //Importing fonts preemptively
 import 'components/FontLists';
@@ -59,6 +60,7 @@ export default class App extends React.Component {
                     <UpdateToast />
                     <Main />
                     <ConverseManager />
+                    <Eruda />
                   </div>
                 </ReactPWAInstallProvider>
               </SnackbarProvider>

@@ -2,6 +2,9 @@ const deepmerge = require('deepmerge');
 const store = require('store');
 
 const defaultConfig = {
+  app: {
+    interactive: true,
+  },
   arrow: {
     showSpatial: false,
     showNonSpatial: false

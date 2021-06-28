@@ -21,7 +21,8 @@ export const init = () => {
   }
 
   //TODO: Temp storage clearing every new version (dev purposes only)
-  if(storedVersion === currVersion) {
+  if(storedVersion !== currVersion) {
+    console.info('(DEV) New version, wiping storage');
     store.clearAll();
     window.localStorage.clear();
     clearIDB();

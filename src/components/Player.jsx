@@ -123,7 +123,10 @@ export default class Player extends React.Component {
   render() {
     var layoutComponents = [];
     layoutComponents.push(
-      <Card key='menu'>
+      <Card key='menu'
+        onMouseEnter={() => { crConfig.set({ app: { interactive: false } }, this.context) }}
+        onMouseLeave={() => { crConfig.set({ app: { interactive: true } }, this.context) }}
+      >
         <Menu
           {...this.state.menu}
           showStatusButton
@@ -143,7 +146,10 @@ export default class Player extends React.Component {
     );
     if(this.state.menu.showClock && this.props.allowClock) {
       layoutComponents.push(
-        <Card key='clock'>
+        <Card key='clock'
+          onMouseEnter={() => { crConfig.set({ app: { interactive: false } }, this.context) }}
+          onMouseLeave={() => { crConfig.set({ app: { interactive: true } }, this.context) }}
+        >
           <Clock
             whiteTimeLeft={this.props.clockWhiteTimeLeft}
             whiteDelayLeft={this.props.clockWhiteDelayLeft}
@@ -156,7 +162,10 @@ export default class Player extends React.Component {
     }
     if(this.state.menu.showAnalyze && this.props.allowTutorial) {
       layoutComponents.push(
-        <Card key='analyze'>
+        <Card key='analyze'
+          onMouseEnter={() => { crConfig.set({ app: { interactive: false } }, this.context) }}
+          onMouseLeave={() => { crConfig.set({ app: { interactive: true } }, this.context) }}
+        >
           <AnalyzeMenu
             onPreviousAction={this.props.analyzeOnPreviousAction}
             onPreviousMove={this.props.analyzeOnPreviousMove}
@@ -168,7 +177,10 @@ export default class Player extends React.Component {
     }
     if(this.state.menu.showTutorial && this.props.allowTutorial) {
       layoutComponents.push(
-        <Card key='tutorial'>
+        <Card key='tutorial'
+          onMouseEnter={() => { crConfig.set({ app: { interactive: false } }, this.context) }}
+          onMouseLeave={() => { crConfig.set({ app: { interactive: true } }, this.context) }}
+        >
           <TutorialMenu
             displayText={this.props.tutorialDisplayText}
             allowNext={this.props.tutorialAllowNext}
@@ -181,7 +193,10 @@ export default class Player extends React.Component {
     }
     if(this.state.menu.showDraw) {
       layoutComponents.push(
-        <Card key='draw'>
+        <Card key='draw'
+          onMouseEnter={() => { crConfig.set({ app: { interactive: false } }, this.context) }}
+          onMouseLeave={() => { crConfig.set({ app: { interactive: true } }, this.context) }}
+        >
           <DrawMenu
             onEnableDraw={(type, middle) => {
               if(this.chessRendererRef.current) {
@@ -219,14 +234,20 @@ export default class Player extends React.Component {
     }
     if(this.state.menu.showSettings) {
       layoutComponents.push(
-        <Card key='settings'>
+        <Card key='settings'
+          onMouseEnter={() => { crConfig.set({ app: { interactive: false } }, this.context) }}
+          onMouseLeave={() => { crConfig.set({ app: { interactive: true } }, this.context) }}
+        >
           <SettingsMenu />
         </Card>
       );
     }
     if(this.state.menu.showNotation) {
       layoutComponents.push(
-        <Card key='notation'>
+        <Card key='notation'
+          onMouseEnter={() => { crConfig.set({ app: { interactive: false } }, this.context) }}
+          onMouseLeave={() => { crConfig.set({ app: { interactive: true } }, this.context) }}
+        >
           <Notation
             notation={this.props.notation}
             highlightNotation={this.props.notationHighlight}
@@ -237,7 +258,10 @@ export default class Player extends React.Component {
     }
     if(this.state.menu.showStatus) {
       layoutComponents.push(
-        <Card key='status'>
+        <Card key='status'
+          onMouseEnter={() => { crConfig.set({ app: { interactive: false } }, this.context) }}
+          onMouseLeave={() => { crConfig.set({ app: { interactive: true } }, this.context) }}
+        >
           <Status
             whitePlayerName={this.props.statusWhitePlayerName}
             whitePlayerType={this.props.statusWhitePlayerType}
@@ -255,7 +279,10 @@ export default class Player extends React.Component {
     }
     if(this.state.menu.showView) {
       layoutComponents.push(
-        <Card key='view'>
+        <Card key='view'
+          onMouseEnter={() => { crConfig.set({ app: { interactive: false } }, this.context) }}
+          onMouseLeave={() => { crConfig.set({ app: { interactive: true } }, this.context) }}
+        >
           <ViewMenu
             onFlip={() => {
               var currentConfig = crConfig.get();
@@ -282,7 +309,10 @@ export default class Player extends React.Component {
     }
     if(this.state.menu.showSubmit) {
       layoutComponents.push(
-        <Card key='submit'>
+        <Card key='submit'
+          onMouseEnter={() => { crConfig.set({ app: { interactive: false } }, this.context) }}
+          onMouseLeave={() => { crConfig.set({ app: { interactive: true } }, this.context) }}
+        >
           <SubmitMenu
             canUndo={this.props.submitCanUndo}
             canSubmit={this.props.submitCanSubmit}

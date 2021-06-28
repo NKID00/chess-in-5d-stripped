@@ -6,7 +6,9 @@ import Accordion from '@material-ui/core/Accordion';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import Box from '@material-ui/core/Box';
+import Checkbox from '@material-ui/core/Checkbox';
 import FormControl from '@material-ui/core/FormControl';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Grid from '@material-ui/core/Grid';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -124,6 +126,40 @@ export default class General extends React.Component {
                         </MenuItem>
                       </Select>
                     </FormControl>
+                  </Grid>
+                </Grid>
+              </AccordionDetails>
+            </Accordion>
+          </Grid>
+          <Grid item xs={12}>
+            <Accordion
+              expanded={this.state.section === 'developer' && this.state.showSection}
+              onChange={() => {
+                this.setState({ section: 'developer', showSection: this.state.section !== 'developer' ? true : !this.state.showSection });
+              }}
+              elevation={0}
+              style={{ margin: 0 }}
+              square={false}
+              TransitionProps={{ unmountOnExit: true }}
+            >
+              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                <Typography variant='h5'><Trans>Developer</Trans></Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Grid container spacing={2}>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
+                    <FormControlLabel
+                      label={<Trans>Eruda</Trans>}
+                      control={
+                        <Checkbox
+                          color='primary'
+                          checked={this.state.settings.eruda}
+                          onChange={(e) => { 
+                            this.setState(deepmerge(this.state, { settings: { eruda: e.target.checked } }));
+                          }}
+                        />
+                      }
+                    />
                   </Grid>
                 </Grid>
               </AccordionDetails>

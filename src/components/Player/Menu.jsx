@@ -68,6 +68,7 @@ export default class Menu extends React.Component {
     if(this.props.showStatusButton) {
       availableButtons.push(
         <Button
+          key='status'
           variant={this.state.showStatus ? 'contained' : 'outlined'}
           onClick={() => {
             if(typeof this.props.onChange === 'function') {
@@ -82,6 +83,7 @@ export default class Menu extends React.Component {
     if(this.props.showSubmitButton) {
       availableButtons.push(
         <Button
+          key='submit'
           variant={this.state.showSubmit ? 'contained' : 'outlined'}
           onClick={() => {
             if(typeof this.props.onChange === 'function') {
@@ -96,6 +98,7 @@ export default class Menu extends React.Component {
     if(this.props.showViewButton) {
       availableButtons.push(
         <Button
+          key='view'
           variant={this.state.showView ? 'contained' : 'outlined'}
           onClick={() => {
             if(typeof this.props.onChange === 'function') {
@@ -110,6 +113,7 @@ export default class Menu extends React.Component {
     if(this.props.showClockButton) {
       availableButtons.push(
         <Button
+          key='clock'
           variant={this.state.showClock ? 'contained' : 'outlined'}
           onClick={() => {
             if(typeof this.props.onChange === 'function') {
@@ -124,6 +128,7 @@ export default class Menu extends React.Component {
     if(this.props.showTutorialButton) {
       availableButtons.push(
         <Button
+          key='tutorial'
           variant={this.state.showTutorial ? 'contained' : 'outlined'}
           onClick={() => {
             if(typeof this.props.onChange === 'function') {
@@ -138,6 +143,7 @@ export default class Menu extends React.Component {
     if(this.props.showNotationButton) {
       availableButtons.push(
         <Button
+          key='notation'
           variant={this.state.showNotation ? 'contained' : 'outlined'}
           onClick={() => {
             if(typeof this.props.onChange === 'function') {
@@ -152,6 +158,7 @@ export default class Menu extends React.Component {
     if(this.props.showAnalyzeButton) {
       availableButtons.push(
         <Button
+          key='analyze'
           variant={this.state.showAnalyze ? 'contained' : 'outlined'}
           onClick={() => {
             if(typeof this.props.onChange === 'function') {
@@ -166,6 +173,7 @@ export default class Menu extends React.Component {
     if(this.props.showDrawButton) {
       availableButtons.push(
         <Button
+          key='draw'
           variant={this.state.showDraw ? 'contained' : 'outlined'}
           onClick={() => {
             if(typeof this.props.onChange === 'function') {
@@ -180,6 +188,7 @@ export default class Menu extends React.Component {
     if(this.props.showSettingsButton) {
       availableButtons.push(
         <Button
+          key='settings'
           variant={this.state.showSettings ? 'contained' : 'outlined'}
           onClick={() => {
             if(typeof this.props.onChange === 'function') {
