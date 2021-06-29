@@ -291,7 +291,8 @@ export default class Player extends React.Component {
               crConfig.set({
                 board: {
                   flipTimeline: !currentConfig.board.flipTimeline,
-                  flipRank: !currentConfig.board.flipRank
+                  flipRank: !currentConfig.board.flipTimeline,
+                  flipFile: !currentConfig.board.flipTimeline
                 }
               }, this.context);
             }}
