@@ -27,127 +27,127 @@ export default class Layout extends React.Component {
       return {
         lg: [
           {i: 'menu', x: 0, y: 0, w: 4, h: 1},
-          {i: 'clock', x: 4, y: 0, w: 4, h: 1},
-          {i: 'analyze', x: 4, y: 0, w: 4, h: 1},
-          {i: 'tutorial', x: 8, y: 0, w: 4, h: 4},
-          {i: 'draw', x: 0, y: 1, w: 4, h: 1},
-          {i: 'settings', x: 0, y: 1, w: 4, h: 3},
-          {i: 'status', x: 4, y: -2, w: 4, h: 1},
-          {i: 'notation', x: 0, y: -4, w: 4, h: 4},
-          {i: 'view', x: 4, y: -1, w: 4, h: 1},
-          {i: 'submit', x: 8, y: -1, w: 4, h: 1},
+          {i: 'clock', x: 9, y: 0, w: 3, h: 1},
+          {i: 'analyze', x: 0, y: 6, w: 3, h: 1},
+          {i: 'tutorial', x: 8, y: 0, w: 4, h: 6},
+          {i: 'draw', x: 0, y: 1, w: 5, h: 1},
+          {i: 'settings', x: 0, y: 1, w: 2, h: 4},
+          {i: 'status', x: 3, y: -2, w: 6, h: 1},
+          {i: 'notation', x: 0, y: -5, w: 3, h: 5},
+          {i: 'view', x: 3, y: -1, w: 6, h: 1},
+          {i: 'submit', x: 9, y: -1, w: 3, h: 1},
         ],
         md: [
-          {i: 'menu', x: 0, y: 0, w: 4, h: 1},
-          {i: 'clock', x: 4, y: 0, w: 4, h: 1},
-          {i: 'analyze', x: 4, y: 0, w: 4, h: 1},
-          {i: 'tutorial', x: 8, y: 0, w: 4, h: 4},
-          {i: 'draw', x: 0, y: 1, w: 4, h: 1},
-          {i: 'settings', x: 0, y: 1, w: 4, h: 3},
+          {i: 'menu', x: 0, y: 0, w: 5, h: 1},
+          {i: 'clock', x: 9, y: 0, w: 3, h: 1},
+          {i: 'analyze', x: 0, y: 6, w: 4, h: 1},
+          {i: 'tutorial', x: 7, y: 0, w: 5, h: 5},
+          {i: 'draw', x: 0, y: 1, w: 5, h: 1},
+          {i: 'settings', x: 0, y: 1, w: 3, h: 4},
           {i: 'status', x: 4, y: -2, w: 4, h: 1},
-          {i: 'notation', x: 0, y: -4, w: 4, h: 4},
+          {i: 'notation', x: 0, y: -5, w: 4, h: 5},
           {i: 'view', x: 4, y: -1, w: 4, h: 1},
           {i: 'submit', x: 8, y: -1, w: 4, h: 1},
         ],
         sm: [
-          {i: 'menu', x: 0, y: 0, w: 4, h: 1},
-          {i: 'clock', x: 4, y: 0, w: 4, h: 1},
-          {i: 'analyze', x: 4, y: 0, w: 4, h: 1},
-          {i: 'tutorial', x: 8, y: 0, w: 4, h: 4},
-          {i: 'draw', x: 0, y: 1, w: 4, h: 1},
-          {i: 'settings', x: 0, y: 1, w: 4, h: 3},
-          {i: 'status', x: 4, y: -2, w: 4, h: 1},
+          {i: 'menu', x: 0, y: 0, w: 6, h: 2},
+          {i: 'clock', x: 9, y: 0, w: 3, h: 2},
+          {i: 'analyze', x: 0, y: 6, w: 4, h: 2},
+          {i: 'tutorial', x: 8, y: 0, w: 4, h: 6},
+          {i: 'draw', x: 0, y: 2, w: 6, h: 2},
+          {i: 'settings', x: 0, y: 2, w: 3, h: 4},
+          {i: 'status', x: 9, y: -4, w: 3, h: 2},
           {i: 'notation', x: 0, y: -4, w: 4, h: 4},
-          {i: 'view', x: 4, y: -1, w: 4, h: 1},
-          {i: 'submit', x: 8, y: -1, w: 4, h: 1},
+          {i: 'view', x: 4, y: -2, w: 5, h: 2},
+          {i: 'submit', x: 9, y: -2, w: 3, h: 2},
         ],
         xs: [
-          {i: 'menu', x: 0, y: 0, w: 4, h: 1},
-          {i: 'clock', x: 4, y: 0, w: 4, h: 1},
-          {i: 'analyze', x: 4, y: 0, w: 4, h: 1},
-          {i: 'tutorial', x: 8, y: 0, w: 4, h: 4},
-          {i: 'draw', x: 0, y: 1, w: 4, h: 1},
-          {i: 'settings', x: 0, y: 1, w: 4, h: 3},
-          {i: 'status', x: 4, y: -2, w: 4, h: 1},
+          {i: 'menu', x: 0, y: 0, w: 7, h: 2},
+          {i: 'clock', x: 9, y: 0, w: 3, h: 2},
+          {i: 'analyze', x: 0, y: 6, w: 4, h: 2},
+          {i: 'tutorial', x: 8, y: 0, w: 4, h: 6},
+          {i: 'draw', x: 0, y: 2, w: 7, h: 2},
+          {i: 'settings', x: 0, y: 2, w: 3, h: 4},
+          {i: 'status', x: 9, y: -4, w: 3, h: 2},
           {i: 'notation', x: 0, y: -4, w: 4, h: 4},
-          {i: 'view', x: 4, y: -1, w: 4, h: 1},
-          {i: 'submit', x: 8, y: -1, w: 4, h: 1},
+          {i: 'view', x: 4, y: -2, w: 5, h: 2},
+          {i: 'submit', x: 9, y: -2, w: 3, h: 2},
         ],
         xxs: [
-          {i: 'menu', x: 0, y: 0, w: 4, h: 1},
-          {i: 'clock', x: 4, y: 0, w: 4, h: 1},
-          {i: 'analyze', x: 4, y: 0, w: 4, h: 1},
-          {i: 'tutorial', x: 8, y: 0, w: 4, h: 4},
-          {i: 'draw', x: 0, y: 1, w: 4, h: 1},
-          {i: 'settings', x: 0, y: 1, w: 4, h: 3},
-          {i: 'status', x: 4, y: -2, w: 4, h: 1},
+          {i: 'menu', x: 0, y: 0, w: 7, h: 2},
+          {i: 'clock', x: 9, y: 0, w: 3, h: 2},
+          {i: 'analyze', x: 0, y: 6, w: 4, h: 2},
+          {i: 'tutorial', x: 8, y: 0, w: 4, h: 6},
+          {i: 'draw', x: 0, y: 2, w: 7, h: 2},
+          {i: 'settings', x: 0, y: 2, w: 3, h: 4},
+          {i: 'status', x: 9, y: -4, w: 3, h: 2},
           {i: 'notation', x: 0, y: -4, w: 4, h: 4},
-          {i: 'view', x: 4, y: -1, w: 4, h: 1},
-          {i: 'submit', x: 8, y: -1, w: 4, h: 1},
+          {i: 'view', x: 4, y: -2, w: 5, h: 2},
+          {i: 'submit', x: 9, y: -2, w: 3, h: 2},
         ],
       };
     }
     //Tall mode
     return {
       lg: [
-        {i: 'menu', x: 0, y: 0, w: 4, h: 1},
-        {i: 'clock', x: 4, y: 0, w: 4, h: 1},
-        {i: 'analyze', x: 4, y: 0, w: 4, h: 1},
+        {i: 'menu', x: 0, y: 0, w: 5, h: 1},
+        {i: 'clock', x: 8, y: 0, w: 4, h: 1},
+        {i: 'analyze', x: 0, y: -4, w: 4, h: 1},
         {i: 'tutorial', x: 8, y: 0, w: 4, h: 4},
-        {i: 'draw', x: 0, y: 1, w: 4, h: 1},
+        {i: 'draw', x: 0, y: 1, w: 5, h: 1},
         {i: 'settings', x: 0, y: 1, w: 4, h: 3},
         {i: 'status', x: 4, y: -2, w: 4, h: 1},
-        {i: 'notation', x: 0, y: -4, w: 4, h: 4},
+        {i: 'notation', x: 0, y: -3, w: 4, h: 3},
         {i: 'view', x: 4, y: -1, w: 4, h: 1},
         {i: 'submit', x: 8, y: -1, w: 4, h: 1},
       ],
       md: [
-        {i: 'menu', x: 0, y: 0, w: 4, h: 1},
-        {i: 'clock', x: 4, y: 0, w: 4, h: 1},
-        {i: 'analyze', x: 4, y: 0, w: 4, h: 1},
+        {i: 'menu', x: 0, y: 0, w: 5, h: 1},
+        {i: 'clock', x: 8, y: 0, w: 4, h: 1},
+        {i: 'analyze', x: 0, y: -4, w: 4, h: 1},
         {i: 'tutorial', x: 8, y: 0, w: 4, h: 4},
-        {i: 'draw', x: 0, y: 1, w: 4, h: 1},
+        {i: 'draw', x: 0, y: 1, w: 5, h: 1},
         {i: 'settings', x: 0, y: 1, w: 4, h: 3},
         {i: 'status', x: 4, y: -2, w: 4, h: 1},
-        {i: 'notation', x: 0, y: -4, w: 4, h: 4},
+        {i: 'notation', x: 0, y: -3, w: 4, h: 3},
         {i: 'view', x: 4, y: -1, w: 4, h: 1},
         {i: 'submit', x: 8, y: -1, w: 4, h: 1},
       ],
       sm: [
-        {i: 'menu', x: 0, y: 0, w: 4, h: 1},
-        {i: 'clock', x: 4, y: 0, w: 4, h: 1},
-        {i: 'analyze', x: 4, y: 0, w: 4, h: 1},
-        {i: 'tutorial', x: 8, y: 0, w: 4, h: 4},
-        {i: 'draw', x: 0, y: 1, w: 4, h: 1},
-        {i: 'settings', x: 0, y: 1, w: 4, h: 3},
+        {i: 'menu', x: 0, y: 0, w: 8, h: 1},
+        {i: 'clock', x: 8, y: 0, w: 4, h: 1},
+        {i: 'analyze', x: 0, y: -4, w: 4, h: 1},
+        {i: 'tutorial', x: 8, y: 0, w: 4, h: 5},
+        {i: 'draw', x: 0, y: 1, w: 8, h: 1},
+        {i: 'settings', x: 0, y: 0, w: 4, h: 3},
         {i: 'status', x: 4, y: -2, w: 4, h: 1},
-        {i: 'notation', x: 0, y: -4, w: 4, h: 4},
+        {i: 'notation', x: 0, y: -3, w: 4, h: 3},
         {i: 'view', x: 4, y: -1, w: 4, h: 1},
         {i: 'submit', x: 8, y: -1, w: 4, h: 1},
       ],
       xs: [
-        {i: 'menu', x: 0, y: 0, w: 4, h: 1},
-        {i: 'clock', x: 4, y: 0, w: 4, h: 1},
-        {i: 'analyze', x: 4, y: 0, w: 4, h: 1},
-        {i: 'tutorial', x: 8, y: 0, w: 4, h: 4},
-        {i: 'draw', x: 0, y: 1, w: 4, h: 1},
-        {i: 'settings', x: 0, y: 1, w: 4, h: 3},
+        {i: 'menu', x: 0, y: 0, w: 8, h: 1},
+        {i: 'clock', x: 8, y: 0, w: 4, h: 1},
+        {i: 'analyze', x: 0, y: -4, w: 4, h: 1},
+        {i: 'tutorial', x: 8, y: 0, w: 4, h: 5},
+        {i: 'draw', x: 0, y: 1, w: 8, h: 1},
+        {i: 'settings', x: 0, y: 0, w: 4, h: 3},
         {i: 'status', x: 4, y: -2, w: 4, h: 1},
-        {i: 'notation', x: 0, y: -4, w: 4, h: 4},
+        {i: 'notation', x: 0, y: -3, w: 4, h: 3},
         {i: 'view', x: 4, y: -1, w: 4, h: 1},
         {i: 'submit', x: 8, y: -1, w: 4, h: 1},
       ],
       xxs: [
-        {i: 'menu', x: 0, y: 0, w: 4, h: 1},
-        {i: 'clock', x: 4, y: 0, w: 4, h: 1},
-        {i: 'analyze', x: 4, y: 0, w: 4, h: 1},
-        {i: 'tutorial', x: 8, y: 0, w: 4, h: 4},
-        {i: 'draw', x: 0, y: 1, w: 4, h: 1},
-        {i: 'settings', x: 0, y: 1, w: 4, h: 3},
-        {i: 'status', x: 4, y: -2, w: 4, h: 1},
-        {i: 'notation', x: 0, y: -4, w: 4, h: 4},
-        {i: 'view', x: 4, y: -1, w: 4, h: 1},
-        {i: 'submit', x: 8, y: -1, w: 4, h: 1},
+        {i: 'menu', x: 0, y: 0, w: 12, h: 1},
+        {i: 'clock', x: 7, y: -4, w: 5, h: 1},
+        {i: 'analyze', x: 0, y: -4, w: 7, h: 1},
+        {i: 'tutorial', x: 0, y: 1, w: 12, h: 3},
+        {i: 'draw', x: 0, y: 1, w: 12, h: 1},
+        {i: 'settings', x: 0, y: 2, w: 6, h: 3},
+        {i: 'status', x: 7, y: -3, w: 5, h: 1},
+        {i: 'notation', x: 0, y: -3, w: 7, h: 3},
+        {i: 'view', x: 7, y: -2, w: 5, h: 1},
+        {i: 'submit', x: 7, y: -1, w: 5, h: 1},
       ],
     };
   }
@@ -282,6 +282,9 @@ export default class Layout extends React.Component {
         layouts: this.layouts()
       });
     });
+    //TODO fix layout so below is not needed
+    //Trigger resize
+    window.setTimeout(() => { this.context.emit('layoutResizeUpdate'); }, 250);
   }
   componentDidUpdate(prevProps, prevState) {
     if(
@@ -313,6 +316,15 @@ export default class Layout extends React.Component {
     //Stop listening to external layout changes
     if(typeof this.layoutListener === 'function') { this.layoutListener(); }
   }
+  printL(l) {
+    var layout = this.transformLayout({ c: l }, false).c;
+    var res = '';
+    for(var i = 0;i < layout.length;i++) {
+      var c = layout[i];
+      res += `{i: '${c.i}', x: ${c.x}, y: ${c.y}, w: ${c.w}, h: ${c.h}},\n`;
+    }
+    console.log(res);
+  }
   render() {
     return (
       <div
@@ -331,6 +343,7 @@ export default class Layout extends React.Component {
           width={this.state.triggerUpdate > 1 ? this.state.width * 0.999 : this.state.width}
           autoSize
           preventCollision
+          draggableCancel='.RGL-Drag-Cancel'
           breakpoints={{lg: 1200, md: 990, sm: 760, xs: 480, xxs: 0}}
           cols={{lg: 12, md: 12, sm: 12, xs: 12, xxs: 12}}
           compactType={null}
@@ -340,6 +353,7 @@ export default class Layout extends React.Component {
           onLayoutChange={(l,ls) => {
             //Detecting if layout change was from user resizing
             if(Date.now() - this.lastUserChange < 100) {
+              this.context.emit('layoutResizeUpdate');
               if(this.state.wideMode) {
                 store.set('player/layouts/wide', this.transformLayout(ls, false));
               }
@@ -363,17 +377,15 @@ export default class Layout extends React.Component {
           onDragStop={(l) => {
             //TODO: Use for layout adjustments
             console.info('Current Layout:');
-            console.table(this.transformLayout({ c: l }, false).c, ['i','x','y','w','h']);
+            this.printL(l);
 
-            this.context.emit('layoutDragUpdate');
             this.lastUserChange = Date.now();
           }}
           onResizeStop={(l) => {
             //TODO: Use for layout adjustments
             console.info('Current Layout:');
-            console.table(this.transformLayout({ c: l }, false).c, ['i','x','y','w','h']);
+            this.printL(l);
 
-            this.context.emit('layoutResizeUpdate');
             this.lastUserChange = Date.now();
           }}
         >

@@ -202,7 +202,7 @@ export default class Menu extends React.Component {
     }
     return (
       <Box p={1} style={{ height: '100%' }}>
-        <ButtonGroup fullWidth style={{ height: '100%' }}>
+        <ButtonGroup className='RGL-Drag-Cancel' fullWidth style={{ height: '100%' }}>
           {availableButtons}
         </ButtonGroup>
       </Box>

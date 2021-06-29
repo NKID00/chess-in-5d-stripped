@@ -60,7 +60,7 @@ export default class SettingsMenu extends React.Component {
   render() {
     return (
       <Box p={1} ref={this.rootRef} style={{ height: '100%' }}>
-        <Grid container spacing={1} style={{ overflowY: 'auto', height: '100%' }}>
+        <Grid container spacing={1} className='RGL-Drag-Cancel' style={{ overflowY: 'auto', height: '100%' }}>
           <Grid item xs={12}>
             <FormControl variant='outlined' fullWidth>
               <InputLabel><Trans>Show Board</Trans></InputLabel>

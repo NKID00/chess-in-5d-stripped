@@ -12,8 +12,8 @@ import ZoomOutMapIcon from '@material-ui/icons/ZoomOutMap';
 
 import EmitterContext from 'EmitterContext';
 
-const widthThreshold = 300;
-const heightThreshold = 75;
+const widthThreshold = 400;
+const heightThreshold = 50;
 export default class ViewMenu extends React.Component {
   static contextType = EmitterContext;
   rootRef = React.createRef();
@@ -44,7 +44,7 @@ export default class ViewMenu extends React.Component {
   render() {
     return (
       <Box p={1} ref={this.rootRef} style={{ height: '100%' }}>
-        <ButtonGroup fullWidth style={{ height: '100%' }}>
+        <ButtonGroup className='RGL-Drag-Cancel' fullWidth style={{ height: '100%' }}>
           <Button
             startIcon={this.state.showText ? <SwapVertIcon /> : null}
             onClick={() => {

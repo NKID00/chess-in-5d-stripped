@@ -121,7 +121,7 @@ export default class Notation extends React.Component {
   render() {
     return (
       <Box p={1} style={{ height: '100%' }}>
-        <Box style={{ overflowY: 'auto', height: '100%' }}>
+        <Box className='RGL-Drag-Cancel' style={{ overflowY: 'auto', height: '100%' }}>
           <Grid container spacing={0}>
             {this.state.notationArr.map((e, i) => {
               return (

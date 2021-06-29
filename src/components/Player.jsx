@@ -124,8 +124,8 @@ export default class Player extends React.Component {
     var layoutComponents = [];
     layoutComponents.push(
       <Card key='menu'
-        onMouseEnter={() => { crConfig.set({ app: { interactive: false } }, this.context) }}
-        onMouseLeave={() => { crConfig.set({ app: { interactive: true } }, this.context) }}
+        onMouseEnter={() => { crConfig.set({ app: { interactive: false } }, this.context); }}
+        onMouseLeave={() => { crConfig.set({ app: { interactive: true } }, this.context); }}
       >
         <Menu
           {...this.state.menu}
@@ -147,8 +147,8 @@ export default class Player extends React.Component {
     if(this.state.menu.showClock && this.props.allowClock) {
       layoutComponents.push(
         <Card key='clock'
-          onMouseEnter={() => { crConfig.set({ app: { interactive: false } }, this.context) }}
-          onMouseLeave={() => { crConfig.set({ app: { interactive: true } }, this.context) }}
+          onMouseEnter={() => { crConfig.set({ app: { interactive: false } }, this.context); }}
+          onMouseLeave={() => { crConfig.set({ app: { interactive: true } }, this.context); }}
         >
           <Clock
             whiteTimeLeft={this.props.clockWhiteTimeLeft}
@@ -163,8 +163,8 @@ export default class Player extends React.Component {
     if(this.state.menu.showAnalyze && this.props.allowTutorial) {
       layoutComponents.push(
         <Card key='analyze'
-          onMouseEnter={() => { crConfig.set({ app: { interactive: false } }, this.context) }}
-          onMouseLeave={() => { crConfig.set({ app: { interactive: true } }, this.context) }}
+          onMouseEnter={() => { crConfig.set({ app: { interactive: false } }, this.context); }}
+          onMouseLeave={() => { crConfig.set({ app: { interactive: true } }, this.context); }}
         >
           <AnalyzeMenu
             onPreviousAction={this.props.analyzeOnPreviousAction}
@@ -178,8 +178,8 @@ export default class Player extends React.Component {
     if(this.state.menu.showTutorial && this.props.allowTutorial) {
       layoutComponents.push(
         <Card key='tutorial'
-          onMouseEnter={() => { crConfig.set({ app: { interactive: false } }, this.context) }}
-          onMouseLeave={() => { crConfig.set({ app: { interactive: true } }, this.context) }}
+          onMouseEnter={() => { crConfig.set({ app: { interactive: false } }, this.context); }}
+          onMouseLeave={() => { crConfig.set({ app: { interactive: true } }, this.context); }}
         >
           <TutorialMenu
             displayText={this.props.tutorialDisplayText}
@@ -194,12 +194,13 @@ export default class Player extends React.Component {
     if(this.state.menu.showDraw) {
       layoutComponents.push(
         <Card key='draw'
-          onMouseEnter={() => { crConfig.set({ app: { interactive: false } }, this.context) }}
-          onMouseLeave={() => { crConfig.set({ app: { interactive: true } }, this.context) }}
+          onMouseEnter={() => { crConfig.set({ app: { interactive: false } }, this.context); }}
+          onMouseLeave={() => { crConfig.set({ app: { interactive: true } }, this.context); }}
         >
           <DrawMenu
             onEnableDraw={(type, middle) => {
               if(this.chessRendererRef.current) {
+                this.chessRendererRef.current.chessRenderer.render.customArrowManager.disableEraseMode();
                 this.chessRendererRef.current.chessRenderer.render.customArrowManager.enableCustomArrowMode(type, middle);
               }
             }}
@@ -210,6 +211,7 @@ export default class Player extends React.Component {
             }}
             onEnableErase={() => {
               if(this.chessRendererRef.current) {
+                this.chessRendererRef.current.chessRenderer.render.customArrowManager.disableCustomArrowMode();
                 this.chessRendererRef.current.chessRenderer.render.customArrowManager.enableEraseMode();
               }
             }}
@@ -235,8 +237,8 @@ export default class Player extends React.Component {
     if(this.state.menu.showSettings) {
       layoutComponents.push(
         <Card key='settings'
-          onMouseEnter={() => { crConfig.set({ app: { interactive: false } }, this.context) }}
-          onMouseLeave={() => { crConfig.set({ app: { interactive: true } }, this.context) }}
+          onMouseEnter={() => { crConfig.set({ app: { interactive: false } }, this.context); }}
+          onMouseLeave={() => { crConfig.set({ app: { interactive: true } }, this.context); }}
         >
           <SettingsMenu />
         </Card>
@@ -245,8 +247,8 @@ export default class Player extends React.Component {
     if(this.state.menu.showNotation) {
       layoutComponents.push(
         <Card key='notation'
-          onMouseEnter={() => { crConfig.set({ app: { interactive: false } }, this.context) }}
-          onMouseLeave={() => { crConfig.set({ app: { interactive: true } }, this.context) }}
+          onMouseEnter={() => { crConfig.set({ app: { interactive: false } }, this.context); }}
+          onMouseLeave={() => { crConfig.set({ app: { interactive: true } }, this.context); }}
         >
           <Notation
             notation={this.props.notation}
@@ -259,8 +261,8 @@ export default class Player extends React.Component {
     if(this.state.menu.showStatus) {
       layoutComponents.push(
         <Card key='status'
-          onMouseEnter={() => { crConfig.set({ app: { interactive: false } }, this.context) }}
-          onMouseLeave={() => { crConfig.set({ app: { interactive: true } }, this.context) }}
+          onMouseEnter={() => { crConfig.set({ app: { interactive: false } }, this.context); }}
+          onMouseLeave={() => { crConfig.set({ app: { interactive: true } }, this.context); }}
         >
           <Status
             whitePlayerName={this.props.statusWhitePlayerName}
@@ -280,8 +282,8 @@ export default class Player extends React.Component {
     if(this.state.menu.showView) {
       layoutComponents.push(
         <Card key='view'
-          onMouseEnter={() => { crConfig.set({ app: { interactive: false } }, this.context) }}
-          onMouseLeave={() => { crConfig.set({ app: { interactive: true } }, this.context) }}
+          onMouseEnter={() => { crConfig.set({ app: { interactive: false } }, this.context); }}
+          onMouseLeave={() => { crConfig.set({ app: { interactive: true } }, this.context); }}
         >
           <ViewMenu
             onFlip={() => {
@@ -310,8 +312,8 @@ export default class Player extends React.Component {
     if(this.state.menu.showSubmit) {
       layoutComponents.push(
         <Card key='submit'
-          onMouseEnter={() => { crConfig.set({ app: { interactive: false } }, this.context) }}
-          onMouseLeave={() => { crConfig.set({ app: { interactive: true } }, this.context) }}
+          onMouseEnter={() => { crConfig.set({ app: { interactive: false } }, this.context); }}
+          onMouseLeave={() => { crConfig.set({ app: { interactive: true } }, this.context); }}
         >
           <SubmitMenu
             canUndo={this.props.submitCanUndo}
@@ -332,6 +334,11 @@ export default class Player extends React.Component {
         }}
       >
         <div
+          onTouchStart={() => { 
+            if(!crConfig.get().app.interactive) {
+              crConfig.set({ app: { interactive: true } }, this.context);
+            }
+          }}
           style={{
             position: 'absolute',
             top: 0,

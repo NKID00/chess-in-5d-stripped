@@ -35,6 +35,9 @@ export default class DrawMenu extends React.Component {
   componentWillUnmount() {
     //Stop listening to palette setting changes
     if(typeof this.paletteListener === 'function') { this.paletteListener(); }
+    if(typeof this.props.onDisableDraw === 'function') {
+      this.props.onDisableDraw();
+    }
   }
   render() {
     return (
@@ -42,6 +45,7 @@ export default class DrawMenu extends React.Component {
         <Grid container spacing={1} style={{ height: '100%' }}>
           <Grid item xs={2} style={{ height: '100%' }}>
             <Button
+              className='RGL-Drag-Cancel'
               fullWidth
               variant={this.state.middleMode ? 'contained' : 'outlined'}
               style={{ height: '100%' }}
@@ -57,7 +61,7 @@ export default class DrawMenu extends React.Component {
               <TimelineIcon />
             </Button>
           </Grid>
-          <Grid item xs={1} style={{ height: '100%' }}>
+          <Grid item xs={1} className='RGL-Drag-Cancel' style={{ height: '100%' }}>
             <Box
               className='borderBlink'
               animate={1}
@@ -82,7 +86,7 @@ export default class DrawMenu extends React.Component {
                   }
                 }
                 else {
-                  this.setState({ drawMode: true, drawType: 'custom1' });
+                  this.setState({ eraseMode: false, drawMode: true, drawType: 'custom1' });
                   if(typeof this.props.onEnableDraw === 'function') {
                     this.props.onEnableDraw('custom1', this.state.middleMode);
                   }
@@ -90,7 +94,7 @@ export default class DrawMenu extends React.Component {
               }}
             />
           </Grid>
-          <Grid item xs={1} style={{ height: '100%' }}>
+          <Grid item xs={1} className='RGL-Drag-Cancel' style={{ height: '100%' }}>
             <Box
               className='borderBlink'
               animate={1}
@@ -115,7 +119,7 @@ export default class DrawMenu extends React.Component {
                   }
                 }
                 else {
-                  this.setState({ drawMode: true, drawType: 'custom2' });
+                  this.setState({ eraseMode: false, drawMode: true, drawType: 'custom2' });
                   if(typeof this.props.onEnableDraw === 'function') {
                     this.props.onEnableDraw('custom2', this.state.middleMode);
                   }
@@ -123,7 +127,7 @@ export default class DrawMenu extends React.Component {
               }}
             />
           </Grid>
-          <Grid item xs={1} style={{ height: '100%' }}>
+          <Grid item xs={1} className='RGL-Drag-Cancel' style={{ height: '100%' }}>
             <Box
               className='borderBlink'
               animate={1}
@@ -148,7 +152,7 @@ export default class DrawMenu extends React.Component {
                   }
                 }
                 else {
-                  this.setState({ drawMode: true, drawType: 'custom3' });
+                  this.setState({ eraseMode: false, drawMode: true, drawType: 'custom3' });
                   if(typeof this.props.onEnableDraw === 'function') {
                     this.props.onEnableDraw('custom3', this.state.middleMode);
                   }
@@ -156,7 +160,7 @@ export default class DrawMenu extends React.Component {
               }}
             />
           </Grid>
-          <Grid item xs={1} style={{ height: '100%' }}>
+          <Grid item xs={1} className='RGL-Drag-Cancel' style={{ height: '100%' }}>
             <Box
               className='borderBlink'
               animate={1}
@@ -181,7 +185,7 @@ export default class DrawMenu extends React.Component {
                   }
                 }
                 else {
-                  this.setState({ drawMode: true, drawType: 'custom4' });
+                  this.setState({ eraseMode: false, drawMode: true, drawType: 'custom4' });
                   if(typeof this.props.onEnableDraw === 'function') {
                     this.props.onEnableDraw('custom4', this.state.middleMode);
                   }
@@ -190,7 +194,7 @@ export default class DrawMenu extends React.Component {
             />
           </Grid>
           <Grid item xs={6} style={{ height: '100%' }}>
-            <ButtonGroup fullWidth style={{ height: '100%' }}>
+            <ButtonGroup className='RGL-Drag-Cancel' fullWidth style={{ height: '100%' }}>
               <Button
                 onClick={() => {
                   if(typeof this.props.onUndo === 'function') {
@@ -204,13 +208,13 @@ export default class DrawMenu extends React.Component {
                 variant={this.state.eraseMode ? 'contained' : 'outlined'}
                 onClick={() => {
                   if(this.state.eraseMode) {
-                    this.setState({ eraseMode: false });
+                    this.setState({ eraseMode: false, drawMode: false });
                     if(typeof this.props.onDisableErase === 'function') {
                       this.props.onDisableErase();
                     }
                   }
                   else {
-                    this.setState({ eraseMode: true });
+                    this.setState({ eraseMode: true, drawMode: false });
                     if(typeof this.props.onEnableErase === 'function') {
                       this.props.onEnableErase();
                     }

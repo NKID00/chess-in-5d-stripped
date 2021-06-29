@@ -13,7 +13,7 @@ export default class AnalyzeMenu extends React.Component {
   render() {
     return (
       <Box p={1} style={{ height: '100%' }}>
-        <ButtonGroup fullWidth style={{ height: '100%' }}>
+        <ButtonGroup className='RGL-Drag-Cancel' fullWidth style={{ height: '100%' }}>
           <Button
             onClick={() => {
               if(typeof this.props.onPreviousAction === 'function') {

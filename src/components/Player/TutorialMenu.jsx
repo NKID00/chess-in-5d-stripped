@@ -47,7 +47,7 @@ export default class TutorialMenu extends React.Component {
   render() {
     return (
       <Box p={1} ref={this.rootRef} style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
-        <Box p={1} style={{ overflowY: 'auto', flex: 1 }}>
+        <Box p={1} className='RGL-Drag-Cancel' style={{ overflowY: 'auto', flex: 1 }}>
           <Markdown
             className='MuiTypography-root'
             components={{
@@ -70,7 +70,7 @@ export default class TutorialMenu extends React.Component {
           </Markdown>
         </Box>
         <Box pt={1} style={{ flexBasis: 'auto' }}>
-          <ButtonGroup fullWidth>
+          <ButtonGroup className='RGL-Drag-Cancel' fullWidth>
             <Button
               variant='contained'
               color='primary'

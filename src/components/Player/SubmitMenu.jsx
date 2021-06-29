@@ -43,7 +43,7 @@ export default class SubmitMenu extends React.Component {
   render() {
     return (
       <Box p={1} ref={this.rootRef} style={{ height: '100%' }}>
-        <ButtonGroup fullWidth style={{ height: '100%' }}>
+        <ButtonGroup className='RGL-Drag-Cancel' fullWidth style={{ height: '100%' }}>
           <Button
             disabled={!this.props.canUndo}
             startIcon={this.state.showText ? <UndoIcon /> : null}
