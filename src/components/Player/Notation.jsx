@@ -1,13 +1,13 @@
 import React from 'react';
 
-import { Trans } from '@lingui/macro';
+//import { Trans } from '@lingui/macro';
 
 import Box from '@material-ui/core/Box';
-import Button from '@material-ui/core/Button';
+//import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 
-import GetAppIcon from '@material-ui/icons/GetApp';
+//import GetAppIcon from '@material-ui/icons/GetApp';
 
 import NotationLine from 'components/Player/Notation/NotationLine';
 
@@ -122,40 +122,42 @@ export default class Notation extends React.Component {
     return (
       <Box p={1} style={{ height: '100%' }}>
         <Box className='RGL-Drag-Cancel' style={{ overflowY: 'auto', height: '100%' }}>
-          <Grid container spacing={0}>
-            {this.state.notationArr.map((e, i) => {
-              return (
-                <Grid key={i} item xs={12}>
-                  <NotationLine 
-                    notationLine={e}
-                    fontFamily={this.state.theme.extra.notation.fontFamily}
-                    fontSize={this.state.theme.extra.notation.fontSize}
-                    newPresentToken={this.state.config.notation.newPresentToken.show}
-                    newPresentTokenBackgroundColor={this.state.theme.extra.notation.newPresentToken.backgroundColor}
-                    newPresentTokenColor={this.state.theme.extra.notation.newPresentToken.color}
-                    newTimelineToken={this.state.config.notation.newTimelineToken.show}
-                    newTimelineTokenBackgroundColor={this.state.theme.extra.notation.newTimelineToken.backgroundColor}
-                    newTimelineTokenColor={this.state.theme.extra.notation.newTimelineToken.color}
-                    highlightNotationSegment={this.state.highlightNotationSegment}
-                    highlightSize={this.state.theme.extra.notation.highlight.size}
-                    highlightColor={this.state.theme.extra.notation.highlight.color}
-                    onClick={(str) => {
-                      var res = '';
-                      for(var j = 0;j < i && j < this.state.notationArr.length;j++) {
-                        res += this.state.notationArr[j] + '\n';
-                      }
-                      res += str;
-                      if(typeof this.props.onClick === 'function') {
-                        this.props.onClick(res.trim());
-                      }
-                    }}
-                  />
-                  {i + 1 < this.state.notationArr.length ? <Divider /> : <></>}
-                </Grid>
-              );
-            })}
-            <Grid item xs={12}>
-              <Box w={1} mb={1} />
+          <Box  style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+            <Grid container spacing={0} style={{ display: 'block', flex: 1 }}>
+              {this.state.notationArr.map((e, i) => {
+                return (
+                  <Grid key={i} item xs={12}>
+                    <NotationLine 
+                      notationLine={e}
+                      fontFamily={this.state.theme.extra.notation.fontFamily}
+                      fontSize={this.state.theme.extra.notation.fontSize}
+                      newPresentToken={this.state.config.notation.newPresentToken.show}
+                      newPresentTokenBackgroundColor={this.state.theme.extra.notation.newPresentToken.backgroundColor}
+                      newPresentTokenColor={this.state.theme.extra.notation.newPresentToken.color}
+                      newTimelineToken={this.state.config.notation.newTimelineToken.show}
+                      newTimelineTokenBackgroundColor={this.state.theme.extra.notation.newTimelineToken.backgroundColor}
+                      newTimelineTokenColor={this.state.theme.extra.notation.newTimelineToken.color}
+                      highlightNotationSegment={this.state.highlightNotationSegment}
+                      highlightSize={this.state.theme.extra.notation.highlight.size}
+                      highlightColor={this.state.theme.extra.notation.highlight.color}
+                      onClick={(str) => {
+                        var res = '';
+                        for(var j = 0;j < i && j < this.state.notationArr.length;j++) {
+                          res += this.state.notationArr[j] + '\n';
+                        }
+                        res += str;
+                        if(typeof this.props.onClick === 'function') {
+                          this.props.onClick(res.trim());
+                        }
+                      }}
+                    />
+                    {i + 1 < this.state.notationArr.length ? <Divider /> : <></>}
+                  </Grid>
+                );
+              })}
+            </Grid>
+            {/*TODO get export working
+            <Box w={1} mt={1} style={{ flexBasis: 'auto' }}>
               <Button
                 fullWidth
                 variant='contained'
@@ -167,10 +169,11 @@ export default class Notation extends React.Component {
                   }
                 }}
               >
-                <Trans>Export Game</Trans>
+                <Trans><s>Export Game</s> (WIP)</Trans>
               </Button>
-            </Grid>
-          </Grid>
+            </Box>
+            */}
+          </Box>
         </Box>
       </Box>
     );
