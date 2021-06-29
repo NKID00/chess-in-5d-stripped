@@ -17,7 +17,7 @@ import Link from '@material-ui/core/Link';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 
-import EmitterContext from 'EmitterContext';
+import EmitterContext from 'utils/EmitterContext';
 import * as authStore from 'state/auth';
 import * as settings from 'state/settings';
 import * as auth from 'network/auth';

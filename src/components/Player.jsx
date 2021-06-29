@@ -15,7 +15,7 @@ import SubmitMenu from 'components/Player/SubmitMenu';
 import TutorialMenu from 'components/Player/TutorialMenu';
 import ViewMenu from 'components/Player/ViewMenu';
 
-import EmitterContext from 'EmitterContext';
+import EmitterContext from 'utils/EmitterContext';
 import * as crConfig from 'state/config';
 
 /*
@@ -57,6 +57,7 @@ Analyze Props:
  - analyzeOnPreviousMove
  - analyzeOnNextAction
  - analyzeOnNextMove
+ - analyzeOnRestore
 
 Clock Props:
  - allowClock

@@ -15,7 +15,7 @@ import i18nInit from 'state/i18n';
 import ReactPWAInstallProvider from 'react-pwa-install';
 
 //App specific event and state management
-import EmitterContext from 'EmitterContext';
+import EmitterContext from 'utils/EmitterContext';
 import * as muiTheme from 'state/theme'
 import * as auth from 'network/auth';
 

@@ -14,7 +14,7 @@ import Grid from '@material-ui/core/Grid';
 import DesktopWindowsIcon from '@material-ui/icons/DesktopWindows';
 import PersonIcon from '@material-ui/icons/Person';
 
-import EmitterContext from 'EmitterContext';
+import EmitterContext from 'utils/EmitterContext';
 
 import 'components/Player/Blink.css';
 

@@ -13,7 +13,9 @@ import Typography from '@material-ui/core/Typography';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 
-import EmitterContext from 'EmitterContext';
+import EmitterContext from 'utils/EmitterContext';
+
+import * as PIXI from 'pixi.js';
 
 const widthThreshold = 300;
 const heightThreshold = 50;
@@ -47,7 +49,7 @@ export default class TutorialMenu extends React.Component {
   render() {
     return (
       <Box p={1} ref={this.rootRef} style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
-        <Box p={1} className='RGL-Drag-Cancel' style={{ overflowY: 'auto', flex: 1 }}>
+        <Box p={1} className={PIXI.utils.isMobile.any ? 'RGL-Drag-Cancel' : ''} style={{ overflowY: 'auto', flex: 1 }}>
           <Markdown
             className='MuiTypography-root'
             components={{
@@ -70,7 +72,7 @@ export default class TutorialMenu extends React.Component {
           </Markdown>
         </Box>
         <Box pt={1} style={{ flexBasis: 'auto' }}>
-          <ButtonGroup className='RGL-Drag-Cancel' fullWidth>
+          <ButtonGroup className={PIXI.utils.isMobile.any ? 'RGL-Drag-Cancel' : ''} fullWidth>
             <Button
               variant='contained'
               color='primary'

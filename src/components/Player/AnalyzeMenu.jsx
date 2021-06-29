@@ -4,16 +4,19 @@ import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 
-import SkipPreviousIcon from '@material-ui/icons/SkipPrevious';
-import SkipNextIcon from '@material-ui/icons/SkipNext';
-import FastRewindIcon from '@material-ui/icons/FastRewind';
 import FastForwardIcon from '@material-ui/icons/FastForward';
+import FastRewindIcon from '@material-ui/icons/FastRewind';
+import RestoreIcon from '@material-ui/icons/Restore';
+import SkipNextIcon from '@material-ui/icons/SkipNext';
+import SkipPreviousIcon from '@material-ui/icons/SkipPrevious';
+
+import * as PIXI from 'pixi.js';
 
 export default class AnalyzeMenu extends React.Component {
   render() {
     return (
       <Box p={1} style={{ height: '100%' }}>
-        <ButtonGroup className='RGL-Drag-Cancel' fullWidth style={{ height: '100%' }}>
+        <ButtonGroup className={PIXI.utils.isMobile.any ? 'RGL-Drag-Cancel' : ''} fullWidth style={{ height: '100%' }}>
           <Button
             onClick={() => {
               if(typeof this.props.onPreviousAction === 'function') {
@@ -31,6 +34,15 @@ export default class AnalyzeMenu extends React.Component {
             }}
           >
             <FastRewindIcon />
+          </Button>
+          <Button
+            onClick={() => {
+              if(typeof this.props.onRestore === 'function') {
+                this.props.onRestore();
+              }
+            }}
+          >
+            <RestoreIcon />
           </Button>
           <Button
             onClick={() => {

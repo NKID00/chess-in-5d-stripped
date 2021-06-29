@@ -31,7 +31,7 @@ import Status from 'components/Player/Status';
 import SubmitMenu from 'components/Player/SubmitMenu';
 import ViewMenu from 'components/Player/ViewMenu';
 
-import EmitterContext from 'EmitterContext';
+import EmitterContext from 'utils/EmitterContext';
 import * as muiTheme from 'state/theme';
 
 const deepmerge = require('deepmerge');

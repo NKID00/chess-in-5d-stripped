@@ -10,7 +10,9 @@ import SwapVertIcon from '@material-ui/icons/SwapVert';
 import SelectAllIcon from '@material-ui/icons/SelectAll';
 import ZoomOutMapIcon from '@material-ui/icons/ZoomOutMap';
 
-import EmitterContext from 'EmitterContext';
+import EmitterContext from 'utils/EmitterContext';
+
+import * as PIXI from 'pixi.js';
 
 const widthThreshold = 400;
 const heightThreshold = 50;
@@ -44,7 +46,7 @@ export default class ViewMenu extends React.Component {
   render() {
     return (
       <Box p={1} ref={this.rootRef} style={{ height: '100%' }}>
-        <ButtonGroup className='RGL-Drag-Cancel' fullWidth style={{ height: '100%' }}>
+        <ButtonGroup className={PIXI.utils.isMobile.any ? 'RGL-Drag-Cancel' : ''} fullWidth style={{ height: '100%' }}>
           <Button
             startIcon={this.state.showText ? <SwapVertIcon /> : null}
             onClick={() => {

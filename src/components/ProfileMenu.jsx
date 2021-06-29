@@ -13,7 +13,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 
 import UserAvatar from 'components/UserAvatar';
 
-import EmitterContext from 'EmitterContext';
+import EmitterContext from 'utils/EmitterContext';
 import * as auth from 'network/auth';
 
 class ProfileMenu extends React.Component {

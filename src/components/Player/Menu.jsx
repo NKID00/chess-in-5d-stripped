@@ -14,6 +14,8 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
 import YoutubeSearchedForIcon from '@material-ui/icons/YoutubeSearchedFor';
 
+import * as PIXI from 'pixi.js';
+
 const deepmerge = require('deepmerge');
 
 export default class Menu extends React.Component {
@@ -202,7 +204,7 @@ export default class Menu extends React.Component {
     }
     return (
       <Box p={1} style={{ height: '100%' }}>
-        <ButtonGroup className='RGL-Drag-Cancel' fullWidth style={{ height: '100%' }}>
+        <ButtonGroup className={PIXI.utils.isMobile.any ? 'RGL-Drag-Cancel' : ''} fullWidth style={{ height: '100%' }}>
           {availableButtons}
         </ButtonGroup>
       </Box>

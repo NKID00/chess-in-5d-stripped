@@ -10,7 +10,7 @@ import { FaEraser } from 'react-icons/fa';
 import TimelineIcon from '@material-ui/icons/Timeline';
 import UndoIcon from '@material-ui/icons/Undo';
 
-import EmitterContext from 'EmitterContext';
+import EmitterContext from 'utils/EmitterContext';
 import * as crPalette from 'state/palette';
 
 import * as PIXI from 'pixi.js';
@@ -45,7 +45,7 @@ export default class DrawMenu extends React.Component {
         <Grid container spacing={1} style={{ height: '100%' }}>
           <Grid item xs={2} style={{ height: '100%' }}>
             <Button
-              className='RGL-Drag-Cancel'
+              className={PIXI.utils.isMobile.any ? 'RGL-Drag-Cancel' : ''}
               fullWidth
               variant={this.state.middleMode ? 'contained' : 'outlined'}
               style={{ height: '100%' }}
@@ -61,7 +61,7 @@ export default class DrawMenu extends React.Component {
               <TimelineIcon />
             </Button>
           </Grid>
-          <Grid item xs={1} className='RGL-Drag-Cancel' style={{ height: '100%' }}>
+          <Grid item xs={1} className={PIXI.utils.isMobile.any ? 'RGL-Drag-Cancel' : ''} style={{ height: '100%' }}>
             <Box
               className='borderBlink'
               animate={1}
@@ -94,7 +94,7 @@ export default class DrawMenu extends React.Component {
               }}
             />
           </Grid>
-          <Grid item xs={1} className='RGL-Drag-Cancel' style={{ height: '100%' }}>
+          <Grid item xs={1} className={PIXI.utils.isMobile.any ? 'RGL-Drag-Cancel' : ''} style={{ height: '100%' }}>
             <Box
               className='borderBlink'
               animate={1}
@@ -127,7 +127,7 @@ export default class DrawMenu extends React.Component {
               }}
             />
           </Grid>
-          <Grid item xs={1} className='RGL-Drag-Cancel' style={{ height: '100%' }}>
+          <Grid item xs={1} className={PIXI.utils.isMobile.any ? 'RGL-Drag-Cancel' : ''} style={{ height: '100%' }}>
             <Box
               className='borderBlink'
               animate={1}
@@ -160,7 +160,7 @@ export default class DrawMenu extends React.Component {
               }}
             />
           </Grid>
-          <Grid item xs={1} className='RGL-Drag-Cancel' style={{ height: '100%' }}>
+          <Grid item xs={1} className={PIXI.utils.isMobile.any ? 'RGL-Drag-Cancel' : ''} style={{ height: '100%' }}>
             <Box
               className='borderBlink'
               animate={1}
@@ -194,7 +194,7 @@ export default class DrawMenu extends React.Component {
             />
           </Grid>
           <Grid item xs={6} style={{ height: '100%' }}>
-            <ButtonGroup className='RGL-Drag-Cancel' fullWidth style={{ height: '100%' }}>
+            <ButtonGroup className={PIXI.utils.isMobile.any ? 'RGL-Drag-Cancel' : ''} fullWidth style={{ height: '100%' }}>
               <Button
                 onClick={() => {
                   if(typeof this.props.onUndo === 'function') {

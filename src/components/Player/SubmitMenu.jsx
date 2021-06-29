@@ -9,7 +9,9 @@ import ButtonGroup from '@material-ui/core/ButtonGroup';
 import SendIcon from '@material-ui/icons/Send';
 import UndoIcon from '@material-ui/icons/Undo';
 
-import EmitterContext from 'EmitterContext';
+import EmitterContext from 'utils/EmitterContext';
+
+import * as PIXI from 'pixi.js';
 
 const widthThreshold = 300;
 const heightThreshold = 50;
@@ -43,7 +45,7 @@ export default class SubmitMenu extends React.Component {
   render() {
     return (
       <Box p={1} ref={this.rootRef} style={{ height: '100%' }}>
-        <ButtonGroup className='RGL-Drag-Cancel' fullWidth style={{ height: '100%' }}>
+        <ButtonGroup className={PIXI.utils.isMobile.any ? 'RGL-Drag-Cancel' : ''} fullWidth style={{ height: '100%' }}>
           <Button
             disabled={!this.props.canUndo}
             startIcon={this.state.showText ? <UndoIcon /> : null}

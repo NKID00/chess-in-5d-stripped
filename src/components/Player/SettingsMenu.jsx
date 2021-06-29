@@ -11,8 +11,10 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 
-import EmitterContext from 'EmitterContext';
+import EmitterContext from 'utils/EmitterContext';
 import * as crConfig from 'state/config';
+
+import * as PIXI from 'pixi.js';
 
 const deepmerge = require('deepmerge');
 const deepequal = require('fast-deep-equal');
@@ -60,7 +62,7 @@ export default class SettingsMenu extends React.Component {
   render() {
     return (
       <Box p={1} ref={this.rootRef} style={{ height: '100%' }}>
-        <Grid container spacing={1} className='RGL-Drag-Cancel' style={{ overflowY: 'auto', height: '100%' }}>
+        <Grid container spacing={1} className={PIXI.utils.isMobile.any ? 'RGL-Drag-Cancel' : ''} style={{ overflowY: 'auto', height: '100%' }}>
           <Grid item xs={12}>
             <FormControl variant='outlined' fullWidth>
               <InputLabel><Trans>Show Board</Trans></InputLabel>

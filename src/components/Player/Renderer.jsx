@@ -5,7 +5,7 @@ import Box from '@material-ui/core/Box';
 import ChessRenderer from '5d-chess-renderer';
 import Chess from '5d-chess-js';
 
-import EmitterContext from 'EmitterContext';
+import EmitterContext from 'utils/EmitterContext';
 import * as crPalette from 'state/palette';
 import * as crConfig from 'state/config';
 import * as crTexture from 'state/texture';

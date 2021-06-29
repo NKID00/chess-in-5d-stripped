@@ -1,6 +1,6 @@
 import React from 'react';
 
-import EmitterContext from 'EmitterContext';
+import EmitterContext from 'utils/EmitterContext';
 import * as authStore from 'state/auth';
 import * as settings from 'state/settings';
 

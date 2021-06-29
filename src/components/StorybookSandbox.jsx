@@ -8,7 +8,7 @@ import { SnackbarProvider } from 'notistack';
 import { I18nProvider } from '@lingui/react';
 import { i18n } from '@lingui/core';
 
-import EmitterContext from 'EmitterContext';
+import EmitterContext from 'utils/EmitterContext';
 import * as muiTheme from 'state/theme';
 import i18nInit from 'state/i18n';
 

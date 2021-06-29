@@ -18,7 +18,7 @@ import TextField from '@material-ui/core/TextField';
 
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
-import EmitterContext from 'EmitterContext';
+import EmitterContext from 'utils/EmitterContext';
 import * as settings from 'state/settings';
 
 const deepmerge = require('deepmerge');
@@ -149,7 +149,7 @@ export default class General extends React.Component {
                 <Grid container spacing={2}>
                   <Grid item xs={12} sm={6} md={12} lg={6}>
                     <FormControlLabel
-                      label={<Trans>Eruda</Trans>}
+                      label={<Trans>Mobile Console</Trans>}
                       control={
                         <Checkbox
                           color='primary'

@@ -12,9 +12,11 @@ import Grid from '@material-ui/core/Grid';
 import NotationLine from 'components/Player/Notation/NotationLine';
 
 import HighlightNotationWorker from 'workerize-loader!components/Player/Notation/HighlightNotationWorker'; // eslint-disable-line import/no-webpack-loader-syntax
-import EmitterContext from 'EmitterContext';
+import EmitterContext from 'utils/EmitterContext';
 import * as crConfig from 'state/config';
 import * as muiTheme from 'state/theme';
+
+import * as PIXI from 'pixi.js';
 
 const highlightNotationWorker = new HighlightNotationWorker();
 
@@ -121,7 +123,7 @@ export default class Notation extends React.Component {
   render() {
     return (
       <Box p={1} style={{ height: '100%' }}>
-        <Box className='RGL-Drag-Cancel' style={{ overflowY: 'auto', height: '100%' }}>
+        <Box className={PIXI.utils.isMobile.any ? 'RGL-Drag-Cancel' : ''} style={{ overflowY: 'auto', height: '100%' }}>
           <Box  style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
             <Grid container spacing={0} style={{ display: 'block', flex: 1 }}>
               {this.state.notationArr.map((e, i) => {

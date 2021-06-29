@@ -3,7 +3,7 @@ import React from 'react';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 
-import EmitterContext from 'EmitterContext';
+import EmitterContext from 'utils/EmitterContext';
 import * as muiTheme from 'state/theme';
 
 import 'components/Player/Blink.css';

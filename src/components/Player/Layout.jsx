@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Responsive as ResponsiveGridLayout } from 'react-grid-layout';
 
-import EmitterContext from 'EmitterContext';
+import EmitterContext from 'utils/EmitterContext';
 
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';

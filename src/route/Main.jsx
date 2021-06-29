@@ -3,6 +3,7 @@ import { Switch, Route } from 'react-router-dom';
 
 import Paper from '@material-ui/core/Paper';
 
+import Analyze from 'route/Main/Analyze';
 import MainAppBar from 'route/MainAppBar';
 import Dashboard from 'route/Main/Dashboard';
 import Play from 'route/Main/Play';
@@ -38,6 +39,9 @@ export default class Main extends React.Component {
         <Switch>
           <Route exact path='/'>
             <Dashboard />
+          </Route>
+          <Route path='/analyze'>
+            <Analyze />
           </Route>
           <Route path='/play'>
             <Play />

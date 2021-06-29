@@ -18,7 +18,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ColorPicker from 'components/ColorPicker';
 import Renderer from 'components/Player/Renderer';
 
-import EmitterContext from 'EmitterContext';
+import EmitterContext from 'utils/EmitterContext';
 import * as crPalette from 'state/palette';
 
 const deepmerge = require('deepmerge');
