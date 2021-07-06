@@ -159,7 +159,7 @@ export default class Notation extends React.Component {
               })}
             </Grid>
             {/*TODO get export working
-            <Box w={1} mt={1} style={{ flexBasis: 'auto' }}>
+            <Box width={1} mt={1} style={{ flexBasis: 'auto' }}>
               <Button
                 fullWidth
                 variant='contained'

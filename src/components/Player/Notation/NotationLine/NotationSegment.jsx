@@ -43,7 +43,7 @@ export default class NotationSegment extends React.Component {
         }
       }
       return (
-        <Box h={1}>
+        <Box height={1}>
           <Tooltip
             arrow
             title={

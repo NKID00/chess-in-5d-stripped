@@ -13,8 +13,8 @@ export default class RawNotation extends React.Component {
     return (
       <Box m={2}>
         <Box
-          h={1}
-          w={1}
+          height={1}
+          width={1}
           sx={{
             borderWidth: '1px',
             borderColor: '#4f4f4f',

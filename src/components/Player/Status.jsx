@@ -161,7 +161,7 @@ export default class Status extends React.Component {
     }
     return (
       <Box p={1} pt={0} pb={this.state.wideMode ? 1 : 2} ref={this.rootRef} style={{ height: '100%' }}>
-        <Box w={1} mx={-1} mb={this.props.isLoading ? 0.5 : 1}>
+        <Box width={1} mx={-1} mb={this.props.isLoading ? 0.5 : 1}>
           {this.props.isLoading ?
             <LinearProgress />
           :
