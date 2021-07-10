@@ -52,7 +52,7 @@ class Register extends React.Component {
     });
     
     //Update state if settings store is changed
-    this.settingsListener = this.context.on('authUpdate', () => {
+    this.settingsListener = this.context.on('settingsUpdate', () => {
       this.setState({ serverUrl: settings.get().server });
     });
   }

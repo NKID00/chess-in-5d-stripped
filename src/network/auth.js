@@ -125,6 +125,22 @@ export const logout = (emitter) => {
   }, emitter);
 }
 
+export const recoverCode = async (email) => {
+  var serverUrl = settings.get().server;
+  await axios.post(`${serverUrl}/recoverCode`, {
+    email: email
+  });
+}
+
+export const recover = async (email, recoverCode, password) => {
+  var serverUrl = settings.get().server;
+  await axios.post(`${serverUrl}/recover`, {
+    email: email,
+    recoverCode: recoverCode,
+    password: password
+  });
+}
+
 export const xmpp = async (emitter) => {
   var storedAuth = authStore.get();
   var serverUrl = settings.get().server;

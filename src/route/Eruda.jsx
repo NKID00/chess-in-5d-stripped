@@ -20,7 +20,6 @@ export default class ConverseManager extends React.Component {
   }
   componentDidMount() {
     this.erudaInit();
-    console.log(eruda)
     //Update state if settings is changed
     this.settingsListener = this.context.on('settingsUpdate', () => {
       this.erudaInit();

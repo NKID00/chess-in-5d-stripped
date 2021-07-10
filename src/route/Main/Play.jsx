@@ -11,16 +11,19 @@ export default class Play extends React.Component {
   futureAvailableMoves = [];
   state = {};
   sync() {
-    var tmpChess = this.chess.copy();
-    tmpChess.skipDetection = true;
-    tmpChess.pass();
-    this.futureAvailableMoves = tmpChess.moves('object', false, false, false);
+    try {
+      var tmpChess = this.chess.copy();
+      tmpChess.skipDetection = true;
+      tmpChess.pass();
+      this.futureAvailableMoves = tmpChess.moves('object', false, false, false);
+    }
+    catch(err) {}
     this.setState({
       player: this.chess.player,
       board: this.chess.board,
       actionHistory: this.chess.actionHistory,
       moveBuffer: this.chess.moveBuffer,
-      checks: this.chess.checks,
+      checks: this.chess.checks(),
       availableMoves: this.chess.moves('object', false, false, false),
       pastAvailableMoves: [this.pastAvailableMoves,this.futureAvailableMoves].flat(),
       undoable: this.chess.undoable(),
@@ -29,6 +32,8 @@ export default class Play extends React.Component {
     });
   }
   componentDidMount() {
+    window.chess = this.chess;
+    window.sync = this.sync.bind(this);
     try {
       this.currAvailableMoves = this.chess.moves('object', false, false, false);
       this.sync();

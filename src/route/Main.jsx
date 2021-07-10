@@ -10,6 +10,7 @@ import Play from 'route/Main/Play';
 import Settings from 'route/Main/Settings';
 import Register from 'route/Main/Register';
 import Login from 'route/Main/Login';
+import RecoverCode from 'route/Main/RecoverCode';
 
 export default class Main extends React.Component {
   backgroundRef = React.createRef();
@@ -54,6 +55,9 @@ export default class Main extends React.Component {
           </Route>
           <Route path='/login'>
             <Login />
+          </Route>
+          <Route path='/recoverCode'>
+            <RecoverCode />
           </Route>
         </Switch>
       </>

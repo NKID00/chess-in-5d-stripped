@@ -7,7 +7,9 @@ const defaultConfig = {
   },
   arrow: {
     showSpatial: false,
-    showNonSpatial: false
+    spatialCurved: false,
+    showNonSpatial: true,
+    nonSpatialCurved: true,
   },
   board:{
     showGhost: true,
