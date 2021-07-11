@@ -316,15 +316,6 @@ export default class Layout extends React.Component {
     //Stop listening to external layout changes
     if(typeof this.layoutListener === 'function') { this.layoutListener(); }
   }
-  printL(l) {
-    var layout = this.transformLayout({ c: l }, false).c;
-    var res = '';
-    for(var i = 0;i < layout.length;i++) {
-      var c = layout[i];
-      res += `{i: '${c.i}', x: ${c.x}, y: ${c.y}, w: ${c.w}, h: ${c.h}},\n`;
-    }
-    console.log(res);
-  }
   render() {
     return (
       <div
@@ -375,17 +366,9 @@ export default class Layout extends React.Component {
             }
           }}
           onDragStop={(l) => {
-            //TODO: Use for layout adjustments
-            console.info('Current Layout:');
-            this.printL(l);
-
             this.lastUserChange = Date.now();
           }}
           onResizeStop={(l) => {
-            //TODO: Use for layout adjustments
-            console.info('Current Layout:');
-            this.printL(l);
-
             this.lastUserChange = Date.now();
           }}
         >

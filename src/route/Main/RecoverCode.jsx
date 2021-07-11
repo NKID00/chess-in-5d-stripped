@@ -1,6 +1,5 @@
 import React from 'react';
 import { withRouter } from 'react-router';
-//import { Link as RouterLink } from 'react-router-dom';
 import { withSnackbar } from 'notistack';
 
 import { Trans } from '@lingui/macro';
@@ -10,10 +9,11 @@ import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Container from '@material-ui/core/Container';
-//import Dialog from '@material-ui/core/Dialog';
-//import DialogActions from '@material-ui/core/DialogActions';
-//import DialogContent from '@material-ui/core/DialogContent';
-//import DialogContentText from '@material-ui/core/DialogContentText';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 import FormControl from '@material-ui/core/FormControl';
 import Grid from '@material-ui/core/Grid';
 import LinearProgress from '@material-ui/core/LinearProgress';
@@ -25,9 +25,6 @@ import EmitterContext from 'utils/EmitterContext';
 import * as authStore from 'state/auth';
 import * as settings from 'state/settings';
 import * as auth from 'network/auth';
-
-//const deepmerge = require('deepmerge');
-//const deepequal = require('fast-deep-equal');
 
 class RecoverCode extends React.Component {
   static contextType = EmitterContext;
@@ -54,22 +51,12 @@ class RecoverCode extends React.Component {
     if(typeof this.settingsListener === 'function') { this.settingsListener(); }
   }
   redirect() {
-    //Redirect to custom url if needed
-    var search = new URLSearchParams(this.props.location.search);
-    if(search.has('redirect')) {
-      this.props.history.replace(search.get('redirect'));
-    }
-    else {
-      this.props.history.replace('/');
-    }
+    this.props.history.replace('/recover');
   }
   async request() {
     this.setState({ loading: true });
     try {
       await auth.recoverCode(this.state.email, this.context);
-      this.setState({
-        showModal: true
-      });
     }
     catch(err) {
       //Describe error states and provide feedback
@@ -85,7 +72,7 @@ class RecoverCode extends React.Component {
         }
         else if(res.data.error.includes('Email is not a valid email!')) {
           this.setState({
-            emailError: res.data.error
+            emailError: 'Not a valid email!'
           });
         }
         else {
@@ -93,7 +80,7 @@ class RecoverCode extends React.Component {
         }
       }
     }
-    this.setState({ loading: false });
+    this.setState({ loading: false, showModal: true });
   }
   render() {
     return (
@@ -163,7 +150,7 @@ class RecoverCode extends React.Component {
                   <Grid item xs={6} md={3}>
                     <Button
                       fullWidth
-                      disabled={this.state.loading}
+                      disabled={this.state.loading || this.state.email.length <= 0}
                       variant='outlined'
                       onClick={this.request.bind(this)}
                     >
@@ -175,6 +162,34 @@ class RecoverCode extends React.Component {
             </Grid>
           </CardContent>
         </Card>
+        <Dialog
+          open={this.state.showModal}
+          maxWidth='lg'
+          fullWidth
+        >
+          <DialogTitle>
+            <Trans>Recover Password</Trans>
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              <Trans>
+                An email has been sent with the recovery code.
+              </Trans>
+              <br/>
+              <br/>
+              <Trans>
+                Look in the spam folder if it does not appear in the main folder.
+              </Trans>
+            </DialogContentText>
+            <DialogActions>
+              <Button
+                onClick={this.redirect.bind(this)}
+              >
+                <Trans>Continue</Trans>
+              </Button>
+            </DialogActions>
+          </DialogContent>
+        </Dialog>
       </Container>
     );
   }

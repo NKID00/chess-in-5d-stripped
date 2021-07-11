@@ -1,6 +1,6 @@
 import React from 'react';
 import { withRouter } from 'react-router';
-import { Link as RouterLink } from 'react-router-dom';
+
 import { withSnackbar } from 'notistack';
 
 import { Trans } from '@lingui/macro';
@@ -22,23 +22,35 @@ import * as authStore from 'state/auth';
 import * as settings from 'state/settings';
 import * as auth from 'network/auth';
 
-const deepmerge = require('deepmerge');
 const deepequal = require('fast-deep-equal');
 
-class Login extends React.Component {
+class Recover extends React.Component {
   static contextType = EmitterContext;
   state = {
     auth: authStore.get(),
     loading: false,
-    usernameError: '',
+    email: '',
+    emailError: '',
+    recoverCode: '',
+    recoverCodeError: '',
     password: '',
     passwordError: '',
+    password2: '',
+    password2Error: '',
     serverUrl: settings.get().server,
   }
   componentDidMount() {
     //Check if already logged in
     if(authStore.isLoggedIn()) {
       this.redirect();
+    }
+
+    //Insert code from search url
+    var search = new URLSearchParams(this.props.location.search);
+    if(search.has('code')) {
+      this.setState({
+        recoverCode: search.get('code')
+      });
     }
 
     //Update state if auth store is changed
@@ -48,7 +60,7 @@ class Login extends React.Component {
       }
       this.setState({ auth: authStore.get() });
     });
-    
+
     //Update state if settings store is changed
     this.settingsListener = this.context.on('settingsUpdate', () => {
       this.setState({ serverUrl: settings.get().server });
@@ -67,20 +79,23 @@ class Login extends React.Component {
     if(typeof this.settingsListener === 'function') { this.settingsListener(); }
   }
   redirect() {
-    //Redirect to custom url if needed
-    var search = new URLSearchParams(this.props.location.search);
-    if(search.has('redirect')) {
-      this.props.history.replace(search.get('redirect'));
-    }
-    else {
-      this.props.history.replace('/');
-    }
+    this.props.history.replace('/login');
   }
-  async login() {
+  async recover() {
     this.setState({ loading: true });
     try {
-      await auth.login(this.state.auth.username, this.state.password, this.context);
-      this.redirect();
+      if(this.state.password !== this.state.password2) {
+        this.setState({
+          emailError: '',
+          recoverCodeError: '',
+          passwordError: '',
+          password2Error: 'Passwords do not match!',
+        });
+      }
+      else {
+        await auth.recover(this.state.email, this.state.recoverCode, this.state.password, this.context);
+        this.redirect();
+      }
     }
     catch(err) {
       //Describe error states and provide feedback
@@ -88,23 +103,45 @@ class Login extends React.Component {
       if(typeof res === 'undefined') {
         this.props.enqueueSnackbar(err.message, {variant: 'error'});
       }
-      else if(res.status === 403) {
+      else if(res.status === 500) {
         if(res.data.error.includes('User not found!')) {
           this.setState({
-            usernameError: 'User does not exist!',
-            passwordError: ''
+            emailError: 'User with email does not exist!',
+            recoverCodeError: '',
+            passwordError: '',
+            passwordError2: ''
           });
         }
-        else if(res.data.error.includes('Username is invalid!')) {
+        else if(res.data.error.includes('Email is not a valid email!')) {
           this.setState({
-            usernameError: res.data.error,
-            passwordError: ''
+            emailError: 'Not a valid email!',
+            recoverCodeError: '',
+            passwordError: '',
+            passwordError2: ''
           });
         }
-        else if(res.data.error.includes('Password do not match!')) {
+        else if(res.data.error.includes('No recovery code received!')) {
           this.setState({
-            usernameError: '',
-            passwordError: 'Password incorrect!'
+            emailError: '',
+            recoverCodeError: 'No Recovery Code!',
+            passwordError: '',
+            passwordError2: ''
+          });
+        }
+        else if(res.data.error.includes('Recovery process has timed out!')) {
+          this.setState({
+            emailError: '',
+            recoverCodeError: 'Recovery code has expired!',
+            passwordError: '',
+            passwordError2: ''
+          });
+        }
+        else if(res.data.error.includes('Recovery code does not match!')) {
+          this.setState({
+            emailError: '',
+            recoverCodeError: 'Invalid Recovery Code!',
+            passwordError: '',
+            passwordError2: ''
           });
         }
         else {
@@ -128,7 +165,7 @@ class Login extends React.Component {
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <Typography variant='h4'>
-                  <Trans>Sign In</Trans>
+                  <Trans>Recover Password</Trans>
                 </Typography>
               </Grid>
               <Grid item xs={12}>
@@ -147,16 +184,21 @@ class Login extends React.Component {
                 <FormControl fullWidth>
                   <TextField
                     variant='outlined'
-                    autoComplete='username'
-                    autoFocus
+                    autoComplete='email'
+                    type='email'
                     required
-                    error={this.state.usernameError.length > 0}
-                    helperText={this.state.usernameError}
-                    value={this.state.auth.username}
+                    error={this.state.emailError.length > 0}
+                    helperText={this.state.emailError}
+                    value={this.state.email}
                     onChange={(event) => {
-                      this.setState(deepmerge(this.state, { auth: { username: event.target.value } }));
+                      this.setState({ email: event.target.value });
                     }}
-                    label={<Trans>Username</Trans>}
+                    onKeyPress={(event) => {
+                      if(event.key === 'Enter') {
+                        this.request();
+                      }
+                    }}
+                    label={<Trans>Email</Trans>}
                   />
                 </FormControl>
               </Grid>
@@ -164,7 +206,22 @@ class Login extends React.Component {
                 <FormControl fullWidth>
                   <TextField
                     variant='outlined'
-                    autoComplete='current-password'
+                    required
+                    error={this.state.recoverCodeError.length > 0}
+                    helperText={this.state.recoverCodeError}
+                    value={this.state.recoverCode}
+                    onChange={(event) => {
+                      this.setState({ recoverCode: event.target.value });
+                    }}
+                    label={<Trans>Recovery Code</Trans>}
+                  />
+                </FormControl>
+              </Grid>
+              <Grid item xs={12}>
+                <FormControl fullWidth>
+                  <TextField
+                    variant='outlined'
+                    autoComplete='new-password'
                     type='password'
                     required
                     error={this.state.passwordError.length > 0}
@@ -173,40 +230,26 @@ class Login extends React.Component {
                     onChange={(event) => {
                       this.setState({ password: event.target.value });
                     }}
-                    onKeyPress={(event) => {
-                      if(event.key === 'Enter') {
-                        this.login();
-                      }
-                    }}
                     label={<Trans>Password</Trans>}
                   />
                 </FormControl>
               </Grid>
               <Grid item xs={12}>
-                <Link component={RouterLink} 
-                  to={(() => {
-                    var search = new URLSearchParams(this.props.location.search);
-                    if(search.has('redirect')) {
-                      return `/recoverCode`;
-                    }
-                    return '/recoverCode';
-                  })()}
-                >
-                  <Trans>Forgot Password?</Trans>
-                </Link>
-              </Grid>
-              <Grid item xs={12}>
-                <Link component={RouterLink} 
-                  to={(() => {
-                    var search = new URLSearchParams(this.props.location.search);
-                    if(search.has('redirect')) {
-                      return `/register?redirect=${search.get('redirect')}`;
-                    }
-                    return '/register';
-                  })()}
-                >
-                  <Trans>Don't have an account?</Trans>
-                </Link>
+                <FormControl fullWidth>
+                  <TextField
+                    variant='outlined'
+                    autoComplete='new-password'
+                    type='password'
+                    required
+                    error={this.state.password2Error.length > 0}
+                    helperText={this.state.password2Error}
+                    value={this.state.password2}
+                    onChange={(event) => {
+                      this.setState({ password2: event.target.value });
+                    }}
+                    label={<Trans>Confirm Password</Trans>}
+                  />
+                </FormControl>
               </Grid>
               <Grid item xs={12}>
                 <Grid
@@ -225,11 +268,11 @@ class Login extends React.Component {
                   <Grid item xs={6} md={3}>
                     <Button
                       fullWidth
-                      disabled={this.state.loading}
                       variant='outlined'
-                      onClick={this.login.bind(this)}
+                      disabled={this.state.loading}
+                      onClick={this.recover.bind(this)}
                     >
-                      <Trans>Sign In</Trans>
+                      <Trans>Continue</Trans>
                     </Button>
                   </Grid>
                 </Grid>
@@ -242,4 +285,4 @@ class Login extends React.Component {
   }
 }
 
-export default withSnackbar(withRouter(Login));
+export default withSnackbar(withRouter(Recover));

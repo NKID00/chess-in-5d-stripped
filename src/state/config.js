@@ -10,6 +10,8 @@ const defaultConfig = {
     spatialCurved: false,
     showNonSpatial: true,
     nonSpatialCurved: true,
+    customCurved: false,
+    customMiddleCurved: true,
   },
   board:{
     showGhost: true,

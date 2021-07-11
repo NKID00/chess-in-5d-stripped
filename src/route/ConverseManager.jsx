@@ -3,6 +3,7 @@ import React from 'react';
 import EmitterContext from 'utils/EmitterContext';
 import * as authStore from 'state/auth';
 import * as settings from 'state/settings';
+import * as auth from 'network/auth';
 
 import 'converse.js/dist/converse.min';
 import 'converse.js/dist/converse.min.css';
@@ -40,7 +41,7 @@ export default class ConverseManager extends React.Component {
 
           //Logout if no longer logged in
           var logoutCheck = () => {
-            if(!authStore.isLoggedIn()) {
+            if(!authStore.isLoggedIn() || !settings.get().xmpp) {
               //Unbind listeners
               for(var i = 0;i < listeners.length;i++) {
                 try {
@@ -56,6 +57,7 @@ export default class ConverseManager extends React.Component {
           //Add listeners to listen for auth store updates
           listeners.push(emitter.on('authUpdate', enterRooms.bind(this)));
           listeners.push(emitter.on('authUpdate', logoutCheck.bind(this)));
+          listeners.push(emitter.on('settingsUpdate', logoutCheck.bind(this)));
           //Converse listeners
           _converse.api.listen.on('chatBoxClosed', enterRooms.bind(this));
 
@@ -66,10 +68,14 @@ export default class ConverseManager extends React.Component {
       }
     });
   }
-  converseInit() {
-    if(!this.isInitialized && authStore.isLoggedIn()) {
+  async converseInit() {
+    if(!this.isInitialized && authStore.isLoggedIn() && settings.get().xmpp) {
       var storedAuth = authStore.get();
-      if(storedAuth.xmpp !== null) {
+      if(storedAuth.xmpp === null) {
+        await auth.xmpp(this.context);
+        storedAuth = authStore.get();
+      }
+      if(!this.isInitialized && storedAuth.xmpp !== null) {
         this.conversePlugin();
         var wsUrl = `wss://${storedAuth.xmpp.domain}:5281/xmpp-websocket/`;
         if(window.location.protocol !== 'https:') {
@@ -103,8 +109,15 @@ export default class ConverseManager extends React.Component {
   }
   componentDidMount() {
     //Update state if auth store is changed
-    this.authListener = this.context.on('authUpdate', () => {
-      this.converseInit();
+    this.authListener = this.context.on('authUpdate', async () => {
+      await this.converseInit();
+      if(this.isInitialized && !authStore.isLoggedIn()) {
+        this.isInitialized = false;
+      }
+    });
+    //Update state if settings is changed
+    this.settingsListener = this.context.on('settingsUpdate', async () => {
+      await this.converseInit();
       if(this.isInitialized && !authStore.isLoggedIn()) {
         this.isInitialized = false;
       }
@@ -114,6 +127,8 @@ export default class ConverseManager extends React.Component {
   componentWillUnmount() {
     //Stop listening to auth store changes
     if(typeof this.authListener === 'function') { this.authListener(); }
+    //Stop listening to settings changes
+    if(typeof this.settingsListener === 'function') { this.settingsListener(); }
   }
   render() {
     return (

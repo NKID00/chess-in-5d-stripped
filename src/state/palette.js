@@ -7,9 +7,11 @@ const defaultPalette = {
     lightRectangle: 0xE2E5F7,
     lightStripeBlack: 0xBCB6CE,
     lightStripeWhite: 0xE5EEF6,
+    lightStripePast: 0xdddddd,
     darkRectangle: 0xCED4F1,
     darkStripeBlack: 0xAFA3BD,
     darkStripeWhite: 0xDDE5F4,
+    darkStripePast: 0xbbbbbb,
   },
   board: {
     whiteBorder: 0xdddddd,
@@ -33,8 +35,8 @@ const defaultPalette = {
     shadow: 0x000000,
   },
   square: {
-    white: 0xaaaaaa,
-    black: 0x555555,
+    white: 0xbababa,
+    black: 0x868686,
   },
   arrow: {
     move: 0xd3a026,

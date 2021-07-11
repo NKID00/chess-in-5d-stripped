@@ -91,6 +91,20 @@ export default class General extends React.Component {
                       />
                     </FormControl>
                   </Grid>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
+                    <FormControlLabel
+                      label={<Trans>Chat</Trans>}
+                      control={
+                        <Checkbox
+                          color='primary'
+                          checked={this.state.settings.xmpp}
+                          onChange={(e) => { 
+                            this.setState(deepmerge(this.state, { settings: { xmpp: e.target.checked } }));
+                          }}
+                        />
+                      }
+                    />
+                  </Grid>
                 </Grid>
               </AccordionDetails>
             </Accordion>

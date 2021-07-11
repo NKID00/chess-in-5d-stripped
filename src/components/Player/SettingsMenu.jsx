@@ -161,7 +161,7 @@ export default class SettingsMenu extends React.Component {
           */}
           <Grid item xs={this.state.wideMode ? 6 : 12}>
             <FormControlLabel
-              label={<Trans>Show Ghost Boards</Trans>}
+              label={<Trans>Show Future Boards</Trans>}
               control={
                 <Checkbox
                   color='primary'

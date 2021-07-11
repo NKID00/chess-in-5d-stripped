@@ -18,6 +18,8 @@ import ViewMenu from 'components/Player/ViewMenu';
 import EmitterContext from 'utils/EmitterContext';
 import * as crConfig from 'state/config';
 
+const deepequal = require('fast-deep-equal');
+
 /*
 Basic Props:
  - board
@@ -117,6 +119,11 @@ export default class Player extends React.Component {
     this.resize();
     this.resizeListener = this.resize.bind(this);
     window.addEventListener('resize', this.resizeListener);
+  }
+  componentDidUpdate(prevProps, prevState) {
+    if(!deepequal(prevState.menu, this.state.menu)) {
+      window.setTimeout(() => { this.context.emit('layoutResizeUpdate'); }, 250);
+    }
   }
   componentWillUnmount() {
     window.removeEventListener('resize', this.resizeListener);
