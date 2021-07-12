@@ -3,7 +3,14 @@ const store = require('store');
 
 const defaultConfig = {
   app: {
+    forceCanvas: false,
     interactive: true,
+  },
+  fps: {
+    show: false,
+    fpsTextOptions: {
+      fontSize: 16
+    }
   },
   arrow: {
     showSpatial: false,
@@ -53,4 +60,11 @@ export const get = () => {
     return deepmerge(defaultConfig, storedConfig);
   }
   return defaultConfig;
+}
+
+export const reset = (emitter = null) => {
+  store.remove('palette');
+  if(emitter !== null) {
+    emitter.emit('configUpdate');
+  }
 }

@@ -183,6 +183,15 @@ export default class Palette extends React.Component {
                     />
                   </Grid>
                   <Grid item xs={12} sm={6} md={12} lg={6}>
+                    <Typography variant='body1'><Trans>Light Rectangle - Past Stripe Color</Trans></Typography>
+                    <ColorPicker
+                      color={this.state.palette.background.lightStripePast}
+                      onChange={throttle(1000, (hex) => {
+                        this.setState(deepmerge(this.state, { palette: { background: { lightStripePast: hex } } }));
+                      })}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
                     <Typography variant='body1'><Trans>Dark Rectangle - Black Stripe Color</Trans></Typography>
                     <ColorPicker
                       color={this.state.palette.background.darkStripeBlack}
@@ -197,6 +206,15 @@ export default class Palette extends React.Component {
                       color={this.state.palette.background.darkStripeWhite}
                       onChange={throttle(1000, (hex) => {
                         this.setState(deepmerge(this.state, { palette: { background: { darkStripeWhite: hex } } }));
+                      })}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
+                    <Typography variant='body1'><Trans>Dark Rectangle - Past Stripe Color</Trans></Typography>
+                    <ColorPicker
+                      color={this.state.palette.background.darkStripePast}
+                      onChange={throttle(1000, (hex) => {
+                        this.setState(deepmerge(this.state, { palette: { background: { darkStripePast: hex } } }));
                       })}
                     />
                   </Grid>

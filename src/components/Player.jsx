@@ -3,6 +3,7 @@ import React from 'react';
 import Card from '@material-ui/core/Card';
 
 import AnalyzeMenu from 'components/Player/AnalyzeMenu';
+import Audio from 'components/Player/Audio';
 import Clock from 'components/Player/Clock';
 import DrawMenu from 'components/Player/DrawMenu';
 import Layout from 'components/Player/Layout';
@@ -381,6 +382,11 @@ export default class Player extends React.Component {
         >
           {layoutComponents}
         </Layout>
+        <Audio
+          actionHistory={this.props.actionHistory}
+          moveBuffer={this.props.moveBuffer}
+          isEnd={this.props.statusIsCheckmate || this.props.statusIsStalemate}
+        />
       </div>
     );
   }
