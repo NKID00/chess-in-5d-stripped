@@ -3,10 +3,15 @@ const store = require('store');
 const clearIDB = async () => {
   // Credit to @steobrien from https://gist.github.com/rmehner/b9a41d9f659c9b1c3340#gistcomment-2940034
   // Code taken from: https://gist.github.com/rmehner/b9a41d9f659c9b1c3340
-  const dbs = await window.indexedDB.databases();
-  dbs.forEach((db) => { 
-    window.indexedDB.deleteDatabase(db.name);
-  });
+  try {
+    const dbs = await window.indexedDB.databases();
+    dbs.forEach((db) => { 
+      window.indexedDB.deleteDatabase(db.name);
+    });
+  }
+  catch(err) {
+    console.error(err);
+  }
 }
 
 export const init = () => {

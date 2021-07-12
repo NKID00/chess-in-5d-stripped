@@ -152,8 +152,6 @@ export default class Gameplay extends React.Component {
                 </Grid>
               </AccordionDetails>
             </Accordion>
-          </Grid>
-          <Grid item xs={12} md={4}>
             <Accordion
               expanded={this.state.section === 'background' && this.state.showSection}
               onChange={() => {
@@ -169,20 +167,6 @@ export default class Gameplay extends React.Component {
               </AccordionSummary>
               <AccordionDetails>
                 <Grid container spacing={2}>
-                  <Grid item xs={12} sm={6} md={12} lg={6}>
-                    <FormControlLabel
-                      label={<Trans>Show Checkered Background</Trans>}
-                      control={
-                        <Checkbox
-                          color='primary'
-                          checked={this.state.config.background.showRectangle}
-                          onChange={(e) => { 
-                            this.setState(deepmerge(this.state, { config: { background: { showRectangle: e.target.checked } } }));
-                          }}
-                        />
-                      }
-                    />
-                  </Grid>
                   <Grid item xs={12} sm={6} md={12} lg={6}>
                     <FormControlLabel
                       label={<Trans>Show Blur</Trans>}
@@ -206,6 +190,137 @@ export default class Gameplay extends React.Component {
                           this.setState(deepmerge(this.state, { config: { background: { blurStrength: event.target.value } } }));
                         }}
                         label={<Trans>Blur Strength</Trans>}
+                      />
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
+                    <FormControlLabel
+                      label={<Trans>Show Striped</Trans>}
+                      control={
+                        <Checkbox
+                          color='primary'
+                          checked={this.state.config.background.striped}
+                          onChange={(e) => { 
+                            this.setState(deepmerge(this.state, { config: { background: { striped: e.target.checked } } }));
+                          }}
+                        />
+                      }
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
+                    <FormControl fullWidth>
+                      <TextField
+                        variant='outlined'
+                        value={this.state.config.background.stripeRatio}
+                        onChange={(event) => {
+                          this.setState(deepmerge(this.state, { config: { background: { stripeRatio: event.target.value } } }));
+                        }}
+                        label={<Trans>Strip Ratio</Trans>}
+                      />
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
+                    <FormControlLabel
+                      label={<Trans>Show Checkered Background</Trans>}
+                      control={
+                        <Checkbox
+                          color='primary'
+                          checked={this.state.config.background.showRectangle}
+                          onChange={(e) => { 
+                            this.setState(deepmerge(this.state, { config: { background: { showRectangle: e.target.checked } } }));
+                          }}
+                        />
+                      }
+                    />
+                  </Grid>
+                </Grid>
+              </AccordionDetails>
+            </Accordion>
+            <Accordion
+              disabled
+              expanded={this.state.section === 'board' && this.state.showSection}
+              onChange={() => {
+                this.setState({ section: 'board', showSection: this.state.section !== 'board' ? true : !this.state.showSection });
+              }}
+              elevation={0}
+              style={{ margin: 0 }}
+              square={false}
+              TransitionProps={{ unmountOnExit: true }}
+            >
+              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                <Typography variant='h5'><Trans>Board</Trans></Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Grid container spacing={2}>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
+                    <FormControl fullWidth>
+                      <TextField
+                        variant='outlined'
+                        value={this.state.config.board.marginWidth}
+                        onChange={(event) => {
+                          this.setState(deepmerge(this.state, { config: { board: { marginWidth: event.target.value } } }));
+                        }}
+                        label={<Trans>Board Margin Width</Trans>}
+                      />
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
+                    <FormControl fullWidth>
+                      <TextField
+                        variant='outlined'
+                        value={this.state.config.board.marginHeight}
+                        onChange={(event) => {
+                          this.setState(deepmerge(this.state, { config: { board: { marginHeight: event.target.value } } }));
+                        }}
+                        label={<Trans>Board Margin Height</Trans>}
+                      />
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
+                    <FormControl fullWidth>
+                      <TextField
+                        variant='outlined'
+                        value={this.state.config.board.borderWidth}
+                        onChange={(event) => {
+                          this.setState(deepmerge(this.state, { config: { board: { borderWidth: event.target.value } } }));
+                        }}
+                        label={<Trans>Board Border Width</Trans>}
+                      />
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
+                    <FormControl fullWidth>
+                      <TextField
+                        variant='outlined'
+                        value={this.state.config.board.borderHeight}
+                        onChange={(event) => {
+                          this.setState(deepmerge(this.state, { config: { board: { borderHeight: event.target.value } } }));
+                        }}
+                        label={<Trans>Board Border Height</Trans>}
+                      />
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
+                    <FormControl fullWidth>
+                      <TextField
+                        variant='outlined'
+                        value={this.state.config.board.borderRadius}
+                        onChange={(event) => {
+                          this.setState(deepmerge(this.state, { config: { board: { borderRadius: event.target.value } } }));
+                        }}
+                        label={<Trans>Board Border Radius</Trans>}
+                      />
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
+                    <FormControl fullWidth>
+                      <TextField
+                        variant='outlined'
+                        value={this.state.config.board.borderLineWidth}
+                        onChange={(event) => {
+                          this.setState(deepmerge(this.state, { config: { board: { borderLineWidth: event.target.value } } }));
+                        }}
+                        label={<Trans>Board Border Line Width</Trans>}
                       />
                     </FormControl>
                   </Grid>

@@ -12,20 +12,33 @@ const defaultConfig = {
       fontSize: 16
     }
   },
+  background: {
+    showRectangle: true,
+    blur: true,
+    blurStrength: 3,
+    striped: true,
+    stripeRatio: 0.333
+  },
+  board: {
+    marginWidth: 160,
+    marginHeight: 160,
+    borderWidth: 50,
+    borderHeight: 50,
+    borderRadius: 45,
+    borderLineWidth: 12,
+    showGhost: true,
+    showWhite: true,
+    showBlack: true,
+    flipTimeline: false,
+    flipRank: false
+  },
   arrow: {
     showSpatial: false,
     spatialCurved: false,
     showNonSpatial: true,
     nonSpatialCurved: true,
     customCurved: false,
-    customMiddleCurved: true,
-  },
-  board:{
-    showGhost: true,
-    showWhite: true,
-    showBlack: true,
-    flipTimeline: false,
-    flipRank: false
+    customMiddleCurved: true
   },
   boardLabel: {
     showTimeline: true,
@@ -63,7 +76,7 @@ export const get = () => {
 }
 
 export const reset = (emitter = null) => {
-  store.remove('palette');
+  store.remove('config');
   if(emitter !== null) {
     emitter.emit('configUpdate');
   }
