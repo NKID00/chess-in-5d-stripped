@@ -5,6 +5,7 @@ var collections = null;
 export const init = () => {
   if(collections === null) {
     collections = {
+      audio: Datastore.create({ filename: 'audio', autoload: true }),
       textures: Datastore.create({ filename: 'textures', autoload: true }),
       users: Datastore.create({ filename: 'users', autoload: true }),
       games: Datastore.create({ filename: 'games', autoload: true }),
