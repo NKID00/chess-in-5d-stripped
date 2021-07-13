@@ -7,11 +7,26 @@ import SubmitSound from 'assets/sound/submit.flac';
 var collections = require('state/db').init();
 
 const defaultAudio = {
-  background: AmbientSound,
-  end: EndSound,
-  move: PieceSound,
-  undo: ReverseSound,
-  submit: SubmitSound
+  background: {
+    audio: AmbientSound,
+    name: 'Default Ambient Sound'
+  },
+  end: {
+    audio: EndSound,
+    name: 'Default End Game Sound'
+  },
+  move: {
+    audio: PieceSound,
+    name: 'Default Move Sound'
+  },
+  undo: {
+    audio: ReverseSound,
+    name: 'Default Undo Sound'
+  },
+  submit: {
+    audio: SubmitSound,
+    name: 'Default Submit Sound'
+  }
 };
 
 window.defaultAudio = defaultAudio;
@@ -33,7 +48,8 @@ export const get = async (key) => {
   if(res === null) {
     res = {
       key: key,
-      audio: defaultAudio[key],
+      name: defaultAudio[key].name,
+      audio: defaultAudio[key].audio,
       volume: key === 'background' ? 0 : 1
     };
   }

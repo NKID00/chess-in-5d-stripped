@@ -28,14 +28,11 @@ export default class Renderer extends React.Component {
   }
   updateConfig() {
     //Update chessRenderer palette based on global palette settings and local palette props
-    var newConfig = { app: { interactive: true } };
+    var newConfig = deepmerge({ app: { interactive: true } }, crConfig.get());
     if(typeof this.props.config === 'object') {
-      newConfig = deepmerge(newConfig, crConfig.get());
-      newConfig = deepmerge(newConfig, this.props.config);
-      this.chessRenderer.global.config(newConfig);
+      this.chessRenderer.global.config(deepmerge(newConfig, this.props.config));
     }
     else {
-      newConfig = deepmerge(newConfig, crConfig.get());
       this.chessRenderer.global.config(newConfig);
     }
   }
@@ -120,6 +117,7 @@ export default class Renderer extends React.Component {
       deepmerge({ app: { interactive: false } }, crConfig.get()),
       crPalette.get()
     );
+    window.cr = this.chessRenderer;
     //Initialization
     this.chessRenderer.global.sync(new Chess());
     this.chessRenderer.zoom.present(true, 1.75);
@@ -148,11 +146,6 @@ export default class Renderer extends React.Component {
   }
   componentDidUpdate(prevProps) {
     //Look for changes in div width or height and update chessRenderer
-    if(prevProps.width !== this.props.width || prevProps.height !== this.props.height) {
-      if(this.rootRef.current !== null) {
-        //this.chessRenderer.global.attach(this.rootRef.current);
-      }
-    }
     //Check if palette props has changed
     if(!deepequal(prevProps.palette, this.props.palette)) {
       this.updatePalette();
