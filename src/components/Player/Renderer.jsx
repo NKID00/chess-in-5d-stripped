@@ -113,9 +113,6 @@ export default class Renderer extends React.Component {
       this.chessRenderer.global.pastAvailableMoves(this.props.pastAvailableMoves);
     }
   }
-  refreshAttach() {
-    this.chessRenderer.global.attach(this.rootRef.current);
-  }
   componentDidMount() {
     //Attach to div element
     this.chessRenderer = new ChessRenderer(
@@ -153,7 +150,7 @@ export default class Renderer extends React.Component {
     //Look for changes in div width or height and update chessRenderer
     if(prevProps.width !== this.props.width || prevProps.height !== this.props.height) {
       if(this.rootRef.current !== null) {
-        this.chessRenderer.global.attach(this.rootRef.current);
+        //this.chessRenderer.global.attach(this.rootRef.current);
       }
     }
     //Check if palette props has changed
