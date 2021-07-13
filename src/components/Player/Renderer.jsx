@@ -13,6 +13,40 @@ import * as crTexture from 'state/texture';
 const deepmerge = require('deepmerge');
 const deepequal = require('fast-deep-equal');
 
+const keylist = [
+  'highlight',
+  'whiteSquare',
+  'blackSquare',
+  'whiteBoardBorder',
+  'blackBoardBorder',
+  'checkBoardBorder',
+  'inactiveBoardBorder',
+  'blackP',
+  'blackW',
+  'blackB',
+  'blackN',
+  'blackR',
+  'blackS',
+  'blackQ',
+  'blackK',
+  'blackC',
+  'blackY',
+  'blackU',
+  'blackD',
+  'whiteP',
+  'whiteW',
+  'whiteB',
+  'whiteN',
+  'whiteR',
+  'whiteS',
+  'whiteQ',
+  'whiteK',
+  'whiteC',
+  'whiteY',
+  'whiteU',
+  'whiteD'
+];
+
 export default class Renderer extends React.Component {
   static contextType = EmitterContext;
   rootRef = React.createRef();
@@ -37,43 +71,11 @@ export default class Renderer extends React.Component {
     }
   }
   async updateTexture() {
-    var keylist = [
-      'highlight',
-      'whiteSquare',
-      'blackSquare',
-      'whiteBoardBorder',
-      'blackBoardBorder',
-      'checkBoardBorder',
-      'inactiveBoardBorder',
-      'blackP',
-      'blackW',
-      'blackB',
-      'blackN',
-      'blackR',
-      'blackS',
-      'blackQ',
-      'blackK',
-      'blackC',
-      'blackY',
-      'blackU',
-      'blackD',
-      'whiteP',
-      'whiteW',
-      'whiteB',
-      'whiteN',
-      'whiteR',
-      'whiteS',
-      'whiteQ',
-      'whiteK',
-      'whiteC',
-      'whiteY',
-      'whiteU',
-      'whiteD'
-    ];
     for(var i = 0;i < keylist.length;i++) {
       var currentKey = keylist[i];
       var currentTexture = await crTexture.get(currentKey);
       if(currentTexture !== null) {
+        console.log(currentTexture)
         this.chessRenderer.global.texture(currentKey, currentTexture);
       }
     }

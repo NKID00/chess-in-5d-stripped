@@ -1,14 +1,19 @@
 var collections = require('state/db').init();
 
-export const set = async (key, texture, emitter = null) => {
+export const set = async (key, name, texture, emitter = null) => {
   var newTexture = {
     key: key,
+    name: name,
     texture: texture
   };
   await collections.textures.update({ key: key }, { $set: newTexture }, { upsert: true });
   if(emitter !== null) {
     emitter.emit('textureUpdate');
   }
+}
+
+export const remove = async (key, emitter = null) => {
+  await collections.textures.remove({ key: key }, { multi: true });
 }
 
 export const get = async (key) => {
