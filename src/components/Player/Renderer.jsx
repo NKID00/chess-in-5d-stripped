@@ -75,8 +75,7 @@ export default class Renderer extends React.Component {
       var currentKey = keylist[i];
       var currentTexture = await crTexture.get(currentKey);
       if(currentTexture !== null) {
-        console.log(currentTexture)
-        this.chessRenderer.global.texture(currentKey, currentTexture);
+        this.chessRenderer.global.texture(currentKey, currentTexture.texture);
       }
     }
   }
