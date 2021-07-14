@@ -116,10 +116,18 @@ export default class Player extends React.Component {
       });
     }
   }
+  startRendererInteraction() {
+    crConfig.set({ app: { interactive: true } }, this.context);
+  }
   componentDidMount() {
     this.resize();
     this.resizeListener = this.resize.bind(this);
+    this.startRendererInteractionListener = this.startRendererInteraction.bind(this);
     window.addEventListener('resize', this.resizeListener);
+    window.addEventListener('focus', this.startRendererInteractionListener);
+    if(this.rootRef.current) {
+      this.rootRef.current.addEventListener('mouseenter', this.startRendererInteractionListener);
+    }
   }
   componentDidUpdate(prevProps, prevState) {
     if(!deepequal(prevState.menu, this.state.menu)) {
@@ -128,6 +136,10 @@ export default class Player extends React.Component {
   }
   componentWillUnmount() {
     window.removeEventListener('resize', this.resizeListener);
+    window.removeEventListener('focus', this.startRendererInteractionListener);
+    if(this.rootRef.current) {
+      this.rootRef.current.removeEventListener('mouseenter', this.startRendererInteractionListener);
+    }
   }
   render() {
     var layoutComponents = [];

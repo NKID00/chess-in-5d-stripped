@@ -981,7 +981,13 @@ export class PieceSetList extends React.Component {
           label={<Trans>Piece Set</Trans>}
         >
           <MenuItem value='default'>
-            <i><Trans>Default</Trans></i>
+            <Box display='flex'>
+              <img alt='White Knight Piece' src={defaultWN} style={{ height: 40 }} />
+              <img alt='Black Knight Piece' src={defaultBR} style={{ height: 40 }} />
+              <Box ml={1} mt='auto' mb='auto' alignItems='center'>
+                <i><Trans>Default</Trans></i>
+              </Box>
+            </Box>
           </MenuItem>
           <MenuItem value='california'>
             <Box display='flex'>
@@ -1118,6 +1124,7 @@ export class PieceSetList extends React.Component {
               </Box>
             </Box>
           </MenuItem>
+          {/* TODO Add piece palette option to allow tinting pieces
           <MenuItem value='mono'>
             <Box display='flex'>
               <img alt='Knight Piece' src={monoN} style={{ height: 40 }} />
@@ -1127,6 +1134,7 @@ export class PieceSetList extends React.Component {
               </Box>
             </Box>
           </MenuItem>
+          */}
           <MenuItem value='pirouetti'>
             <Box display='flex'>
               <img alt='White Knight Piece' src={pirouettiWN} style={{ height: 40 }} />

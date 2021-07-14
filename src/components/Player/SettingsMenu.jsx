@@ -62,8 +62,9 @@ export default class SettingsMenu extends React.Component {
   render() {
     return (
       <Box p={1} ref={this.rootRef} style={{ height: '100%' }}>
-        <Grid container spacing={1} className={PIXI.utils.isMobile.any ? 'RGL-Drag-Cancel' : ''} style={{ overflowY: 'auto', height: '100%' }}>
+        <Grid container spacing={2} className={PIXI.utils.isMobile.any ? 'RGL-Drag-Cancel' : ''} style={{ overflowY: 'auto', height: '100%' }}>
           <Grid item xs={12}>
+            <Box mt={1} />
             <FormControl variant='outlined' fullWidth>
               <InputLabel><Trans>Show Board</Trans></InputLabel>
               <Select

@@ -4,12 +4,12 @@ const store = require('store');
 const defaultConfig = {
   app: {
     forceCanvas: false,
-    interactive: true,
+    interactive: true,            //Controlled by game
   },
   fps: {
     show: false,
     fpsTextOptions: {
-      fontSize: 16
+      fontSize: 16,
     }
   },
   background: {
@@ -17,48 +17,74 @@ const defaultConfig = {
     blur: true,
     blurStrength: 3,
     striped: true,
-    stripeRatio: 0.333
+    stripeRatio: 0.333,
+    expandDuration: 350,
   },
   board: {
+    showGhost: true,              //Controlled by in game settings menu
+    showWhite: true,              //Controlled by in game settings menu
+    showBlack: true,              //Controlled by in game settings menu
+    flipTimeline: false,          //Controlled by in game settings menu
+    flipRank: false,              //Controlled by in game settings menu
+    flipFile: false,              //Controlled by in game settings menu
     marginWidth: 160,
     marginHeight: 160,
     borderWidth: 50,
     borderHeight: 50,
     borderRadius: 45,
     borderLineWidth: 12,
-    showGhost: true,
-    showWhite: true,
-    showBlack: true,
-    flipTimeline: false,
-    flipRank: false,
     ghostAlpha: 0.4,
     showPresentBlink: true,
-  },
-  arrow: {
-    showSpatial: false,
-    spatialCurved: false,
-    showNonSpatial: true,
-    nonSpatialCurved: true,
-    customCurved: false,
-    customMiddleCurved: true
+    blinkDuration: 350,
+    fadeDuration: 450,
   },
   boardLabel: {
-    showTimeline: true,
-    showTurn: true,
-    showFile: true,
-    showRank: true
+    showTimeline: true,           //Controlled by in game settings menu
+    showTurn: true,               //Controlled by in game settings menu
+    showFile: true,               //Controlled by in game settings menu
+    showRank: true,               //Controlled by in game settings menu
+    fadeDuration: 250,
   },
-  notation: {
+  boardShadow: {
+    show: true,
+    offsetX: 40,
+    offsetY: 40,
+    alpha: 0.25,
+  },
+  arrow: {
+    showSpatial: false,           //Controlled by in game settings menu
+    showNonSpatial: true,         //Controlled by in game settings menu
+    size: 12,
+    headSize: 35,
+    midpointRadius: 11,
+    outlineSize: 22,
+    animateDuration: 650,
+    alpha: 0.6,
+    spatialCurved: false,
+    spatialSplitCurve: false,
+    spatialMiddle: false,
+    spatialRealEnd: false,
+    nonSpatialCurved: true,
+    nonSpatialSplitCurve: true,
+    nonSpatialMiddle: true,
+    nonSpatialRealEnd: true,
+    checkCurved: true,
+    customCurved: false,
+    customSplitCurved: true,
+    customMiddleCurved: true,
+    customMiddleSplitCurved: true,
+  },
+  notation: {                     //Not used in 5d-chess-renderer
     newPresentToken: {
-      show: true
+      show: true,
     },
     newTimelineToken: {
-      show: true
+      show: true,
     }
   },
-  extra: {
-    autoRecenter: false,
-    autoSubmit: false
+  extra: {                        //Not used in 5d-chess-renderer
+    autoRecenter: true,
+    autoSubmit: false,
   }
 };
 

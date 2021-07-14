@@ -235,6 +235,18 @@ export default class Gameplay extends React.Component {
                       }
                     />
                   </Grid>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
+                    <FormControl fullWidth>
+                      <TextField
+                        variant='outlined'
+                        value={this.state.config.background.expandDuration}
+                        onChange={(event) => {
+                          this.setState(deepmerge(this.state, { config: { background: { expandDuration: Number(event.target.value) } } }));
+                        }}
+                        label={<Trans>Expand Animation Duration (ms)</Trans>}
+                      />
+                    </FormControl>
+                  </Grid>
                 </Grid>
               </AccordionDetails>
             </Accordion>
@@ -350,6 +362,158 @@ export default class Gameplay extends React.Component {
                         />
                       }
                     />
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
+                    <FormControl fullWidth>
+                      <TextField
+                        variant='outlined'
+                        value={this.state.config.board.blinkDuration}
+                        onChange={(event) => {
+                          this.setState(deepmerge(this.state, { config: { board: { blinkDuration: Number(event.target.value) } } }));
+                        }}
+                        label={<Trans>Blinking Animation Cycle Duration (ms)</Trans>}
+                      />
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
+                    <FormControl fullWidth>
+                      <TextField
+                        variant='outlined'
+                        value={this.state.config.board.fadeDuration}
+                        onChange={(event) => {
+                          this.setState(deepmerge(this.state, { config: { board: { fadeDuration: Number(event.target.value) } } }));
+                        }}
+                        label={<Trans>Fade Animation Duration (ms)</Trans>}
+                      />
+                    </FormControl>
+                  </Grid>
+                </Grid>
+              </AccordionDetails>
+            </Accordion>
+            <Accordion
+              expanded={this.state.section === 'shadow' && this.state.showSection}
+              onChange={() => {
+                this.setState({ section: 'shadow', showSection: this.state.section !== 'shadow' ? true : !this.state.showSection });
+              }}
+              elevation={0}
+              style={{ margin: 0 }}
+              square={false}
+              TransitionProps={{ unmountOnExit: true }}
+            >
+              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                <Typography variant='h5'><Trans>Board Shadows</Trans></Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Grid container spacing={2}>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
+                    <FormControlLabel
+                      label={<Trans>Show Board Shadows</Trans>}
+                      control={
+                        <Checkbox
+                          color='primary'
+                          checked={this.state.config.boardShadow.show}
+                          onChange={(e) => { 
+                            this.setState(deepmerge(this.state, { config: { boardShadow: { show: e.target.checked } } }));
+                          }}
+                        />
+                      }
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
+                    <FormControl fullWidth>
+                      <TextField
+                        variant='outlined'
+                        value={this.state.config.boardShadow.offsetX}
+                        onChange={(event) => {
+                          this.setState(deepmerge(this.state, { config: { boardShadow: { offsetX: Number(event.target.value) } } }));
+                        }}
+                        label={<Trans>Offset X</Trans>}
+                      />
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
+                    <FormControl fullWidth>
+                      <TextField
+                        variant='outlined'
+                        value={this.state.config.boardShadow.offsetY}
+                        onChange={(event) => {
+                          this.setState(deepmerge(this.state, { config: { boardShadow: { offsetY: Number(event.target.value) } } }));
+                        }}
+                        label={<Trans>Offset Y</Trans>}
+                      />
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
+                    <FormControl fullWidth>
+                      <TextField
+                        variant='outlined'
+                        value={this.state.config.boardShadow.alpha}
+                        onChange={(event) => {
+                          this.setState(deepmerge(this.state, { config: { boardShadow: { alpha: Number(event.target.value) } } }));
+                        }}
+                        label={<Trans>Board Shadow Transparency</Trans>}
+                      />
+                    </FormControl>
+                  </Grid>
+                </Grid>
+              </AccordionDetails>
+            </Accordion>
+            <Accordion
+              expanded={this.state.section === 'label' && this.state.showSection}
+              onChange={() => {
+                this.setState({ section: 'label', showSection: this.state.section !== 'label' ? true : !this.state.showSection });
+              }}
+              elevation={0}
+              style={{ margin: 0 }}
+              square={false}
+              TransitionProps={{ unmountOnExit: true }}
+            >
+              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                <Typography variant='h5'><Trans>Labels</Trans></Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Grid container spacing={2}>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
+                    <FormControl fullWidth>
+                      <TextField
+                        variant='outlined'
+                        value={this.state.config.boardLabel.fadeDuration}
+                        onChange={(event) => {
+                          this.setState(deepmerge(this.state, { config: { boardLabel: { fadeDuration: Number(event.target.value) } } }));
+                        }}
+                        label={<Trans>Fade Animation Duration (ms)</Trans>}
+                      />
+                    </FormControl>
+                  </Grid>
+                </Grid>
+              </AccordionDetails>
+            </Accordion>
+            <Accordion
+              expanded={this.state.section === 'label' && this.state.showSection}
+              onChange={() => {
+                this.setState({ section: 'label', showSection: this.state.section !== 'label' ? true : !this.state.showSection });
+              }}
+              elevation={0}
+              style={{ margin: 0 }}
+              square={false}
+              TransitionProps={{ unmountOnExit: true }}
+            >
+              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                <Typography variant='h5'><Trans>Labels</Trans></Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Grid container spacing={2}>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
+                    <FormControl fullWidth>
+                      <TextField
+                        variant='outlined'
+                        value={this.state.config.boardLabel.fadeDuration}
+                        onChange={(event) => {
+                          this.setState(deepmerge(this.state, { config: { boardLabel: { fadeDuration: Number(event.target.value) } } }));
+                        }}
+                        label={<Trans>Fade Animation Duration (ms)</Trans>}
+                      />
+                    </FormControl>
                   </Grid>
                 </Grid>
               </AccordionDetails>

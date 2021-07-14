@@ -321,9 +321,9 @@ export default class Palette extends React.Component {
               </AccordionDetails>
             </Accordion>
             <Accordion
-              expanded={this.state.section === 'boardLabel' && this.state.showSection}
+              expanded={this.state.section === 'label' && this.state.showSection}
               onChange={() => {
-                this.setState({ section: 'boardLabel', showSection: this.state.section !== 'boardLabel' ? true : !this.state.showSection });
+                this.setState({ section: 'label', showSection: this.state.section !== 'label' ? true : !this.state.showSection });
               }}
               elevation={0}
               style={{ margin: 0 }}
@@ -331,7 +331,7 @@ export default class Palette extends React.Component {
               TransitionProps={{ unmountOnExit: true }}
             >
               <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                <Typography variant='h5'><Trans>Board Labels</Trans></Typography>
+                <Typography variant='h5'><Trans>Labels</Trans></Typography>
               </AccordionSummary>
               <AccordionDetails>
                 <Grid container spacing={2}>
