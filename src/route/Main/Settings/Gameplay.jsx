@@ -19,6 +19,7 @@ import TextField from '@material-ui/core/TextField';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 import Renderer from 'components/Player/Renderer';
+import { PieceSetList } from 'components/PieceLists';
 
 import EmitterContext from 'utils/EmitterContext';
 import * as crConfig from 'state/config';
@@ -237,7 +238,6 @@ export default class Gameplay extends React.Component {
               </AccordionDetails>
             </Accordion>
             <Accordion
-              disabled
               expanded={this.state.section === 'board' && this.state.showSection}
               onChange={() => {
                 this.setState({ section: 'board', showSection: this.state.section !== 'board' ? true : !this.state.showSection });
@@ -323,6 +323,27 @@ export default class Gameplay extends React.Component {
                         label={<Trans>Board Border Line Width</Trans>}
                       />
                     </FormControl>
+                  </Grid>
+                </Grid>
+              </AccordionDetails>
+            </Accordion>
+            <Accordion
+              expanded={this.state.section === 'piece' && this.state.showSection}
+              onChange={() => {
+                this.setState({ section: 'piece', showSection: this.state.section !== 'piece' ? true : !this.state.showSection });
+              }}
+              elevation={0}
+              style={{ margin: 0 }}
+              square={false}
+              TransitionProps={{ unmountOnExit: true }}
+            >
+              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                <Typography variant='h5'><Trans>Piece Sets</Trans></Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Grid container spacing={2}>
+                  <Grid item xs={12}>
+                    <PieceSetList emitter={this.context} />
                   </Grid>
                 </Grid>
               </AccordionDetails>

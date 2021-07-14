@@ -23,6 +23,19 @@ import californiaWP from 'assets/piece/california/wP.png';
 import californiaWQ from 'assets/piece/california/wQ.png';
 import californiaWR from 'assets/piece/california/wR.png';
 
+import cardinalBB from 'assets/piece/cardinal/bB.png';
+import cardinalBK from 'assets/piece/cardinal/bK.png';
+import cardinalBN from 'assets/piece/cardinal/bN.png';
+import cardinalBP from 'assets/piece/cardinal/bP.png';
+import cardinalBQ from 'assets/piece/cardinal/bQ.png';
+import cardinalBR from 'assets/piece/cardinal/bR.png';
+import cardinalWB from 'assets/piece/cardinal/wB.png';
+import cardinalWK from 'assets/piece/cardinal/wK.png';
+import cardinalWN from 'assets/piece/cardinal/wN.png';
+import cardinalWP from 'assets/piece/cardinal/wP.png';
+import cardinalWQ from 'assets/piece/cardinal/wQ.png';
+import cardinalWR from 'assets/piece/cardinal/wR.png';
+
 const keylist = [
   'blackP',
   'blackW',
@@ -115,6 +128,32 @@ export class PieceSetList extends React.Component {
         await crTexture.set('whiteU', 'california', californiaWN);
         await crTexture.set('whiteD', 'california', californiaWN);
       }
+      else if(this.state.pieceSet === 'cardinal') {
+        await crTexture.set('blackP', 'cardinal', cardinalBP);
+        await crTexture.set('blackW', 'cardinal', cardinalBP);
+        await crTexture.set('blackB', 'cardinal', cardinalBB);
+        await crTexture.set('blackN', 'cardinal', cardinalBN);
+        await crTexture.set('blackR', 'cardinal', cardinalBR);
+        await crTexture.set('blackS', 'cardinal', cardinalBQ);
+        await crTexture.set('blackQ', 'cardinal', cardinalBQ);
+        await crTexture.set('blackK', 'cardinal', cardinalBK);
+        await crTexture.set('blackC', 'cardinal', cardinalBK);
+        await crTexture.set('blackY', 'cardinal', cardinalBQ);
+        await crTexture.set('blackU', 'cardinal', cardinalBN);
+        await crTexture.set('blackD', 'cardinal', cardinalBN);
+        await crTexture.set('whiteP', 'cardinal', cardinalWP);
+        await crTexture.set('whiteW', 'cardinal', cardinalWP);
+        await crTexture.set('whiteB', 'cardinal', cardinalWB);
+        await crTexture.set('whiteN', 'cardinal', cardinalWN);
+        await crTexture.set('whiteR', 'cardinal', cardinalWR);
+        await crTexture.set('whiteS', 'cardinal', cardinalWQ);
+        await crTexture.set('whiteQ', 'cardinal', cardinalWQ);
+        await crTexture.set('whiteK', 'cardinal', cardinalWK);
+        await crTexture.set('whiteC', 'cardinal', cardinalWK);
+        await crTexture.set('whiteY', 'cardinal', cardinalWQ);
+        await crTexture.set('whiteU', 'cardinal', cardinalWN);
+        await crTexture.set('whiteD', 'cardinal', cardinalWN);
+      }
       if(this.props.emitter !== null) {
         this.props.emitter.emit('textureUpdate');
       }
@@ -146,10 +185,19 @@ export class PieceSetList extends React.Component {
           <MenuItem value='california'>
             <Box display='flex'>
               <Box mr={1} mt='auto' mb='auto' alignItems='center'>
-                <Trans>California</Trans>
+                California
               </Box>
-              <img src={californiaWN} style={{ height: 40 }} />
-              <img src={californiaBN} style={{ height: 40 }} />
+              <img alt='White Knight Piece' src={californiaWN} style={{ height: 40 }} />
+              <img alt='Black Knight Piece' src={californiaBN} style={{ height: 40 }} />
+            </Box>
+          </MenuItem>
+          <MenuItem value='cardinal'>
+            <Box display='flex'>
+              <Box mr={1} mt='auto' mb='auto' alignItems='center'>
+                Cardinal
+              </Box>
+              <img alt='White Knight Piece' src={cardinalWN} style={{ height: 40 }} />
+              <img alt='Black Knight Piece' src={cardinalBN} style={{ height: 40 }} />
             </Box>
           </MenuItem>
           <MenuItem disabled value='custom'>
