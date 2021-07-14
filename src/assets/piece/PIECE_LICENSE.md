@@ -4,6 +4,7 @@ src/assets/piece/california | [Jerry S.](https://sites.google.com/view/jerryches
 src/assets/piece/cardinal | sadsnake1 | [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/)
 src/assets/piece/cburnett | [Colin M.L. Burnett](https://en.wikipedia.org/wiki/User:Cburnett) | [GPLv2+](https://www.gnu.org/licenses/gpl-2.0.txt)
 src/assets/piece/chessnut | [Alexis Luengas](https://github.com/LexLuengas) | [Apache 2.0](https://github.com/LexLuengas/chessnut-pieces/blob/master/LICENSE.txt)
+src/assets/piece/default | [CrazyPenguin0111](https://gitlab.com/CrazyPenguin0111) | [BSD-3](https://spdx.org/licenses/BSD-3-Clause.html)
 src/assets/piece/dubrovny | sadsnake1 | [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/)
 src/assets/piece/fresca | sadsnake1 | [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/)
 src/assets/piece/gioco | sadsnake1 | [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/)

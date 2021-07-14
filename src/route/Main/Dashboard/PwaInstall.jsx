@@ -26,7 +26,7 @@ export default function PwaInstall() {
           <li><Trans>Play on mobile devices!</Trans></li>
         </ul>
       ),
-      description: (<Trans>Open source implementation of '5D Chess With Multiverse Time Travel'. Play the game of Chess In 5D here!</Trans>)
+      description: (<Trans>Chess across time and space! Open source implementation of '5D Chess With Multiverse Time Travel'. Play the game of Chess In 5D here!</Trans>)
     });
   }
 

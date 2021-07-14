@@ -19,7 +19,7 @@ import TextField from '@material-ui/core/TextField';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 import Renderer from 'components/Player/Renderer';
-import { PieceSetList } from 'components/PieceLists';
+import { PieceSetList, resetPieceSet } from 'components/PieceLists';
 
 import EmitterContext from 'utils/EmitterContext';
 import * as crConfig from 'state/config';
@@ -97,6 +97,7 @@ export default class Gameplay extends React.Component {
                   variant='outlined'
                   onClick={() =>{
                     crConfig.reset(this.context);
+                    resetPieceSet(this.context);
                     this.resetView();
                   }}
                   fullWidth
@@ -188,7 +189,7 @@ export default class Gameplay extends React.Component {
                         variant='outlined'
                         value={this.state.config.background.blurStrength}
                         onChange={(event) => {
-                          this.setState(deepmerge(this.state, { config: { background: { blurStrength: event.target.value } } }));
+                          this.setState(deepmerge(this.state, { config: { background: { blurStrength: Number(event.target.value) } } }));
                         }}
                         label={<Trans>Blur Strength</Trans>}
                       />
@@ -214,7 +215,7 @@ export default class Gameplay extends React.Component {
                         variant='outlined'
                         value={this.state.config.background.stripeRatio}
                         onChange={(event) => {
-                          this.setState(deepmerge(this.state, { config: { background: { stripeRatio: event.target.value } } }));
+                          this.setState(deepmerge(this.state, { config: { background: { stripeRatio: Number(event.target.value) } } }));
                         }}
                         label={<Trans>Strip Ratio</Trans>}
                       />
@@ -258,7 +259,7 @@ export default class Gameplay extends React.Component {
                         variant='outlined'
                         value={this.state.config.board.marginWidth}
                         onChange={(event) => {
-                          this.setState(deepmerge(this.state, { config: { board: { marginWidth: event.target.value } } }));
+                          this.setState(deepmerge(this.state, { config: { board: { marginWidth: Number(event.target.value) } } }));
                         }}
                         label={<Trans>Board Margin Width</Trans>}
                       />
@@ -270,7 +271,7 @@ export default class Gameplay extends React.Component {
                         variant='outlined'
                         value={this.state.config.board.marginHeight}
                         onChange={(event) => {
-                          this.setState(deepmerge(this.state, { config: { board: { marginHeight: event.target.value } } }));
+                          this.setState(deepmerge(this.state, { config: { board: { marginHeight: Number(event.target.value) } } }));
                         }}
                         label={<Trans>Board Margin Height</Trans>}
                       />
@@ -282,7 +283,7 @@ export default class Gameplay extends React.Component {
                         variant='outlined'
                         value={this.state.config.board.borderWidth}
                         onChange={(event) => {
-                          this.setState(deepmerge(this.state, { config: { board: { borderWidth: event.target.value } } }));
+                          this.setState(deepmerge(this.state, { config: { board: { borderWidth: Number(event.target.value) } } }));
                         }}
                         label={<Trans>Board Border Width</Trans>}
                       />
@@ -294,7 +295,7 @@ export default class Gameplay extends React.Component {
                         variant='outlined'
                         value={this.state.config.board.borderHeight}
                         onChange={(event) => {
-                          this.setState(deepmerge(this.state, { config: { board: { borderHeight: event.target.value } } }));
+                          this.setState(deepmerge(this.state, { config: { board: { borderHeight: Number(event.target.value) } } }));
                         }}
                         label={<Trans>Board Border Height</Trans>}
                       />
@@ -306,7 +307,7 @@ export default class Gameplay extends React.Component {
                         variant='outlined'
                         value={this.state.config.board.borderRadius}
                         onChange={(event) => {
-                          this.setState(deepmerge(this.state, { config: { board: { borderRadius: event.target.value } } }));
+                          this.setState(deepmerge(this.state, { config: { board: { borderRadius: Number(event.target.value) } } }));
                         }}
                         label={<Trans>Board Border Radius</Trans>}
                       />
@@ -318,11 +319,37 @@ export default class Gameplay extends React.Component {
                         variant='outlined'
                         value={this.state.config.board.borderLineWidth}
                         onChange={(event) => {
-                          this.setState(deepmerge(this.state, { config: { board: { borderLineWidth: event.target.value } } }));
+                          this.setState(deepmerge(this.state, { config: { board: { borderLineWidth: Number(event.target.value) } } }));
                         }}
                         label={<Trans>Board Border Line Width</Trans>}
                       />
                     </FormControl>
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
+                    <FormControl fullWidth>
+                      <TextField
+                        variant='outlined'
+                        value={this.state.config.board.ghostAlpha}
+                        onChange={(event) => {
+                          this.setState(deepmerge(this.state, { config: { board: { ghostAlpha: Number(event.target.value) } } }));
+                        }}
+                        label={<Trans>Future Board Transparency</Trans>}
+                      />
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
+                    <FormControlLabel
+                      label={<Trans>Show Blinking Border on Present Board</Trans>}
+                      control={
+                        <Checkbox
+                          color='primary'
+                          checked={this.state.config.board.showPresentBlink}
+                          onChange={(e) => { 
+                            this.setState(deepmerge(this.state, { config: { board: { showPresentBlink: e.target.checked } } }));
+                          }}
+                        />
+                      }
+                    />
                   </Grid>
                 </Grid>
               </AccordionDetails>

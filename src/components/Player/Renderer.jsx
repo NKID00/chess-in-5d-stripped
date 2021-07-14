@@ -77,9 +77,6 @@ export default class Renderer extends React.Component {
       if(currentTexture !== null) {
         this.chessRenderer.global.texture(currentKey, currentTexture.texture, true);
       }
-      else {
-        //this.chessRenderer.global.texture(currentKey, null, true);
-      }
     }
     this.chessRenderer.global.emitter.emit('textureUpdate');
   }
@@ -132,7 +129,7 @@ export default class Renderer extends React.Component {
         this.props.onMove(move);
       }
     });
-    //Listen for changes in palette and config settings
+    //Listen for changes in palette, config, and texture settings
     this.paletteListener = this.context.on('paletteUpdate', () => {
       this.updatePalette();
     });
@@ -163,7 +160,7 @@ export default class Renderer extends React.Component {
     this.updateRenderer();
   }
   componentWillUnmount() {
-    //Stop listening to palette and config setting changes
+    //Stop listening to palette, config, and texture changes
     if(typeof this.paletteListener === 'function') { this.paletteListener(); }
     if(typeof this.configListener === 'function') { this.configListener(); }
     if(typeof this.textureListener === 'function') { this.textureListener(); }
