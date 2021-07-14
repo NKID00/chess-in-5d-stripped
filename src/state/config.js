@@ -30,7 +30,9 @@ const defaultConfig = {
     showWhite: true,
     showBlack: true,
     flipTimeline: false,
-    flipRank: false
+    flipRank: false,
+    ghostAlpha: 0.4,
+    showPresentBlink: true,
   },
   arrow: {
     showSpatial: false,
