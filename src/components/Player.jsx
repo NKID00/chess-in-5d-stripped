@@ -136,10 +136,23 @@ export default class Player extends React.Component {
     if(!prevProps.submitCanSubmit && this.props.submitCanSubmit) {
       if(typeof this.props.submitOnSubmit === 'function') {
         //Auto submit functionality
-        var currentConfig = crConfig.get();
+        let currentConfig = crConfig.get();
         if(currentConfig.extra.autoSubmit) {
           this.props.submitOnSubmit();
         }
+      }
+    }
+    if(prevProps.statusWhiteActive !== this.props.statusWhiteActive) {
+      //Auto flip functionality
+      let currentConfig = crConfig.get();
+      if(currentConfig.extra.autoFlip) {
+        crConfig.set({
+          board: {
+            flipTimeline: !this.props.statusWhiteActive,
+            flipRank: !this.props.statusWhiteActive,
+            flipFile: !this.props.statusWhiteActive
+          }
+        }, this.context);
       }
     }
   }

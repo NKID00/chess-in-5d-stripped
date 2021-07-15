@@ -121,6 +121,7 @@ const defaultConfig = {
   },
   extra: {                        //Not used in 5d-chess-renderer
     autoRecenter: true,
+    autoFlip: true,
     autoSubmit: false,
   }
 };

@@ -344,7 +344,6 @@ export default class Layout extends React.Component {
           onLayoutChange={(l,ls) => {
             //Detecting if layout change was from user resizing
             if(Date.now() - this.lastUserChange < 100) {
-              this.context.emit('layoutResizeUpdate');
               if(this.state.wideMode) {
                 store.set('player/layouts/wide', this.transformLayout(ls, false));
               }
@@ -364,6 +363,7 @@ export default class Layout extends React.Component {
                 triggerUpdate: 0
               });
             }
+            this.context.emit('layoutResizeUpdate');
           }}
           onDragStop={(l) => {
             this.lastUserChange = Date.now();

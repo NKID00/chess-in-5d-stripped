@@ -169,6 +169,11 @@ export default class General extends React.Component {
                     </Typography>
                   </Grid>
                   <Grid item xs={12} sm={6} md={12} lg={6}>
+                    <Typography>
+                      <Trans>Build Type:</Trans>{` ${process.env.NODE_ENV.toUpperCase()}`}
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
                     <FormControlLabel
                       label={<Trans>Mobile Console</Trans>}
                       control={
