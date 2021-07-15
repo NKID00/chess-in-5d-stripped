@@ -1,15 +1,16 @@
 import React from 'react';
 
-//import { Trans } from '@lingui/macro';
+import { Trans } from '@lingui/macro';
 
 import Box from '@material-ui/core/Box';
-//import Button from '@material-ui/core/Button';
+import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 
-//import GetAppIcon from '@material-ui/icons/GetApp';
+import GetAppIcon from '@material-ui/icons/GetApp';
 
 import NotationLine from 'components/Player/Notation/NotationLine';
+import ExportNotation from 'components/Player/Notation/ExportNotation';
 
 import HighlightNotationWorker from 'workerize-loader!components/Player/Notation/HighlightNotationWorker'; // eslint-disable-line import/no-webpack-loader-syntax
 import EmitterContext from 'utils/EmitterContext';
@@ -23,6 +24,7 @@ const highlightNotationWorker = new HighlightNotationWorker();
 export default class Notation extends React.Component {
   static contextType = EmitterContext;
   state = {
+    openExportModal: false,
     config: crConfig.get(),
     theme: muiTheme.get(),
     notationArr: [],
@@ -158,25 +160,24 @@ export default class Notation extends React.Component {
                 );
               })}
             </Grid>
-            {/*TODO get export working
             <Box width={1} mt={1} style={{ flexBasis: 'auto' }}>
               <Button
                 fullWidth
                 variant='contained'
                 color='primary'
                 startIcon={<GetAppIcon />}
-                onClick={() => {
-                  if(typeof this.props.onExport === 'function') {
-                    this.props.onExport();
-                  }
-                }}
+                onClick={() => { this.setState({ openExportModal: true }); }}
               >
-                <Trans><s>Export Game</s> (WIP)</Trans>
+                <Trans>Export Game</Trans>
               </Button>
             </Box>
-            */}
           </Box>
         </Box>
+        <ExportNotation
+          notation={this.props.notation}
+          open={this.state.openExportModal}
+          onClose={() => { this.setState({ openExportModal: false }); }}
+        />
       </Box>
     );
   }

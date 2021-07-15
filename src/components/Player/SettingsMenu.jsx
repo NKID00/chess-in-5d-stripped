@@ -130,10 +130,9 @@ export default class SettingsMenu extends React.Component {
               </Select>
             </FormControl>
           </Grid>
-          {/* TODO make auto submit and auto recenter do something
           <Grid item xs={this.state.wideMode ? 6 : 12}>
             <FormControlLabel
-              label={<Trans><s>Automatic Recenter</s> (WIP)</Trans>}
+              label={<Trans>Automatic Recenter</Trans>}
               control={
                 <Checkbox
                   color='primary'
@@ -147,7 +146,7 @@ export default class SettingsMenu extends React.Component {
           </Grid>
           <Grid item xs={this.state.wideMode ? 6 : 12}>
             <FormControlLabel
-              label={<Trans><s>Automatic Submit</s> (WIP)</Trans>}
+              label={<Trans>Automatic Submit</Trans>}
               control={
                 <Checkbox
                   color='primary'
@@ -159,7 +158,6 @@ export default class SettingsMenu extends React.Component {
               }
             />
           </Grid>
-          */}
           <Grid item xs={this.state.wideMode ? 6 : 12}>
             <FormControlLabel
               label={<Trans>Show Future Boards</Trans>}

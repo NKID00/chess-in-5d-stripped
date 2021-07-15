@@ -87,7 +87,7 @@ export default class General extends React.Component {
                         variant='outlined'
                         value={this.state.settings.key}
                         onChange={(event) => {
-                          this.setState(deepmerge(this.state, { settings: { server: event.target.value } }));
+                          this.setState(deepmerge(this.state, { settings: { key: event.target.value } }));
                         }}
                         label={<Trans>Server Key</Trans>}
                       />
@@ -127,7 +127,7 @@ export default class General extends React.Component {
               </AccordionSummary>
               <AccordionDetails>
                 <Grid container spacing={2}>
-                  <Grid item xs={12} sm={6} md={12} lg={6}>
+                  <Grid item xs={12}>
                     <FormControl variant='outlined' fullWidth>
                       <InputLabel><Trans>Locale</Trans></InputLabel>
                       <Select

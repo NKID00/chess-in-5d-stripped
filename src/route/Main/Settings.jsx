@@ -48,7 +48,8 @@ class Settings extends React.Component {
                 }}
                 indicatorColor='primary'
                 textColor='primary'
-                variant='fullWidth'
+                variant='scrollable'
+                scrollButtons='auto'
                 selectionFollowsFocus
               >
                 <Tab value='general' label={<Trans>General</Trans>} />

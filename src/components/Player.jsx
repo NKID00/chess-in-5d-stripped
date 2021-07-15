@@ -133,12 +133,57 @@ export default class Player extends React.Component {
     if(!deepequal(prevState.menu, this.state.menu)) {
       window.setTimeout(() => { this.context.emit('layoutResizeUpdate'); }, 250);
     }
+    if(!prevProps.submitCanSubmit && this.props.submitCanSubmit) {
+      if(typeof this.props.submitOnSubmit === 'function') {
+        //Auto submit functionality
+        var currentConfig = crConfig.get();
+        if(currentConfig.extra.autoSubmit) {
+          this.props.submitOnSubmit();
+        }
+      }
+    }
   }
   componentWillUnmount() {
     window.removeEventListener('resize', this.resizeListener);
     window.removeEventListener('focus', this.startRendererInteractionListener);
     if(this.rootRef.current) {
       this.rootRef.current.removeEventListener('mouseenter', this.startRendererInteractionListener);
+    }
+  }
+  onMove(move) {
+    //Passthrough function for auto recenter
+    if(typeof this.props.onMove === 'function') {
+      this.props.onMove(move);
+      var currentConfig = crConfig.get();
+      if(currentConfig.extra.autoRecenter) {
+        window.setTimeout(() => {
+          this.chessRendererRef.current.chessRenderer.zoom.present(true, false);
+        }, 250);
+      }
+    }
+  }
+  onUndo() {
+    //Passthrough function for auto recenter
+    if(typeof this.props.submitOnUndo === 'function') {
+      this.props.submitOnUndo();
+      var currentConfig = crConfig.get();
+      if(currentConfig.extra.autoRecenter) {
+        window.setTimeout(() => {
+          this.chessRendererRef.current.chessRenderer.zoom.present(true, false);
+        }, 250);
+      }
+    }
+  }
+  onSubmit() {
+    //Passthrough function for auto recenter
+    if(typeof this.props.submitOnSubmit === 'function') {
+      this.props.submitOnSubmit();
+      var currentConfig = crConfig.get();
+      if(currentConfig.extra.autoRecenter) {
+        window.setTimeout(() => {
+          this.chessRendererRef.current.chessRenderer.zoom.present(true, false);
+        }, 250);
+      }
     }
   }
   render() {
@@ -340,8 +385,8 @@ export default class Player extends React.Component {
           <SubmitMenu
             canUndo={this.props.submitCanUndo}
             canSubmit={this.props.submitCanSubmit}
-            onUndo={this.props.submitOnUndo}
-            onSubmit={this.props.submitOnSubmit}
+            onUndo={this.onUndo.bind(this)}
+            onSubmit={this.onSubmit.bind(this)}
           />
         </Card>
       );
@@ -383,7 +428,7 @@ export default class Player extends React.Component {
             checks={this.props.checks}
             availableMoves={this.props.availableMoves}
             pastAvailableMoves={this.props.pastAvailableMoves}
-            onMove={this.props.onMove}
+            onMove={this.onMove.bind(this)}
           />
         </div>
         <Layout
@@ -400,8 +445,8 @@ export default class Player extends React.Component {
           isEnd={this.props.statusIsCheckmate || this.props.statusIsStalemate}
         />
         <Hotkeys
-          onUndo={this.props.submitCanUndo ? this.props.submitOnUndo : null}
-          onSubmit={this.props.submitCanSubmit ? this.props.submitOnSubmit : null}
+          onUndo={this.props.submitCanUndo ? this.onUndo.bind(this) : null}
+          onSubmit={this.props.submitCanSubmit ? this.onSubmit.bind(this) : null}
           onRestore={this.props.allowAnalyze ? this.props.analyzeOnRestore : null}
           onPreviousAction={this.props.allowAnalyze ? this.props.analyzeOnPreviousAction : null}
           onPreviousMove={this.props.allowAnalyze ? this.props.analyzeOnPreviousMove : null}
