@@ -51,6 +51,43 @@ const defaultConfig = {
     offsetY: 40,
     alpha: 0.25,
   },
+  promotion: {
+    borderHeight: 30,
+    borderWidth: 30,
+    borderRadius: 28,
+    borderLineWidth: 8,
+    fadeDuration: 150,
+  },
+  promotionShadow: {
+    show: true,
+    offsetX: 25,
+    offsetY: 25,
+    alpha: 0.25,
+  },
+  square: {
+    height: 100,
+    width: 100,
+    fadeDuration: 150,
+  },
+  piece: {
+    height: 90,
+    width: 90,
+    fadeDuration: 150,
+    roundPixel: true,
+  },
+  highlight: {
+    hoverAlpha: 0.4,
+    pastHoverAlpha: 0.2,
+    selectedAlpha: 0.6,
+    pastSelectedAlpha: 0.4,
+    fadeDuration: 75,
+  },
+  ripple: {
+    timelineDuration: 0,
+    turnDuration: 0,
+    rankDuration: 15,
+    fileDuration: 15,
+  },
   arrow: {
     showSpatial: false,           //Controlled by in game settings menu
     showNonSpatial: true,         //Controlled by in game settings menu

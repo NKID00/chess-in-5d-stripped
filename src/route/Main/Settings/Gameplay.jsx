@@ -13,6 +13,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Grid from '@material-ui/core/Grid';
+import Slider from '@material-ui/core/Slider';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 
@@ -338,16 +339,20 @@ export default class Gameplay extends React.Component {
                     </FormControl>
                   </Grid>
                   <Grid item xs={12} sm={6} md={12} lg={6}>
-                    <FormControl fullWidth>
-                      <TextField
-                        variant='outlined'
-                        value={this.state.config.board.ghostAlpha}
-                        onChange={(event) => {
-                          this.setState(deepmerge(this.state, { config: { board: { ghostAlpha: Number(event.target.value) } } }));
-                        }}
-                        label={<Trans>Future Board Transparency</Trans>}
-                      />
-                    </FormControl>
+                    <Typography>
+                      <Trans>Future Board Transparency</Trans>
+                    </Typography>
+                    <Slider
+                      color='primary'
+                      min={0}
+                      max={1}
+                      step={0.05}
+                      valueLabelDisplay='auto'
+                      value={this.state.config.board.ghostAlpha}
+                      onChange={(e, v) => { 
+                        this.setState(deepmerge(this.state, { config: { board: { ghostAlpha: v } } }));
+                      }}
+                    />
                   </Grid>
                   <Grid item xs={12} sm={6} md={12} lg={6}>
                     <FormControlLabel
@@ -387,24 +392,6 @@ export default class Gameplay extends React.Component {
                       />
                     </FormControl>
                   </Grid>
-                </Grid>
-              </AccordionDetails>
-            </Accordion>
-            <Accordion
-              expanded={this.state.section === 'shadow' && this.state.showSection}
-              onChange={() => {
-                this.setState({ section: 'shadow', showSection: this.state.section !== 'shadow' ? true : !this.state.showSection });
-              }}
-              elevation={0}
-              style={{ margin: 0 }}
-              square={false}
-              TransitionProps={{ unmountOnExit: true }}
-            >
-              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                <Typography variant='h5'><Trans>Board Shadows</Trans></Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <Grid container spacing={2}>
                   <Grid item xs={12} sm={6} md={12} lg={6}>
                     <FormControlLabel
                       label={<Trans>Show Board Shadows</Trans>}
@@ -427,7 +414,7 @@ export default class Gameplay extends React.Component {
                         onChange={(event) => {
                           this.setState(deepmerge(this.state, { config: { boardShadow: { offsetX: Number(event.target.value) } } }));
                         }}
-                        label={<Trans>Offset X</Trans>}
+                        label={<Trans>Board Shadow Offset X</Trans>}
                       />
                     </FormControl>
                   </Grid>
@@ -439,7 +426,53 @@ export default class Gameplay extends React.Component {
                         onChange={(event) => {
                           this.setState(deepmerge(this.state, { config: { boardShadow: { offsetY: Number(event.target.value) } } }));
                         }}
-                        label={<Trans>Offset Y</Trans>}
+                        label={<Trans>Board Shadow Offset Y</Trans>}
+                      />
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
+                    <Typography>
+                      <Trans>Board Shadow Transparency</Trans>
+                    </Typography>
+                    <Slider
+                      color='primary'
+                      min={0}
+                      max={1}
+                      step={0.05}
+                      valueLabelDisplay='auto'
+                      value={this.state.config.boardShadow.alpha}
+                      onChange={(e, v) => { 
+                        this.setState(deepmerge(this.state, { config: { boardShadow: { alpha: v } } }));
+                      }}
+                    />
+                  </Grid>
+                </Grid>
+              </AccordionDetails>
+            </Accordion>
+            <Accordion
+              expanded={this.state.section === 'promotion' && this.state.showSection}
+              onChange={() => {
+                this.setState({ section: 'promotion', showSection: this.state.section !== 'promotion' ? true : !this.state.showSection });
+              }}
+              elevation={0}
+              style={{ margin: 0 }}
+              square={false}
+              TransitionProps={{ unmountOnExit: true }}
+            >
+              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                <Typography variant='h5'><Trans>Promotion Menu</Trans></Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Grid container spacing={2}>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
+                    <FormControl fullWidth>
+                      <TextField
+                        variant='outlined'
+                        value={this.state.config.promotion.borderWidth}
+                        onChange={(event) => {
+                          this.setState(deepmerge(this.state, { config: { promotion: { borderWidth: Number(event.target.value) } } }));
+                        }}
+                        label={<Trans>Promotion Menu Border Width</Trans>}
                       />
                     </FormControl>
                   </Grid>
@@ -447,13 +480,103 @@ export default class Gameplay extends React.Component {
                     <FormControl fullWidth>
                       <TextField
                         variant='outlined'
-                        value={this.state.config.boardShadow.alpha}
+                        value={this.state.config.promotion.borderHeight}
                         onChange={(event) => {
-                          this.setState(deepmerge(this.state, { config: { boardShadow: { alpha: Number(event.target.value) } } }));
+                          this.setState(deepmerge(this.state, { config: { promotion: { borderHeight: Number(event.target.value) } } }));
                         }}
-                        label={<Trans>Board Shadow Transparency</Trans>}
+                        label={<Trans>Promotion Menu Border Height</Trans>}
                       />
                     </FormControl>
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
+                    <FormControl fullWidth>
+                      <TextField
+                        variant='outlined'
+                        value={this.state.config.promotion.borderRadius}
+                        onChange={(event) => {
+                          this.setState(deepmerge(this.state, { config: { promotion: { borderRadius: Number(event.target.value) } } }));
+                        }}
+                        label={<Trans>Promotion Menu Border Radius</Trans>}
+                      />
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
+                    <FormControl fullWidth>
+                      <TextField
+                        variant='outlined'
+                        value={this.state.config.promotion.borderLineWidth}
+                        onChange={(event) => {
+                          this.setState(deepmerge(this.state, { config: { promotion: { borderLineWidth: Number(event.target.value) } } }));
+                        }}
+                        label={<Trans>Promotion Menu Border Line Width</Trans>}
+                      />
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
+                    <FormControl fullWidth>
+                      <TextField
+                        variant='outlined'
+                        value={this.state.config.promotion.fadeDuration}
+                        onChange={(event) => {
+                          this.setState(deepmerge(this.state, { config: { promotion: { fadeDuration: Number(event.target.value) } } }));
+                        }}
+                        label={<Trans>Fade Animation Duration (ms)</Trans>}
+                      />
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
+                    <FormControlLabel
+                      label={<Trans>Show Promotion Menu Shadows</Trans>}
+                      control={
+                        <Checkbox
+                          color='primary'
+                          checked={this.state.config.promotionShadow.show}
+                          onChange={(e) => { 
+                            this.setState(deepmerge(this.state, { config: { promotionShadow: { show: e.target.checked } } }));
+                          }}
+                        />
+                      }
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
+                    <FormControl fullWidth>
+                      <TextField
+                        variant='outlined'
+                        value={this.state.config.promotionShadow.offsetX}
+                        onChange={(event) => {
+                          this.setState(deepmerge(this.state, { config: { promotionShadow: { offsetX: Number(event.target.value) } } }));
+                        }}
+                        label={<Trans>Promotion Menu Shadow Offset X</Trans>}
+                      />
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
+                    <FormControl fullWidth>
+                      <TextField
+                        variant='outlined'
+                        value={this.state.config.promotionShadow.offsetY}
+                        onChange={(event) => {
+                          this.setState(deepmerge(this.state, { config: { promotionShadow: { offsetY: Number(event.target.value) } } }));
+                        }}
+                        label={<Trans>Promotion Menu Shadow Offset Y</Trans>}
+                      />
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
+                    <Typography>
+                      <Trans>Promotion Menu Shadow Transparency</Trans>
+                    </Typography>
+                    <Slider
+                      color='primary'
+                      min={0}
+                      max={1}
+                      step={0.05}
+                      valueLabelDisplay='auto'
+                      value={this.state.config.promotionShadow.alpha}
+                      onChange={(e, v) => { 
+                        this.setState(deepmerge(this.state, { config: { promotionShadow: { alpha: v } } }));
+                      }}
+                    />
                   </Grid>
                 </Grid>
               </AccordionDetails>
@@ -489,9 +612,9 @@ export default class Gameplay extends React.Component {
               </AccordionDetails>
             </Accordion>
             <Accordion
-              expanded={this.state.section === 'label' && this.state.showSection}
+              expanded={this.state.section === 'square' && this.state.showSection}
               onChange={() => {
-                this.setState({ section: 'label', showSection: this.state.section !== 'label' ? true : !this.state.showSection });
+                this.setState({ section: 'square', showSection: this.state.section !== 'square' ? true : !this.state.showSection });
               }}
               elevation={0}
               style={{ margin: 0 }}
@@ -499,7 +622,7 @@ export default class Gameplay extends React.Component {
               TransitionProps={{ unmountOnExit: true }}
             >
               <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                <Typography variant='h5'><Trans>Labels</Trans></Typography>
+                <Typography variant='h5'><Trans>Squares</Trans></Typography>
               </AccordionSummary>
               <AccordionDetails>
                 <Grid container spacing={2}>
@@ -507,9 +630,127 @@ export default class Gameplay extends React.Component {
                     <FormControl fullWidth>
                       <TextField
                         variant='outlined'
-                        value={this.state.config.boardLabel.fadeDuration}
+                        value={this.state.config.square.height}
                         onChange={(event) => {
-                          this.setState(deepmerge(this.state, { config: { boardLabel: { fadeDuration: Number(event.target.value) } } }));
+                          this.setState(deepmerge(this.state, { config: { square: { height: Number(event.target.value) } } }));
+                        }}
+                        label={<Trans>Square Height</Trans>}
+                      />
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
+                    <FormControl fullWidth>
+                      <TextField
+                        variant='outlined'
+                        value={this.state.config.square.width}
+                        onChange={(event) => {
+                          this.setState(deepmerge(this.state, { config: { square: { width: Number(event.target.value) } } }));
+                        }}
+                        label={<Trans>Square Width</Trans>}
+                      />
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
+                    <FormControl fullWidth>
+                      <TextField
+                        variant='outlined'
+                        value={this.state.config.square.fadeDuration}
+                        onChange={(event) => {
+                          this.setState(deepmerge(this.state, { config: { square: { fadeDuration: Number(event.target.value) } } }));
+                        }}
+                        label={<Trans>Fade Animation Duration (ms)</Trans>}
+                      />
+                    </FormControl>
+                  </Grid>
+                </Grid>
+              </AccordionDetails>
+            </Accordion>
+            <Accordion
+              expanded={this.state.section === 'highlight' && this.state.showSection}
+              onChange={() => {
+                this.setState({ section: 'highlight', showSection: this.state.section !== 'highlight' ? true : !this.state.showSection });
+              }}
+              elevation={0}
+              style={{ margin: 0 }}
+              square={false}
+              TransitionProps={{ unmountOnExit: true }}
+            >
+              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                <Typography variant='h5'><Trans>Square Highlights</Trans></Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Grid container spacing={2}>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
+                    <Typography>
+                      <Trans>Move Hover Highlight Transparency</Trans>
+                    </Typography>
+                    <Slider
+                      color='primary'
+                      min={0}
+                      max={1}
+                      step={0.05}
+                      valueLabelDisplay='auto'
+                      value={this.state.config.highlight.hoverAlpha}
+                      onChange={(e, v) => { 
+                        this.setState(deepmerge(this.state, { config: { highlight: { hoverAlpha: v } } }));
+                      }}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
+                    <Typography>
+                      <Trans>Past Move Hover Highlight Transparency</Trans>
+                    </Typography>
+                    <Slider
+                      color='primary'
+                      min={0}
+                      max={1}
+                      step={0.05}
+                      valueLabelDisplay='auto'
+                      value={this.state.config.highlight.pastHoverAlpha}
+                      onChange={(e, v) => { 
+                        this.setState(deepmerge(this.state, { config: { highlight: { pastHoverAlpha: v } } }));
+                      }}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
+                    <Typography>
+                      <Trans>Move Selected Highlight Transparency</Trans>
+                    </Typography>
+                    <Slider
+                      color='primary'
+                      min={0}
+                      max={1}
+                      step={0.05}
+                      valueLabelDisplay='auto'
+                      value={this.state.config.highlight.selectedAlpha}
+                      onChange={(e, v) => { 
+                        this.setState(deepmerge(this.state, { config: { highlight: { selectedAlpha: v } } }));
+                      }}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
+                    <Typography>
+                      <Trans>Past Move Selected Highlight Transparency</Trans>
+                    </Typography>
+                    <Slider
+                      color='primary'
+                      min={0}
+                      max={1}
+                      step={0.05}
+                      valueLabelDisplay='auto'
+                      value={this.state.config.highlight.pastSelectedAlpha}
+                      onChange={(e, v) => { 
+                        this.setState(deepmerge(this.state, { config: { highlight: { pastSelectedAlpha: v } } }));
+                      }}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
+                    <FormControl fullWidth>
+                      <TextField
+                        variant='outlined'
+                        value={this.state.config.highlight.fadeDuration}
+                        onChange={(event) => {
+                          this.setState(deepmerge(this.state, { config: { highlight: { fadeDuration: Number(event.target.value) } } }));
                         }}
                         label={<Trans>Fade Animation Duration (ms)</Trans>}
                       />
@@ -535,6 +776,384 @@ export default class Gameplay extends React.Component {
                 <Grid container spacing={2}>
                   <Grid item xs={12}>
                     <PieceSetList emitter={this.context} />
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
+                    <FormControl fullWidth>
+                      <TextField
+                        variant='outlined'
+                        value={this.state.config.piece.height}
+                        onChange={(event) => {
+                          this.setState(deepmerge(this.state, { config: { piece: { height: Number(event.target.value) } } }));
+                        }}
+                        label={<Trans>Piece Height</Trans>}
+                      />
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
+                    <FormControl fullWidth>
+                      <TextField
+                        variant='outlined'
+                        value={this.state.config.piece.width}
+                        onChange={(event) => {
+                          this.setState(deepmerge(this.state, { config: { piece: { width: Number(event.target.value) } } }));
+                        }}
+                        label={<Trans>Piece Width</Trans>}
+                      />
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
+                    <FormControl fullWidth>
+                      <TextField
+                        variant='outlined'
+                        value={this.state.config.piece.fadeDuration}
+                        onChange={(event) => {
+                          this.setState(deepmerge(this.state, { config: { piece: { fadeDuration: Number(event.target.value) } } }));
+                        }}
+                        label={<Trans>Fade Animation Duration (ms)</Trans>}
+                      />
+                    </FormControl>
+                  </Grid>
+                </Grid>
+              </AccordionDetails>
+            </Accordion>
+            <Accordion
+              expanded={this.state.section === 'arrow' && this.state.showSection}
+              onChange={() => {
+                this.setState({ section: 'arrow', showSection: this.state.section !== 'arrow' ? true : !this.state.showSection });
+              }}
+              elevation={0}
+              style={{ margin: 0 }}
+              square={false}
+              TransitionProps={{ unmountOnExit: true }}
+            >
+              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                <Typography variant='h5'><Trans>Arrows</Trans></Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Grid container spacing={2}>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
+                    <FormControlLabel
+                      label={<Trans>Spatial - Enable Curved Arrow</Trans>}
+                      control={
+                        <Checkbox
+                          color='primary'
+                          checked={this.state.config.arrow.spatialCurved}
+                          onChange={(e) => { 
+                            this.setState(deepmerge(this.state, { config: { arrow: { spatialCurved: e.target.checked } } }));
+                          }}
+                        />
+                      }
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
+                    <FormControlLabel
+                      label={<Trans>Spatial - Use Split Curved Arrow</Trans>}
+                      control={
+                        <Checkbox
+                          color='primary'
+                          checked={this.state.config.arrow.spatialSplitCurve}
+                          onChange={(e) => { 
+                            this.setState(deepmerge(this.state, { config: { arrow: { spatialSplitCurve: e.target.checked } } }));
+                          }}
+                        />
+                      }
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
+                    <FormControlLabel
+                      label={<Trans>Spatial - Enable Midpoint Mode</Trans>}
+                      control={
+                        <Checkbox
+                          color='primary'
+                          checked={this.state.config.arrow.spatialMiddle}
+                          onChange={(e) => { 
+                            this.setState(deepmerge(this.state, { config: { arrow: { spatialMiddle: e.target.checked } } }));
+                          }}
+                        />
+                      }
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
+                    <FormControlLabel
+                      label={<Trans>Spatial - Enable Real End Mode</Trans>}
+                      control={
+                        <Checkbox
+                          color='primary'
+                          checked={this.state.config.arrow.spatialRealEnd}
+                          onChange={(e) => { 
+                            this.setState(deepmerge(this.state, { config: { arrow: { spatialRealEnd: e.target.checked } } }));
+                          }}
+                        />
+                      }
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
+                    <FormControlLabel
+                      label={<Trans>Non-Spatial - Enable Curved Arrow</Trans>}
+                      control={
+                        <Checkbox
+                          color='primary'
+                          checked={this.state.config.arrow.nonSpatialCurved}
+                          onChange={(e) => { 
+                            this.setState(deepmerge(this.state, { config: { arrow: { nonSpatialCurved: e.target.checked } } }));
+                          }}
+                        />
+                      }
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
+                    <FormControlLabel
+                      label={<Trans>Non-Spatial - Use Split Curved Arrow</Trans>}
+                      control={
+                        <Checkbox
+                          color='primary'
+                          checked={this.state.config.arrow.nonSpatialSplitCurve}
+                          onChange={(e) => { 
+                            this.setState(deepmerge(this.state, { config: { arrow: { nonSpatialSplitCurve: e.target.checked } } }));
+                          }}
+                        />
+                      }
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
+                    <FormControlLabel
+                      label={<Trans>Non-Spatial - Enable Midpoint Mode</Trans>}
+                      control={
+                        <Checkbox
+                          color='primary'
+                          checked={this.state.config.arrow.nonSpatialMiddle}
+                          onChange={(e) => { 
+                            this.setState(deepmerge(this.state, { config: { arrow: { nonSpatialMiddle: e.target.checked } } }));
+                          }}
+                        />
+                      }
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
+                    <FormControlLabel
+                      label={<Trans>Non-Spatial - Enable Real End Mode</Trans>}
+                      control={
+                        <Checkbox
+                          color='primary'
+                          checked={this.state.config.arrow.nonSpatialRealEnd}
+                          onChange={(e) => { 
+                            this.setState(deepmerge(this.state, { config: { arrow: { nonSpatialRealEnd: e.target.checked } } }));
+                          }}
+                        />
+                      }
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
+                    <FormControlLabel
+                      label={<Trans>Custom - Enable Curved Arrow</Trans>}
+                      control={
+                        <Checkbox
+                          color='primary'
+                          checked={this.state.config.arrow.customCurved}
+                          onChange={(e) => { 
+                            this.setState(deepmerge(this.state, { config: { arrow: { customCurved: e.target.checked } } }));
+                          }}
+                        />
+                      }
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
+                    <FormControlLabel
+                      label={<Trans>Custom - Use Split Curved Arrow</Trans>}
+                      control={
+                        <Checkbox
+                          color='primary'
+                          checked={this.state.config.arrow.customSplitCurved}
+                          onChange={(e) => { 
+                            this.setState(deepmerge(this.state, { config: { arrow: { customSplitCurved: e.target.checked } } }));
+                          }}
+                        />
+                      }
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
+                    <FormControlLabel
+                      label={<Trans>Custom (Middle Mode) - Enable Curved Arrow</Trans>}
+                      control={
+                        <Checkbox
+                          color='primary'
+                          checked={this.state.config.arrow.customMiddleCurved}
+                          onChange={(e) => { 
+                            this.setState(deepmerge(this.state, { config: { arrow: { customMiddleCurved: e.target.checked } } }));
+                          }}
+                        />
+                      }
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
+                    <FormControlLabel
+                      label={<Trans>Custom (Middle Mode) - Use Split Curved Arrow</Trans>}
+                      control={
+                        <Checkbox
+                          color='primary'
+                          checked={this.state.config.arrow.customMiddleSplitCurved}
+                          onChange={(e) => { 
+                            this.setState(deepmerge(this.state, { config: { arrow: { customMiddleSplitCurved: e.target.checked } } }));
+                          }}
+                        />
+                      }
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
+                    <FormControlLabel
+                      label={<Trans>Check - Enable Curved Arrow</Trans>}
+                      control={
+                        <Checkbox
+                          color='primary'
+                          checked={this.state.config.arrow.checkCurved}
+                          onChange={(e) => { 
+                            this.setState(deepmerge(this.state, { config: { arrow: { checkCurved: e.target.checked } } }));
+                          }}
+                        />
+                      }
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
+                    <FormControl fullWidth>
+                      <TextField
+                        variant='outlined'
+                        value={this.state.config.arrow.size}
+                        onChange={(event) => {
+                          this.setState(deepmerge(this.state, { config: { arrow: { size: Number(event.target.value) } } }));
+                        }}
+                        label={<Trans>Arrow Size</Trans>}
+                      />
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
+                    <FormControl fullWidth>
+                      <TextField
+                        variant='outlined'
+                        value={this.state.config.arrow.headSize}
+                        onChange={(event) => {
+                          this.setState(deepmerge(this.state, { config: { arrow: { headSize: Number(event.target.value) } } }));
+                        }}
+                        label={<Trans>Arrow Head Size</Trans>}
+                      />
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
+                    <FormControl fullWidth>
+                      <TextField
+                        variant='outlined'
+                        value={this.state.config.arrow.outlineSize}
+                        onChange={(event) => {
+                          this.setState(deepmerge(this.state, { config: { arrow: { outlineSize: Number(event.target.value) } } }));
+                        }}
+                        label={<Trans>Arrow Outline Size</Trans>}
+                      />
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
+                    <FormControl fullWidth>
+                      <TextField
+                        variant='outlined'
+                        value={this.state.config.arrow.midpointRadius}
+                        onChange={(event) => {
+                          this.setState(deepmerge(this.state, { config: { arrow: { midpointRadius: Number(event.target.value) } } }));
+                        }}
+                        label={<Trans>Arrow Midpoint Radius</Trans>}
+                      />
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
+                    <Typography>
+                      <Trans>Arrow Transparency</Trans>
+                    </Typography>
+                    <Slider
+                      color='primary'
+                      min={0}
+                      max={1}
+                      step={0.05}
+                      valueLabelDisplay='auto'
+                      value={this.state.config.arrow.alpha}
+                      onChange={(e, v) => { 
+                        this.setState(deepmerge(this.state, { config: { arrow: { alpha: v } } }));
+                      }}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
+                    <FormControl fullWidth>
+                      <TextField
+                        variant='outlined'
+                        value={this.state.config.arrow.animateDuration}
+                        onChange={(event) => {
+                          this.setState(deepmerge(this.state, { config: { arrow: { animateDuration: Number(event.target.value) } } }));
+                        }}
+                        label={<Trans>Animation Duration (ms)</Trans>}
+                      />
+                    </FormControl>
+                  </Grid>
+                </Grid>
+              </AccordionDetails>
+            </Accordion>
+            <Accordion
+              expanded={this.state.section === 'ripple' && this.state.showSection}
+              onChange={() => {
+                this.setState({ section: 'ripple', showSection: this.state.section !== 'ripple' ? true : !this.state.showSection });
+              }}
+              elevation={0}
+              style={{ margin: 0 }}
+              square={false}
+              TransitionProps={{ unmountOnExit: true }}
+            >
+              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                <Typography variant='h5'><Trans>Ripple Animation</Trans></Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Grid container spacing={2}>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
+                    <FormControl fullWidth>
+                      <TextField
+                        variant='outlined'
+                        value={this.state.config.ripple.timelineDuration}
+                        onChange={(event) => {
+                          this.setState(deepmerge(this.state, { config: { ripple: { timelineDuration: Number(event.target.value) } } }));
+                        }}
+                        label={<Trans>Timeline Ripple Animation Duration (ms)</Trans>}
+                      />
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
+                    <FormControl fullWidth>
+                      <TextField
+                        variant='outlined'
+                        value={this.state.config.ripple.turnDuration}
+                        onChange={(event) => {
+                          this.setState(deepmerge(this.state, { config: { ripple: { turnDuration: Number(event.target.value) } } }));
+                        }}
+                        label={<Trans>Turn Ripple Animation Duration (ms)</Trans>}
+                      />
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
+                    <FormControl fullWidth>
+                      <TextField
+                        variant='outlined'
+                        value={this.state.config.ripple.rankDuration}
+                        onChange={(event) => {
+                          this.setState(deepmerge(this.state, { config: { ripple: { rankDuration: Number(event.target.value) } } }));
+                        }}
+                        label={<Trans>Rank Ripple Animation Duration (ms)</Trans>}
+                      />
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
+                    <FormControl fullWidth>
+                      <TextField
+                        variant='outlined'
+                        value={this.state.config.ripple.fileDuration}
+                        onChange={(event) => {
+                          this.setState(deepmerge(this.state, { config: { ripple: { fileDuration: Number(event.target.value) } } }));
+                        }}
+                        label={<Trans>File Ripple Animation Duration (ms)</Trans>}
+                      />
+                    </FormControl>
                   </Grid>
                 </Grid>
               </AccordionDetails>
