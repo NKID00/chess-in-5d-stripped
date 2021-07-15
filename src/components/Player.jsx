@@ -6,6 +6,7 @@ import AnalyzeMenu from 'components/Player/AnalyzeMenu';
 import Audio from 'components/Player/Audio';
 import Clock from 'components/Player/Clock';
 import DrawMenu from 'components/Player/DrawMenu';
+import Hotkeys from 'components/Player/Hotkeys';
 import Layout from 'components/Player/Layout';
 import Menu from 'components/Player/Menu';
 import Notation from 'components/Player/Notation';
@@ -79,7 +80,6 @@ Tutorial Props:
  - tutorialAllowBack
  - tutorialOnBack
 */
-
 export default class Player extends React.Component {
   static contextType = EmitterContext;
   rootRef = React.createRef();
@@ -398,6 +398,15 @@ export default class Player extends React.Component {
           actionHistory={this.props.actionHistory}
           moveBuffer={this.props.moveBuffer}
           isEnd={this.props.statusIsCheckmate || this.props.statusIsStalemate}
+        />
+        <Hotkeys
+          onUndo={this.props.submitCanUndo ? this.props.submitOnUndo : null}
+          onSubmit={this.props.submitCanSubmit ? this.props.submitOnSubmit : null}
+          onRestore={this.props.allowAnalyze ? this.props.analyzeOnRestore : null}
+          onPreviousAction={this.props.allowAnalyze ? this.props.analyzeOnPreviousAction : null}
+          onPreviousMove={this.props.allowAnalyze ? this.props.analyzeOnPreviousMove : null}
+          onNextMove={this.props.allowAnalyze ? this.props.analyzeOnNextMove : null}
+          onNextAction={this.props.allowAnalyze ? this.props.analyzeOnNextAction : null}
         />
       </div>
     );

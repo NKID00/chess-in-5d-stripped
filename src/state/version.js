@@ -38,3 +38,7 @@ export const init = () => {
   //Store current version
   store.set('version', currVersion);
 }
+
+export const get = () => {
+  return store.get('version');
+}

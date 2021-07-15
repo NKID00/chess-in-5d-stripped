@@ -20,9 +20,11 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 import EmitterContext from 'utils/EmitterContext';
 import * as settings from 'state/settings';
+import * as version from 'state/version';
 
 const deepmerge = require('deepmerge');
 const deepequal = require('fast-deep-equal');
+const browserInfo = require('browser-info');
 
 export default class General extends React.Component {
   static contextType = EmitterContext;
@@ -30,7 +32,7 @@ export default class General extends React.Component {
     section: 'language',
     showSection: false,
     settings: settings.get()
-  }
+  };
   componentDidMount() {
     //Update state if settings are changed
     this.settingsListener = this.context.on('settingsUpdate', () => {
@@ -162,6 +164,11 @@ export default class General extends React.Component {
               <AccordionDetails>
                 <Grid container spacing={2}>
                   <Grid item xs={12} sm={6} md={12} lg={6}>
+                    <Typography>
+                      <Trans>Build Version:</Trans>{` ${version.get()}`}
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
                     <FormControlLabel
                       label={<Trans>Mobile Console</Trans>}
                       control={
@@ -174,6 +181,22 @@ export default class General extends React.Component {
                         />
                       }
                     />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <Typography>
+                      <Trans>Browser Info:</Trans>
+                    </Typography>
+                    <code>
+                      {JSON.stringify(browserInfo())}
+                    </code>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <Typography>
+                      <Trans>User Agent:</Trans>
+                    </Typography>
+                    <code>
+                      {navigator.userAgent}
+                    </code>
                   </Grid>
                 </Grid>
               </AccordionDetails>

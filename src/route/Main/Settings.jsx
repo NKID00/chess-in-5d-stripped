@@ -11,6 +11,7 @@ import TabList from '@material-ui/lab/TabList';
 import TabContext from '@material-ui/lab/TabContext';
 import TabPanel from '@material-ui/lab/TabPanel';
 
+import Controls from 'route/Main/Settings/Controls';
 import Gameplay from 'route/Main/Settings/Gameplay';
 import General from 'route/Main/Settings/General';
 import Theme from 'route/Main/Settings/Theme';
@@ -54,6 +55,7 @@ class Settings extends React.Component {
                 <Tab value='theme' label={<Trans>Theme</Trans>} />
                 <Tab value='palette' label={<Trans>Palette</Trans>} />
                 <Tab value='gameplay' label={<Trans>Gameplay</Trans>} />
+                <Tab value='controls' label={<Trans>Controls</Trans>} />
                 <Tab value='import' disabled label={<Trans>Import / Export</Trans>} />
               </TabList>
             </AppBar>
@@ -68,6 +70,9 @@ class Settings extends React.Component {
             </TabPanel>
             <TabPanel value='gameplay'>
               <Gameplay />
+            </TabPanel>
+            <TabPanel value='controls'>
+              <Controls />
             </TabPanel>
           </TabContext>
         </Card>
