@@ -11,6 +11,6 @@
 }
 
 .borderBlink[animate='1'] {
-  -webkit-animation: borderBlink 0.5s linear infinite alternate;
-  animation: borderBlink 0.5s linear infinite alternate;
+  -webkit-animation: borderBlink 0.375s linear infinite alternate;
+  animation: borderBlink 0.375s linear infinite alternate;
 }

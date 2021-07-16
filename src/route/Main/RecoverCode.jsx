@@ -173,7 +173,7 @@ class RecoverCode extends React.Component {
           <DialogContent>
             <DialogContentText>
               <Trans>
-                An email has been sent with the recovery code.
+                An email has been sent to {this.state.email} with the recovery code.
               </Trans>
               <br/>
               <br/>

@@ -70,15 +70,21 @@ export default class Renderer extends React.Component {
       this.chessRenderer.global.config(newConfig);
     }
   }
-  async updateTexture() {
+  async updateTexture(init = false) {
+    let didUpdate = false;
     for(var i = 0;i < keylist.length;i++) {
       var currentKey = keylist[i];
       var currentTexture = await crTexture.get(currentKey);
       if(currentTexture !== null) {
-        this.chessRenderer.global.texture(currentKey, currentTexture.texture, true);
+        if(!init || (init && currentKey !== 'default')) {
+          this.chessRenderer.global.texture(currentKey, currentTexture.texture, true);
+          didUpdate = true;
+        }
       }
     }
-    this.chessRenderer.global.emitter.emit('textureUpdate');
+    if(didUpdate) {
+      this.chessRenderer.global.emitter.emit('textureUpdate');
+    }
   }
   updateRenderer() {
     if(typeof this.props.board === 'object') {
@@ -142,7 +148,7 @@ export default class Renderer extends React.Component {
     //Update palette and config right now
     this.updatePalette();
     this.updateConfig();
-    this.updateTexture();
+    this.updateTexture(true);
     //Update renderer data
     this.updateRenderer();
   }

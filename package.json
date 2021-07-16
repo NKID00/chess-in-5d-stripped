@@ -116,8 +116,6 @@
     ]
   },
   "dependencies": {
-    "5d-chess-js": "^1.1.3",
-    "5d-chess-renderer": "^1.1.11",
     "@fontsource/domine": "^4.3.0",
     "@fontsource/eb-garamond": "^4.3.0",
     "@fontsource/exo": "^4.3.0",
@@ -130,13 +128,15 @@
     "@fontsource/roboto-condensed": "^4.3.0",
     "@fontsource/roboto-mono": "^4.3.0",
     "@fontsource/vollkorn": "^4.2.2",
-    "@lingui/react": "^3.8.2",
+    "@lingui/react": "^3.10.2",
     "@material-ui/core": "^4.11.0",
     "@material-ui/icons": "^4.11.2",
     "@material-ui/lab": "^4.0.0-alpha.57",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
+    "5d-chess-js": "^1.1.3",
+    "5d-chess-renderer": "^1.1.11",
     "axios": "^0.21.0",
     "browser-info": "^1.3.0",
     "codemirror": "^5.58.3",
@@ -179,8 +179,8 @@
     "throttle-debounce": "^3.0.1"
   },
   "devDependencies": {
-    "@lingui/cli": "^3.8.2",
-    "@lingui/macro": "^3.8.2",
+    "@lingui/cli": "^3.10.2",
+    "@lingui/macro": "^3.10.2",
     "@storybook/addon-actions": "^6.2.9",
     "@storybook/addon-essentials": "^6.2.9",
     "@storybook/addon-links": "^6.2.9",
