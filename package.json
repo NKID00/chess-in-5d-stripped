@@ -78,9 +78,65 @@
       ],
       "category": "Game"
     },
-    "copyright": "Created by Shaun Wu, source code released uner AGPL-v3.0. All other assets are released under CC BY-SA 4.0"
+    "copyright": "Created by Shaun Wu (https://gitlab.com/alexbay218), source code released under AGPL-v3.0. All other assets are released under CC BY-SA 4.0"
+  },
+  "proxy": "http://localhost:5000",
+  "scripts": {
+    "analyze": "npm run build && source-map-explorer 'build/static/js/*.js'",
+    "start": "craco start",
+    "electron-start": "concurrently \"npm start\" \"wait-on http://localhost:3000 && electron .\"",
+    "build": "craco build",
+    "preelectron-build": "npm run build --em.main=build/electron.js",
+    "electron-build": "electron-builder install-app-deps && electron-builder -wl -p always",
+    "preelectron-build-test": "npm run build --em.main=build/electron.js",
+    "electron-build-test": "electron-builder install-app-deps && electron-builder -w -p always",
+    "lingui-extract": "lingui extract",
+    "lingui-compile": "lingui compile",
+    "test": "craco test --passWithNoTests",
+    "eject": "react-scripts eject",
+    "storybook": "start-storybook -p 6006 -s public",
+    "storybook-build": "build-storybook -s public"
+  },
+  "eslintConfig": {
+    "extends": "react-app",
+    "overrides": [
+      {
+        "files": [
+          "**/*.stories.*"
+        ],
+        "rules": {
+          "import/no-anonymous-default-export": "off"
+        }
+      }
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   },
   "dependencies": {
+    "@craco/craco": "^6.2.0",
+    "@fontsource/domine": "^4.3.0",
+    "@fontsource/eb-garamond": "^4.3.0",
+    "@fontsource/exo": "^4.3.0",
+    "@fontsource/fira-sans": "^4.3.0",
+    "@fontsource/merriweather": "^4.3.0",
+    "@fontsource/newsreader": "^4.3.0",
+    "@fontsource/open-sans": "^4.3.0",
+    "@fontsource/playfair-display": "^4.3.0",
+    "@fontsource/roboto": "^4.2.2",
+    "@fontsource/roboto-condensed": "^4.3.0",
+    "@fontsource/roboto-mono": "^4.3.0",
+    "@fontsource/vollkorn": "^4.2.2",
+    "@lingui/react": "^3.10.2",
     "@material-ui/core": "^4.11.0",
     "@rebass/forms": "^4.0.6",
     "@rebass/preset": "^4.0.5",
@@ -125,8 +181,7 @@
     "react-redux": "^7.2.1",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "^3.4.4",
-    "rebass": "^4.0.7",
+    "react-scripts": "^4.0.3",
     "store": "^2.0.12",
     "wait-on": "^5.2.0"
   },
@@ -159,6 +214,16 @@
     ]
   },
   "devDependencies": {
+    "@lingui/cli": "^3.10.2",
+    "@lingui/loader": "^3.10.2",
+    "@lingui/macro": "^3.10.2",
+    "@storybook/addon-actions": "^6.2.9",
+    "@storybook/addon-essentials": "^6.2.9",
+    "@storybook/addon-links": "^6.2.9",
+    "@storybook/node-logger": "^6.2.9",
+    "@storybook/preset-create-react-app": "^3.1.7",
+    "@storybook/react": "^6.2.9",
+    "concurrently": "^5.3.0",
     "electron": "^10.1.2",
     "electron-builder": "^22.9.1",
     "nodemon": "^2.0.4",
