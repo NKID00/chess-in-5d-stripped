@@ -76,16 +76,16 @@
   "proxy": "http://localhost:5000",
   "scripts": {
     "analyze": "npm run build && source-map-explorer 'build/static/js/*.js'",
-    "start": "npm run lingui-compile && react-scripts start",
+    "start": "craco start",
     "electron-start": "concurrently \"npm start\" \"wait-on http://localhost:3000 && electron .\"",
-    "build": "npm run lingui-compile && react-scripts build",
+    "build": "craco build",
     "preelectron-build": "npm run build --em.main=build/electron.js",
     "electron-build": "electron-builder install-app-deps && electron-builder -wl -p always",
     "preelectron-build-test": "npm run build --em.main=build/electron.js",
     "electron-build-test": "electron-builder install-app-deps && electron-builder -w -p always",
     "lingui-extract": "lingui extract",
     "lingui-compile": "lingui compile",
-    "test": "react-scripts test --passWithNoTests",
+    "test": "craco test --passWithNoTests",
     "eject": "react-scripts eject",
     "storybook": "start-storybook -p 6006 -s public",
     "storybook-build": "build-storybook -s public"
@@ -116,6 +116,7 @@
     ]
   },
   "dependencies": {
+    "@craco/craco": "^6.2.0",
     "@fontsource/domine": "^4.3.0",
     "@fontsource/eb-garamond": "^4.3.0",
     "@fontsource/exo": "^4.3.0",
@@ -174,12 +175,13 @@
     "react-redux": "^7.2.1",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "^3.4.4",
+    "react-scripts": "^4.0.3",
     "store": "^2.0.12",
     "throttle-debounce": "^3.0.1"
   },
   "devDependencies": {
     "@lingui/cli": "^3.10.2",
+    "@lingui/loader": "^3.10.2",
     "@lingui/macro": "^3.10.2",
     "@storybook/addon-actions": "^6.2.9",
     "@storybook/addon-essentials": "^6.2.9",
