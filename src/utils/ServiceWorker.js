@@ -93,6 +93,11 @@ function registerValidSW(swUrl, config) {
               }
             }
           }
+          else if(installingWorker.state === 'installing') {
+            if(config && config.onUpdateFound) {
+              config.onUpdateFound(registration);
+            }
+          }
         };
       };
     })

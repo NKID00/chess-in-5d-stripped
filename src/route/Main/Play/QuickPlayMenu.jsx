@@ -108,6 +108,9 @@ export default class QuickPlayMenu extends React.Component {
             </Button>
           </Box>
         </Hidden>
+        <Box p={1} width={1}>
+          <Trans>Test</Trans>
+        </Box>
       </>
     );
   }
