@@ -3,7 +3,7 @@ import React from 'react';
 import Button from '@material-ui/core/Button';
 
 import { withSnackbar } from 'notistack';
-import * as serviceWorker from 'utils/ServiceWorker';
+import * as serviceWorker from 'serviceWorker';
 
 const swUpdateAvailable = new Event('swupdateavailable');
 const swOfflineReady = new Event('swofflineready');
