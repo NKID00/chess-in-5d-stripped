@@ -95,13 +95,41 @@ export default class General extends React.Component {
                   </Grid>
                   <Grid item xs={12} sm={6} md={12} lg={6}>
                     <FormControlLabel
-                      label={<Trans>Chat</Trans>}
+                      label={<Trans>Enable Chat</Trans>}
                       control={
                         <Checkbox
                           color='primary'
                           checked={this.state.settings.xmpp}
                           onChange={(e) => { 
                             this.setState(deepmerge(this.state, { settings: { xmpp: e.target.checked } }));
+                          }}
+                        />
+                      }
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
+                    <FormControlLabel
+                      label={<Trans>Use BOSH for Chat</Trans>}
+                      control={
+                        <Checkbox
+                          color='primary'
+                          checked={this.state.settings.xmppBosh}
+                          onChange={(e) => { 
+                            this.setState(deepmerge(this.state, { settings: { xmppBosh: e.target.checked } }));
+                          }}
+                        />
+                      }
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={12} lg={6}>
+                    <FormControlLabel
+                      label={<Trans>Auto Update</Trans>}
+                      control={
+                        <Checkbox
+                          color='primary'
+                          checked={this.state.settings.autoUpdate}
+                          onChange={(e) => { 
+                            this.setState(deepmerge(this.state, { settings: { autoUpdate: e.target.checked } }));
                           }}
                         />
                       }

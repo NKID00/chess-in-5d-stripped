@@ -77,12 +77,7 @@ export default class ConverseManager extends React.Component {
       }
       if(!this.isInitialized && storedAuth.xmpp !== null) {
         this.conversePlugin();
-        var wsUrl = `wss://${storedAuth.xmpp.domain}:5281/xmpp-websocket/`;
-        if(window.location.protocol !== 'https:') {
-          //Use regular (non-tls) url if not using https
-          wsUrl = `ws://${storedAuth.xmpp.domain}:5280/xmpp-websocket/`;
-        }
-        this.converse.initialize({
+        let initObj = {
           allow_logout: false,
           allow_registration: false,
           allow_chat_pending_contacts: true,
@@ -96,13 +91,29 @@ export default class ConverseManager extends React.Component {
           authentication: 'login',
           jid: storedAuth.xmpp.username,
           password: storedAuth.xmpp.password,
-          websocket_url: wsUrl,
           whitelisted_plugins: ['custom'],
           blacklisted_plugins: ['converse-profile'],
           theme: 'concord',
           emitter: this.context,
           authStore: authStore,
-        });
+        };
+        if(!settings.get().xmppBosh) {
+          let wsUrl = `wss://${storedAuth.xmpp.domain}:5281/xmpp-websocket/`;
+          if(window.location.protocol !== 'https:') {
+            //Use regular (non-tls) url if not using https
+            wsUrl = `ws://${storedAuth.xmpp.domain}:5280/xmpp-websocket/`;
+          }
+          initObj['websocket_url'] = wsUrl;
+        }
+        else {
+          let boshUrl = `https://${storedAuth.xmpp.domain}:5281/http-bind/`;
+          if(window.location.protocol !== 'https:') {
+            //Use regular (non-tls) url if not using https
+            boshUrl = `http://${storedAuth.xmpp.domain}:5280/http-bind/`;
+          }
+          initObj['bosh_service_url'] = boshUrl;
+        }
+        this.converse.initialize(initObj);
         this.isInitialized = true;
       }
     }
