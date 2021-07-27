@@ -22,24 +22,31 @@ class UpdateToast extends React.Component {
         }
       });
       if(settings.get().autoUpdate) {
+        this.props.enqueueSnackbar('Auto Updating...', {
+          variant: 'info',
+          persist: true,
+          preventDuplicate: true,
+        });
         regwaiting.postMessage({ type: 'SKIP_WAITING' });
       }
+      else {
+        this.props.enqueueSnackbar('New version available', {
+          variant: 'info',
+          persist: true,
+          action: (
+            <Button onClick={() => {
+              let regwaiting = this.reg.waiting;
+              if(regwaiting) {
+                regwaiting.postMessage({ type: 'SKIP_WAITING' });
+              }
+            }}>
+              Update
+            </Button>
+          ),
+          preventDuplicate: true,
+        });
+      }
     }
-    this.props.enqueueSnackbar('New version available', {
-      variant: 'info',
-      persist: true,
-      action: (
-        <Button onClick={() => {
-          let regwaiting = this.reg.waiting;
-          if(regwaiting) {
-            regwaiting.postMessage({ type: 'SKIP_WAITING' });
-          }
-        }}>
-          Update
-        </Button>
-      ),
-      preventDuplicate: true,
-    });
   }
   offlineToast() {
     this.props.enqueueSnackbar('Content available offline', {
