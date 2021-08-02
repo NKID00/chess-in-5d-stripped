@@ -6,7 +6,7 @@ import Paper from '@material-ui/core/Paper';
 import Analyze from 'route/Main/Analyze';
 import MainAppBar from 'route/MainAppBar';
 import Dashboard from 'route/Main/Dashboard';
-import Play from 'route/Main/Play';
+import PlayTmp from 'route/Main/PlayTmp';
 import Settings from 'route/Main/Settings';
 import Register from 'route/Main/Register';
 import Login from 'route/Main/Login';
@@ -46,7 +46,7 @@ export default class Main extends React.Component {
             <Analyze />
           </Route>
           <Route path='/play'>
-            <Play />
+            <PlayTmp />
           </Route>
           <Route path='/settings'>
             <Settings />

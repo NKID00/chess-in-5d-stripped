@@ -31,6 +31,7 @@ Props:
  - isStalemate
  - isCheck
 */
+//TODO Add time / forfeit messages
 const CustomCheckBadge = withStyles(() => ({
   badge: {
     right: 7,

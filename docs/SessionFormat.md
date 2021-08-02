@@ -1,6 +1,6 @@
 # WIP
 
-Format for all sessions (local or otherwise)
+## Format for all sessions (local or otherwise)
 
   - `id` - Unique string identifier.
   - `host` - Username of the user that created the session (missing on local play, `null` if 5d-chess-server game).
@@ -27,7 +27,7 @@ Format for all sessions (local or otherwise)
   - `winner` - String indicating the winning player ('white', 'black', or 'draw'). Will be `null` if current session has not ended yet.
   - `winCause` - String indicating the reason for winning ('time', 'forfeit', or 'regular'). Stalemates results in 'regular', whereas draws results in 'forfeit'. Will be `null` if current session has not ended yet.
 
-5DPGN Tag Transformation
+## 5DPGN Tag Transformation
 
 ```
 [Board "<variant>"]
@@ -45,3 +45,12 @@ Format for all sessions (local or otherwise)
 [TimeControl "<format>"] may be missing
 [Termination "<winCause>"]
 ```
+
+## Session Types
+
+ - Local - Check if `host` field is missing
+ - Server Game - Check if `host` field is `null`
+ - Server Session - Check if `host` field is an non-empty string
+
+ - Ongoing Session - Check if `started` field is `true` and `ended` field is `false`
+ - Ended Session - Check if `ended` field is `true`

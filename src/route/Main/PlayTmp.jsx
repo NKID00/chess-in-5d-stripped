@@ -4,7 +4,7 @@ import Player from 'components/Player';
 
 import Chess from '5d-chess-js';
 
-export default class Play extends React.Component {
+export default class PlayTmp extends React.Component {
   chess = new Chess();
   currAvailableMoves = [];
   pastAvailableMoves = [];

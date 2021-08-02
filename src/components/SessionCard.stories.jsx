@@ -1,17 +1,23 @@
 import React from 'react';
 
 import StorybookSandbox from 'components/StorybookSandbox';
-import GameCard from 'components/GameCard';
+import SessionCard from 'components/SessionCard';
 
 export default {
-  title: 'components/GameCard',
-  component: GameCard
+  title: 'components/SessionCard',
+  component: SessionCard,
+  args: {
+    whitePlayerName: 'Player 1',
+    whitePlayerType: 'human',
+    blackPlayerName: 'Player 2',
+    blackPlayerType: 'bot',
+  }
 };
 
 export const Main = (args) => {
   return (
     <StorybookSandbox>
-      <GameCard {...args} />
+      <SessionCard {...args} />
     </StorybookSandbox>
   );
 }
@@ -20,7 +26,7 @@ export const Squeezed500px = (args) => {
   return (
     <StorybookSandbox>
       <div style={{ width: 500 }}>
-        <GameCard {...args} />
+        <SessionCard {...args} />
       </div>
     </StorybookSandbox>
   );
@@ -30,7 +36,7 @@ export const Squeezed250px = (args) => {
   return (
     <StorybookSandbox>
       <div style={{ width: 250 }}>
-        <GameCard {...args} />
+        <SessionCard {...args} />
       </div>
     </StorybookSandbox>
   );
