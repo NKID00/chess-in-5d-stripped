@@ -15,7 +15,7 @@
   - `started` - Boolean indicating if session has started.
   - `startDate` - UNIX epoch time in milliseconds indicating when the session was started.
   - `ended` - Boolean indicating if session has ended.
-  - `endDate` - UNIX epoch time in milliseconds indicating when the session was ended.
+  - `endDate` - UNIX epoch time in milliseconds indicating when the session was ended. Will be `null` if current session has not ended yet.
   - `processing` - Boolean indicating if server is processing session (mainly to indicate checkmate detection), timed controls are paused during processing.
   - `timed` - Object containing timing information (`null` if game is not timed). [TODO Add 5d-chess-clock reference]
   - `board` - `Board` object representing the current session (https://5d-chess.gitlab.io/5d-chess-js/#/?id=board-1).

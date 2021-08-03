@@ -38,8 +38,11 @@ export default class App extends React.Component {
     muiTheme: muiTheme.get()
   };
   emitter = createNanoEvents();
-  componentDidMount() {
+  constructor() {
+    super();
     i18nInit(this.emitter);
+  }
+  componentDidMount() {
     this.emitter.on('themeUpdate', () => {
       this.setState({
         muiTheme: muiTheme.get()

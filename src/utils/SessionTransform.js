@@ -1,4 +1,4 @@
-const Chess = require('5d-chess-js');
+import Chess from '5d-chess-js';
 
 export const fromServerGame = (game) => {
   let res = {

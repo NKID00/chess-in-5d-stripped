@@ -11,6 +11,15 @@ export default {
     whitePlayerType: 'human',
     blackPlayerName: 'Player 2',
     blackPlayerType: 'bot',
+    isServer: true,
+    canPlay: true,
+    started: true,
+    startDate: 1628011696154,
+    ended: true,
+    endDate: 1628011816154,
+    variant: 'Standard',
+    format: 'Untimed',
+    winString: 'Player 1 won by checkmate'
   }
 };
 

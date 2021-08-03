@@ -1,4 +1,5 @@
 import React from 'react';
+import { withRouter } from 'react-router';
 
 import AppBar from '@material-ui/core/AppBar';
 import Box from '@material-ui/core/Box';
@@ -12,7 +13,7 @@ import Logo from 'assets/logo.png';
 import LoginButton from 'components/LoginButton';
 import Menu from 'route/MainAppBar/Menu';
 
-export default class MainAppBar extends React.Component {
+class MainAppBar extends React.Component {
   state = {
     openMenu: false
   }
@@ -29,10 +30,21 @@ export default class MainAppBar extends React.Component {
             >
               <MenuIcon />
             </IconButton>
-            <Box mx={2} my={1}>
+            <Box
+              mx={2}
+              my={1}
+              onClick={() => {
+                this.props.history.push('/');
+              }}
+            >
               <img src={Logo} alt='Logo' style={{ height: 40 }} />
             </Box>
-            <Typography variant='h6'>
+            <Typography
+              variant='h6'
+              onClick={() => {
+                this.props.history.push('/');
+              }}
+            >
               Chess In 5D
             </Typography>
             <Box flexGrow={1} />
@@ -53,3 +65,5 @@ export default class MainAppBar extends React.Component {
     );
   }
 }
+
+export default withRouter(MainAppBar);

@@ -3,10 +3,10 @@ import React from 'react';
 import Card from '@material-ui/core/Card';
 
 import StorybookSandbox from 'components/StorybookSandbox';
-import QuickPlayMenu from 'route/Main/Play/QuickPlayMenu';
+import QuickPlayMenu from 'route/Main/PlayMenu/QuickPlayMenu';
 
 export default {
-  title: 'route/Main/Play/QuickPlayMenu',
+  title: 'route/Main/PlayMenu/QuickPlayMenu',
   component: QuickPlayMenu
 };
 

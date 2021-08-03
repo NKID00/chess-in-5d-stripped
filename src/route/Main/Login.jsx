@@ -185,11 +185,7 @@ class Login extends React.Component {
               <Grid item xs={12}>
                 <Link component={RouterLink} 
                   to={(() => {
-                    var search = new URLSearchParams(this.props.location.search);
-                    if(search.has('redirect')) {
-                      return `/recoverCode`;
-                    }
-                    return '/recoverCode';
+                    return '/recover-code';
                   })()}
                 >
                   <Trans>Forgot Password?</Trans>
