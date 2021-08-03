@@ -235,7 +235,7 @@ This means we need to make a move on both the top and bottom boards.
 This example shows what an action is in comparison to a move.
 
 Let's make some formal definitions for both actions and moves:
-- Move - Defined as a singluar piece movement or capture. This also includes en passant, promotion, and castling.
+- Move - Defined as a singular piece movement or capture. This also includes en passant, promotion, and castling.
 - Action - Defined as a group of one or more moves that a player makes during their turn.
 
 *Note: Castling technically involves two piece movements, but for purposes of this current and future discussions, castling is considered a single move*`,
