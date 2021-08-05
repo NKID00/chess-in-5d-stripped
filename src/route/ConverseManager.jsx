@@ -72,7 +72,7 @@ export default class ConverseManager extends React.Component {
     if(!this.isInitialized && authStore.isLoggedIn() && settings.get().xmpp) {
       var storedAuth = authStore.get();
       if(storedAuth.xmpp === null) {
-        await auth.xmpp(this.context);
+        await auth.xmpp();
         storedAuth = authStore.get();
       }
       if(!this.isInitialized && storedAuth.xmpp !== null) {

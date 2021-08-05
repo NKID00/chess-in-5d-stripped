@@ -154,7 +154,7 @@ class Login extends React.Component {
                     helperText={this.state.usernameError}
                     value={this.state.auth.username}
                     onChange={(event) => {
-                      this.setState(deepmerge(this.state, { auth: { username: event.target.value } }));
+                      this.setState(deepmerge(this.state, { auth: { username: event.target.value.toLowerCase() } }));
                     }}
                     label={<Trans>Username</Trans>}
                   />

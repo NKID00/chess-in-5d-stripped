@@ -10,7 +10,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 
 import Logo from 'assets/logo.png';
-import LoginButton from 'components/LoginButton';
+import LoginButton from 'route/MainAppBar/LoginButton';
 import Menu from 'route/MainAppBar/Menu';
 
 class MainAppBar extends React.Component {

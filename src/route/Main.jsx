@@ -8,6 +8,7 @@ import MainAppBar from 'route/MainAppBar';
 import Dashboard from 'route/Main/Dashboard';
 import PlayMenu from 'route/Main/PlayMenu';
 import PlayTmp from 'route/Main/PlayTmp';
+import Profile from 'route/Main/Profile';
 import Settings from 'route/Main/Settings';
 import Register from 'route/Main/Register';
 import Login from 'route/Main/Login';
@@ -60,6 +61,9 @@ export default class Main extends React.Component {
           </Route>
           <Route path='/login'>
             <Login />
+          </Route>
+          <Route path='/profile'>
+            <Profile />
           </Route>
           <Route path='/recover-code'>
             <RecoverCode />

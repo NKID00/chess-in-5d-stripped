@@ -32,14 +32,26 @@ export default class UserAvatar extends React.Component {
   render() {
     if(typeof this.state.avatar === 'string') {
       return (
-        <Tooltip title={this.props.username}>
-          <Avatar src={this.state.avatar} style={{ backgroundColor: 'white' }} />
+        <Tooltip arrow title={this.props.username}>
+          <Avatar
+            src={this.state.avatar}
+            style={{
+              backgroundColor: 'white',
+              width: this.props.width,
+              height: this.props.height,
+            }}
+          />
         </Tooltip>
       );
     }
     return (
-      <Tooltip title={this.props.username}>
-        <Avatar>
+      <Tooltip arrow title={this.props.username}>
+        <Avatar
+          style={{
+            width: this.props.width,
+            height: this.props.height,
+          }}
+        >
           <div
             style={{
               backgroundColor: 'white',

@@ -35,6 +35,8 @@ class Register extends React.Component {
     passwordError: '',
     password2: '',
     password2Error: '',
+    email: '',
+    emailError: '',
     serverUrl: settings.get().server,
   }
   componentDidMount() {
@@ -86,10 +88,11 @@ class Register extends React.Component {
           usernameError: '',
           passwordError: '',
           password2Error: 'Passwords do not match!',
+          emailError: '',
         });
       }
       else {
-        await auth.register(this.state.auth.username, this.state.password, this.context);
+        await auth.register(this.state.auth.username, this.state.password, this.state.email, this.context);
         this.redirect();
       }
     }
@@ -104,21 +107,24 @@ class Register extends React.Component {
           this.setState({
             usernameError: 'Username already taken!',
             passwordError: '',
-            passwordError2: ''
+            passwordError2: '',
+            emailError: '',
           });
         }
         else if(res.data.error.includes('Username is invalid!')) {
           this.setState({
             usernameError: res.data.error,
             passwordError: '',
-            passwordError2: ''
+            passwordError2: '',
+            emailError: '',
           });
         }
         else if(res.data.error.includes('Username is blacklisted')) {
           this.setState({
             usernameError: res.data.error,
             passwordError: '',
-            passwordError2: ''
+            passwordError2: '',
+            emailError: '',
           });
         }
         else {
@@ -168,9 +174,25 @@ class Register extends React.Component {
                     helperText={this.state.usernameError}
                     value={this.state.auth.username}
                     onChange={(event) => {
-                      this.setState(deepmerge(this.state, { auth: { username: event.target.value } }));
+                      this.setState(deepmerge(this.state, { auth: { username: event.target.value.toLowerCase() } }));
                     }}
                     label={<Trans>Username</Trans>}
+                  />
+                </FormControl>
+              </Grid>
+              <Grid item xs={12}>
+                <FormControl fullWidth>
+                  <TextField
+                    variant='outlined'
+                    autoComplete='email'
+                    type='email'
+                    error={this.state.emailError.length > 0}
+                    helperText={this.state.emailError}
+                    value={this.state.email}
+                    onChange={(event) => {
+                      this.setState({ email: event.target.value });
+                    }}
+                    label={<Trans>Email</Trans>}
                   />
                 </FormControl>
               </Grid>

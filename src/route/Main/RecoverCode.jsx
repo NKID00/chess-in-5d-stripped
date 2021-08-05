@@ -51,7 +51,7 @@ class RecoverCode extends React.Component {
     if(typeof this.settingsListener === 'function') { this.settingsListener(); }
   }
   redirect() {
-    this.props.history.replace('/recover');
+    this.props.history.replace('/login');
   }
   async request() {
     this.setState({ loading: true });

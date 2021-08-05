@@ -4,7 +4,7 @@ import { withRouter } from 'react-router';
 import { Trans } from '@lingui/macro';
 
 import Button from '@material-ui/core/Button';
-import ProfileMenu from 'components/ProfileMenu';
+import ProfileMenu from 'route/MainAppBar/ProfileMenu';
 
 import EmitterContext from 'utils/EmitterContext';
 import * as authStore from 'state/auth';

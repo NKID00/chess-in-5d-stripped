@@ -71,3 +71,32 @@ export const getOne = async (username) => {
   }
   return (await collections.users.findOne({ username: username }));
 }
+
+export const update = async (data) => {
+  var currentDate = Date.now();
+  var storedAuth = authStore.get();
+  var serverUrl = settings.get().server;
+  var lastQuery = store.get('network/user/update');
+  if(typeof lastQuery !== 'number') { lastQuery = 0; }
+  if(currentDate - lastQuery > 6*1000) {
+    var options = {};
+    if(storedAuth.token !== null) {
+      options = {
+        headers: {
+          'Authorization': storedAuth.token
+        }
+      };
+      var res = (await axios.post(`${serverUrl}/users/${storedAuth.username}/update`, data, options));
+      if(res.status === 200) {
+        var user = res.data;
+        await collections.users.update({ username: storedAuth.username }, { $set: user }, { upsert: true });
+      }
+    }
+    else {
+      throw new Error('Not logged in!');
+    }
+  }
+  else {
+    throw new Error('Too many requests!');
+  }
+}

@@ -79,7 +79,7 @@ class Recover extends React.Component {
     if(typeof this.settingsListener === 'function') { this.settingsListener(); }
   }
   redirect() {
-    this.props.history.replace('/login');
+    this.props.history.replace('/recover');
   }
   async recover() {
     this.setState({ loading: true });

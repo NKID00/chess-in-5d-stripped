@@ -47,12 +47,18 @@ class ProfileMenu extends React.Component {
               <MenuList autoFocusItem={this.state.showMenu}>
                 <MenuItem disabled>{this.props.username}</MenuItem>
                 <MenuItem
-                  disabled
                   onClick={() => {
                     this.props.history.push('/profile');
                   }}
                 >
                   <Trans>Edit Profile</Trans>
+                </MenuItem>
+                <MenuItem
+                  onClick={() => {
+                    this.props.history.push('/settings');
+                  }}
+                >
+                  <Trans>Settings</Trans>
                 </MenuItem>
                 <Divider />
                 <MenuItem
