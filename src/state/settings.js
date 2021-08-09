@@ -10,7 +10,7 @@ const defaultSettings = {
   xmppBosh: false,
   autoUpdate: true,
   quickPlay: {
-    variants: ['standard'],
+    variants: ['turn_zero'],
     formats: ['blitz', 'rapid']
   }
 };

@@ -77,7 +77,7 @@ export default class QuickPlayMenu extends React.Component {
                     }
                   }}
                 >
-                  <Trans>Quick Play</Trans>
+                  <Trans><s>Quick Play</s> <i>WIP</i></Trans>
                 </Button>
               </Box>
             </Tooltip>
@@ -101,7 +101,7 @@ export default class QuickPlayMenu extends React.Component {
                       }
                     }}
                   >
-                    <Trans>Ranked Play</Trans>
+                    <Trans><s>Ranked Play</s> <i>WIP</i></Trans>
                   </Button>
                 </Box>
               </Tooltip>
@@ -132,7 +132,7 @@ export default class QuickPlayMenu extends React.Component {
                 }
               }}
             >
-              <Trans>Quick Play</Trans>
+              <Trans><s>Quick Play</s> <i>WIP</i></Trans>
             </Button>
           </Box>
           <Box p={1} width={1} height={50}>
@@ -146,7 +146,7 @@ export default class QuickPlayMenu extends React.Component {
                 }
               }}
             >
-              <Trans>Ranked Play</Trans>
+              <Trans><s>Ranked Play</s> <i>WIP</i></Trans>
             </Button>
           </Box>
           <Box p={1} width={1} height={50}>
