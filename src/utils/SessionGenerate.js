@@ -9,6 +9,7 @@ export const generate = (variant = 'standard', format = null) => {
     variant: variant,
     format: null,
     ranked: false,
+    offerDraw: false,
     started: true,
     startDate: Date.now(),
     ended: false,

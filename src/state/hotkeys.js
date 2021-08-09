@@ -20,7 +20,7 @@ export const set = (hotkeys, emitter = null) => {
 
 export const get = () => {
   var storedHotkeys = store.get('hotkeys');
-  if(typeof storedHotkeys === 'object') {
+  if(typeof storedHotkeys === 'object' && storedHotkeys !== null) {
     return deepmerge(defaultHotkeys, storedHotkeys);
   }
   return defaultHotkeys;

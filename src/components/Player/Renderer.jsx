@@ -53,7 +53,7 @@ export default class Renderer extends React.Component {
   chessRenderer = null;
   updatePalette() {
     //Update chessRenderer palette based on global palette settings and local palette props
-    if(typeof this.props.palette === 'object') {
+    if(typeof this.props.palette === 'object' && this.props.palette !== null) {
       this.chessRenderer.global.palette(deepmerge(this.props.palette, crPalette.get()));
     }
     else {
@@ -63,7 +63,7 @@ export default class Renderer extends React.Component {
   updateConfig() {
     //Update chessRenderer palette based on global palette settings and local palette props
     var newConfig = deepmerge({ app: { interactive: true } }, crConfig.get());
-    if(typeof this.props.config === 'object') {
+    if(typeof this.props.config === 'object' && this.props.config !== null) {
       this.chessRenderer.global.config(deepmerge(newConfig, this.props.config));
     }
     else {
@@ -87,34 +87,34 @@ export default class Renderer extends React.Component {
     }
   }
   updateRenderer() {
-    if(typeof this.props.board === 'object') {
+    if(typeof this.props.board === 'object' && this.props.board !== null) {
       this.chessRenderer.global.board(this.props.board, true);
     }
-    if(typeof this.props.actionHistory === 'object') {
+    if(typeof this.props.actionHistory === 'object' && this.props.actionHistory !== null) {
       this.chessRenderer.global.actionHistory(this.props.actionHistory, true);
     }
-    if(typeof this.props.moveBuffer === 'object') {
+    if(typeof this.props.moveBuffer === 'object' && this.props.moveBuffer !== null) {
       this.chessRenderer.global.moveBuffer(this.props.moveBuffer, true);
     }
-    if(typeof this.props.checks === 'object') {
+    if(typeof this.props.checks === 'object' && this.props.checks !== null) {
       this.chessRenderer.global.checks(this.props.checks, true);
     }
-    if(typeof this.props.board === 'object') {
+    if(typeof this.props.board === 'object' && this.props.board !== null) {
       this.chessRenderer.global.emitter.emit('boardUpdate', this.props.board);
     }
-    if(typeof this.props.actionHistory === 'object') {
+    if(typeof this.props.actionHistory === 'object' && this.props.actionHistory !== null) {
       this.chessRenderer.global.emitter.emit('actionHistoryUpdate', this.props.actionHistory);
     }
-    if(typeof this.props.moveBuffer === 'object') {
+    if(typeof this.props.moveBuffer === 'object' && this.props.moveBuffer !== null) {
       this.chessRenderer.global.emitter.emit('moveBufferUpdate', this.props.moveBuffer);
     }
-    if(typeof this.props.checks === 'object') {
+    if(typeof this.props.checks === 'object' && this.props.checks !== null) {
       this.chessRenderer.global.emitter.emit('checksUpdate', this.props.checks);
     }
-    if(typeof this.props.availableMoves === 'object') {
+    if(typeof this.props.availableMoves === 'object' && this.props.availableMoves !== null) {
       this.chessRenderer.global.availableMoves(this.props.availableMoves);
     }
-    if(typeof this.props.pastAvailableMoves === 'object') {
+    if(typeof this.props.pastAvailableMoves === 'object' && this.props.pastAvailableMoves !== null) {
       this.chessRenderer.global.pastAvailableMoves(this.props.pastAvailableMoves);
     }
   }

@@ -19,7 +19,7 @@ MongoDB query (given variables `username`, `variants`, `formats`, and `ranked`):
     { started: false },
     { variant: { $in: variants } },
     { format: { $in: formats } },
-    { $or: [ { white: null }, { black: null} ] },
+    { $or: [ { white: null }, { black: null } ] },
     { $not: { requestJoin: username } },
     { ranked: ranked }
   ]

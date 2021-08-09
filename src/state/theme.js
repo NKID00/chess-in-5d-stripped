@@ -86,7 +86,7 @@ export const set = (theme, emitter = null) => {
 
 export const get = () => {
   var storedTheme = store.get('theme');
-  if(typeof storedTheme === 'object') {
+  if(typeof storedTheme === 'object' && storedTheme !== null) {
     return deepmerge(defaultTheme, storedTheme);
   }
   return defaultTheme;

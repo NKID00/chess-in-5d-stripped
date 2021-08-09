@@ -72,7 +72,7 @@ export const set = (palette, emitter = null) => {
 
 export const get = () => {
   var storedPalette = store.get('palette');
-  if(typeof storedPalette === 'object') {
+  if(typeof storedPalette === 'object' && storedPalette !== null) {
     return deepmerge(defaultPalette, storedPalette);
   }
   return defaultPalette;

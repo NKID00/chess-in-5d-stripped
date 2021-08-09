@@ -19,7 +19,7 @@ export const set = (auth, emitter = null) => {
 
 export const get = () => {
   var storedAuth = store.get('auth');
-  if(typeof storedAuth === 'object') {
+  if(typeof storedAuth === 'object' && storedAuth !== null) {
     return deepmerge(defaultAuth, storedAuth);
   }
   return defaultAuth;
@@ -28,7 +28,7 @@ export const get = () => {
 export const isLoggedIn = () => {
   var currentTime = Date.now();
   var storedAuth = store.get('auth');
-  if(typeof storedAuth === 'object') {
+  if(typeof storedAuth === 'object' && storedAuth !== null) {
     storedAuth = deepmerge(defaultAuth, storedAuth);
   }
   else {

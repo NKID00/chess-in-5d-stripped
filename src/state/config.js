@@ -135,7 +135,7 @@ export const set = (config, emitter = null) => {
 
 export const get = () => {
   var storedConfig = store.get('config');
-  if(typeof storedConfig === 'object') {
+  if(typeof storedConfig === 'object' && storedConfig !== null) {
     return deepmerge(defaultConfig, storedConfig);
   }
   return defaultConfig;

@@ -34,12 +34,22 @@ export default class QuickPlayOptions extends React.Component {
     let vAF = (await variantsAndFormats.get());
     let variants = this.chess.variants.filter(e => e.shortName !== 'custom');
     let formats = this.chessClock.formats;
-    this.setState({
-      variants: variants.filter(variant => vAF.variants.includes(variant.shortName)),
-      formats: formats.filter(format => vAF.formats.includes(format.shortName)),
-      selectedVariants: this.state.selectedVariants.filter(variantShort => vAF.variants.includes(variantShort)),
-      selectedFormats: this.state.selectedFormats.filter(formatShort => vAF.formats.includes(formatShort))
-    });
+    if(vAF.variants.length > 0) {
+      this.setState({
+        variants: variants.filter(variant => vAF.variants.includes(variant.shortName)),
+        formats: formats.filter(format => vAF.formats.includes(format.shortName)),
+        selectedVariants: settings.get().quickPlay.variants.filter(variantShort => vAF.variants.includes(variantShort)),
+        selectedFormats: settings.get().quickPlay.formats.filter(formatShort => vAF.formats.includes(formatShort))
+      });
+    }
+    else {
+      this.setState({
+        variants: variants,
+        formats: formats,
+        selectedVariants: settings.get().quickPlay.variants,
+        selectedFormats: settings.get().quickPlay.formats
+      });
+    }
   }
   componentDidMount() {
     this.rankedFilter();
@@ -47,10 +57,16 @@ export default class QuickPlayOptions extends React.Component {
     this.authListener = this.context.on('authUpdate', () => {
       this.rankedFilter();
     });
+    //Update state if settings is changed
+    this.settingsListener = this.context.on('settingsUpdate', () => {
+      this.rankedFilter();
+    });
   }
   componentWillUnmount() {
     //Stop listening to auth store changes
     if(typeof this.authListener === 'function') { this.authListener(); }
+    //Stop listening to settings changes
+    if(typeof this.settingsListener === 'function') { this.settingsListener(); }
   }
   render() {
     return (
@@ -63,9 +79,9 @@ export default class QuickPlayOptions extends React.Component {
               value={this.state.selectedVariants}
               onChange={(event) => {
                 if(event.target.value.length > 0) {
-                  this.setState({
-                    selectedVariants: event.target.value
-                  });
+                  settings.set({
+                    quickPlay: { variants: event.target.value }
+                  }, this.context);
                 }
               }}
               label={<Trans>Variants</Trans>}
@@ -86,9 +102,9 @@ export default class QuickPlayOptions extends React.Component {
               value={this.state.selectedFormats}
               onChange={(event) => {
                 if(event.target.value.length > 0) {
-                  this.setState({
-                    selectedFormats: event.target.value
-                  });
+                  settings.set({
+                    quickPlay: { formats: event.target.value }
+                  }, this.context);
                 }
               }}
               label={<Trans>Formats</Trans>}

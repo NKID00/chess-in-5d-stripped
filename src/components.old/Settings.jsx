@@ -23,7 +23,7 @@ export default class Settings extends React.Component {
     showCheckGhost: true
   };
   componentDidMount() {
-    if(typeof this.props.value === 'object') {
+    if(typeof this.props.value === 'object' && this.props.value !== null) {
       this.setState(this.props.value);
     }
   }
