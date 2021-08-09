@@ -21,6 +21,7 @@ import TextField from '@material-ui/core/TextField';
 import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
 
+import Flags from 'country-flag-icons/react/3x2';
 import { CountryRegionData } from 'react-country-region-selector';
 import { FilePond } from 'react-filepond';
 import Jimp from 'jimp';
@@ -44,6 +45,8 @@ class Profile extends React.Component {
     avatar: null,
     bio: '',
     country: '',
+    email: '',
+    showEmail: false,
   }
   async getSelf() {
     if(!authStore.isLoggedIn()) {
@@ -81,6 +84,7 @@ class Profile extends React.Component {
     }
     await users.update(data);
     await this.getSelf();
+    window.location.reload();
   }
   componentDidMount() {
     this.getSelf();
@@ -190,25 +194,47 @@ class Profile extends React.Component {
                   </Typography>
                 </Grid>
                 <Grid item xs={12}>
-                  <FormControl fullWidth variant='outlined'>
-                    <InputLabel><Trans>Country</Trans></InputLabel>
-                    <Select
-                      value={countries.alpha3ToAlpha2(this.state.country, 'en')}
-                      onChange={(event) => {
-                        this.setState({ country: countries.alpha2ToAlpha3(event.target.value[1], 'en') });
-                      }}
-                      label={<Trans>Country</Trans>}
-                    >
-                      <MenuItem value=''>
-                        <Trans>Select Country</Trans>
-                      </MenuItem>
-                      {CountryRegionData.map((option) => (
-                        <MenuItem key={option[0]} value={option}>
-                          {option[0]}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  </FormControl>
+                  <Grid container spacing={2}>
+                    {this.state.country.length > 0 ?
+                      <Grid item xs={2}>
+                        {React.createElement(
+                          Flags[countries.alpha3ToAlpha2(this.state.country, 'en')],
+                          {
+                            title: this.state.country
+                          },
+                          null
+                        )}
+                      </Grid>
+                    :
+                      <></>
+                    }
+                    <Grid item xs>
+                      <FormControl fullWidth variant='outlined'>
+                        <InputLabel><Trans>Country</Trans></InputLabel>
+                        <Select
+                          value={this.state.country.length > 0 ? countries.alpha3ToAlpha2(this.state.country, 'en') : this.state.country}
+                          onChange={(event) => {
+                            if(event.target.value.length > 0) {
+                              this.setState({ country: countries.alpha2ToAlpha3(event.target.value, 'en') });
+                            }
+                            else {
+                              this.setState({ country: '' });
+                            }
+                          }}
+                          label={<Trans>Country</Trans>}
+                        >
+                          <MenuItem value=''>
+                            <Trans>Select Country</Trans>
+                          </MenuItem>
+                          {CountryRegionData.map((option) => (
+                            <MenuItem key={option[0]} value={option[1]}>
+                              {option[0]}
+                            </MenuItem>
+                          ))}
+                        </Select>
+                      </FormControl>
+                    </Grid>
+                  </Grid>
                 </Grid>
                 <Grid item xs={12}>
                   <Typography variant='h6'>

@@ -10,11 +10,13 @@ export const init = () => {
       users: Datastore.create({ filename: 'users', autoload: true }),
       pastSessions: Datastore.create({ filename: 'pastSessions', autoload: true }),
       currentSessions: Datastore.create({ filename: 'currentSessions', autoload: true }),
+      sessionRequests: Datastore.create({ filename: 'sessionRequests', autoload: true }),
       rankings: Datastore.create({ filename: 'rankings', autoload: true })
     };
     collections.users.ensureIndex({ fieldName: 'username' });
     collections.pastSessions.ensureIndex({ fieldName: 'id' });
     collections.currentSessions.ensureIndex({ fieldName: 'id' });
+    collections.sessionRequests.ensureIndex({ fieldName: 'id' });
     collections.rankings.ensureIndex({ fieldName: 'id' });
   }
   return collections;

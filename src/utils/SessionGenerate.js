@@ -1,12 +1,13 @@
 import Chess from '5d-chess-js';
+import ChessClock from '5d-chess-clock';
 
-export const generate = (variant = 'standard', format = 'untimed') => {
+export const generate = (variant = 'standard', format = null) => {
   let res = {
     id: String(Date.now()),
     white: '',
     black: '',
     variant: variant,
-    format: format,
+    format: null,
     ranked: false,
     started: true,
     startDate: Date.now(),
@@ -22,17 +23,21 @@ export const generate = (variant = 'standard', format = 'untimed') => {
     winner: null,
     winCause: null,
   };
-  
-  try {
-    let chess = new Chess();
-    if(variant.includes('[')) {
-      chess.import(variant);
-    }
-    else {
-      chess.reset(variant);
-    }
-    res.board = chess.board;
+  //Setup chess board
+  let chess = new Chess();
+  if(variant.includes('[')) {
+    chess.import(variant);
   }
-  catch(err) {}
+  else {
+    chess.reset(variant);
+  }
+  res.board = chess.board;
+  //Setup chess clock
+  let chessClock = new ChessClock();
+  if(format !== null) {
+    chessClock.import(format);
+    res.format = chessClock.format;
+    res.timed = chessClock.state();
+  }
   return res;
 }

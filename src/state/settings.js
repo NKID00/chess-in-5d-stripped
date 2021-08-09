@@ -9,6 +9,10 @@ const defaultSettings = {
   xmpp: true,
   xmppBosh: false,
   autoUpdate: true,
+  quickPlay: {
+    variants: ['standard'],
+    formats: ['blitz', 'rapid']
+  }
 };
 
 export const set = (settings, emitter = null) => {
