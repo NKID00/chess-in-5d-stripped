@@ -93,12 +93,18 @@ export default class Status extends React.Component {
         blackIcon = <Box mx={1}><CircularProgress size={25} thickness={4} /></Box>;
       }
     }
-    if(this.props.isCheckmate) {
+    if(this.props.isCheckmate || this.props.isFlagged) {
       return (
         <Box p={1} ref={this.rootRef} style={{ height: '100%' }}>
           <Tooltip
             arrow
-            title={<Trans>In Checkmate</Trans>}
+            title={this.props.isCheckmate ?
+              <Trans>By Checkmate</Trans>
+            : this.props.isFlagged ?
+              <Trans>By Time</Trans>
+            :
+              <Trans>By Forfeit</Trans>
+            }
             placement='top'
           >
             <CustomCheckBadge
@@ -136,27 +142,37 @@ export default class Status extends React.Component {
         </Box>
       );
     }
-    if(this.props.isStalemate) {
+    if(this.props.isStalemate || this.props.isDraw) {
       return (
         <Box p={1} ref={this.rootRef} style={{ height: '100%' }}>
-          <Box
-            py={0.75}
-            textAlign='center'
-            style={{
-              height: '100%',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              color: '#ffffff',
-              backgroundColor: '#777777',
-              margin: 0
-            }}
-            border={5}
-            borderRadius={5}
-            borderColor='#777777'
+          <Tooltip
+            arrow
+            title={this.props.isStalemate ?
+              <Trans>By Stalemate</Trans>
+            :
+              <Trans>By Agreement</Trans>
+            }
+            placement='top'
           >
-            <Typography><Trans>Draw</Trans></Typography>
-          </Box>
+            <Box
+              py={0.75}
+              textAlign='center'
+              style={{
+                height: '100%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                color: '#ffffff',
+                backgroundColor: '#777777',
+                margin: 0
+              }}
+              border={5}
+              borderRadius={5}
+              borderColor='#777777'
+            >
+              <Typography><Trans>Draw</Trans></Typography>
+            </Box>
+          </Tooltip>
         </Box>
       );
     }

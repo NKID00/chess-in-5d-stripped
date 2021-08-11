@@ -1,4 +1,5 @@
 import React from 'react';
+import { withRouter } from 'react-router';
 
 import { Trans } from '@lingui/macro';
 
@@ -30,8 +31,7 @@ import Chess from '5d-chess-js';
 import ChessClock from '5d-chess-clock';
 
 import EmitterContext from 'utils/EmitterContext';
-import * as authStore from 'state/auth';
-import * as users from 'network/users';
+import * as SessionInfo from 'utils/SessionInfo';
 
 const deepequal = require('fast-deep-equal');
 
@@ -39,7 +39,7 @@ const deepequal = require('fast-deep-equal');
 Props:
  - session - Associated session object (in the format described by SessionFormat.md)
 */
-export default class SessionCard extends React.Component {
+class SessionCard extends React.Component {
   static contextType = EmitterContext;
   chess = new Chess();
   chessClock = new ChessClock();
@@ -71,79 +71,17 @@ export default class SessionCard extends React.Component {
       let blackPlayerName = '';
       let blackPlayerType = 'blank'; //'human', 'bot', or 'blank'
       let blackUsername = '';
-      if(isServer) {
-        //Define a function that grabs information from user object returned by 5d-chess-server
-        const processUser = (user, player = 'white') => {
-          if(player === 'white') {
-            if(user.fullname.length > 0) {
-              whitePlayerName = user.fullname;
-            }
-            else {
-              whitePlayerName = user.username;
-            }
-            whitePlayerType = user.bot ? 'bot' : 'human';
-            whiteUsername = user.username;
-          }
-          else if(player === 'black') {
-            if(user.fullname.length > 0) {
-              blackPlayerName = user.fullname;
-            }
-            else {
-              blackPlayerName = user.username;
-            }
-            blackPlayerType = user.bot ? 'bot' : 'human';
-            blackUsername = user.username;
-          }
-          if(typeof player === 'string') {
-            if(authStore.isLoggedIn()) {
-              let selfUsername = authStore.get().username;
-              if(selfUsername === user.username) {
-                canPlay = true;
-              }
-            }
-          }
-        };
-        //Extract user info from 5d-chess-server
-        if(typeof this.props.session.white === 'string' && typeof this.props.session.black === 'string') {
-          whitePlayerName = this.props.session.white;
-          whiteUsername = this.props.session.white;
-          blackPlayerName = this.props.session.black;
-          blackUsername = this.props.session.black;
-          let usersData = (await users.get({ username: { $in: [this.props.session.white, this.props.session.black] } }));
-          for(let user of usersData) {
-            processUser(
-              user,
-              user.username === this.props.session.white ?
-                'white'
-              : user.username === this.props.session.black ?
-                'black'
-              :
-                null
-            );
-          }
-        }
-        else if(typeof this.props.session.white === 'string' && typeof this.props.session.black !== 'string') {
-          whitePlayerName = this.props.session.white;
-          whiteUsername = this.props.session.white;
-          let user = (await users.getOne(this.props.session.white));
-          processUser(user, 'white');
-        }
-        else if(typeof this.props.session.white !== 'string' && typeof this.props.session.black === 'string') {
-          blackPlayerName = this.props.session.black;
-          blackUsername = this.props.session.black;
-          let user = (await users.getOne(this.props.session.black));
-          processUser(user, 'black');
-        }
-      }
-      else {
-        whitePlayerName = this.props.session.white;
-        whitePlayerType = this.props.session.white.length > 0 ? 'bot' : 'human';
-        whiteUsername = this.props.session.white;
-        blackPlayerName = this.props.session.black;
-        blackPlayerType = this.props.session.white.length > 0 ? 'bot' : 'human';
-        blackUsername = this.props.session.black;
-        canPlay = !this.props.session.ended;
-      }
+      //Get session info
+      let sessionInfo = await SessionInfo.getInfo(this.props.session);
+      isServer = sessionInfo.isServer;
+      whitePlayerName = sessionInfo.whitePlayerName;
+      whitePlayerType = sessionInfo.whitePlayerType;
+      whiteUsername = sessionInfo.whiteUsername;
+      blackPlayerName = sessionInfo.blackPlayerName;
+      blackPlayerType = sessionInfo.blackPlayerType;
+      blackUsername = sessionInfo.blackUsername;
+      canPlay = sessionInfo.canPlay;
+
       //Extract variant long name
       let variant = this.props.session.variant;
       if(this.props.session.variant.includes('[')) {
@@ -343,7 +281,17 @@ export default class SessionCard extends React.Component {
               <Trans>Format: {this.state.format}</Trans>
             </Typography>
           </Box>
-          <Button color='primary'>
+          <Button
+            color='primary'
+            onClick={() => {
+              if(this.props.session.ended) {
+                this.props.history.push('/analyze?id=' + this.props.session.id);
+              }
+              else {
+                this.props.history.push('/play?id=' + this.props.session.id);
+              }
+            }}
+          >
             {this.props.session.ended ?
               <Trans>Analyze</Trans>
             : this.state.canPlay ?
@@ -357,3 +305,5 @@ export default class SessionCard extends React.Component {
     );
   }
 }
+
+export default withRouter(SessionCard);

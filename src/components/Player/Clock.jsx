@@ -48,7 +48,7 @@ export default class Clock extends React.Component {
         this.whiteActive = this.props.whiteActive;
       }
     }
-    //Calculate time update
+    //Calculate time update (part 1)
     if(typeof this.lastUpdate === 'undefined') {
       this.timeDelta = 0;
       this.lastUpdate = Date.now();
@@ -57,6 +57,23 @@ export default class Clock extends React.Component {
       this.timeDelta = Date.now() - this.lastUpdate;
       this.lastUpdate = Date.now();
     }
+    //Freeze time update calulations if needed
+    if(!this.props.active) {
+      this.timeDelta = 0;
+      if(typeof this.props.whiteTimeLeft === 'number') {
+        this.whiteTimeLeft = this.props.whiteTimeLeft;
+      }
+      if(typeof this.props.whiteDelayLeft === 'number') {
+        this.whiteDelayLeft = this.props.whiteDelayLeft;
+      }
+      if(typeof this.props.blackTimeLeft === 'number') {
+        this.blackTimeLeft = this.props.blackTimeLeft;
+      }
+      if(typeof this.props.blackDelayLeft === 'number') {
+        this.blackDelayLeft = this.props.blackDelayLeft;
+      }
+    }
+    //Calculate time update (part 2)
     if(this.whiteActive && (this.whiteTimeLeft > 0 || this.whiteDelayLeft > 0)) {
       this.whiteDelayLeft -= this.timeDelta;
       if(this.whiteDelayLeft < 0) {
@@ -270,7 +287,7 @@ export default class Clock extends React.Component {
           <Grid item xs={6} style={{ height: '100%' }}>
             <Box
               className='borderBlink'
-              animate={1}
+              animate={this.props.active ? 1 : 0}
               py={0.75}
               textAlign='center'
               style={{
@@ -302,7 +319,7 @@ export default class Clock extends React.Component {
           <Grid item xs={6} style={{ height: '100%' }}>
             <Box
               className='borderBlink'
-              animate={1}
+              animate={this.props.active ? 1 : 0}
               py={0.75}
               textAlign='center'
               style={{

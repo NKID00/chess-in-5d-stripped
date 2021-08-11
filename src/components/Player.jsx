@@ -52,7 +52,10 @@ Status Props:
  - statusIsLoading
  - statusIsLoadingPlayer
  - statusIsCheckmate
+ - statusIsFlagged
+ - statusIsForfeit
  - statusIsStalemate
+ - statusIsDraw
  - statusIsCheck
 
 Analyze Props:
@@ -65,6 +68,7 @@ Analyze Props:
 
 Clock Props:
  - allowClock
+ - clockActive
  - clockWhiteTimeLeft
  - clockWhiteDelayLeft
  - clockBlackTimeLeft
@@ -119,6 +123,19 @@ export default class Player extends React.Component {
   startRendererInteraction() {
     crConfig.set({ app: { interactive: true } }, this.context);
   }
+  autoFlip() {
+    //Auto flip functionality
+    let currentConfig = crConfig.get();
+    if(currentConfig.extra.autoFlip) {
+      crConfig.set({
+        board: {
+          flipTimeline: !this.props.statusWhiteActive,
+          flipRank: !this.props.statusWhiteActive,
+          flipFile: !this.props.statusWhiteActive
+        }
+      }, this.context);
+    }
+  }
   componentDidMount() {
     this.resize();
     this.resizeListener = this.resize.bind(this);
@@ -128,6 +145,7 @@ export default class Player extends React.Component {
     if(this.rootRef.current) {
       this.rootRef.current.addEventListener('mouseenter', this.startRendererInteractionListener);
     }
+    this.autoFlip();
   }
   componentDidUpdate(prevProps, prevState) {
     if(!deepequal(prevState.menu, this.state.menu)) {
@@ -143,17 +161,7 @@ export default class Player extends React.Component {
       }
     }
     if(prevProps.statusWhiteActive !== this.props.statusWhiteActive) {
-      //Auto flip functionality
-      let currentConfig = crConfig.get();
-      if(currentConfig.extra.autoFlip) {
-        crConfig.set({
-          board: {
-            flipTimeline: !this.props.statusWhiteActive,
-            flipRank: !this.props.statusWhiteActive,
-            flipFile: !this.props.statusWhiteActive
-          }
-        }, this.context);
-      }
+      this.autoFlip();
     }
   }
   componentWillUnmount() {
@@ -230,6 +238,7 @@ export default class Player extends React.Component {
           onMouseLeave={() => { crConfig.set({ app: { interactive: true } }, this.context); }}
         >
           <Clock
+            active={this.props.clockActive}
             whiteTimeLeft={this.props.clockWhiteTimeLeft}
             whiteDelayLeft={this.props.clockWhiteDelayLeft}
             blackTimeLeft={this.props.clockBlackTimeLeft}
@@ -352,7 +361,10 @@ export default class Player extends React.Component {
             isLoading={this.props.statusIsLoading}
             isLoadingPlayer={this.props.statusIsLoadingPlayer}
             isCheckmate={this.props.statusIsCheckmate}
+            isFlagged={this.props.statusIsFlagged}
+            isForfeit={this.props.statusIsForfeit}
             isStalemate={this.props.statusIsStalemate}
+            isDraw={this.props.statusIsDraw}
             isCheck={this.props.statusIsCheck}
           />
         </Card>

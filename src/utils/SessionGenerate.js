@@ -37,6 +37,7 @@ export const generate = (variant = 'standard', format = null) => {
   let chessClock = new ChessClock();
   if(format !== null) {
     chessClock.import(format);
+    chessClock.start(res.board, res.startDate);
     res.format = chessClock.format;
     res.timed = chessClock.state();
   }

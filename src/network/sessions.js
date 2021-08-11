@@ -10,30 +10,65 @@ const collections = require('state/db').init();
 export const getCurrentSession = async (id) => {
   //Look for session in db
   let existingSession = (await collections.currentSessions.findOne({ id: id }));
-  if(existingSession !== null) {
-    //Check if session is online
-    if(typeof existingSession.host !== 'undefined') {
-      let lastQuery = store.get('network/session/get');
-      let storedAuth = authStore.get();
-      let serverUrl = settings.get().server;
-      if(typeof lastQuery !== 'number') { lastQuery = 0; }
-      if(Date.now() - lastQuery > 333 && storedAuth.token !== null) {
-        let options = {
-          headers: {
-            'Authorization': storedAuth.token
-          }
-        };
-        try {
-          let res = (await axios.get(`${serverUrl}/sessions/${id}`, options));
-          if(res.status === 200) {
-            existingSession = res.data;
-            await collections.currentSessions.update({ id: existingSession.id }, { $set: existingSession }, { upsert: true });
-          }
-          store.set('network/session/get', Date.now());
+  if((existingSession !== null && typeof existingSession.host !== 'undefined') || existingSession === null) {
+    let lastQuery = store.get('network/session/get');
+    let storedAuth = authStore.get();
+    let serverUrl = settings.get().server;
+    if(typeof lastQuery !== 'number') { lastQuery = 0; }
+    if(Date.now() - lastQuery > 333 && storedAuth.token !== null) {
+      let options = {
+        headers: {
+          'Authorization': storedAuth.token
         }
-        catch(err) {}
+      };
+      try {
+        let res = (await axios.get(`${serverUrl}/sessions/${id}`, options));
+        if(res.status === 200) {
+          existingSession = res.data;
+          await collections.currentSessions.update({ id: existingSession.id }, { $set: existingSession }, { upsert: true });
+        }
+        store.set('network/session/get', Date.now());
       }
+      catch(err) {}
     }
+  }
+  if(existingSession && existingSession._id) {
+    delete existingSession._id;
+  }
+  return existingSession;
+}
+
+export const getSession = async (id) => {
+  //Look for session in db
+  let existingSession = (await collections.pastSessions.findOne({ id: id }));
+  if(existingSession !== null) {
+    return existingSession;
+  }
+  existingSession = (await collections.sessionCache.findOne({ id: id }));
+  if((existingSession !== null && typeof existingSession.host !== 'undefined') || existingSession === null) {
+    let lastQuery = store.get('network/session/get');
+    let storedAuth = authStore.get();
+    let serverUrl = settings.get().server;
+    if(typeof lastQuery !== 'number') { lastQuery = 0; }
+    if(Date.now() - lastQuery > 333 && storedAuth.token !== null) {
+      let options = {
+        headers: {
+          'Authorization': storedAuth.token
+        }
+      };
+      try {
+        let res = (await axios.get(`${serverUrl}/sessions/${id}`, options));
+        if(res.status === 200) {
+          existingSession = res.data;
+          await collections.sessionCache.update({ id: existingSession.id }, { $set: existingSession }, { upsert: true });
+        }
+        store.set('network/session/get', Date.now());
+      }
+      catch(err) {}
+    }
+  }
+  if(existingSession && existingSession._id) {
+    delete existingSession._id;
   }
   return existingSession;
 }

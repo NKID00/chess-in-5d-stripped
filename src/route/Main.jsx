@@ -6,6 +6,7 @@ import Paper from '@material-ui/core/Paper';
 import Analyze from 'route/Main/Analyze';
 import MainAppBar from 'route/MainAppBar';
 import Dashboard from 'route/Main/Dashboard';
+import Play from 'route/Main/Play';
 import PlayMenu from 'route/Main/PlayMenu';
 import PlayTmp from 'route/Main/PlayTmp';
 import Profile from 'route/Main/Profile';
@@ -48,6 +49,9 @@ export default class Main extends React.Component {
             <Analyze />
           </Route>
           <Route path='/play'>
+            <Play />
+          </Route>
+          <Route path='/play-tmp'>
             <PlayTmp />
           </Route>
           <Route path='/play-menu'>
