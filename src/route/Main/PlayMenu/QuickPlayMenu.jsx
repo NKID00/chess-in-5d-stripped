@@ -1,4 +1,5 @@
 import React from 'react';
+import { withRouter } from 'react-router';
 
 import { Trans } from '@lingui/macro';
 
@@ -26,7 +27,7 @@ Props:
  - onRanked
  - onLocal
 */
-export default class QuickPlayMenu extends React.Component {
+class QuickPlayMenu extends React.Component {
   static contextType = EmitterContext;
   state = {
     loggedIn: authStore.isLoggedIn()
@@ -34,7 +35,7 @@ export default class QuickPlayMenu extends React.Component {
   async onLocal() {
     let variants = settings.get().quickPlay.variants;
     let formats = settings.get().quickPlay.formats;
-    await sessions.createSession(
+    let newSession = await sessions.createSession(
       false,
       variants[0],
       formats[0],
@@ -42,6 +43,7 @@ export default class QuickPlayMenu extends React.Component {
       false,
       this.context
     );
+    this.props.history.push('/play?id=' + newSession.id);
   }
   componentDidMount() {
     //Update state if auth store is changed
@@ -182,3 +184,5 @@ export default class QuickPlayMenu extends React.Component {
     );
   }
  }
+
+ export default withRouter(QuickPlayMenu);

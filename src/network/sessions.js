@@ -96,6 +96,7 @@ export const createSession = async (online = false, variant = 'standard', format
         await collections.sessionRequests.update({ id: newSession.id }, { $set: newSession }, { upsert: true });
         store.set('network/session/new', Date.now());
         emitter.emit('sessionsUpdate');
+        return newSession;
       }
       catch(err) {}
     }
@@ -104,6 +105,7 @@ export const createSession = async (online = false, variant = 'standard', format
     let newSession = SessionGenerate.generate(variant, format);
     await collections.currentSessions.update({ id: newSession.id }, { $set: newSession }, { upsert: true });
     emitter.emit('sessionsUpdate');
+    return newSession;
   }
 }
 

@@ -59,7 +59,7 @@ class Menu extends React.Component {
         <ListItem
           button
           onClick={() => {
-            this.props.history.push('/play-tmp');
+            this.props.history.push('/play-menu');
             if(typeof this.props.onClose === 'function') { this.props.onClose(); }
           }}
         >
