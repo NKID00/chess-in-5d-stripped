@@ -73,7 +73,7 @@ export const getSession = async (id) => {
   return existingSession;
 }
 
-export const createSession = async (online = false, variant = 'standard', format = null, player = 'white', ranked = false, emitter) => {
+export const createSession = async (online = false, variant = 'standard', format = null, player = 'white', ranked = false, emitter = null) => {
   if(online) {
     let lastQuery = store.get('network/session/new');
     let storedAuth = authStore.get();
@@ -95,7 +95,9 @@ export const createSession = async (online = false, variant = 'standard', format
         let newSession = res.data;
         await collections.sessionRequests.update({ id: newSession.id }, { $set: newSession }, { upsert: true });
         store.set('network/session/new', Date.now());
-        emitter.emit('sessionsUpdate');
+        if(emitter !== null) {
+          emitter.emit('sessionsUpdate');
+        }
         return newSession;
       }
       catch(err) {}
@@ -104,7 +106,9 @@ export const createSession = async (online = false, variant = 'standard', format
   else {
     let newSession = SessionGenerate.generate(variant, format);
     await collections.currentSessions.update({ id: newSession.id }, { $set: newSession }, { upsert: true });
-    emitter.emit('sessionsUpdate');
+    if(emitter !== null) {
+      emitter.emit('sessionsUpdate');
+    }
     return newSession;
   }
 }
@@ -143,7 +147,7 @@ const getPastSessions = async () => {
   return (await collections.pastSessions.find({}));
 }
 
-export const getSessions = async (emitter) => {
+export const getSessions = async (emitter = null) => {
   let sessions = {
     sessionRequests: [],
     currentSessions: [],
@@ -200,7 +204,9 @@ export const getSessions = async (emitter) => {
     }
     await Promise.all(bulkDbUpdates);
     store.set('network/sessions/get', Date.now());
-    emitter.emit('sessionsUpdate');
+    if(emitter !== null) {
+      emitter.emit('sessionsUpdate');
+    }
   }
   sessions.sessionRequests = (await collections.sessionRequests.find({}));
   sessions.currentSessions = (await collections.currentSessions.find({}).sort({ startDate: -1 }));

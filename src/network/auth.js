@@ -89,15 +89,19 @@ export const login = async (username, password, emitter) => {
   }
 }
 
-export const register = async (username, password, emitter) => {
+export const register = async (username, password, email, emitter) => {
   var serverUrl = settings.get().server;
   try {
-    var res = (await axios.post(`${serverUrl}/register`, {
+    let data = {
       username: username,
       password: password
-    }));
+    };
+    if(typeof email === 'string' && email.length <= 0) {
+      data.email = email;
+    }
+    let res = (await axios.post(`${serverUrl}/register`, data));
     if(res.status === 200) {
-      var currentTime = Date.now();
+      let currentTime = Date.now();
       authStore.set({
         token: res.data,
         lastOnline: currentTime,

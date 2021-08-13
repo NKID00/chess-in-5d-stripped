@@ -30,13 +30,13 @@ class Register extends React.Component {
   state = {
     auth: authStore.get(),
     loading: false,
-    usernameError: '',
-    password: '',
-    passwordError: '',
-    password2: '',
-    password2Error: '',
-    email: '',
-    emailError: '',
+    usernameError: null,
+    password: null,
+    passwordError: null,
+    password2: null,
+    password2Error: null,
+    email: null,
+    emailError: null,
     serverUrl: settings.get().server,
   }
   componentDidMount() {
@@ -85,10 +85,10 @@ class Register extends React.Component {
     try {
       if(this.state.password !== this.state.password2) {
         this.setState({
-          usernameError: '',
-          passwordError: '',
-          password2Error: 'Passwords do not match!',
-          emailError: '',
+          usernameError: null,
+          passwordError: null,
+          password2Error: <Trans>Passwords do not match!</Trans>,
+          emailError: null,
         });
       }
       else {
@@ -105,26 +105,34 @@ class Register extends React.Component {
       else if(res.status === 403) {
         if(res.data.error.includes('Username already exists!')) {
           this.setState({
-            usernameError: 'Username already taken!',
-            passwordError: '',
-            passwordError2: '',
-            emailError: '',
+            usernameError: <Trans>Username already taken!</Trans>,
+            passwordError: null,
+            passwordError2: null,
+            emailError: null,
           });
         }
         else if(res.data.error.includes('Username is invalid!')) {
           this.setState({
-            usernameError: res.data.error,
-            passwordError: '',
-            passwordError2: '',
-            emailError: '',
+            usernameError: <Trans>Invalid username!</Trans>,
+            passwordError: null,
+            passwordError2: null,
+            emailError: null,
           });
         }
         else if(res.data.error.includes('Username is blacklisted')) {
           this.setState({
-            usernameError: res.data.error,
-            passwordError: '',
-            passwordError2: '',
-            emailError: '',
+            usernameError: <Trans>Username blacklisted!</Trans>,
+            passwordError: null,
+            passwordError2: null,
+            emailError: null,
+          });
+        }
+        else if(res.data.error.includes('Email field is not a valid email')) {
+          this.setState({
+            usernameError: null,
+            passwordError: null,
+            passwordError2: null,
+            emailError: <Trans>Invalid email!</Trans>,
           });
         }
         else {
@@ -170,7 +178,7 @@ class Register extends React.Component {
                     autoComplete='username'
                     autoFocus
                     required
-                    error={this.state.usernameError.length > 0}
+                    error={this.state.usernameError}
                     helperText={this.state.usernameError}
                     value={this.state.auth.username}
                     onChange={(event) => {
@@ -186,7 +194,7 @@ class Register extends React.Component {
                     variant='outlined'
                     autoComplete='email'
                     type='email'
-                    error={this.state.emailError.length > 0}
+                    error={this.state.emailError}
                     helperText={this.state.emailError}
                     value={this.state.email}
                     onChange={(event) => {
@@ -203,7 +211,7 @@ class Register extends React.Component {
                     autoComplete='new-password'
                     type='password'
                     required
-                    error={this.state.passwordError.length > 0}
+                    error={this.state.passwordError}
                     helperText={this.state.passwordError}
                     value={this.state.password}
                     onChange={(event) => {
@@ -220,11 +228,16 @@ class Register extends React.Component {
                     autoComplete='new-password'
                     type='password'
                     required
-                    error={this.state.password2Error.length > 0}
+                    error={this.state.password2Error}
                     helperText={this.state.password2Error}
                     value={this.state.password2}
                     onChange={(event) => {
                       this.setState({ password2: event.target.value });
+                    }}
+                    onKeyPress={(event) => {
+                      if(event.key === 'Enter') {
+                        this.register();
+                      }
                     }}
                     label={<Trans>Confirm Password</Trans>}
                   />

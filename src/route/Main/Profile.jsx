@@ -307,7 +307,11 @@ class Profile extends React.Component {
               >
                 <Trans>Save</Trans>
               </Button>
-              <Button>
+              <Button
+                onClick={() => {
+                  this.props.history.push('/');
+                }}
+              >
                 <Trans>Cancel</Trans>
               </Button>
             </CardActions>
