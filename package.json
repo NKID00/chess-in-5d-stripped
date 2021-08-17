@@ -116,7 +116,6 @@
     ]
   },
   "dependencies": {
-    "@craco/craco": "^6.2.0",
     "@fontsource/domine": "^4.3.0",
     "@fontsource/eb-garamond": "^4.3.0",
     "@fontsource/exo": "^4.3.0",
@@ -182,6 +181,7 @@
     "throttle-debounce": "^3.0.1"
   },
   "devDependencies": {
+    "@craco/craco": "^6.2.0",
     "@lingui/cli": "^3.10.2",
     "@lingui/loader": "^3.10.2",
     "@lingui/macro": "^3.10.2",
