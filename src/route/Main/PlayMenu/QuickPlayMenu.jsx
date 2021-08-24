@@ -20,6 +20,7 @@ import EmitterContext from 'utils/EmitterContext';
 import * as authStore from 'state/auth';
 import * as settings from 'state/settings';
 import * as sessions from 'network/sessions';
+import * as quickplay from 'network/quickplay';
 
 /*
 Props:
@@ -30,7 +31,13 @@ Props:
 class QuickPlayMenu extends React.Component {
   static contextType = EmitterContext;
   state = {
-    loggedIn: authStore.isLoggedIn()
+    loggedIn: authStore.isLoggedIn(),
+    queueDuration: 0,
+    queueStarted: false,
+    matchFound: false,
+    ranked: false,
+    modalOpen: false,
+    opponentTimeout: false
   };
   async onLocal() {
     let variants = settings.get().quickPlay.variants;
@@ -44,6 +51,41 @@ class QuickPlayMenu extends React.Component {
       this.context
     );
     this.props.history.push('/play?id=' + newSession.id);
+  }
+  async delay(timeout = 0) {
+    await (new Promise((resolve) => {
+      window.setTimeout(resolve, timeout);
+    }));
+  }
+  async quickplay(ranked = false) {
+    let variants = settings.get().quickPlay.variants;
+    let formats = settings.get().quickPlay.formats;
+    this.setState({
+      queueDuration: 0,
+      queueStarted: true,
+      matchFound: false,
+      ranked: ranked,
+      opponentTimeout: false
+    });
+    try {
+      let matchStarted = false;
+      while(!matchStarted) {
+        //Start queue
+        await quickplay.startQueue(ranked, variants, formats);
+        let matchFound = null;
+        while(matchFound === null) {
+          let res = await quickplay.getQueue();
+          this.setState({ queueDuration: Date.now() - res.date });
+          matchFound = res.sessionId;
+          await this.delay(333);
+        }
+        this.setState({ matchFound: true });
+        //Confirm and wait for 
+      }
+    }
+    catch(err) {
+      this.setState({ queueStarted: false });
+    }
   }
   componentDidMount() {
     //Update state if auth store is changed

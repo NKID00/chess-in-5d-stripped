@@ -13,6 +13,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
 import CheckIcon from '@material-ui/icons/Check';
+import CloseIcon from '@material-ui/icons/Close';
 
 /*
 Props
@@ -20,6 +21,7 @@ Props
  - ranked
  - totalPlayers
  - found
+ - opponentTimeout
  - onCancel
 */
 export default class QuickPlayModal extends React.Component {
@@ -42,9 +44,14 @@ export default class QuickPlayModal extends React.Component {
             <Grid item xs={12}>
               <Box display='flex'>
                 <Box mx='auto'>
-                  {this.props.found ?
+                  {this.props.opponentTimeout ?
+                    <CloseIcon
+                      style={{ fontSize: 120 }}
+                      color='primary'
+                    />
+                  : this.props.found ?
                     <CheckIcon
-                    style={{ fontSize: 120 }}
+                      style={{ fontSize: 120 }}
                       color='primary'
                     />
                   :
@@ -64,8 +71,12 @@ export default class QuickPlayModal extends React.Component {
               <Box display='flex'>
                 <Box mx='auto'>
                   <Typography>
-                    {this.props.found ?
-                      <Trans>Match Found!</Trans>
+                    {this.props.opponentTimeout ?
+                      <Trans>Opponent did not accept, rejoining queue...</Trans>
+                    : this.props.found ?
+                      <Trans>Match Found! Waiting for match to start...</Trans>
+                    : this.props.ranked ?
+                      <Trans>{this.props.totalPlayers} players looking for ranked match</Trans>
                     :
                       <Trans>{this.props.totalPlayers} players looking for match</Trans>
                     }
@@ -77,6 +88,7 @@ export default class QuickPlayModal extends React.Component {
         </DialogContent>
         <DialogActions>
           <Button
+            disabled={this.props.found}
             onClick={() => {
               if(typeof this.props.onCancel === 'function') {
                 this.props.onCancel();

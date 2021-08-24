@@ -1,7 +1,5 @@
 import React from 'react';
 
-import Card from '@material-ui/core/Card';
-
 import StorybookSandbox from 'components/StorybookSandbox';
 import QuickPlayModal from 'route/Main/PlayMenu/QuickPlayModal';
 
@@ -10,7 +8,9 @@ export default {
   component: QuickPlayModal,
   args: {
     open: true,
+    ranked: false,
     found: false,
+    opponentTimeout: false,
     totalPlayers: 0
   }
 };
