@@ -15,6 +15,7 @@ import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 import QuickPlayOptions from 'route/Main/PlayMenu/QuickPlayMenu/QuickPlayOptions';
+import QuickPlayModal from 'route/Main/PlayMenu/QuickPlayModal';
 
 import EmitterContext from 'utils/EmitterContext';
 import * as authStore from 'state/auth';
@@ -22,21 +23,15 @@ import * as settings from 'state/settings';
 import * as sessions from 'network/sessions';
 import * as quickplay from 'network/quickplay';
 
-/*
-Props:
- - onQuick
- - onRanked
- - onLocal
-*/
 class QuickPlayMenu extends React.Component {
   static contextType = EmitterContext;
   state = {
     loggedIn: authStore.isLoggedIn(),
     queueDuration: 0,
+    totalPlayers: 0,
     queueStarted: false,
     matchFound: false,
     ranked: false,
-    modalOpen: false,
     opponentTimeout: false
   };
   async onLocal() {
@@ -52,8 +47,8 @@ class QuickPlayMenu extends React.Component {
     );
     this.props.history.push('/play?id=' + newSession.id);
   }
-  async delay(timeout = 0) {
-    await (new Promise((resolve) => {
+  delay(timeout = 0) {
+    return (new Promise((resolve) => {
       window.setTimeout(resolve, timeout);
     }));
   }
@@ -71,21 +66,51 @@ class QuickPlayMenu extends React.Component {
       let matchStarted = false;
       while(!matchStarted) {
         //Start queue
-        await quickplay.startQueue(ranked, variants, formats);
-        let matchFound = null;
+        let res = await quickplay.startQueue(ranked, variants, formats);
+        let matchFound = res.sessionId;
         while(matchFound === null) {
-          let res = await quickplay.getQueue();
+          await this.delay(333);
+          res = await quickplay.getQueue();
           this.setState({ queueDuration: Date.now() - res.date });
           matchFound = res.sessionId;
-          await this.delay(333);
         }
         this.setState({ matchFound: true });
-        //Confirm and wait for 
+        //Confirm and wait for session start
+        await quickplay.confirmQueue();
+        res = await sessions.getSession(matchFound);
+        matchStarted = res.started;
+        const maxWait = Date.now() + 5000;
+        while(!matchStarted || Date.now() > maxWait) {
+          await this.delay(333);
+          res = await sessions.getSession(matchFound);
+          matchStarted = res.started;
+        }
+        //Show opponent timeout if needed
+        if(!matchStarted) {
+          await quickplay.cancelQueue();
+          this.setState({ opponentTimeout: true });
+          await this.delay(2000);
+          this.setState({
+            matchFound: false,
+            opponentTimeout: false
+          });
+        }
+        else {
+          this.props.history.push('/play?id=' + matchFound);
+        }
       }
     }
     catch(err) {
       this.setState({ queueStarted: false });
     }
+  }
+  async cancel() {
+    await quickplay.cancelQueue();
+    this.setState({
+      queueStarted: false,
+      matchFound: false,
+      opponentTimeout: false
+    });
   }
   componentDidMount() {
     //Update state if auth store is changed
@@ -100,6 +125,14 @@ class QuickPlayMenu extends React.Component {
   render() {
     return (
       <>
+        <QuickPlayModal
+          open={this.state.queueStarted}
+          ranked={this.state.ranked}
+          totalPlayers={0}
+          found={this.state.matchFound}
+          opponentTimeout={this.state.opponentTimeout}
+          onCancel={this.cancel.bind(this)}
+        />
         <Hidden xsDown>
           <Box display='flex' width={1} height={130}>
             <Tooltip
@@ -116,12 +149,10 @@ class QuickPlayMenu extends React.Component {
                   variant='contained'
                   style={{ width: '100%', height: '100%' }}
                   onClick={() => {
-                    if(typeof this.props.onQuick === 'function') {
-                      this.props.onQuick();
-                    }
+                    this.quickplay();
                   }}
                 >
-                  <Trans><s>Quick Play</s> <i>WIP</i></Trans>
+                  <Trans>Quick Play</Trans>
                 </Button>
               </Box>
             </Tooltip>
@@ -140,12 +171,10 @@ class QuickPlayMenu extends React.Component {
                     variant='contained'
                     style={{ width: '100%', height: '100%' }}
                     onClick={() => {
-                      if(typeof this.props.onRanked === 'function') {
-                        this.props.onRanked();
-                      }
+                      this.quickplay(true);
                     }}
                   >
-                    <Trans><s>Ranked Play</s> <i>WIP</i></Trans>
+                    <Trans>Ranked Play</Trans>
                   </Button>
                 </Box>
               </Tooltip>
@@ -171,12 +200,10 @@ class QuickPlayMenu extends React.Component {
               variant='contained'
               style={{ width: '100%', height: '100%' }}
               onClick={() => {
-                if(typeof this.props.onQuick === 'function') {
-                  this.props.onQuick();
-                }
+                this.quickplay();
               }}
             >
-              <Trans><s>Quick Play</s> <i>WIP</i></Trans>
+              <Trans>Quick Play</Trans>
             </Button>
           </Box>
           <Box p={1} width={1} height={50}>
@@ -185,12 +212,10 @@ class QuickPlayMenu extends React.Component {
               variant='outlined'
               style={{ width: '100%', height: '100%' }}
               onClick={() => {
-                if(typeof this.props.onRanked === 'function') {
-                  this.props.onRanked();
-                }
+                this.quickplay(true);
               }}
             >
-              <Trans><s>Ranked Play</s> <i>WIP</i></Trans>
+              <Trans>Ranked Play</Trans>
             </Button>
           </Box>
           <Box p={1} width={1} height={50}>
