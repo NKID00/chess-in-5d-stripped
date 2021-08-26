@@ -41,7 +41,7 @@ class Play extends React.Component {
         clockWhiteDelayLeft: clockData.whiteDelayLeft,
         clockBlackTimeLeft: clockData.blackDurationLeft,
         clockBlackDelayLeft: clockData.blackDelayLeft,
-      })
+      });
     });
     //Listen for session end changes
     this.endListener = this.sessionManager.on('onEnd', async (endData) => {

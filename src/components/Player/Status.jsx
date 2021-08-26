@@ -31,7 +31,6 @@ Props:
  - isStalemate
  - isCheck
 */
-//TODO Add time / forfeit messages
 const CustomCheckBadge = withStyles(() => ({
   badge: {
     right: 7,
@@ -95,7 +94,7 @@ export default class Status extends React.Component {
     }
     if(this.props.isCheckmate || this.props.isFlagged) {
       return (
-        <Box p={1} ref={this.rootRef} style={{ height: '100%' }}>
+        <Box p={1} py={1.25} ref={this.rootRef} style={{ height: '100%' }}>
           <Tooltip
             arrow
             title={this.props.isCheckmate ?

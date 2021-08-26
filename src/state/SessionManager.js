@@ -22,6 +22,14 @@ export default class SessionManager {
       this.session = await sessions.getSession(id);
     }
     this.isServer = typeof this.session.host !== 'undefined';
+    this.isPlayer = false;
+    let username = authStore.get().username;
+    if(
+      (this.session.player === 'white' && this.session.white === username) ||
+      (this.session.player === 'black' && this.session.black === username)
+    ) {
+      this.isPlayer = true;
+    }
     this.pastAvailableMoves = [];
     this.futureAvailableMoves = [];
     this.chess = new Chess();
@@ -40,15 +48,30 @@ export default class SessionManager {
   }
   async updateInterval() {
     let slowChecking = true;
+    let username = authStore.get().username;
     if(this.canPlay) {
       this.session = await sessions.getCurrentSession(this.session.id);
     }
     else {
+      if(
+        (this.session.white === username) ||
+        (this.session.black === username)
+      ) {
+        this.canPlay = true;
+      }
       this.session = await sessions.getSession(this.session.id);
+    }
+    if(
+      (this.session.player === 'white' && this.session.white === username) ||
+      (this.session.player === 'black' && this.session.black === username)
+    ) {
+      this.isPlayer = true;
+    }
+    else {
+      this.isPlayer = false;
     }
     if(this.isServer) {
       //Check if session is current player
-      let username = authStore.get().username;
       if(
         (this.session.player === 'white' && this.session.white !== username) ||
         (this.session.player === 'black' && this.session.black !== username)
@@ -227,8 +250,8 @@ export default class SessionManager {
       checks: this.chess.checks(),
       availableMoves: this.chess.moves('object', false, false, false),
       pastAvailableMoves: [this.pastAvailableMoves,this.futureAvailableMoves].flat(),
-      undoable: this.chess.undoable(),
-      submittable: this.chess.submittable(),
+      undoable: this.chess.undoable() && ((this.isServer && this.isPlayer) || !this.isServer),
+      submittable: this.chess.submittable() && ((this.isServer && this.isPlayer) || !this.isServer),
       notation: this.chess.export('5dpgn_active_timeline')
     };
   }
@@ -243,10 +266,14 @@ export default class SessionManager {
   }
   async move(move) {
     if(this.canPlay) {
-      if(this.isServer) {
-        //TODO network play
+      if(this.isServer && this.isPlayer) {
+        this.chess.move(move);
+        let mb = this.chess.moveBuffer;
+        await sessions.moveSession(this.session.id, mb[mb.length - 1]);
+        await this.setSession();
+        this.emitter.emit('onBoardUpdate', this.getBoard());
       }
-      else {
+      else if(!this.isServer) {
         this.chess.move(move);
         await this.setSession();
         this.emitter.emit('onBoardUpdate', this.getBoard());
@@ -255,10 +282,13 @@ export default class SessionManager {
   }
   async undo() {
     if(this.canPlay) {
-      if(this.isServer) {
-        //TODO network play
+      if(this.isServer && this.isPlayer) {
+        this.chess.undo();
+        await sessions.undoSession(this.session.id);
+        await this.setSession();
+        this.emitter.emit('onBoardUpdate', this.getBoard());
       }
-      else {
+      else if(!this.isServer) {
         this.chess.undo();
         await this.setSession();
         this.emitter.emit('onBoardUpdate', this.getBoard());
@@ -267,10 +297,13 @@ export default class SessionManager {
   }
   async submit() {
     if(this.canPlay) {
-      if(this.isServer) {
-        //TODO network play
+      if(this.isServer && this.isPlayer) {
+        this.chess.undo();
+        await sessions.submitSession(this.session.id);
+        await this.setSession();
+        this.emitter.emit('onBoardUpdate', this.getBoard());
       }
-      else {
+      else if(!this.isServer) {
         this.chessClock.stop();
         this.chess.submit();
         this.chessClock.start();
@@ -282,10 +315,10 @@ export default class SessionManager {
   }
   async forfeit() {
     if(this.canPlay) {
-      if(this.isServer) {
-        //TODO network play
+      if(this.isServer && this.isPlayer) {
+        await sessions.forfeitSession(this.session.id);
       }
-      else {
+      else if(!this.isServer) {
         this.session.winner = this.chess.player === 'white' ? 'black' : 'white';
         this.session.winCause = 'forfeit';
         this.session.ended = true;
@@ -296,10 +329,10 @@ export default class SessionManager {
   }
   async draw() {
     if(this.canPlay) {
-      if(this.isServer) {
-        //TODO network play
+      if(this.isServer && this.isPlayer) {
+        await sessions.drawSession(this.session.id);
       }
-      else {
+      else if(!this.isServer) {
         this.session.winner = 'draw';
         this.session.winCause = 'forfeit';
         this.session.ended = true;

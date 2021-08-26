@@ -63,6 +63,7 @@ class QuickPlayMenu extends React.Component {
       opponentTimeout: false
     });
     try {
+      await quickplay.cancelQueue();
       let matchStarted = false;
       while(!matchStarted) {
         //Start queue

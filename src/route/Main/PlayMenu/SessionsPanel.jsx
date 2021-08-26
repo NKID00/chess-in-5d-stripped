@@ -32,10 +32,13 @@ export default class SessionsPanel extends React.Component {
     this.sessionListener = this.context.on('sessionsUpdate', () => {
       this.refresh();
     });
+    //Update state if interval triggered
+    this.sessionRefreshInterval = window.setInterval(this.refresh.bind(this), 2500);
   }
   componentWillUnmount() {
     //Stop listening to session store changes
     if(typeof this.sessionListener === 'function') { this.sessionListener(); }
+    window.clearInterval(this.sessionRefreshInterval);
   }
   render() {
     return (
