@@ -54,8 +54,8 @@ export default class SessionsPanel extends React.Component {
           <AccordionDetails>
             {this.state.sessionRequests.length > 0 ?
               <Grid container spacing={2}>
-                {this.state.sessionRequests.map((session) => (
-                  <Grid item xs={12}>
+                {this.state.sessionRequests.map((session, i) => (
+                  <Grid key={i} item xs={12}>
                     <SessionCard flat session={session} />
                   </Grid>
                 ))}
@@ -78,8 +78,8 @@ export default class SessionsPanel extends React.Component {
           <AccordionDetails>
             {this.state.currentSessions.length > 0 ?
               <Grid container spacing={2}>
-                {this.state.currentSessions.map((session) => (
-                  <Grid item xs={12}>
+                {this.state.currentSessions.map((session, i) => (
+                  <Grid key={i} item xs={12}>
                     <SessionCard flat session={session} />
                   </Grid>
                 ))}
@@ -102,8 +102,8 @@ export default class SessionsPanel extends React.Component {
           <AccordionDetails>
             {this.state.pastSessions.length > 0 ?
               <Grid container spacing={2}>
-                {this.state.pastSessions.map((session) => (
-                  <Grid item xs={12}>
+                {this.state.pastSessions.map((session, i) => (
+                  <Grid key={i} item xs={12}>
                     <SessionCard flat session={session} />
                   </Grid>
                 ))}

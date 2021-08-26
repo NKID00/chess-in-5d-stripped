@@ -156,6 +156,7 @@
     "jimp": "^0.16.1",
     "js-file-download": "^0.4.12",
     "lzutf8": "^0.5.8",
+    "make-plural": "^6.2.2",
     "moment": "^2.29.1",
     "nanoevents": "^5.1.13",
     "nedb-promises": "^4.1.2",
