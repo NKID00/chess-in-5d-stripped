@@ -45,6 +45,8 @@ export default class SessionManager {
       this.allowUpdate = true;
       this.updateInterval();
     }
+    window.chess = this.chess;
+    window.chessClock = this.chessClock;
   }
   async updateInterval() {
     let slowChecking = true;
@@ -91,7 +93,10 @@ export default class SessionManager {
             this.pastAvailableMoves.push(move);
           }
           try {
-            this.chess.action(this.session.actionHistory[i]);
+            for(let j = 0;j < this.session.actionHistory[i].moves.length;j++) {
+              this.chess.move(this.session.actionHistory[i].moves[j]);
+            }
+            this.chess.submit();
           }
           catch(err) {
             needReset = true;
@@ -104,12 +109,12 @@ export default class SessionManager {
         this.futureAvailableMoves = tmpChess.moves('object', false, false, false);
         needUpdate = true;
       }
-      if(this.session.actionHistory.length < this.chess.actionHistory.length) {
+      else if(this.session.actionHistory.length < this.chess.actionHistory.length) {
         needReset = true;
         needUpdate = true;
       }
       //Checking move buffer for update
-      if(this.session.moveBuffer.length > this.chess.moveBuffer.length) {
+      else if(this.session.moveBuffer.length > this.chess.moveBuffer.length) {
         for(let i = this.chess.moveBuffer.length;!needReset && i < this.session.moveBuffer.length;i++) {
           try {
             this.chess.move(this.session.moveBuffer[i]);
@@ -120,8 +125,8 @@ export default class SessionManager {
         }
         needUpdate = true;
       }
-      if(this.session.moveBuffer.length < this.chess.moveBuffer.length) {
-        for(let i = this.chess.moveBuffer.length;!needReset && i < this.session.moveBuffer.length;i++) {
+      else if(this.session.moveBuffer.length < this.chess.moveBuffer.length) {
+        for(let i = this.session.moveBuffer.length;!needReset && i < this.chess.moveBuffer.length;i++) {
           try {
             this.chess.undo();
           }
@@ -169,6 +174,9 @@ export default class SessionManager {
           this.endSession();
         }
       }
+      else if(this.isServer && this.session.ended) {
+        this.endSession();
+      }
     }
     if(this.allowUpdate && !this.session.ended) {
       if(slowChecking) {
@@ -180,7 +188,7 @@ export default class SessionManager {
     }
   }
   reset() {
-    //Initialize clock if needed
+    //Set clock if needed
     if(this.session.timed !== null) {
       this.chessClock.state(this.session.timed);
     }
@@ -192,6 +200,7 @@ export default class SessionManager {
       this.chess.reset(this.session.variant);
     }
     //Import action history
+    this.pastAvailableMoves = [];
     for(let i = 0;i < this.session.actionHistory.length;i++) {
       let moves = this.chess.moves('object', false, false, false);
       for(let move of moves) {
@@ -298,7 +307,7 @@ export default class SessionManager {
   async submit() {
     if(this.canPlay) {
       if(this.isServer && this.isPlayer) {
-        this.chess.undo();
+        this.chess.submit();
         await sessions.submitSession(this.session.id);
         await this.setSession();
         this.emitter.emit('onBoardUpdate', this.getBoard());

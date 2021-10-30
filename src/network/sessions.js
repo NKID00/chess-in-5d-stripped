@@ -217,7 +217,6 @@ export const getSessions = async (emitter = null) => {
 export const moveSession = async (id, move) => {
   let storedAuth = authStore.get();
   let serverUrl = settings.get().server;
-  console.log(id, move)
   if(storedAuth.token !== null) {
     let options = {
       headers: {
