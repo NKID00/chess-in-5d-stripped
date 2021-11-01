@@ -96,7 +96,7 @@ export const register = async (username, password, email, emitter) => {
       username: username,
       password: password
     };
-    if(typeof email === 'string' && email.length <= 0) {
+    if(typeof email === 'string' && email.length > 0) {
       data.email = email;
     }
     let res = (await axios.post(`${serverUrl}/register`, data));

@@ -10,15 +10,14 @@ export default class UserAvatar extends React.Component {
   state = {
     avatar: null
   };
-  getAvatar() {
+  async getAvatar() {
     if(typeof this.props.username === 'string') {
-      users.getOne(this.props.username).then((user) => {
-        if(user !== null && typeof user.avatar === 'string') {
-          this.setState({
-            avatar: user.avatar
-          });
-        }
-      });
+      let user = await users.getOne(this.props.username);
+      if(user !== null && typeof user.avatar === 'string') {
+        this.setState({
+          avatar: user.avatar
+        });
+      }
     }
   }
   componentDidMount() {

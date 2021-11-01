@@ -82,6 +82,12 @@ class Profile extends React.Component {
     if(typeof this.state.country === 'string' && this.state.country.length > 0) {
       data.country = this.state.country;
     }
+    if(typeof this.state.email === 'string' && this.state.email.length > 0) {
+      data.email = this.state.email;
+    }
+    if(typeof this.state.showEmail === 'boolean') {
+      data.showEmail = this.state.showEmail;
+    }
     await users.update(data);
     await this.getSelf();
     window.location.reload();

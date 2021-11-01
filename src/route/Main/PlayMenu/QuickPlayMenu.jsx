@@ -18,6 +18,7 @@ import QuickPlayOptions from 'route/Main/PlayMenu/QuickPlayMenu/QuickPlayOptions
 import QuickPlayModal from 'route/Main/PlayMenu/QuickPlayModal';
 
 import EmitterContext from 'utils/EmitterContext';
+import Delay from 'utils/Delay';
 import * as authStore from 'state/auth';
 import * as settings from 'state/settings';
 import * as sessions from 'network/sessions';
@@ -47,11 +48,6 @@ class QuickPlayMenu extends React.Component {
     );
     this.props.history.push('/play?id=' + newSession.id);
   }
-  delay(timeout = 0) {
-    return (new Promise((resolve) => {
-      window.setTimeout(resolve, timeout);
-    }));
-  }
   async quickplay(ranked = false) {
     let variants = settings.get().quickPlay.variants;
     let formats = settings.get().quickPlay.formats;
@@ -70,7 +66,7 @@ class QuickPlayMenu extends React.Component {
         let res = await quickplay.startQueue(ranked, variants, formats);
         let matchFound = res.sessionId;
         while(matchFound === null) {
-          await this.delay(333);
+          await Delay(333);
           res = await quickplay.getQueue();
           this.setState({ queueDuration: Date.now() - res.date });
           matchFound = res.sessionId;
@@ -82,7 +78,7 @@ class QuickPlayMenu extends React.Component {
         matchStarted = res.started;
         const maxWait = Date.now() + 5000;
         while(!matchStarted || Date.now() > maxWait) {
-          await this.delay(333);
+          await Delay(333);
           res = await sessions.getSession(matchFound);
           matchStarted = res.started;
         }
@@ -90,7 +86,7 @@ class QuickPlayMenu extends React.Component {
         if(!matchStarted) {
           await quickplay.cancelQueue();
           this.setState({ opponentTimeout: true });
-          await this.delay(2000);
+          await Delay(2000);
           this.setState({
             matchFound: false,
             opponentTimeout: false
@@ -195,30 +191,48 @@ class QuickPlayMenu extends React.Component {
           </Box>
         </Hidden>
         <Hidden smUp>
-          <Box p={1} width={1} height={90}>
-            <Button
-              color='primary'
-              variant='contained'
-              style={{ width: '100%', height: '100%' }}
-              onClick={() => {
-                this.quickplay();
-              }}
-            >
-              <Trans>Quick Play</Trans>
-            </Button>
-          </Box>
-          <Box p={1} width={1} height={50}>
-            <Button
-              color='secondary'
-              variant='outlined'
-              style={{ width: '100%', height: '100%' }}
-              onClick={() => {
-                this.quickplay(true);
-              }}
-            >
-              <Trans>Ranked Play</Trans>
-            </Button>
-          </Box>
+          <Tooltip
+            arrow
+            title={<Trans>Log in to play online!</Trans>}
+            disableFocusListener={this.state.loggedIn}
+            disableHoverListener={this.state.loggedIn}
+            disableTouchListener={this.state.loggedIn}
+          >
+            <Box p={1} width={1} height={90}>
+              <Button
+                disabled={!this.state.loggedIn}
+                color='primary'
+                variant='contained'
+                style={{ width: '100%', height: '100%' }}
+                onClick={() => {
+                  this.quickplay();
+                }}
+              >
+                <Trans>Quick Play</Trans>
+              </Button>
+            </Box>
+          </Tooltip>
+          <Tooltip
+            arrow
+            title={<Trans>Log in to play online!</Trans>}
+            disableFocusListener={this.state.loggedIn}
+            disableHoverListener={this.state.loggedIn}
+            disableTouchListener={this.state.loggedIn}
+          >
+            <Box p={1} width={1} height={50}>
+              <Button
+                disabled={!this.state.loggedIn}
+                color='secondary'
+                variant='outlined'
+                style={{ width: '100%', height: '100%' }}
+                onClick={() => {
+                  this.quickplay(true);
+                }}
+              >
+                <Trans>Ranked Play</Trans>
+              </Button>
+            </Box>
+          </Tooltip>
           <Box p={1} width={1} height={50}>
             <Button
               color='default'

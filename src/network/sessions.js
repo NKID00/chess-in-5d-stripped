@@ -1,5 +1,6 @@
 import * as authStore from 'state/auth';
 import * as settings from 'state/settings';
+import Delay from 'utils/Delay';
 import * as SessionGenerate from 'utils/SessionGenerate';
 import * as SessionTransform from 'utils/SessionTransform';
 
@@ -212,6 +213,34 @@ export const getSessions = async (emitter = null) => {
   sessions.currentSessions = (await collections.currentSessions.find({}).sort({ startDate: -1 }));
   sessions.pastSessions = (await getPastSessions());
   return sessions;
+}
+
+export const getSessionsQuery = async (query = {}, projection = {}, sort = {}, limit = 100, skip = 0) => {
+  let lastQuery = store.get('network/sessions/get');
+  let storedAuth = authStore.get();
+  let serverUrl = settings.get().server;
+  if(typeof lastQuery !== 'number') { lastQuery = 0; }
+  if(Date.now() - lastQuery <= 1500) {
+    await Delay(1500 - (Date.now() - lastQuery));
+  }
+  let options = {};
+  if(storedAuth.token !== null) {
+    options = {
+      headers: {
+        'Authorization': storedAuth.token
+      }
+    };
+  }
+  let res = (await axios.post(`${serverUrl}/sessions`, {
+    query: query,
+    projection: projection,
+    sort: sort,
+    limit: limit,
+    skip: skip
+  }, options));
+  let networkSessions = res.data;
+  store.set('network/sessions/get', Date.now());
+  return networkSessions;
 }
 
 export const moveSession = async (id, move) => {

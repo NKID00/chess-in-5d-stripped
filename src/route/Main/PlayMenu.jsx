@@ -6,6 +6,7 @@ import Grid from '@material-ui/core/Grid';
 
 import QuickPlayMenu from 'route/Main/PlayMenu/QuickPlayMenu';
 import SessionsPanel from 'route/Main/PlayMenu/SessionsPanel';
+import SessionsBrowser from 'route/Main/PlayMenu/SessionsBrowser';
 
 export default class PlayMenu extends React.Component {
   render() {
@@ -19,6 +20,11 @@ export default class PlayMenu extends React.Component {
                   <Box p={1}>
                     <QuickPlayMenu />
                   </Box>
+                </Card>
+              </Grid>
+              <Grid item xs={12}>
+                <Card>
+                  <SessionsBrowser />
                 </Card>
               </Grid>
             </Grid>

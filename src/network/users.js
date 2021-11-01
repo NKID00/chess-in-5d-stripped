@@ -5,7 +5,7 @@ const store = require('store');
 const axios = require('axios');
 var collections = require('state/db').init();
 
-export const get = async (query = {}, projection = {}, sort = {}, limit = 100) => {
+export const get = async (query = {}, projection = {}, sort = {}, limit = 100, skip = 0) => {
   var currentDate = Date.now();
   var storedAuth = authStore.get();
   var serverUrl = settings.get().server;
@@ -25,7 +25,8 @@ export const get = async (query = {}, projection = {}, sort = {}, limit = 100) =
         query: query,
         projection: projection,
         sort: sort,
-        limit: limit
+        limit: limit,
+        skip: skip
       }, options));
       if(res.status === 200) {
         var bulkDbUpdates = [];
@@ -41,7 +42,7 @@ export const get = async (query = {}, projection = {}, sort = {}, limit = 100) =
     catch(err) {}
     store.set('network/user/get', currentDate);
   }
-  return (await collections.users.find(query, projection).sort(sort).limit(limit));
+  return (await collections.users.find(query, projection).sort(sort).limit(limit).skip(skip));
 }
 
 export const getOne = async (username) => {

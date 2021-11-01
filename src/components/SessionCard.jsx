@@ -213,7 +213,19 @@ class SessionCard extends React.Component {
               {this.state.isServer ?
                 <>
                   <Box mx={2}>
-                    <Trans>{this.state.whitePlayerName} vs {this.state.blackPlayerName}</Trans>
+                    {this.state.whitePlayerName.length <= 0 ? 
+                      <i>
+                        <Trans>[Empty]</Trans>
+                      </i>
+                    : 
+                      this.state.whitePlayerName
+                    } vs {this.state.blackPlayerName.length <= 0 ? 
+                      <i>
+                        <Trans>[Empty]</Trans>
+                      </i>
+                    : 
+                      this.state.blackPlayerName
+                    }
                   </Box>
                   <IconButton disabled>
                     <LanguageIcon />

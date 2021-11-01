@@ -45,6 +45,7 @@ export default class SessionManager {
       this.allowUpdate = true;
       this.updateInterval();
     }
+    //TODO used for debugging
     window.chess = this.chess;
     window.chessClock = this.chessClock;
   }
