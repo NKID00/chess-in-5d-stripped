@@ -25,8 +25,18 @@ export class Welcome extends React.Component {
           <Typography variant='h4'>
             <Trans>Welcome to Chess In 5D!</Trans>
           </Typography>
+          <Typography variant='body1' component='p'>
+            This website is still a work in progress. These items are still currently WIP:
+          </Typography>
           <Typography variant='body2' component='p'>
-            <Trans>This view is still a work in progress.</Trans>
+            <ul>
+              <li>Analysis mode</li>
+              <li>Puzzles</li>
+              <li>Tutorial</li>
+              <li>Editor</li>
+              <li>User Stats</li>
+              <li>Ranking Stats</li>
+            </ul>
           </Typography>
         </CardContent>
       </Card>
