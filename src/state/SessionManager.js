@@ -36,8 +36,9 @@ export default class SessionManager {
     this.chess.skipDetection = true;
     this.chessClock = new ChessClock();
     this.reset();
-    this.emitter.emit('onBoardUpdate', this.getBoard());
-    this.emitter.emit('onClockUpdate', this.getClock());
+    this.emitter.emit('onBoardUpdate', this.getBoard(), this.session);
+    this.emitter.emit('onClockUpdate', this.getClock(), this.session);
+    this.emitter.emit('onSessionUpdate', this.session);
     if(this.session.ended) {
       await this.endSession();
     }
@@ -93,6 +94,7 @@ export default class SessionManager {
           for(let move of moves) {
             this.pastAvailableMoves.push(move);
           }
+          /*
           try {
             for(let j = 0;j < this.session.actionHistory[i].moves.length;j++) {
               this.chess.move(this.session.actionHistory[i].moves[j]);
@@ -102,6 +104,8 @@ export default class SessionManager {
           catch(err) {
             needReset = true;
           }
+          */
+          needReset = true;
         }
         //Populate futureAvailableMoves
         let tmpChess = this.chess.copy();
@@ -142,12 +146,12 @@ export default class SessionManager {
         this.reset();
       }
       if(needUpdate) {
-        this.emitter.emit('onBoardUpdate', this.getBoard());
+        this.emitter.emit('onBoardUpdate', this.getBoard(), this.session);
       }
     }
     let chessClockState = this.chessClock.state();
     if(chessClockState.running) {
-      this.emitter.emit('onClockUpdate', this.getClock());
+      this.emitter.emit('onClockUpdate', this.getClock(), this.session);
       //Update every 100ms if current player has less than 1 second
       if(
         (chessClockState.whiteDurationLeft < 60000 && this.chess.player === 'white') ||
@@ -179,6 +183,7 @@ export default class SessionManager {
         this.endSession();
       }
     }
+    this.emitter.emit('onSessionUpdate', this.session);
     if(this.allowUpdate && !this.session.ended) {
       if(slowChecking) {
         this.updateIntervalHandler = window.setTimeout(this.updateInterval.bind(this), 3000);
@@ -207,11 +212,14 @@ export default class SessionManager {
       for(let move of moves) {
         this.pastAvailableMoves.push(move);
       }
-      this.chess.action(this.session.actionHistory[i]);
+      for(let j = 0;j < this.session.actionHistory[i].moves.length;j++) {
+        this.chess.move(this.session.actionHistory[i].moves[j]);
+      }
+      this.chess.submit();
     }
     //Import move buffer
     for(let i = 0;i < this.session.moveBuffer.length;i++) {
-      this.chess.move(this.session.moveBuffer);
+      this.chess.move(this.session.moveBuffer[i]);
     }
     //Populate futureAvailableMoves
     let tmpChess = this.chess.copy();
@@ -281,12 +289,14 @@ export default class SessionManager {
         let mb = this.chess.moveBuffer;
         await sessions.moveSession(this.session.id, mb[mb.length - 1]);
         await this.setSession();
-        this.emitter.emit('onBoardUpdate', this.getBoard());
+        this.emitter.emit('onBoardUpdate', this.getBoard(), this.session);
+        this.emitter.emit('onSessionUpdate', this.session);
       }
       else if(!this.isServer) {
         this.chess.move(move);
         await this.setSession();
-        this.emitter.emit('onBoardUpdate', this.getBoard());
+        this.emitter.emit('onBoardUpdate', this.getBoard(), this.session);
+        this.emitter.emit('onSessionUpdate', this.session);
       }
     }
   }
@@ -296,12 +306,14 @@ export default class SessionManager {
         this.chess.undo();
         await sessions.undoSession(this.session.id);
         await this.setSession();
-        this.emitter.emit('onBoardUpdate', this.getBoard());
+        this.emitter.emit('onBoardUpdate', this.getBoard(), this.session);
+        this.emitter.emit('onSessionUpdate', this.session);
       }
       else if(!this.isServer) {
         this.chess.undo();
         await this.setSession();
-        this.emitter.emit('onBoardUpdate', this.getBoard());
+        this.emitter.emit('onBoardUpdate', this.getBoard(), this.session);
+        this.emitter.emit('onSessionUpdate', this.session);
       }
     }
   }
@@ -311,7 +323,8 @@ export default class SessionManager {
         this.chess.submit();
         await sessions.submitSession(this.session.id);
         await this.setSession();
-        this.emitter.emit('onBoardUpdate', this.getBoard());
+        this.emitter.emit('onBoardUpdate', this.getBoard(), this.session);
+        this.emitter.emit('onSessionUpdate', this.session);
       }
       else if(!this.isServer) {
         this.chessClock.stop();
@@ -319,7 +332,8 @@ export default class SessionManager {
         this.chessClock.start();
         this.chessClock.switch(this.chess.player, this.chess.board);
         await this.setSession();
-        this.emitter.emit('onBoardUpdate', this.getBoard());
+        this.emitter.emit('onBoardUpdate', this.getBoard(), this.session);
+        this.emitter.emit('onSessionUpdate', this.session);
       }
     }
   }

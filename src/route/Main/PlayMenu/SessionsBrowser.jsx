@@ -1,10 +1,14 @@
 import React from 'react';
+import { withRouter } from 'react-router';
+
 
 import { Trans } from '@lingui/macro';
 
 import MaterialTable from 'material-table';
 import Typography from '@material-ui/core/Typography';
+
 import AddIcon from '@material-ui/icons/Add';
+import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import RefreshIcon from '@material-ui/icons/Refresh';
 
 import TableIcons from 'components/TableIcons';
@@ -20,7 +24,7 @@ import EmitterContext from 'utils/EmitterContext';
 import * as authStore from 'state/auth';
 import * as sessions from 'network/sessions';
 
-export default class SessionsBrowser extends React.Component {
+class SessionsBrowser extends React.Component {
   static contextType = EmitterContext;
   tableRef = React.createRef();
   chess = new Chess();
@@ -147,7 +151,7 @@ export default class SessionsBrowser extends React.Component {
             },
             {
               title: <Trans>Ended</Trans>,
-              field: 'started',
+              field: 'ended',
               type: 'boolean',
               searchable: false,
               filtering: false
@@ -156,7 +160,7 @@ export default class SessionsBrowser extends React.Component {
               title: <Trans>End Date</Trans>,
               field: 'endDate',
               render: rowData => rowData.endDate === null || rowData.endDate === 0 ?
-                <Trans>has not ended</Trans>
+                <Trans>Has not ended</Trans>
               :
                 moment(rowData.endDate).fromNow(),
               searchable: false,
@@ -188,7 +192,14 @@ export default class SessionsBrowser extends React.Component {
                   this.tableRef.current.onQueryChange()
                 }
               },
-            }
+            },
+            (rowData) => ({
+              icon: ArrowForwardIcon,
+              tooltip: <Trans>Go</Trans>,
+              onClick: () => {
+                this.props.history.push('/play?id=' + rowData.id);
+              }
+            })
           ]}
           localization={{
             body: {
@@ -196,6 +207,7 @@ export default class SessionsBrowser extends React.Component {
             }
           }}
           options={{
+            actionsColumnIndex: -1,
             filtering: true
           }}
         />
@@ -203,3 +215,5 @@ export default class SessionsBrowser extends React.Component {
     );
   }
 }
+
+export default withRouter(SessionsBrowser);

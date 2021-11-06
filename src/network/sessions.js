@@ -317,3 +317,80 @@ export const drawSession = async (id) => {
   }
   throw new Error('Not logged in!');
 }
+
+export const requestJoinSession = async (id) => {
+  let storedAuth = authStore.get();
+  let serverUrl = settings.get().server;
+  if(storedAuth.token !== null) {
+    let options = {
+      headers: {
+        'Authorization': storedAuth.token
+      }
+    };
+    let res = (await axios.post(`${serverUrl}/sessions/${id}/requestJoin`, {}, options));
+    return res.data;
+  }
+  throw new Error('Not logged in!');
+}
+
+export const addUserSession = async (id, username) => {
+  let storedAuth = authStore.get();
+  let serverUrl = settings.get().server;
+  if(storedAuth.token !== null) {
+    let options = {
+      headers: {
+        'Authorization': storedAuth.token
+      }
+    };
+    let res = (await axios.post(`${serverUrl}/sessions/${id}/addUser`, {
+      username: username
+    }, options));
+    return res.data;
+  }
+  throw new Error('Not logged in!');
+}
+
+export const readySession = async (id) => {
+  let storedAuth = authStore.get();
+  let serverUrl = settings.get().server;
+  if(storedAuth.token !== null) {
+    let options = {
+      headers: {
+        'Authorization': storedAuth.token
+      }
+    };
+    let res = (await axios.post(`${serverUrl}/sessions/${id}/ready`, {}, options));
+    return res.data;
+  }
+  throw new Error('Not logged in!');
+}
+
+export const unreadySession = async (id) => {
+  let storedAuth = authStore.get();
+  let serverUrl = settings.get().server;
+  if(storedAuth.token !== null) {
+    let options = {
+      headers: {
+        'Authorization': storedAuth.token
+      }
+    };
+    let res = (await axios.post(`${serverUrl}/sessions/${id}/unready`, {}, options));
+    return res.data;
+  }
+  throw new Error('Not logged in!');
+}
+
+export const startSession = async (id) => {
+  let storedAuth = authStore.get();
+  let serverUrl = settings.get().server;
+  if(storedAuth.token !== null) {
+    let options = {
+      headers: {
+        'Authorization': storedAuth.token
+      }
+    };
+    let res = (await axios.post(`${serverUrl}/sessions/${id}/start`, {}, options));
+    return res.data;
+  }
+  throw new Error('Not logged in!');
+}
