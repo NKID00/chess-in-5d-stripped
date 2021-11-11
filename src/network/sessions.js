@@ -243,6 +243,36 @@ export const getSessionsQuery = async (query = {}, projection = {}, sort = {}, l
   return networkSessions;
 }
 
+const getPastSessionsQuery = async (query = {}, projection = {}, sort = {}, limit = 100, skip = 0) => {
+  let lastQuery = store.get('network/games/get');
+  let storedAuth = authStore.get();
+  let serverUrl = settings.get().server;
+  if(typeof lastQuery !== 'number') { lastQuery = 0; }
+  if(Date.now() - lastQuery <= 1500) {
+    await Delay(1500 - (Date.now() - lastQuery));
+  }
+  let options = {
+    headers: {
+      'Authorization': storedAuth.token
+    }
+  };
+  let res = (await axios.post(`${serverUrl}/games`, {
+    query: query,
+    projection: projection,
+    sort: sort,
+    limit: limit,
+    skip: skip
+  }, options));
+  let networkGames = res.data;
+  let networkSessions = [];
+  for(let networkGame of networkGames) {
+    let pastSession = SessionTransform.fromServerGame(networkGame);
+    networkSessions.push(pastSession);
+  }
+  store.set('network/games/get', Date.now());
+  return networkSessions;
+}
+
 export const moveSession = async (id, move) => {
   let storedAuth = authStore.get();
   let serverUrl = settings.get().server;

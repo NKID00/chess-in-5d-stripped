@@ -11,7 +11,7 @@ export const compressLink = (str) => {
 
 export const decompressLink = (str) => {
   if(typeof cache[str] === 'undefined') {
-    cache[str] = LZUTF8.decompress(str, { inputEncoding: 'Base64', outputEncoding: 'String'});
+    cache[str] = LZUTF8.decompress(str, { inputEncoding: 'Base64', outputEncoding: 'String' });
   }
   return cache[str];
 }

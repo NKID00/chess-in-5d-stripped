@@ -162,7 +162,7 @@ export default class SessionManager {
     }
     else {
       if(!this.isServer && chessClockState.lastUpdate >= 0) {
-        if(chessClockState.whiteDurationLeft <= 0) {
+        if(chessClockState.whiteDurationLeft <= 0 && chessClockState.whiteDelayLeft <= 0) {
           await this.setSession();
           this.session.winner = 'black';
           this.session.winCause = 'time';
@@ -170,10 +170,26 @@ export default class SessionManager {
           this.session.endDate = Date.now();
           this.endSession();
         }
-        if(chessClockState.blackDurationLeft <= 0) {
+        else if(chessClockState.blackDurationLeft <= 0 && chessClockState.blackDelayLeft <= 0) {
           await this.setSession();
           this.session.winner = 'white';
           this.session.winCause = 'time';
+          this.session.ended = true;
+          this.session.endDate = Date.now();
+          this.endSession();
+        }
+        else if(this.chess.inStalemate) {
+          await this.setSession();
+          this.session.winner = 'draw';
+          this.session.winCause = 'regular';
+          this.session.ended = true;
+          this.session.endDate = Date.now();
+          this.endSession();
+        }
+        else if(this.chess.inCheckmate) {
+          await this.setSession();
+          this.session.winner = this.session.player === 'white' ? 'black' : 'white';
+          this.session.winCause = 'regular';
           this.session.ended = true;
           this.session.endDate = Date.now();
           this.endSession();
@@ -201,6 +217,7 @@ export default class SessionManager {
     //Initialize chess board with variant
     if(this.session.variant.includes('[')) {
       this.chess.import(this.session.variant);
+      this.chess.reset();
     }
     else {
       this.chess.reset(this.session.variant);
