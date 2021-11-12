@@ -4,8 +4,8 @@
 
 Open source implementation of '5D Chess With Multiverse Time Travel'.
 
-[![Pipeline Status](https://gitlab.com/alexbay218/chess-in-5d/badges/master/pipeline.svg)](https://gitlab.com/alexbay218/chess-in-5d/-/commits/master)
-[![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://gitlab.com/alexbay218/chess-in-5d)
+[![Pipeline Status](https://gitlab.com/5d-chess/chess-in-5d/badges/master/pipeline.svg)](https://gitlab.com/5d-chess/chess-in-5d/-/commits/master)
+[![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://gitlab.com/5d-chess/chess-in-5d)
 
 Chess In 5D aims to reimplement the rules as found in the original.
 This project looks to implement additional features also not found in the game:
@@ -35,7 +35,7 @@ const BotFunc = (chess) => {
 
     This bot picks a random valid action and plays it.
 
-    Go to https://gitlab.com/alexbay218/chess-in-5d#bot-api-usage for more information on how to create your own bot
+    Go to https://gitlab.com/5d-chess/chess-in-5d#bot-api-usage for more information on how to create your own bot
 
     In the future, a better default bot will replace this one.
   */
@@ -72,7 +72,7 @@ const BotFunc = (chess) => {
 ```
 
 Here the function has three parameters: `chess`, `timed`, and `global`
- - `chess` - This is the instance of the Chess class (https://gitlab.com/alexbay218/5d-chess-js) representing the current game.
+ - `chess` - This is the instance of the Chess class (https://gitlab.com/5d-chess/5d-chess-js) representing the current game.
  - `timed` - Object containing timing information (`null` if game is not timed). All values are in seconds.
    - `whiteDurationLeft` - Amount of time left for white to play.
    - `blackDurationLeft` - Amount of time left for black to play.
@@ -81,7 +81,7 @@ Here the function has three parameters: `chess`, `timed`, and `global`
    - `perActionTimelineIncrement` - Amount of time to give to player when their turn starts (this scales per present timeline in play).
  - `global` - This is a persistent empty object that allows for saving of data between function calls.
 
-To be an actual bot, you then need to return an `Action` object as described here https://gitlab.com/alexbay218/5d-chess-js#schemas
+To be an actual bot, you then need to return an `Action` object as described here https://gitlab.com/5d-chess/5d-chess-js#schemas
 
 The Debug mode will run the function in the main thread, otherwise it will run it as a Web Worker to prevent hanging.
 
@@ -93,7 +93,7 @@ Yes (maybe).
 
 ### You incorrectly evaluated this board as a checkmate (or not a checkmate)!
 
-If you can provide me an action list (object, json, or notation) or the board state, and submit it as an issue to this repo (https://gitlab.com/alexbay218/5d-chess-js), I can get right on it. This goes for any other bugs. A good way to verify if it is correct or not is to repeat the same moves in the same order in '5D Chess With Multiverse Time Travel' and see if it matches.
+If you can provide me an action list (object, json, or notation) or the board state, and submit it as an issue to this repo (https://gitlab.com/5d-chess/5d-chess-js), I can get right on it. This goes for any other bugs. A good way to verify if it is correct or not is to repeat the same moves in the same order in '5D Chess With Multiverse Time Travel' and see if it matches.
 
 ### Why is this on GitLab instead of GitHub?
 
