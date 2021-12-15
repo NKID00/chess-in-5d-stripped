@@ -28,7 +28,6 @@ export const extractHighlightNotation = (notationArr, notation, highlightNotatio
           currTmpNotation += tmpNotationArr[j] + (tmpNotationArr[j].includes('[') ? '\n' : ' ');
         }
         try {
-          console.log(currTmpNotation)
           currTmpChess.import(currTmpNotation);
           if(currTmpChess.hash === hash) {
             return tmpNotationArr[i];
@@ -39,7 +38,6 @@ export const extractHighlightNotation = (notationArr, notation, highlightNotatio
     }
   }
   catch(err) {
-    console.log(err)
   }
   return null;
 };

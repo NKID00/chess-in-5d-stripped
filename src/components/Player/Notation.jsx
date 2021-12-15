@@ -34,7 +34,6 @@ export default class Notation extends React.Component {
     if(Array.isArray(notationArr) && typeof this.props.notation === 'string' && typeof this.props.highlightNotation === 'string') {
       try {
         var highlightNotationSegment = (await highlightNotationWorker.extractHighlightNotation(notationArr, this.props.notation, this.props.highlightNotation));
-        console.log(highlightNotationSegment)
         this.setState({
           highlightNotationSegment: highlightNotationSegment
         });
@@ -102,7 +101,6 @@ export default class Notation extends React.Component {
       this.setState({ notationArr: res });
     }
 
-    console.log(resWithTags)
     //Look for highlights
     this.extractHighlightNotation(resWithTags);
   }

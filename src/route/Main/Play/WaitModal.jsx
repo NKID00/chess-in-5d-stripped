@@ -66,7 +66,6 @@ export default class WaitModal extends React.Component {
     else {
       stage = 4;
     }
-    console.log(stage)
     return (
       <Dialog
         fullWidth

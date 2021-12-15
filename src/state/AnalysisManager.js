@@ -126,22 +126,33 @@ export default class AnalysisManager {
     //onSessionUpdate
     return this.emitter.on(event, callback);
   }
+  setAsBase() {
+    this.baseActionHistory = deepcopy(this.currentActionHistory);
+    this.baseMoveBuffer = deepcopy(this.currentMoveBuffer);
+    this.baseNotation = this.chess.export('5dpgn_active_timeline');
+    if(this.session === null && this.importB64.length <= 0) {
+      this.importB64 = LinkCompression.compressLink(this.baseNotation);
+    }
+  }
   move(move) {
     this.chess.move(move);
     this.currentActionHistory = deepcopy(this.chess.actionHistory);
     this.currentMoveBuffer = deepcopy(this.chess.moveBuffer);
+    this.setAsBase();
     this.setCurrentState();
   }
   undo() {
     this.chess.undo();
     this.currentActionHistory = deepcopy(this.chess.actionHistory);
     this.currentMoveBuffer = deepcopy(this.chess.moveBuffer);
+    this.setAsBase();
     this.setCurrentState();
   }
   submit() {
     this.chess.submit();
     this.currentActionHistory = deepcopy(this.chess.actionHistory);
     this.currentMoveBuffer = deepcopy(this.chess.moveBuffer);
+    this.setAsBase();
     this.setCurrentState();
   }
   previousAction() {
