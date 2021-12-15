@@ -243,7 +243,7 @@ export const getSessionsQuery = async (query = {}, projection = {}, sort = {}, l
   return networkSessions;
 }
 
-const getPastSessionsQuery = async (query = {}, projection = {}, sort = {}, limit = 100, skip = 0) => {
+export const getPastSessionsQuery = async (query = {}, projection = {}, sort = {}, limit = 100, skip = 0) => {
   let lastQuery = store.get('network/games/get');
   let storedAuth = authStore.get();
   let serverUrl = settings.get().server;

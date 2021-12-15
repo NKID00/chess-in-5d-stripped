@@ -146,6 +146,12 @@ export default class Player extends React.Component {
       this.rootRef.current.addEventListener('mouseenter', this.startRendererInteractionListener);
     }
     this.autoFlip();
+    let currentConfig = crConfig.get();
+    if(currentConfig.extra.autoRecenter && this.chessRendererRef) {
+      window.setTimeout(() => {
+        this.chessRendererRef.current.chessRenderer.zoom.present(true, false);
+      }, 750);
+    }
   }
   componentDidUpdate(prevProps, prevState) {
     if(!deepequal(prevState.menu, this.state.menu)) {
@@ -175,36 +181,18 @@ export default class Player extends React.Component {
     //Passthrough function for auto recenter
     if(typeof this.props.onMove === 'function') {
       this.props.onMove(move);
-      var currentConfig = crConfig.get();
-      if(currentConfig.extra.autoRecenter) {
-        window.setTimeout(() => {
-          this.chessRendererRef.current.chessRenderer.zoom.present(true, false);
-        }, 250);
-      }
     }
   }
   onUndo() {
     //Passthrough function for auto recenter
     if(typeof this.props.submitOnUndo === 'function') {
       this.props.submitOnUndo();
-      var currentConfig = crConfig.get();
-      if(currentConfig.extra.autoRecenter) {
-        window.setTimeout(() => {
-          this.chessRendererRef.current.chessRenderer.zoom.present(true, false);
-        }, 250);
-      }
     }
   }
   onSubmit() {
     //Passthrough function for auto recenter
     if(typeof this.props.submitOnSubmit === 'function') {
       this.props.submitOnSubmit();
-      var currentConfig = crConfig.get();
-      if(currentConfig.extra.autoRecenter) {
-        window.setTimeout(() => {
-          this.chessRendererRef.current.chessRenderer.zoom.present(true, false);
-        }, 250);
-      }
     }
   }
   render() {
@@ -248,7 +236,7 @@ export default class Player extends React.Component {
         </Card>
       );
     }
-    if(this.state.menu.showAnalyze && this.props.allowTutorial) {
+    if(this.state.menu.showAnalyze && this.props.allowAnalyze) {
       layoutComponents.push(
         <Card key='analyze'
           onMouseEnter={() => { crConfig.set({ app: { interactive: false } }, this.context); }}
@@ -259,6 +247,7 @@ export default class Player extends React.Component {
             onPreviousMove={this.props.analyzeOnPreviousMove}
             onNextAction={this.props.analyzeOnNextAction}
             onNextMove={this.props.analyzeOnNextMove}
+            onRestore={this.props.analyzeOnRestore}
           />
         </Card>
       );
@@ -465,6 +454,7 @@ export default class Player extends React.Component {
           {layoutComponents}
         </Layout>
         <Audio
+          chessRendererRef={this.chessRendererRef}
           actionHistory={this.props.actionHistory}
           moveBuffer={this.props.moveBuffer}
           isEnd={this.props.statusIsCheckmate || this.props.statusIsStalemate}

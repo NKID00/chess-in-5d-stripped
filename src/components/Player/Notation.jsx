@@ -34,6 +34,7 @@ export default class Notation extends React.Component {
     if(Array.isArray(notationArr) && typeof this.props.notation === 'string' && typeof this.props.highlightNotation === 'string') {
       try {
         var highlightNotationSegment = (await highlightNotationWorker.extractHighlightNotation(notationArr, this.props.notation, this.props.highlightNotation));
+        console.log(highlightNotationSegment)
         this.setState({
           highlightNotationSegment: highlightNotationSegment
         });
@@ -43,30 +44,41 @@ export default class Notation extends React.Component {
   }
   extractNotationArr() {
     var res = [];
+    var resWithTags = [];
     //Process notation into string arrays
     if(typeof this.props.notation === 'string') {
       var tmpNotation = this.props.notation.slice();
-      tmpNotation = tmpNotation.replace(/\[[^\]]*\]/g, '');
       tmpNotation = tmpNotation.replace(/;\s*([^\n]*)\n/g, '{$1}\n');
       tmpNotation = tmpNotation.replace(/([^\s]){/g, '$1 {');
       tmpNotation = tmpNotation.replace(/}([^\s])/g, '} $1');
       tmpNotation = tmpNotation.replace(/\r\n/g, '\n');
-      //Remove newline within comments
+      //Remove comments
       var commentMode = false;
       for(var i = 0;i < tmpNotation.length;i++) {
         if(tmpNotation[i] === '{') {
           commentMode = true;
-        }
-        else if(commentMode && tmpNotation[i] === '\n') {
-          tmpNotation.splice(i,1);
+          tmpNotation = tmpNotation.substring(0,i) + tmpNotation.substring(i + 1);
           i--;
         }
         else if(tmpNotation[i] === '}') {
           commentMode = false;
+          tmpNotation = tmpNotation.substring(0,i) + tmpNotation.substring(i + 1);
+          i--;
+        }
+        else if(commentMode && typeof tmpNotation[i] === 'string') {
+          tmpNotation = tmpNotation.substring(0,i) + tmpNotation.substring(i + 1);
+          i--;
         }
       }
       tmpNotation = tmpNotation.replace(/\s+(\d*\.)/g, '\n$1');
       var tmpNotationArr = tmpNotation.split('\n');
+      for(var i = 0;i < tmpNotationArr.length;i++) { // eslint-disable-line no-redeclare
+        if(tmpNotationArr[i].length > 0) {
+          resWithTags.push(tmpNotationArr[i]);
+        }
+      }
+      tmpNotation = tmpNotation.replace(/\[[^\]]*\]/g, '');
+      tmpNotationArr = tmpNotation.split('\n');
       for(var i = 0;i < tmpNotationArr.length;i++) { // eslint-disable-line no-redeclare
         if(tmpNotationArr[i].length > 0) {
           res.push(tmpNotationArr[i]);
@@ -90,8 +102,9 @@ export default class Notation extends React.Component {
       this.setState({ notationArr: res });
     }
 
+    console.log(resWithTags)
     //Look for highlights
-    this.extractHighlightNotation(res);
+    this.extractHighlightNotation(resWithTags);
   }
   componentDidMount() {
     //Update state if config settings are changed

@@ -105,9 +105,8 @@ class Menu extends React.Component {
         </ListItem>
         <ListItem
           button
-          disabled
           onClick={() => {
-            this.props.history.push('/analyze');
+            this.props.history.push('/analyze?import=');
             if(typeof this.props.onClose === 'function') { this.props.onClose(); }
           }}
         >

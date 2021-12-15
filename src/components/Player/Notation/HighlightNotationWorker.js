@@ -11,13 +11,13 @@ export const extractHighlightNotation = (notationArr, notation, highlightNotatio
     //Check if highlight matches current displayed notation (skip if matches)
     chess.import(notation);
     if(hash !== chess.hash) {
-      var currTmpChess = new Chess();
-      currTmpChess.skipDetection = true;
+      var currTmpChess = chess.copy();
+      currTmpChess.reset();
 
       //Create array of notation segments
       var tmpNotationArr = [];
       for(var i = 0;i < notationArr.length;i++) {
-        tmpNotationArr.push(notationArr[i].split(' '));
+        tmpNotationArr.push(notationArr[i].includes('[') ? notationArr[i] : notationArr[i].split(' '));
       }
       tmpNotationArr = tmpNotationArr.flat();
 
@@ -25,9 +25,10 @@ export const extractHighlightNotation = (notationArr, notation, highlightNotatio
       for(var i = 0;i < tmpNotationArr.length;i++) { // eslint-disable-line no-redeclare
         var currTmpNotation = '';
         for(var j = 0;j <= i;j++) {
-          currTmpNotation += tmpNotationArr[j] + ' ';
+          currTmpNotation += tmpNotationArr[j] + (tmpNotationArr[j].includes('[') ? '\n' : ' ');
         }
         try {
+          console.log(currTmpNotation)
           currTmpChess.import(currTmpNotation);
           if(currTmpChess.hash === hash) {
             return tmpNotationArr[i];
@@ -37,6 +38,8 @@ export const extractHighlightNotation = (notationArr, notation, highlightNotatio
       }
     }
   }
-  catch(err) {}
+  catch(err) {
+    console.log(err)
+  }
   return null;
 };

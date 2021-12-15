@@ -1,6 +1,8 @@
 import React from 'react';
 import { withRouter } from 'react-router';
 
+import { Trans } from '@lingui/macro';
+
 import Box from '@material-ui/core/Box';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
@@ -38,8 +40,8 @@ class Play extends React.Component {
     this.endListener = this.sessionManager.on('onEnd', async (endData) => {
       this.setState(endData);
     });
-    //Listen for session changes
-    this.endListener = this.sessionManager.on('onSessionUpdate', async (session) => {
+    //Listen for session info changes
+    this.sessionListener = this.sessionManager.on('onSessionUpdate', async (session) => {
       if(
         (this.state.session && !this.state.session.started && session.started) ||
         (!this.state.session && session.started)
@@ -60,6 +62,7 @@ class Play extends React.Component {
       this.setState({ session: session });
     });
 
+    //Check URL search params for id
     let search = new URLSearchParams(this.props.location.search);
     if(search.has('id')) {
       this.sessionManager.init(search.get('id'));
@@ -77,6 +80,8 @@ class Play extends React.Component {
     if(typeof this.clockListener === 'function') { this.clockListener(); }
     //Stop listening to session end changes
     if(typeof this.endListener === 'function') { this.endListener(); }
+    //Stop listening to session info changes
+    if(typeof this.sessionListener === 'function') { this.sessionListener(); }
     this.sessionManager.destroy();
   }
   render() {
@@ -97,7 +102,13 @@ class Play extends React.Component {
       );
     }
     if(this.state.board === null) {
-      return (<>No session id</>);
+      return (
+        <Box display='flex'>
+          <Box mx='auto' my={5}>
+            <Trans>Session does not exist!</Trans>
+          </Box>
+        </Box>
+      );
     }
     return (
       <>

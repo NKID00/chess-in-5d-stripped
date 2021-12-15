@@ -4,9 +4,11 @@ import { Howl } from 'howler';
 
 import EmitterContext from 'utils/EmitterContext';
 import * as audio from 'state/audio';
+import * as crConfig from 'state/config';
 
 /*
 Props
+ - chessRendererRef
  - actionHistory
  - moveBuffer
  - isEnd
@@ -47,6 +49,14 @@ export default class Audio extends React.Component {
       src: submitAudio.audio
     });
   }
+  triggerAutoRecenter() {
+    let currentConfig = crConfig.get();
+    if(currentConfig.extra.autoRecenter && this.props.chessRendererRef) {
+      window.setTimeout(() => {
+        this.props.chessRendererRef.current.chessRenderer.zoom.present(true, false);
+      }, 250);
+    }
+  }
   componentDidMount() {
     this.audioRefresh();
     //Update state if audio files are changed
@@ -64,10 +74,12 @@ export default class Audio extends React.Component {
       if(prevProps.actionHistory.length < this.props.actionHistory.length) {
         //Submit / Forward Action triggered
         this.submitHowl.play();
+        this.triggerAutoRecenter();
       }
       else {
         //Revert Action triggered
         this.undoHowl.play();
+        this.triggerAutoRecenter();
       }
     }
     else if(
@@ -78,10 +90,12 @@ export default class Audio extends React.Component {
       if(prevProps.moveBuffer.length < this.props.moveBuffer.length) {
         //Move triggered
         this.moveHowl.play();
+        this.triggerAutoRecenter();
       }
       else {
         //Undo triggered
         this.undoHowl.play();
+        this.triggerAutoRecenter();
       }
     }
     else if(
@@ -92,6 +106,7 @@ export default class Audio extends React.Component {
       if(this.props.isEnd) {
         //End triggered
         this.endHowl.play();
+        this.triggerAutoRecenter();
       }
     }
   }

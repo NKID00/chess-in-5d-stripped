@@ -30,7 +30,6 @@ export class Welcome extends React.Component {
           </Typography>
           <Typography variant='body2' component='p'>
             <ul>
-              <li>Analysis mode</li>
               <li>Puzzles</li>
               <li>Tutorial</li>
               <li>Editor</li>
@@ -69,7 +68,7 @@ export class DiscordJoin extends React.Component {
             </Grid>
             <Grid item xs={7}>
               <Typography variant='body2' component='p'>
-                <Trans>Want to contribute? Working on an open source 5D Chess project? Join the Open 5D Chess Discord!</Trans>
+                <Trans>Want to contribute? Working on an open source 5D Chess project? Got a bug to report? Join the Open 5D Chess Discord!</Trans>
               </Typography>
             </Grid>
             <Grid item xs={5}>

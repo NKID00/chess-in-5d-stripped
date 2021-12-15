@@ -4,10 +4,9 @@ import { createNanoEvents } from 'nanoevents';
 import * as sessions from 'network/sessions';
 import * as LinkCompression from 'utils/LinkCompression';
 
-const collections = require('state/db').init();
 const deepcopy = require('deepcopy');
 
-export default class SessionManager {
+export default class AnalysisManager {
   constructor(id = null) {
     this.emitter = createNanoEvents();
     if(id) {
@@ -19,22 +18,34 @@ export default class SessionManager {
     this.importB64 = '';
     this.session = await sessions.getSession(id);
     if(this.session === null) {
-      let pastSessions = await sessions.getPastSessionsQuery({ id: id });
-      if(pastSessions.length > 0) {
-        this.session = pastSessions[0];
+      try {
+        let pastSessions = await sessions.getPastSessionsQuery({ id: id });
+        if(pastSessions.length > 0) {
+          this.session = pastSessions[0];
+          this.emitter.emit('onSessionUpdate', this.session);
+        }
+        else {
+          //No session available, assuming id is Base64 import
+          this.importB64 = id;
+        }
       }
-      else {
-        //No session available, assuming id is Base64 import
+      catch(err) {
         this.importB64 = id;
       }
+    }
+    else {
+      this.emitter.emit('onSessionUpdate', this.session);
     }
     this.pastAvailableMoves = [];
     this.futureAvailableMoves = [];
     this.currentActionHistory = [];
     this.currentMoveBuffer = [];
+    this.baseActionHistory = [];
+    this.baseMoveBuffer = [];
+    this.baseNotation = '';
     this.chess = new Chess();
     this.chess.skipDetection = true;
-    this.emitter.emit('onBoardUpdate', this.getBoard());
+    this.reset();
     //TODO used for debugging
     window.chess = this.chess;
     window.chessClock = this.chessClock;
@@ -61,9 +72,13 @@ export default class SessionManager {
       this.currentActionHistory = tmpChess.actionHistory;
       this.currentMoveBuffer = tmpChess.moveBuffer;
     }
-    this.setCurrentState();
+    this.baseActionHistory = deepcopy(this.currentActionHistory);
+    this.baseMoveBuffer = deepcopy(this.currentMoveBuffer);
+    this.setCurrentState(false);
+    this.baseNotation = this.chess.export('5dpgn_active_timeline');
+    this.emitter.emit('onBoardUpdate', this.getBoard());
   }
-  setCurrentState() {
+  setCurrentState(emit = true) {
     this.chess.reset();
     //Import action history
     this.pastAvailableMoves = [];
@@ -86,8 +101,12 @@ export default class SessionManager {
     tmpChess.skipDetection = true;
     tmpChess.pass();
     this.futureAvailableMoves = tmpChess.moves('object', false, false, false);
+    if(emit) {
+      this.emitter.emit('onBoardUpdate', this.getBoard());
+    }
   }
   getBoard() {
+    let currentNotation = this.chess.export('5dpgn_active_timeline');
     return {
       player: this.chess.player,
       board: this.chess.board,
@@ -98,34 +117,76 @@ export default class SessionManager {
       pastAvailableMoves: [this.pastAvailableMoves,this.futureAvailableMoves].flat(),
       undoable: this.chess.undoable() && ((this.isServer && this.isPlayer) || !this.isServer),
       submittable: this.chess.submittable() && ((this.isServer && this.isPlayer) || !this.isServer),
-      notation: this.chess.export('5dpgn_active_timeline')
+      notation: currentNotation,
+      baseNotation: this.baseNotation.includes(currentNotation) ? this.baseNotation : currentNotation
     };
   }
   on(event, callback) {
     //onBoardUpdate
-    //onClockUpdate
-    //onEnd
+    //onSessionUpdate
     return this.emitter.on(event, callback);
   }
   move(move) {
     this.chess.move(move);
-    this.currentActionHistory = this.chess.actionHistory;
-    this.currentMoveBuffer = this.chess.moveBuffer;
+    this.currentActionHistory = deepcopy(this.chess.actionHistory);
+    this.currentMoveBuffer = deepcopy(this.chess.moveBuffer);
     this.setCurrentState();
-    this.emitter.emit('onBoardUpdate', this.getBoard());
   }
   undo() {
-    this.chess.undo(move);
-    this.currentActionHistory = this.chess.actionHistory;
-    this.currentMoveBuffer = this.chess.moveBuffer;
+    this.chess.undo();
+    this.currentActionHistory = deepcopy(this.chess.actionHistory);
+    this.currentMoveBuffer = deepcopy(this.chess.moveBuffer);
     this.setCurrentState();
-    this.emitter.emit('onBoardUpdate', this.getBoard());
   }
   submit() {
     this.chess.submit();
-    this.currentActionHistory = this.chess.actionHistory;
-    this.currentMoveBuffer = this.chess.moveBuffer;
+    this.currentActionHistory = deepcopy(this.chess.actionHistory);
+    this.currentMoveBuffer = deepcopy(this.chess.moveBuffer);
     this.setCurrentState();
-    this.emitter.emit('onBoardUpdate', this.getBoard());
+  }
+  previousAction() {
+    if(this.currentMoveBuffer.length > 0) {
+      this.currentMoveBuffer = [];
+      this.setCurrentState();
+    }
+    else if(this.currentActionHistory.length > 0) {
+      this.currentActionHistory.pop();
+      this.setCurrentState();
+    }
+  }
+  nextAction() {
+    if(this.currentActionHistory.length < this.baseActionHistory.length) {
+      this.currentActionHistory.push(deepcopy(this.baseActionHistory[this.currentActionHistory.length]));
+      this.currentMoveBuffer = [];
+      this.setCurrentState();
+    }
+  }
+  previousMove() {
+    if(this.currentActionHistory.length > 0) {
+      if(this.currentMoveBuffer.length <= 0) {
+        this.currentMoveBuffer = deepcopy(this.currentActionHistory.pop().moves);
+      }
+      this.currentMoveBuffer.pop();
+      this.setCurrentState();
+    }
+  }
+  nextMove() {
+    if(this.currentMoveBuffer.length < this.baseMoveBuffer.length) {
+      this.currentMoveBuffer.push(deepcopy(this.baseMoveBuffer[this.currentMoveBuffer.length]));
+      this.setCurrentState();
+    }
+    else {
+      this.nextAction();
+    }
+  }
+  select(notation) {
+    let tmpChess = new Chess();
+    tmpChess.import(notation);
+    this.currentActionHistory = tmpChess.actionHistory;
+    this.currentMoveBuffer = tmpChess.moveBuffer;
+    this.setCurrentState();
+  }
+  destroy() {
+    this.emitter.events = {};
   }
 }

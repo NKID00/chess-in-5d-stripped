@@ -172,7 +172,11 @@ class SessionsBrowser extends React.Component {
             if(typeof query.orderBy !== 'undefined') {
               sort[query.orderBy.field] = query.orderDirection === 'asc' ? 1 : -1;
             }
-            let sessionData = await sessions.getSessionsQuery({}, {}, sort, query.pageSize, query.page);
+            let sessionData = [];
+            try {
+              sessionData = await sessions.getSessionsQuery({}, {}, sort, query.pageSize, query.page);
+            }
+            catch(err) {}
             return {data: sessionData, page: query.page, totalCount: 0};
           }}
           actions={[
