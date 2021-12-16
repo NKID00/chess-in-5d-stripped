@@ -106,7 +106,7 @@ class Menu extends React.Component {
         <ListItem
           button
           onClick={() => {
-            this.props.history.push('/analyze?import=');
+            this.props.history.push('/analyze-menu');
             if(typeof this.props.onClose === 'function') { this.props.onClose(); }
           }}
         >

@@ -13,7 +13,7 @@ export default class AnalysisManager {
       this.init(id);
     }
   }
-  async init(id) {
+  async init(id, emptyBase = false) {
     //Import session if available
     this.importB64 = '';
     this.session = await sessions.getSession(id);
@@ -43,6 +43,7 @@ export default class AnalysisManager {
     this.baseActionHistory = [];
     this.baseMoveBuffer = [];
     this.baseNotation = '';
+    this.emptyBase = emptyBase;
     this.chess = new Chess();
     this.chess.skipDetection = true;
     this.reset();
@@ -130,7 +131,7 @@ export default class AnalysisManager {
     this.baseActionHistory = deepcopy(this.currentActionHistory);
     this.baseMoveBuffer = deepcopy(this.currentMoveBuffer);
     this.baseNotation = this.chess.export('5dpgn_active_timeline');
-    if(this.session === null && this.importB64.length <= 0) {
+    if(this.emptyBase) {
       this.importB64 = LinkCompression.compressLink(this.baseNotation);
     }
   }

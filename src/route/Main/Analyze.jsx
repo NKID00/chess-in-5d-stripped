@@ -51,10 +51,10 @@ class Analyze extends React.Component {
     let search = new URLSearchParams(this.props.location.search);
     window.search = search
     if(search.has('id')) {
-      this.analysisManager.init(search.get('id'));
+      this.analysisManager.init(search.get('id'), search.has('empty'));
     }
     else if(search.has('import')) {
-      this.analysisManager.init(search.get('import'));
+      this.analysisManager.init(search.get('import'), search.has('empty'));
     }
     else {
       this.setState({
