@@ -98,10 +98,13 @@ export default class AnalysisManager {
       this.chess.move(this.currentMoveBuffer[i]);
     }
     //Populate futureAvailableMoves
-    let tmpChess = this.chess.copy();
-    tmpChess.skipDetection = true;
-    tmpChess.pass();
-    this.futureAvailableMoves = tmpChess.moves('object', false, false, false);
+    try {
+      let tmpChess = this.chess.copy();
+      tmpChess.skipDetection = true;
+      tmpChess.pass();
+      this.futureAvailableMoves = tmpChess.moves('object', false, false, false);
+    }
+    catch(err) {}
     if(emit) {
       this.emitter.emit('onBoardUpdate', this.getBoard());
     }
