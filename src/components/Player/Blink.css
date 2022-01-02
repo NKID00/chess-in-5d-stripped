@@ -1,0 +1,16 @@
+@-webkit-keyframes borderBlink {
+  to {
+    border-color: transparent;
+  }
+}
+
+@keyframes borderBlink {
+  to {
+    border-color: transparent;
+  }
+}
+
+.borderBlink[animate='1'] {
+  -webkit-animation: borderBlink 0.375s linear infinite alternate;
+  animation: borderBlink 0.375s linear infinite alternate;
+}
