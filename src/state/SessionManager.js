@@ -108,10 +108,13 @@ export default class SessionManager {
           needReset = true;
         }
         //Populate futureAvailableMoves
-        let tmpChess = this.chess.copy();
-        tmpChess.skipDetection = true;
-        tmpChess.pass();
-        this.futureAvailableMoves = tmpChess.moves('object', false, false, false);
+        try {
+          let tmpChess = this.chess.copy();
+          tmpChess.skipDetection = true;
+          tmpChess.pass();
+          this.futureAvailableMoves = tmpChess.moves('object', false, false, false);
+        }
+        catch(err) {}
         needUpdate = true;
       }
       else if(this.session.actionHistory.length < this.chess.actionHistory.length) {
@@ -239,10 +242,13 @@ export default class SessionManager {
       this.chess.move(this.session.moveBuffer[i]);
     }
     //Populate futureAvailableMoves
-    let tmpChess = this.chess.copy();
-    tmpChess.skipDetection = true;
-    tmpChess.pass();
-    this.futureAvailableMoves = tmpChess.moves('object', false, false, false);
+    try {
+      let tmpChess = this.chess.copy();
+      tmpChess.skipDetection = true;
+      tmpChess.pass();
+      this.futureAvailableMoves = tmpChess.moves('object', false, false, false);
+    }
+    catch(err) {}
   }
   async setSession() {
     if(!this.isServer) {
