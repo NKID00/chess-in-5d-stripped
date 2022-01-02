@@ -3,20 +3,21 @@ const { autoUpdater } = require('electron-updater');
 const fs = require('fs');
 const isDev = require('electron-is-dev');
 const path = require('path');
-const { compressLink } = require('../src/components/LinkCompression');
+
+const LinkCompression = require('utils/LinkCompression');
 
 if(!isDev) {
   autoUpdater.checkForUpdatesAndNotify();
 }
 
 var mainWindow = null;
-var baseUrl = isDev ? 'http://localhost:3000/' : `file://${path.join(__dirname, '../build/index.html')}`;
+var baseUrl = isDev ? 'http://localhost:3000' : `file://${path.join(__dirname, '../build/index.html')}`;
 var mainUrl = baseUrl + '';
 
 app.on('open-file', (e, p) => {
   if(p.includes('.5dpgn')) {
     var data = fs.readFileSync(p, 'utf8');
-    mainUrl = compressLink(data);
+    mainUrl += '/#/analyze?import=' + LinkCompression.compressLink(data);
     if(mainWindow !== null) {
       mainWindow.loadURL(mainUrl);
     }
@@ -33,7 +34,7 @@ app.on('ready', () => {
 
   if(process.argv.length > 1 && process.argv[1].includes('.5dpgn')) {
     var data = fs.readFileSync(process.argv[1], 'utf8');
-    mainUrl = compressLink(data);
+    mainUrl += '/#/analyze?import=' + LinkCompression.compressLink(data);
   }
 
   mainWindow.loadURL(mainUrl);

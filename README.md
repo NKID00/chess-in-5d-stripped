@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Open source implementation of '5D Chess With Multiverse Time Travel'.
+Chess across time and space! Open source implementation of '5D Chess With Multiverse Time Travel'.
 
 [![Pipeline Status](https://gitlab.com/5d-chess/chess-in-5d/badges/master/pipeline.svg)](https://gitlab.com/5d-chess/chess-in-5d/-/commits/master)
 [![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://gitlab.com/5d-chess/chess-in-5d)
