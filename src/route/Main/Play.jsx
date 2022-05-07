@@ -87,18 +87,30 @@ class Play extends React.Component {
   render() {
     if(this.state.loading) {
       return (
-        <Box display='flex'>
-          <Box mx='auto' my={5}>
-            <CircularProgress
-              size={120}
-              thickness={3.3}
-              disableShrink
-              style={{
-                animationDuration: '2000ms'
+        <>
+          {this.state.session && !this.state.session.started ? 
+            <WaitModal
+              session={this.state.session}
+              onBack={() => {
+                this.props.history.goBack();
               }}
             />
+          :
+            null
+          }
+          <Box display='flex'>
+            <Box mx='auto' my={5}>
+              <CircularProgress
+                size={120}
+                thickness={3.3}
+                disableShrink
+                style={{
+                  animationDuration: '2000ms'
+                }}
+              />
+            </Box>
           </Box>
-        </Box>
+        </>
       );
     }
     if(this.state.board === null) {
