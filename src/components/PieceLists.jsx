@@ -36,6 +36,31 @@ import defaultWR from 'assets/piece/default/white_rook.png';
 import defaultWY from 'assets/piece/default/white_royal_queen.png';
 import defaultWU from 'assets/piece/default/white_unicorn.png';
 
+import default2BB from 'assets/piece/default_v2/black_bishop.png';
+import default2BW from 'assets/piece/default_v2/black_brawn.png';
+import default2BC from 'assets/piece/default_v2/black_common_king.png';
+import default2BD from 'assets/piece/default_v2/black_dragon.png';
+import default2BK from 'assets/piece/default_v2/black_king.png';
+import default2BN from 'assets/piece/default_v2/black_knight.png';
+import default2BP from 'assets/piece/default_v2/black_pawn.png';
+import default2BS from 'assets/piece/default_v2/black_princess.png';
+import default2BQ from 'assets/piece/default_v2/black_queen.png';
+import default2BR from 'assets/piece/default_v2/black_rook.png';
+import default2BY from 'assets/piece/default_v2/black_royal_queen.png';
+import default2BU from 'assets/piece/default_v2/black_unicorn.png';
+import default2WB from 'assets/piece/default_v2/white_bishop.png';
+import default2WW from 'assets/piece/default_v2/white_brawn.png';
+import default2WC from 'assets/piece/default_v2/white_common_king.png';
+import default2WD from 'assets/piece/default_v2/white_dragon.png';
+import default2WK from 'assets/piece/default_v2/white_king/png';
+import default2WN from 'assets/piece/default_v2/white_knight.png';
+import default2WP from 'assets/piece/default_v2/white_pawn.png';
+import default2WS from 'assets/piece/default_v2/white_princess.png';
+import default2WQ from 'assets/piece/default_v2/white_queen.png';
+import default2WR from 'assets/piece/default_v2/white_rook.png';
+import default2WY from 'assets/piece/default_v2/white_royal_queen.png';
+import default2WU from 'assets/piece/default_v2/white_unicorn.png';
+
 import californiaBB from 'assets/piece/california/bB.png';
 import californiaBK from 'assets/piece/california/bK.png';
 import californiaBN from 'assets/piece/california/bN.png';
@@ -373,30 +398,30 @@ export class PieceSetList extends React.Component {
         }
       }
       if(needsUpdate) {
-        await crTexture.set('blackP', 'default', defaultBP);
-        await crTexture.set('blackW', 'default', defaultBW);
-        await crTexture.set('blackB', 'default', defaultBB);
-        await crTexture.set('blackN', 'default', defaultBN);
-        await crTexture.set('blackR', 'default', defaultBR);
-        await crTexture.set('blackS', 'default', defaultBS);
-        await crTexture.set('blackQ', 'default', defaultBQ);
-        await crTexture.set('blackK', 'default', defaultBK);
-        await crTexture.set('blackC', 'default', defaultBC);
-        await crTexture.set('blackY', 'default', defaultBY);
-        await crTexture.set('blackU', 'default', defaultBU);
-        await crTexture.set('blackD', 'default', defaultBD);
-        await crTexture.set('whiteP', 'default', defaultWP);
-        await crTexture.set('whiteW', 'default', defaultWW);
-        await crTexture.set('whiteB', 'default', defaultWB);
-        await crTexture.set('whiteN', 'default', defaultWN);
-        await crTexture.set('whiteR', 'default', defaultWR);
-        await crTexture.set('whiteS', 'default', defaultWS);
-        await crTexture.set('whiteQ', 'default', defaultWQ);
-        await crTexture.set('whiteK', 'default', defaultWK);
-        await crTexture.set('whiteC', 'default', defaultWC);
-        await crTexture.set('whiteY', 'default', defaultWY);
-        await crTexture.set('whiteU', 'default', defaultWU);
-        await crTexture.set('whiteD', 'default', defaultWD);
+        await crTexture.set('blackP', 'default v2', default2BP);
+        await crTexture.set('blackW', 'default v2', default2BW);
+        await crTexture.set('blackB', 'default v2', default2BB);
+        await crTexture.set('blackN', 'default v2', default2BN);
+        await crTexture.set('blackR', 'default v2', default2BR);
+        await crTexture.set('blackS', 'default v2', default2BS);
+        await crTexture.set('blackQ', 'default v2', default2BQ);
+        await crTexture.set('blackK', 'default v2', default2BK);
+        await crTexture.set('blackC', 'default v2', default2BC);
+        await crTexture.set('blackY', 'default v2', default2BY);
+        await crTexture.set('blackU', 'default v2', default2BU);
+        await crTexture.set('blackD', 'default v2', default2BD);
+        await crTexture.set('whiteP', 'default v2', default2WP);
+        await crTexture.set('whiteW', 'default v2', default2WW);
+        await crTexture.set('whiteB', 'default v2', default2WB);
+        await crTexture.set('whiteN', 'default v2', default2WN);
+        await crTexture.set('whiteR', 'default v2', default2WR);
+        await crTexture.set('whiteS', 'default v2', default2WS);
+        await crTexture.set('whiteQ', 'default v2', default2WQ);
+        await crTexture.set('whiteK', 'default v2', default2WK);
+        await crTexture.set('whiteC', 'default v2', default2WC);
+        await crTexture.set('whiteY', 'default v2', default2WY);
+        await crTexture.set('whiteU', 'default v2', default2WU);
+        await crTexture.set('whiteD', 'default v2', default2WD);
         if(this.props.emitter !== null) {
           this.props.emitter.emit('textureUpdate');
         }
@@ -429,6 +454,7 @@ export class PieceSetList extends React.Component {
         await crTexture.set('whiteU', 'california', californiaWN);
         await crTexture.set('whiteD', 'california', californiaWN);
       }
+     
       else if(this.state.pieceSet === 'cardinal') {
         await crTexture.set('blackP', 'cardinal', cardinalBP);
         await crTexture.set('blackW', 'cardinal', cardinalBP);
@@ -506,6 +532,32 @@ export class PieceSetList extends React.Component {
         await crTexture.set('whiteY', 'chessnut', chessnutWQ);
         await crTexture.set('whiteU', 'chessnut', chessnutWN);
         await crTexture.set('whiteD', 'chessnut', chessnutWN);
+      }
+      else if(this.state.pieceSet === 'default_v1'){
+        await crTexture.set('blackP', 'default v1', defaultBP);
+        await crTexture.set('blackW', 'default v1', defaultBW);
+        await crTexture.set('blackB', 'default v1', defaultBB);
+        await crTexture.set('blackN', 'default v1', defaultBN);
+        await crTexture.set('blackR', 'default v1', defaultBR);
+        await crTexture.set('blackS', 'default v1', defaultBS);
+        await crTexture.set('blackQ', 'default v1', defaultBQ);
+        await crTexture.set('blackK', 'default v1', defaultBK);
+        await crTexture.set('blackC', 'default v1', defaultBC);
+        await crTexture.set('blackY', 'default v1', defaultBY);
+        await crTexture.set('blackU', 'default v1', defaultBU);
+        await crTexture.set('blackD', 'default v1', defaultBD);
+        await crTexture.set('whiteP', 'default v1', defaultWP);
+        await crTexture.set('whiteW', 'default v1', defaultWW);
+        await crTexture.set('whiteB', 'default v1', defaultWB);
+        await crTexture.set('whiteN', 'default v1', defaultWN);
+        await crTexture.set('whiteR', 'default v1', defaultWR);
+        await crTexture.set('whiteS', 'default v1', defaultWS);
+        await crTexture.set('whiteQ', 'default v1', defaultWQ);
+        await crTexture.set('whiteK', 'default v1', defaultWK);
+        await crTexture.set('whiteC', 'default v1', defaultWC);
+        await crTexture.set('whiteY', 'default v1', defaultWY);
+        await crTexture.set('whiteU', 'default v1', defaultWU);
+        await crTexture.set('whiteD', 'default v1', defaultWD);
       }
       else if(this.state.pieceSet === 'dubrovny') {
         await crTexture.set('blackP', 'dubrovny', dubrovnyBP);
@@ -980,12 +1032,12 @@ export class PieceSetList extends React.Component {
           }}
           label={<Trans>Piece Set</Trans>}
         >
-          <MenuItem value='default'>
+          <MenuItem value='default v2'>
             <Box display='flex'>
-              <img alt='White Knight Piece' src={defaultWN} style={{ height: 40 }} />
-              <img alt='Black Knight Piece' src={defaultBR} style={{ height: 40 }} />
+              <img alt='White Knight Piece' src={default2WN} style={{ height: 40 }} />
+              <img alt='Black Knight Piece' src={default2BR} style={{ height: 40 }} />
               <Box ml={1} mt='auto' mb='auto' alignItems='center'>
-                <i><Trans>Default</Trans></i>
+                <i><Trans>Default V2</Trans></i>
               </Box>
             </Box>
           </MenuItem>
@@ -1022,6 +1074,15 @@ export class PieceSetList extends React.Component {
               <img alt='Black Knight Piece' src={chessnutBR} style={{ height: 40 }} />
               <Box ml={1} mt='auto' mb='auto' alignItems='center'>
                 Chessnut
+              </Box>
+            </Box>
+          </MenuItem>
+          <MenuItem value='default v1'>
+            <Box display='flex'>
+              <img alt='White Knight Piece' src={default1WN} style={{ height: 40 }} />
+              <img alt='Black Knight Piece' src={default1BR} style={{ height: 40 }} />
+              <Box ml={1} mt='auto' mb='auto' alignItems='center'>
+                <i><Trans>Default V1</Trans></i>
               </Box>
             </Box>
           </MenuItem>
@@ -1190,30 +1251,30 @@ export class PieceSetList extends React.Component {
 }
 
 export const resetPieceSet = async (emitter = null) => {
-  await crTexture.set('blackP', 'default', defaultBP);
-  await crTexture.set('blackW', 'default', defaultBW);
-  await crTexture.set('blackB', 'default', defaultBB);
-  await crTexture.set('blackN', 'default', defaultBN);
-  await crTexture.set('blackR', 'default', defaultBR);
-  await crTexture.set('blackS', 'default', defaultBS);
-  await crTexture.set('blackQ', 'default', defaultBQ);
-  await crTexture.set('blackK', 'default', defaultBK);
-  await crTexture.set('blackC', 'default', defaultBC);
-  await crTexture.set('blackY', 'default', defaultBY);
-  await crTexture.set('blackU', 'default', defaultBU);
-  await crTexture.set('blackD', 'default', defaultBD);
-  await crTexture.set('whiteP', 'default', defaultWP);
-  await crTexture.set('whiteW', 'default', defaultWW);
-  await crTexture.set('whiteB', 'default', defaultWB);
-  await crTexture.set('whiteN', 'default', defaultWN);
-  await crTexture.set('whiteR', 'default', defaultWR);
-  await crTexture.set('whiteS', 'default', defaultWS);
-  await crTexture.set('whiteQ', 'default', defaultWQ);
-  await crTexture.set('whiteK', 'default', defaultWK);
-  await crTexture.set('whiteC', 'default', defaultWC);
-  await crTexture.set('whiteY', 'default', defaultWY);
-  await crTexture.set('whiteU', 'default', defaultWU);
-  await crTexture.set('whiteD', 'default', defaultWD);
+  await crTexture.set('blackP', 'default v2', default2BP);
+  await crTexture.set('blackW', 'default v2', default2BW);
+  await crTexture.set('blackB', 'default v2', default2BB);
+  await crTexture.set('blackN', 'default v2', default2BN);
+  await crTexture.set('blackR', 'default v2', default2BR);
+  await crTexture.set('blackS', 'default v2', default2BS);
+  await crTexture.set('blackQ', 'default v2', default2BQ);
+  await crTexture.set('blackK', 'default v2', default2BK);
+  await crTexture.set('blackC', 'default v2', default2BC);
+  await crTexture.set('blackY', 'default v2', default2BY);
+  await crTexture.set('blackU', 'default v2', default2BU);
+  await crTexture.set('blackD', 'default v2', default2BD);
+  await crTexture.set('whiteP', 'default v2', default2WP);
+  await crTexture.set('whiteW', 'default v2', default2WW);
+  await crTexture.set('whiteB', 'default v2', default2WB);
+  await crTexture.set('whiteN', 'default v2', default2WN);
+  await crTexture.set('whiteR', 'default v2', default2WR);
+  await crTexture.set('whiteS', 'default v2', default2WS);
+  await crTexture.set('whiteQ', 'default v2', default2WQ);
+  await crTexture.set('whiteK', 'default v2', default2WK);
+  await crTexture.set('whiteC', 'default v2', default2WC);
+  await crTexture.set('whiteY', 'default v2', default2WY);
+  await crTexture.set('whiteU', 'default v2', default2WU);
+  await crTexture.set('whiteD', 'default v2', default2WD);
   if(emitter !== null) {
     emitter.emit('textureUpdate');
   }
