@@ -36,6 +36,31 @@ import defaultWR from 'assets/piece/default/white_rook.png';
 import defaultWY from 'assets/piece/default/white_royal_queen.png';
 import defaultWU from 'assets/piece/default/white_unicorn.png';
 
+import default2BB from 'assets/piece/default_v2/black_bishop.png';
+import default2BW from 'assets/piece/default_v2/black_brawn.png';
+import default2BC from 'assets/piece/default_v2/black_common_king.png';
+import default2BD from 'assets/piece/default_v2/black_dragon.png';
+import default2BK from 'assets/piece/default_v2/black_king.png';
+import default2BN from 'assets/piece/default_v2/black_knight.png';
+import default2BP from 'assets/piece/default_v2/black_pawn.png';
+import default2BS from 'assets/piece/default_v2/black_princess.png';
+import default2BQ from 'assets/piece/default_v2/black_queen.png';
+import default2BR from 'assets/piece/default_v2/black_rook.png';
+import default2BY from 'assets/piece/default_v2/black_royal_queen.png';
+import default2BU from 'assets/piece/default_v2/black_unicorn.png';
+import default2WB from 'assets/piece/default_v2/white_bishop.png';
+import default2WW from 'assets/piece/default_v2/white_brawn.png';
+import default2WC from 'assets/piece/default_v2/white_common_king.png';
+import default2WD from 'assets/piece/default_v2/white_dragon.png';
+import default2WK from 'assets/piece/default_v2/white_king.png';
+import default2WN from 'assets/piece/default_v2/white_knight.png';
+import default2WP from 'assets/piece/default_v2/white_pawn.png';
+import default2WS from 'assets/piece/default_v2/white_princess.png';
+import default2WQ from 'assets/piece/default_v2/white_queen.png';
+import default2WR from 'assets/piece/default_v2/white_rook.png';
+import default2WY from 'assets/piece/default_v2/white_royal_queen.png';
+import default2WU from 'assets/piece/default_v2/white_unicorn.png';
+
 import californiaBB from 'assets/piece/california/bB.png';
 import californiaBK from 'assets/piece/california/bK.png';
 import californiaBN from 'assets/piece/california/bN.png';
@@ -429,6 +454,7 @@ export class PieceSetList extends React.Component {
         await crTexture.set('whiteU', 'california', californiaWN);
         await crTexture.set('whiteD', 'california', californiaWN);
       }
+     
       else if(this.state.pieceSet === 'cardinal') {
         await crTexture.set('blackP', 'cardinal', cardinalBP);
         await crTexture.set('blackW', 'cardinal', cardinalBP);
@@ -506,6 +532,32 @@ export class PieceSetList extends React.Component {
         await crTexture.set('whiteY', 'chessnut', chessnutWQ);
         await crTexture.set('whiteU', 'chessnut', chessnutWN);
         await crTexture.set('whiteD', 'chessnut', chessnutWN);
+      }
+      else if(this.state.pieceSet === 'default_v2'){
+        await crTexture.set('blackP', 'default_v2', default2BP);
+        await crTexture.set('blackW', 'default_v2', default2BW);
+        await crTexture.set('blackB', 'default_v2', default2BB);
+        await crTexture.set('blackN', 'default_v2', default2BN);
+        await crTexture.set('blackR', 'default_v2', default2BR);
+        await crTexture.set('blackS', 'default_v2', default2BS);
+        await crTexture.set('blackQ', 'default_v2', default2BQ);
+        await crTexture.set('blackK', 'default_v2', default2BK);
+        await crTexture.set('blackC', 'default_v2', default2BC);
+        await crTexture.set('blackY', 'default_v2', default2BY);
+        await crTexture.set('blackU', 'default_v2', default2BU);
+        await crTexture.set('blackD', 'default_v2', default2BD);
+        await crTexture.set('whiteP', 'default_v2', default2WP);
+        await crTexture.set('whiteW', 'default_v2', default2WW);
+        await crTexture.set('whiteB', 'default_v2', default2WB);
+        await crTexture.set('whiteN', 'default_v2', default2WN);
+        await crTexture.set('whiteR', 'default_v2', default2WR);
+        await crTexture.set('whiteS', 'default_v2', default2WS);
+        await crTexture.set('whiteQ', 'default_v2', default2WQ);
+        await crTexture.set('whiteK', 'default_v2', default2WK);
+        await crTexture.set('whiteC', 'default_v2', default2WC);
+        await crTexture.set('whiteY', 'default_v2', default2WY);
+        await crTexture.set('whiteU', 'default_v2', default2WU);
+        await crTexture.set('whiteD', 'default_v2', default2WD);
       }
       else if(this.state.pieceSet === 'dubrovny') {
         await crTexture.set('blackP', 'dubrovny', dubrovnyBP);
@@ -980,15 +1032,6 @@ export class PieceSetList extends React.Component {
           }}
           label={<Trans>Piece Set</Trans>}
         >
-          <MenuItem value='default'>
-            <Box display='flex'>
-              <img alt='White Knight Piece' src={defaultWN} style={{ height: 40 }} />
-              <img alt='Black Knight Piece' src={defaultBR} style={{ height: 40 }} />
-              <Box ml={1} mt='auto' mb='auto' alignItems='center'>
-                <i><Trans>Default</Trans></i>
-              </Box>
-            </Box>
-          </MenuItem>
           <MenuItem value='california'>
             <Box display='flex'>
               <img alt='White Knight Piece' src={californiaWN} style={{ height: 40 }} />
@@ -1022,6 +1065,24 @@ export class PieceSetList extends React.Component {
               <img alt='Black Knight Piece' src={chessnutBR} style={{ height: 40 }} />
               <Box ml={1} mt='auto' mb='auto' alignItems='center'>
                 Chessnut
+              </Box>
+            </Box>
+          </MenuItem>
+          <MenuItem value='default'>
+            <Box display='flex'>
+              <img alt='White Knight Piece' src={defaultWN} style={{ height: 40 }} />
+              <img alt='Black Knight Piece' src={defaultBR} style={{ height: 40 }} />
+              <Box ml={1} mt='auto' mb='auto' alignItems='center'>
+                <i><Trans>Default</Trans></i>
+              </Box>
+            </Box>
+          </MenuItem>
+          <MenuItem value='default_v2'>
+            <Box display='flex'>
+              <img alt='White Knight Piece' src={default2WN} style={{ height: 40 }} />
+              <img alt='Black Knight Piece' src={default2BR} style={{ height: 40 }} />
+              <Box ml={1} mt='auto' mb='auto' alignItems='center'>
+                <Trans>Default V2</Trans>
               </Box>
             </Box>
           </MenuItem>
