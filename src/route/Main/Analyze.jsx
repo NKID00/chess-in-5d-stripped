@@ -49,7 +49,6 @@ class Analyze extends React.Component {
 
     //Check URL search params for id or import data
     let search = new URLSearchParams(this.props.location.search);
-    window.search = search
     if(search.has('id')) {
       this.analysisManager.init(search.get('id'), search.has('empty'));
     }
