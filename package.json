@@ -4,7 +4,13 @@
     "name": "Shaun Wu",
     "email": "alexbay218@gmail.com"
   },
-  "version": "1.0.2",
+  "contributors": [
+    {
+      "name": "CrazyPenguin0111",
+      "url": "https://gitlab.com/CrazyPenguin0111"
+    }
+  ],
+  "version": "1.0.3",
   "description": "Chess across time and space! Open source implementation of '5D Chess With Multiverse Time Travel'. Play the game of Chess In 5D here!",
   "private": true,
   "main": "public/electron.js",
@@ -180,7 +186,8 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "^4.0.3",
     "store": "^2.0.12",
-    "throttle-debounce": "^3.0.1"
+    "throttle-debounce": "^3.0.1",
+    "url-safe-base64": "^1.2.0"
   },
   "devDependencies": {
     "@craco/craco": "^6.2.0",
