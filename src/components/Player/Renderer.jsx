@@ -70,16 +70,25 @@ export default class Renderer extends React.Component {
       this.chessRenderer.global.config(newConfig);
     }
   }
-  async updateTexture(init = false) {
+  async firstTextureLoad() {
+    let textures = {};
+    for(let i = 0;i < keylist.length;i++) {
+      let currentKey = keylist[i];
+      let currentTexture = await crTexture.get(currentKey);
+      if(currentTexture !== null) {
+        textures[currentKey] = currentTexture;
+      }
+    }
+    return textures;
+  }
+  async updateTexture() {
     let didUpdate = false;
     for(var i = 0;i < keylist.length;i++) {
       var currentKey = keylist[i];
       var currentTexture = await crTexture.get(currentKey);
       if(currentTexture !== null) {
-        if(!init || (init && currentKey !== 'default')) {
-          this.chessRenderer.global.texture(currentKey, currentTexture.texture, true);
-          didUpdate = true;
-        }
+        this.chessRenderer.global.texture(currentKey, currentTexture.texture, true);
+        didUpdate = true;
       }
     }
     if(didUpdate) {
@@ -118,12 +127,13 @@ export default class Renderer extends React.Component {
       this.chessRenderer.global.pastAvailableMoves(this.props.pastAvailableMoves);
     }
   }
-  componentDidMount() {
+  async componentDidMount() {
     //Attach to div element
     this.chessRenderer = new ChessRenderer(
       this.rootRef.current,
       deepmerge({ app: { interactive: false } }, crConfig.get()),
-      crPalette.get()
+      crPalette.get(),
+      await this.firstTexture()
     );
     window.cr = this.chessRenderer;
     //Initialization
@@ -148,7 +158,6 @@ export default class Renderer extends React.Component {
     //Update palette and config right now
     this.updatePalette();
     this.updateConfig();
-    this.updateTexture(true);
     //Update renderer data
     this.updateRenderer();
   }
