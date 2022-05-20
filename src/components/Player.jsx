@@ -149,7 +149,9 @@ export default class Player extends React.Component {
     let currentConfig = crConfig.get();
     if(currentConfig.extra.autoRecenter && this.chessRendererRef) {
       window.setTimeout(() => {
-        this.chessRendererRef.current.chessRenderer.zoom.present(true, false);
+        if(this.chessRendererRef.current.chessRenderer && this.chessRendererRef.current.chessRenderer) {
+          this.chessRendererRef.current.chessRenderer.zoom.present(true, false);
+        }
       }, 750);
     }
   }
@@ -276,34 +278,34 @@ export default class Player extends React.Component {
         >
           <DrawMenu
             onEnableDraw={(type, middle) => {
-              if(this.chessRendererRef.current) {
+              if(this.chessRendererRef.current && this.chessRendererRef.current.chessRenderer) {
                 this.chessRendererRef.current.chessRenderer.render.customArrowManager.disableEraseMode();
                 this.chessRendererRef.current.chessRenderer.render.customArrowManager.enableCustomArrowMode(type, middle);
               }
             }}
             onDisableDraw={() => {
-              if(this.chessRendererRef.current) {
+              if(this.chessRendererRef.current && this.chessRendererRef.current.chessRenderer) {
                 this.chessRendererRef.current.chessRenderer.render.customArrowManager.disableCustomArrowMode();
               }
             }}
             onEnableErase={() => {
-              if(this.chessRendererRef.current) {
+              if(this.chessRendererRef.current && this.chessRendererRef.current.chessRenderer) {
                 this.chessRendererRef.current.chessRenderer.render.customArrowManager.disableCustomArrowMode();
                 this.chessRendererRef.current.chessRenderer.render.customArrowManager.enableEraseMode();
               }
             }}
             onDisableErase={() => {
-              if(this.chessRendererRef.current) {
+              if(this.chessRendererRef.current && this.chessRendererRef.current.chessRenderer) {
                 this.chessRendererRef.current.chessRenderer.render.customArrowManager.disableEraseMode();
               }
             }}
             onUndo={() => {
-              if(this.chessRendererRef.current) {
+              if(this.chessRendererRef.current && this.chessRendererRef.current.chessRenderer) {
                 this.chessRendererRef.current.chessRenderer.render.customArrowManager.undo();
               }
             }}
             onClear={() => {
-              if(this.chessRendererRef.current) {
+              if(this.chessRendererRef.current && this.chessRendererRef.current.chessRenderer) {
                 this.chessRendererRef.current.chessRenderer.render.customArrowManager.wipe();
               }
             }}
@@ -377,12 +379,12 @@ export default class Player extends React.Component {
               }, this.context);
             }}
             onPresentZoom={() => {
-              if(this.chessRendererRef.current) {
+              if(this.chessRendererRef.current && this.chessRendererRef.current.chessRenderer) {
                 this.chessRendererRef.current.chessRenderer.zoom.present(true, false);
               }
             }}
             onFullboardZoom={() => {
-              if(this.chessRendererRef.current) {
+              if(this.chessRendererRef.current && this.chessRendererRef.current.chessRenderer) {
                 this.chessRendererRef.current.chessRenderer.zoom.fullBoard();
               }
             }}
