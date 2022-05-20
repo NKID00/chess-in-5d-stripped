@@ -43,12 +43,8 @@ export default class Palette extends React.Component {
     cr.global.availableMoves(chess.moves('object', false, false, false));
     cr.zoom.fullBoard();
   }
-  componentDidMount() {
-    //Update state if palette settings are changed
-    this.paletteListener = this.context.on('paletteUpdate', () => {
-      this.setState({ palette: crPalette.get() });
-    });
-    if(this.chessRenderer.current !== null) {
+  setupRenderer() {
+    if(this.chessRenderer.current !== null && this.chessRenderer.current.chessRenderer !== null) {
       //Setup renderer with example
       var cr = this.chessRenderer.current.chessRenderer;
       this.resetView();
@@ -56,6 +52,16 @@ export default class Palette extends React.Component {
         cr.zoom.fullBoard();
       });
     }
+    else {
+      window.setTimeout(this.setupRenderer.bind(this), 500);
+    }
+  }
+  componentDidMount() {
+    //Update state if palette settings are changed
+    this.paletteListener = this.context.on('paletteUpdate', () => {
+      this.setState({ palette: crPalette.get() });
+    });
+    this.setupRenderer();
   }
   componentDidUpdate(prevProps, prevState) {
     //Update palette settings if state has changed
