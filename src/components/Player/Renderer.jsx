@@ -76,7 +76,7 @@ export default class Renderer extends React.Component {
       let currentKey = keylist[i];
       let currentTexture = await crTexture.get(currentKey);
       if(currentTexture !== null) {
-        textures[currentKey] = currentTexture;
+        textures[currentKey] = currentTexture.texture;
       }
     }
     return textures;
@@ -96,35 +96,40 @@ export default class Renderer extends React.Component {
     }
   }
   updateRenderer() {
-    if(typeof this.props.board === 'object' && this.props.board !== null) {
-      this.chessRenderer.global.board(this.props.board, true);
+    if(this.chessRenderer !== null) {
+      if(typeof this.props.board === 'object' && this.props.board !== null) {
+        this.chessRenderer.global.board(this.props.board, true);
+      }
+      if(typeof this.props.actionHistory === 'object' && this.props.actionHistory !== null) {
+        this.chessRenderer.global.actionHistory(this.props.actionHistory, true);
+      }
+      if(typeof this.props.moveBuffer === 'object' && this.props.moveBuffer !== null) {
+        this.chessRenderer.global.moveBuffer(this.props.moveBuffer, true);
+      }
+      if(typeof this.props.checks === 'object' && this.props.checks !== null) {
+        this.chessRenderer.global.checks(this.props.checks, true);
+      }
+      if(typeof this.props.board === 'object' && this.props.board !== null) {
+        this.chessRenderer.global.emitter.emit('boardUpdate', this.props.board);
+      }
+      if(typeof this.props.actionHistory === 'object' && this.props.actionHistory !== null) {
+        this.chessRenderer.global.emitter.emit('actionHistoryUpdate', this.props.actionHistory);
+      }
+      if(typeof this.props.moveBuffer === 'object' && this.props.moveBuffer !== null) {
+        this.chessRenderer.global.emitter.emit('moveBufferUpdate', this.props.moveBuffer);
+      }
+      if(typeof this.props.checks === 'object' && this.props.checks !== null) {
+        this.chessRenderer.global.emitter.emit('checksUpdate', this.props.checks);
+      }
+      if(typeof this.props.availableMoves === 'object' && this.props.availableMoves !== null) {
+        this.chessRenderer.global.availableMoves(this.props.availableMoves);
+      }
+      if(typeof this.props.pastAvailableMoves === 'object' && this.props.pastAvailableMoves !== null) {
+        this.chessRenderer.global.pastAvailableMoves(this.props.pastAvailableMoves);
+      }
     }
-    if(typeof this.props.actionHistory === 'object' && this.props.actionHistory !== null) {
-      this.chessRenderer.global.actionHistory(this.props.actionHistory, true);
-    }
-    if(typeof this.props.moveBuffer === 'object' && this.props.moveBuffer !== null) {
-      this.chessRenderer.global.moveBuffer(this.props.moveBuffer, true);
-    }
-    if(typeof this.props.checks === 'object' && this.props.checks !== null) {
-      this.chessRenderer.global.checks(this.props.checks, true);
-    }
-    if(typeof this.props.board === 'object' && this.props.board !== null) {
-      this.chessRenderer.global.emitter.emit('boardUpdate', this.props.board);
-    }
-    if(typeof this.props.actionHistory === 'object' && this.props.actionHistory !== null) {
-      this.chessRenderer.global.emitter.emit('actionHistoryUpdate', this.props.actionHistory);
-    }
-    if(typeof this.props.moveBuffer === 'object' && this.props.moveBuffer !== null) {
-      this.chessRenderer.global.emitter.emit('moveBufferUpdate', this.props.moveBuffer);
-    }
-    if(typeof this.props.checks === 'object' && this.props.checks !== null) {
-      this.chessRenderer.global.emitter.emit('checksUpdate', this.props.checks);
-    }
-    if(typeof this.props.availableMoves === 'object' && this.props.availableMoves !== null) {
-      this.chessRenderer.global.availableMoves(this.props.availableMoves);
-    }
-    if(typeof this.props.pastAvailableMoves === 'object' && this.props.pastAvailableMoves !== null) {
-      this.chessRenderer.global.pastAvailableMoves(this.props.pastAvailableMoves);
+    else {
+      window.setTimeout(this.updateRenderer.bind(this), 500);
     }
   }
   async componentDidMount() {
@@ -133,7 +138,8 @@ export default class Renderer extends React.Component {
       this.rootRef.current,
       deepmerge({ app: { interactive: false } }, crConfig.get()),
       crPalette.get(),
-      await this.firstTexture()
+      null,
+      await this.firstTextureLoad()
     );
     window.cr = this.chessRenderer;
     //Initialization

@@ -47,12 +47,8 @@ export default class Gameplay extends React.Component {
     cr.global.availableMoves(chess.moves('object', false, false, false));
     cr.zoom.fullBoard();
   }
-  componentDidMount() {
-    //Update state if config settings are changed
-    this.configListener = this.context.on('configUpdate', () => {
-      this.setState({ config: crConfig.get() });
-    });
-    if(this.chessRenderer.current !== null) {
+  setupRenderer() {
+    if(this.chessRenderer.current !== null && this.chessRenderer.current.chessRenderer !== null) {
       //Setup renderer with example
       var cr = this.chessRenderer.current.chessRenderer;
       this.resetView();
@@ -60,6 +56,16 @@ export default class Gameplay extends React.Component {
         cr.zoom.fullBoard();
       });
     }
+    else {
+      window.setTimeout(this.setupRenderer.bind(this), 500);
+    }
+  }
+  componentDidMount() {
+    //Update state if config settings are changed
+    this.configListener = this.context.on('configUpdate', () => {
+      this.setState({ config: crConfig.get() });
+    });
+    this.setupRenderer();
   }
   componentDidUpdate(prevProps, prevState) {
     //Update config settings if state has changed
