@@ -1,3 +1,4 @@
+import { satisfies } from 'compare-versions';
 const store = require('store');
 
 const clearIDB = async () => {
@@ -26,15 +27,13 @@ export const init = () => {
     clearIDB();
   }
 
-  //TODO: Temp storage clearing every new version (dev purposes only)
-  if(storedVersion !== currVersion) {
-    console.info('(DEV) New version, wiping storage');
+  //Clear storage if older than 1.0.3
+  if(!satisfies(storedVersion, '^1.0.3')) {
+    console.info('[Version] Previous version is older than 1.0.3, wiping storage');
     store.clearAll();
     window.localStorage.clear();
     clearIDB();
   }
-
-  //TODO: Use version system to smoothly update
 
   //Store current version
   store.set('version', currVersion);
