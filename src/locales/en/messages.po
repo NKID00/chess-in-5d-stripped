@@ -6,408 +6,1664 @@ msgstr ""
 "X-Generator: POEditor.com\n"
 "Project-Id-Version: Chess in 5D\n"
 "Language: en\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Plural-Forms: \n"
 
-#: src/route/Main/Dashboard.jsx:54
+#: src/route/Main/Dashboard.jsx:66
 msgid "5DCWMTT Discord"
 msgstr "5DCWMTT Discord"
 
-#: src/route/Main/Register.jsx:221
+#: src/components/Player/SettingsMenu.jsx:126
+msgid "All"
+msgstr "All"
+
+#: src/route/Main/Register.jsx:256
 msgid "Already have an account?"
 msgstr "Already have an account?"
 
-#: src/route/MainAppBar/Menu.jsx:97
+#: src/route/Main/RecoverCode.jsx:175
+msgid "An email has been sent to {0} with the recovery code."
+msgstr "An email has been sent to {0} with the recovery code."
+
+#: src/components/SessionCard.jsx:308
+#: src/route/MainAppBar/Menu.jsx:117
 msgid "Analyze"
 msgstr "Analyze"
 
-#: src/route/Main/Settings/Palette.jsx:485
+#: src/route/Main/Settings/Gameplay.jsx:1094
+msgid "Animation Duration (ms)"
+msgstr "Animation Duration (ms)"
+
+#: src/route/Main/Settings/Theme.jsx:482
+msgid "Appbar Color"
+msgstr "Appbar Color"
+
+#: src/route/Main/Settings/Gameplay.jsx:129
+msgid "Application"
+msgstr "Application"
+
+#: src/route/Main/Settings/Gameplay.jsx:1042
+msgid "Arrow Head Size"
+msgstr "Arrow Head Size"
+
+#: src/route/Main/Settings/Gameplay.jsx:1066
+msgid "Arrow Midpoint Radius"
+msgstr "Arrow Midpoint Radius"
+
+#: src/route/Main/Settings/Gameplay.jsx:1054
+msgid "Arrow Outline Size"
+msgstr "Arrow Outline Size"
+
+#: src/route/Main/Settings/Gameplay.jsx:1030
+msgid "Arrow Size"
+msgstr "Arrow Size"
+
+#: src/route/Main/Settings/Gameplay.jsx:1072
+msgid "Arrow Transparency"
+msgstr "Arrow Transparency"
+
+#: src/route/Main/Settings/Gameplay.jsx:836
+#: src/route/Main/Settings/Palette.jsx:511
 msgid "Arrows"
 msgstr "Arrows"
 
-#: src/route/Main/Login.jsx:209
-#: src/route/Main/Register.jsx:235
+#: src/route/Main/Settings/General.jsx:126
+msgid "Auto Update"
+msgstr "Auto Update"
+
+#: src/components/Player/SettingsMenu.jsx:149
+msgid "Automatic Flip Perspective"
+msgstr "Automatic Flip Perspective"
+
+#: src/components/Player/SettingsMenu.jsx:135
+msgid "Automatic Recenter"
+msgstr "Automatic Recenter"
+
+#: src/components/Player/SettingsMenu.jsx:163
+msgid "Automatic Submit"
+msgstr "Automatic Submit"
+
+#: src/route/Main/Profile.jsx:115
+msgid "Avatar"
+msgstr "Avatar"
+
+#: src/components/Player/TutorialMenu.jsx:88
+#: src/route/Main/Login.jsx:218
+#: src/route/Main/Play/WaitModal.jsx:169
+#: src/route/Main/Recover.jsx:265
+#: src/route/Main/RecoverCode.jsx:147
+#: src/route/Main/Register.jsx:270
 msgid "Back"
 msgstr "Back"
 
-#: src/route/Main/Settings/Palette.jsx:116
-#: src/route/Main/Settings/Theme.jsx:238
+#: src/route/Main/Settings/Gameplay.jsx:175
+#: src/route/Main/Settings/Palette.jsx:124
 msgid "Background"
 msgstr "Background"
 
-#: src/route/Main/Settings/Theme.jsx:252
+#: src/route/Main/Settings/Theme.jsx:500
 msgid "Background Color"
 msgstr "Background Color"
 
-#: src/route/Main/Settings/Palette.jsx:161
+#: src/route/Main/Settings/Theme.jsx:477
+msgid "Background Palette"
+msgstr "Background Palette"
+
+#: src/route/Main/Settings/Palette.jsx:169
 msgid "Background Stripes"
 msgstr "Background Stripes"
 
-#: src/route/Main/Settings/Palette.jsx:238
+#: src/route/Main/Profile.jsx:301
+msgid "Bio"
+msgstr "Bio"
+
+#: src/route/Main/Profile.jsx:283
+msgid "Biography"
+msgstr "Biography"
+
+#: src/components/Player/SettingsMenu.jsx:92
+#: src/route/Main/PlayMenu/SessionsBrowser/NewSessionModal.jsx:92
+msgid "Black"
+msgstr "Black"
+
+#: src/route/Main/Settings/Palette.jsx:264
 msgid "Black Board Border"
 msgstr "Black Board Border"
 
-#: src/route/Main/Settings/Palette.jsx:346
+#: src/route/Main/Settings/Palette.jsx:372
 msgid "Black Board Labels"
 msgstr "Black Board Labels"
 
-#: src/route/Main/Settings/Palette.jsx:247
+#: src/route/Main/Settings/Palette.jsx:273
 msgid "Black Board Outline"
 msgstr "Black Board Outline"
 
-#: src/route/Main/Settings/Palette.jsx:400
+#: src/route/Main/PlayMenu/SessionsBrowser.jsx:79
+msgid "Black Player"
+msgstr "Black Player"
+
+#: src/route/Main/Settings/Palette.jsx:426
 msgid "Black Squares"
 msgstr "Black Squares"
 
-#: src/route/Main/Settings/Palette.jsx:215
+#: src/route/Main/Settings/Gameplay.jsx:385
+msgid "Blinking Animation Cycle Duration (ms)"
+msgstr "Blinking Animation Cycle Duration (ms)"
+
+#: src/route/Main/Settings/Gameplay.jsx:201
+msgid "Blur Strength"
+msgstr "Blur Strength"
+
+#: src/route/Main/Settings/Gameplay.jsx:271
+msgid "Board"
+msgstr "Board"
+
+#: src/route/Main/Settings/Gameplay.jsx:319
+msgid "Board Border Height"
+msgstr "Board Border Height"
+
+#: src/route/Main/Settings/Gameplay.jsx:343
+msgid "Board Border Line Width"
+msgstr "Board Border Line Width"
+
+#: src/route/Main/Settings/Gameplay.jsx:331
+msgid "Board Border Radius"
+msgstr "Board Border Radius"
+
+#: src/route/Main/Settings/Gameplay.jsx:307
+msgid "Board Border Width"
+msgstr "Board Border Width"
+
+#: src/route/Main/Settings/Palette.jsx:241
 msgid "Board Borders"
 msgstr "Board Borders"
 
-#: src/route/Main/Settings/Palette.jsx:314
+#: src/components/Player/SettingsMenu.jsx:219
 msgid "Board Labels"
 msgstr "Board Labels"
 
-#: src/route/Main/Settings/Palette.jsx:292
+#: src/route/Main/Settings/Gameplay.jsx:295
+msgid "Board Margin Height"
+msgstr "Board Margin Height"
+
+#: src/route/Main/Settings/Gameplay.jsx:283
+msgid "Board Margin Width"
+msgstr "Board Margin Width"
+
+#: src/route/Main/Settings/Palette.jsx:318
 msgid "Board Shadow"
 msgstr "Board Shadow"
 
-#: src/route/Main/Settings/Palette.jsx:454
+#: src/route/Main/Settings/Gameplay.jsx:423
+msgid "Board Shadow Offset X"
+msgstr "Board Shadow Offset X"
+
+#: src/route/Main/Settings/Gameplay.jsx:435
+msgid "Board Shadow Offset Y"
+msgstr "Board Shadow Offset Y"
+
+#: src/route/Main/Settings/Gameplay.jsx:441
+msgid "Board Shadow Transparency"
+msgstr "Board Shadow Transparency"
+
+#: src/route/Main/Settings/Theme.jsx:143
+msgid "Body1"
+msgstr "Body1"
+
+#: src/route/Main/Settings/Theme.jsx:146
+msgid "Body2"
+msgstr "Body2"
+
+#: src/components/Player/SettingsMenu.jsx:93
+msgid "Both"
+msgstr "Both"
+
+#: src/route/Main/Settings/General.jsx:220
+msgid "Browser Info:"
+msgstr "Browser Info:"
+
+#: src/route/Main/Settings/General.jsx:201
+msgid "Build Type:"
+msgstr "Build Type:"
+
+#: src/route/Main/Settings/General.jsx:196
+msgid "Build Version:"
+msgstr "Build Version:"
+
+#: src/components/Player/Status.jsx:152
+msgid "By Agreement"
+msgstr "By Agreement"
+
+#: src/components/Player/Status.jsx:101
+msgid "By Checkmate"
+msgstr "By Checkmate"
+
+#: src/components/Player/Status.jsx:105
+msgid "By Forfeit"
+msgstr "By Forfeit"
+
+#: src/components/Player/Status.jsx:150
+msgid "By Stalemate"
+msgstr "By Stalemate"
+
+#: src/components/Player/Status.jsx:103
+msgid "By Time"
+msgstr "By Time"
+
+#: src/route/Main/PlayMenu/QuickPlayModal.jsx:98
+#: src/route/Main/PlayMenu/SessionsBrowser/NewSessionModal.jsx:224
+#: src/route/Main/Profile.jsx:321
+msgid "Cancel"
+msgstr "Cancel"
+
+#: src/route/Main/Settings/Theme.jsx:149
+msgid "Caption Text"
+msgstr "Caption Text"
+
+#: src/route/Main/Settings/Palette.jsx:480
 msgid "Capture Move Highlights"
 msgstr "Capture Move Highlights"
 
-#: src/route/Main/Settings/Theme.jsx:261
+#: src/route/Main/Settings/Theme.jsx:509
 msgid "Card Color"
 msgstr "Card Color"
 
-#: src/route/Main/Settings/Palette.jsx:256
+#: src/route/Main/Settings/Gameplay.jsx:1010
+msgid "Check - Enable Curved Arrow"
+msgstr "Check - Enable Curved Arrow"
+
+#: src/route/Main/Settings/Palette.jsx:282
 msgid "Check Board Border"
 msgstr "Check Board Border"
 
-#: src/route/Main/Settings/Palette.jsx:355
+#: src/route/Main/Settings/Palette.jsx:381
 msgid "Check Board Labels"
 msgstr "Check Board Labels"
 
-#: src/route/Main/Settings/Palette.jsx:265
+#: src/route/Main/Settings/Palette.jsx:291
 msgid "Check Board Outline"
 msgstr "Check Board Outline"
 
-#: src/route/Main/Settings/Palette.jsx:508
+#: src/route/Main/Settings/Palette.jsx:534
 msgid "Check Move Arrow"
 msgstr "Check Move Arrow"
 
-#: src/route/Main/Settings/Palette.jsx:517
+#: src/route/Main/Settings/Palette.jsx:543
 msgid "Check Move Arrow Outline"
 msgstr "Check Move Arrow Outline"
 
-#: src/route/Main/Settings/Palette.jsx:139
+#: src/route/Main/Settings/Palette.jsx:147
 msgid "Checkered Background - Dark Rectangle Color"
 msgstr "Checkered Background - Dark Rectangle Color"
 
-#: src/route/Main/Settings/Palette.jsx:130
+#: src/route/Main/Settings/Palette.jsx:138
 msgid "Checkered Background - Light Rectangle Color"
 msgstr "Checkered Background - Light Rectangle Color"
 
-#: src/route/Main/Register.jsx:207
+#: src/components/SessionCard.jsx:135
+msgid "Checkmate!"
+msgstr "Checkmate!"
+
+#: src/route/Main/Dashboard/PwaInstall.jsx:29
+msgid "Chess across time and space! Open source implementation of '5D Chess With Multiverse Time Travel'. Play the game of Chess In 5D here!"
+msgstr "Chess across time and space! Open source implementation of '5D Chess With Multiverse Time Travel'. Play the game of Chess In 5D here!"
+
+#: src/route/Main/Settings/Theme.jsx:303
+#: src/route/Main/Settings/Theme.jsx:309
+msgid "Clock - Font Family"
+msgstr "Clock - Font Family"
+
+#: src/route/Main/Settings/Theme.jsx:323
+msgid "Clock - Font Size"
+msgstr "Clock - Font Size"
+
+#: src/components/Player/Notation/ExportNotation.jsx:103
+msgid "Close"
+msgstr "Close"
+
+#: src/route/Main/Recover.jsx:250
+#: src/route/Main/Register.jsx:242
 msgid "Confirm Password"
 msgstr "Confirm Password"
 
+#: src/route/Main/Play/WaitModal.jsx:131
+msgid "Confirm ready to play"
+msgstr "Confirm ready to play"
+
 #: src/route/Main/Login.jsx:136
-#: src/route/Main/Register.jsx:150
+#: src/route/Main/Recover.jsx:173
+#: src/route/Main/RecoverCode.jsx:104
+#: src/route/Main/Register.jsx:164
 msgid "Connecting to:"
 msgstr "Connecting to:"
 
-#: src/route/Main/Settings/Palette.jsx:562
+#: src/route/Main/Recover.jsx:275
+#: src/route/Main/RecoverCode.jsx:157
+#: src/route/Main/RecoverCode.jsx:188
+msgid "Continue"
+msgstr "Continue"
+
+#: src/route/Main/Settings.jsx:59
+msgid "Controls"
+msgstr "Controls"
+
+#: src/components/Player/Notation/ExportNotation.jsx:111
+msgid "Copy link to clipboard"
+msgstr "Copy link to clipboard"
+
+#: src/components/Player/Notation/ExportNotation.jsx:120
+msgid "Copy to clipboard"
+msgstr "Copy to clipboard"
+
+#: src/route/Main/Profile.jsx:194
+#: src/route/Main/Profile.jsx:219
+#: src/route/Main/Profile.jsx:230
+msgid "Country"
+msgstr "Country"
+
+#: src/route/Main/PlayMenu/SessionsPanel.jsx:75
+msgid "Current Games"
+msgstr "Current Games"
+
+#: src/components/PieceLists.jsx:1245
+msgid "Custom"
+msgstr "Custom"
+
+#: src/route/Main/Settings/Gameplay.jsx:982
+msgid "Custom (Middle Mode) - Enable Curved Arrow"
+msgstr "Custom (Middle Mode) - Enable Curved Arrow"
+
+#: src/route/Main/Settings/Gameplay.jsx:996
+msgid "Custom (Middle Mode) - Use Split Curved Arrow"
+msgstr "Custom (Middle Mode) - Use Split Curved Arrow"
+
+#: src/route/Main/Settings/Gameplay.jsx:954
+msgid "Custom - Enable Curved Arrow"
+msgstr "Custom - Enable Curved Arrow"
+
+#: src/route/Main/Settings/Gameplay.jsx:968
+msgid "Custom - Use Split Curved Arrow"
+msgstr "Custom - Use Split Curved Arrow"
+
+#: src/route/Main/Settings/Palette.jsx:588
 msgid "Custom Arrow #1"
 msgstr "Custom Arrow #1"
 
-#: src/route/Main/Settings/Palette.jsx:571
+#: src/route/Main/Settings/Palette.jsx:597
 msgid "Custom Arrow #1 Outline"
 msgstr "Custom Arrow #1 Outline"
 
-#: src/route/Main/Settings/Palette.jsx:580
+#: src/route/Main/Settings/Palette.jsx:606
 msgid "Custom Arrow #2"
 msgstr "Custom Arrow #2"
 
-#: src/route/Main/Settings/Palette.jsx:589
+#: src/route/Main/Settings/Palette.jsx:615
 msgid "Custom Arrow #2 Outline"
 msgstr "Custom Arrow #2 Outline"
 
-#: src/route/Main/Settings/Palette.jsx:598
+#: src/route/Main/Settings/Palette.jsx:624
 msgid "Custom Arrow #3"
 msgstr "Custom Arrow #3"
 
-#: src/route/Main/Settings/Palette.jsx:607
+#: src/route/Main/Settings/Palette.jsx:633
 msgid "Custom Arrow #3 Outline"
 msgstr "Custom Arrow #3 Outline"
 
-#: src/route/Main/Settings/Palette.jsx:616
+#: src/route/Main/Settings/Palette.jsx:642
 msgid "Custom Arrow #4"
 msgstr "Custom Arrow #4"
 
-#: src/route/Main/Settings/Palette.jsx:625
+#: src/route/Main/Settings/Palette.jsx:651
 msgid "Custom Arrow #4 Outline"
 msgstr "Custom Arrow #4 Outline"
 
-#: src/route/Main/Settings/Palette.jsx:539
+#: src/route/Main/Settings/Palette.jsx:565
 msgid "Custom Arrows"
 msgstr "Custom Arrows"
 
-#: src/route/Main/Settings/Palette.jsx:184
+#: src/route/Main/PlayMenu/SessionsBrowser/NewSessionModal.jsx:210
+msgid "Custom Format"
+msgstr "Custom Format"
+
+#: src/route/Main/PlayMenu/SessionsBrowser/NewSessionModal.jsx:159
+#: src/route/Main/PlayMenu/SessionsBrowser.jsx:108
+msgid "Custom Variant"
+msgstr "Custom Variant"
+
+#: src/route/Main/Settings/Theme.jsx:554
+msgid "Dark"
+msgstr "Dark"
+
+#: src/route/Main/Settings/Palette.jsx:201
 msgid "Dark Rectangle - Black Stripe Color"
 msgstr "Dark Rectangle - Black Stripe Color"
 
-#: src/route/Main/Settings/Palette.jsx:193
+#: src/route/Main/Settings/Palette.jsx:219
+msgid "Dark Rectangle - Past Stripe Color"
+msgstr "Dark Rectangle - Past Stripe Color"
+
+#: src/route/Main/Settings/Palette.jsx:210
 msgid "Dark Rectangle - White Stripe Color"
 msgstr "Dark Rectangle - White Stripe Color"
 
-#: src/route/MainAppBar/Menu.jsx:37
+#: src/route/MainAppBar/Menu.jsx:55
 msgid "Dashboard"
 msgstr "Dashboard"
 
-#: src/route/Main/Settings/Theme.jsx:103
-#: src/route/Main/Settings/Theme.jsx:117
+#: src/components/PieceLists.jsx:1076
+#: src/route/Main/Settings/Theme.jsx:156
+#: src/route/Main/Settings/Theme.jsx:170
 msgid "Default"
 msgstr "Default"
 
-#: src/route/Main/Settings/Palette.jsx:544
+#: src/route/Main/Settings/Palette.jsx:570
 msgid "Default Custom Arrow"
 msgstr "Default Custom Arrow"
 
-#: src/route/Main/Settings/Palette.jsx:553
+#: src/route/Main/Settings/Palette.jsx:579
 msgid "Default Custom Arrow Outline"
 msgstr "Default Custom Arrow Outline"
 
-#: src/route/Main/Settings/Theme.jsx:112
-#: src/route/Main/Settings/Theme.jsx:126
+#: src/components/PieceLists.jsx:1085
+msgid "Default V2"
+msgstr "Default V2"
+
+#: src/route/Main/Settings/General.jsx:190
+msgid "Developer"
+msgstr "Developer"
+
+#: src/route/Main/Settings/Theme.jsx:165
+#: src/route/Main/Settings/Theme.jsx:179
 msgid "Disabled"
 msgstr "Disabled"
 
-#: src/route/Main/Login.jsx:195
+#: src/route/Main/Profile.jsx:177
+msgid "Display name, people will see this name. <0>Limited to 100 characters</0>"
+msgstr "Display name, people will see this name. <0>Limited to 100 characters</0>"
+
+#: src/route/Main/Login.jsx:204
 msgid "Don't have an account?"
 msgstr "Don't have an account?"
 
-#: src/route/MainAppBar/Menu.jsx:112
+#: src/components/Player/Status.jsx:172
+msgid "Draw"
+msgstr "Draw"
+
+#: src/components/SessionCard.jsx:132
+msgid "Draw!"
+msgstr "Draw!"
+
+#: src/route/MainAppBar/Menu.jsx:133
 msgid "Edit"
 msgstr "Edit"
 
-#: src/components/ProfileMenu.jsx:54
+#: src/route/MainAppBar/ProfileMenu.jsx:54
 msgid "Edit Profile"
 msgstr "Edit Profile"
 
-#: src/route/Main/Settings/Theme.jsx:132
+#: src/route/Main/Profile.jsx:247
+#: src/route/Main/Profile.jsx:263
+#: src/route/Main/Recover.jsx:201
+#: src/route/Main/RecoverCode.jsx:132
+#: src/route/Main/Register.jsx:203
+msgid "Email"
+msgstr "Email"
+
+#: src/route/Main/Profile.jsx:252
+msgid "Email address of the user, used primarily for password recovery."
+msgstr "Email address of the user, used primarily for password recovery."
+
+#: src/route/Main/Settings/General.jsx:98
+msgid "Enable Chat"
+msgstr "Enable Chat"
+
+#: src/route/Main/PlayMenu/SessionsBrowser.jsx:160
+msgid "End Date"
+msgstr "End Date"
+
+#: src/route/Main/PlayMenu/SessionsBrowser.jsx:153
+msgid "Ended"
+msgstr "Ended"
+
+#: src/route/Main/Settings/Theme.jsx:189
+msgid "Error - example error alert!"
+msgstr "Error - example error alert!"
+
+#: src/route/Main/Settings/Theme.jsx:578
+msgid "Error Color"
+msgstr "Error Color"
+
+#: src/route/Main/Settings/Theme.jsx:185
 msgid "Example Textfield"
 msgstr "Example Textfield"
 
+#: src/route/Main/Settings/Gameplay.jsx:253
+msgid "Expand Animation Duration (ms)"
+msgstr "Expand Animation Duration (ms)"
+
+#: src/components/Player/Notation.jsx:182
+msgid "Export Game"
+msgstr "Export Game"
+
+#: src/components/Player/Notation/ExportNotation.jsx:52
+msgid "Export Notation"
+msgstr "Export Notation"
+
+#: src/components/Player/Notation/ExportNotation.jsx:129
+msgid "Export to file"
+msgstr "Export to file"
+
+#: src/route/Main/Settings/Theme.jsx:459
+msgid "Extra Large Breakpoint"
+msgstr "Extra Large Breakpoint"
+
+#: src/route/Main/Settings/Theme.jsx:407
+msgid "Extra Small Breakpoint"
+msgstr "Extra Small Breakpoint"
+
+#: src/route/Main/Settings/Gameplay.jsx:397
+#: src/route/Main/Settings/Gameplay.jsx:529
+#: src/route/Main/Settings/Gameplay.jsx:613
+#: src/route/Main/Settings/Gameplay.jsx:667
+#: src/route/Main/Settings/Gameplay.jsx:761
+#: src/route/Main/Settings/Gameplay.jsx:818
+msgid "Fade Animation Duration (ms)"
+msgstr "Fade Animation Duration (ms)"
+
+#: src/route/Main/Settings/Gameplay.jsx:1160
+msgid "File Ripple Animation Duration (ms)"
+msgstr "File Ripple Animation Duration (ms)"
+
+#: src/components/Player/ViewMenu.jsx:59
+msgid "Flip View"
+msgstr "Flip View"
+
 #: src/route/Main/Settings/Theme.jsx:171
 #: src/route/Main/Settings/Theme.jsx:177
-msgid "Font Family"
-msgstr "Font Family"
+#~ msgid "Font Family"
+#~ msgstr "Font Family"
 
 #: src/route/Main/Settings/Theme.jsx:220
-msgid "Font Size"
-msgstr "Font Size"
+#~ msgid "Font Size"
+#~ msgstr "Font Size"
 
-#: src/route/Main/Settings.jsx:52
+#: src/route/Main/Settings/Gameplay.jsx:135
+msgid "Force Canvas Fallback"
+msgstr "Force Canvas Fallback"
+
+#: src/route/Main/Login.jsx:191
+msgid "Forgot Password?"
+msgstr "Forgot Password?"
+
+#: src/route/Main/PlayMenu/SessionsBrowser/NewSessionModal.jsx:165
+#: src/route/Main/PlayMenu/SessionsBrowser/NewSessionModal.jsx:172
+#: src/route/Main/PlayMenu/SessionsBrowser.jsx:121
+msgid "Format"
+msgstr "Format"
+
+#: src/components/SessionCard.jsx:293
+msgid "Format: {0}"
+msgstr "Format: {0}"
+
+#: src/route/Main/PlayMenu/QuickPlayMenu/QuickPlayOptions.jsx:99
+#: src/route/Main/PlayMenu/QuickPlayMenu/QuickPlayOptions.jsx:110
+msgid "Formats"
+msgstr "Formats"
+
+#: src/components/Player/ViewMenu.jsx:87
+msgid "Full"
+msgstr "Full"
+
+#: src/route/Main/Profile.jsx:188
+msgid "Full Name"
+msgstr "Full Name"
+
+#: src/route/Main/Settings/Gameplay.jsx:349
+msgid "Future Board Transparency"
+msgstr "Future Board Transparency"
+
+#: src/route/Main/PlayMenu/SessionsPanel.jsx:51
+msgid "Game Requests"
+msgstr "Game Requests"
+
+#: src/components/SessionCard.jsx:256
+msgid "Game ended {0}"
+msgstr "Game ended {0}"
+
+#: src/components/SessionCard.jsx:264
+msgid "Game started {0}"
+msgstr "Game started {0}"
+
+#: src/route/Main/Settings.jsx:58
+msgid "Gameplay"
+msgstr "Gameplay"
+
+#: src/route/Main/Settings.jsx:55
 msgid "General"
 msgstr "General"
 
-#: src/route/Main/Settings.jsx:55
-msgid "Graphics"
-msgstr "Graphics"
+#: src/route/Main/PlayMenu/SessionsBrowser.jsx:202
+msgid "Go"
+msgstr "Go"
 
-#: src/route/Main/Settings/Palette.jsx:274
+#: src/route/Main/Settings.jsx:55
+#~ msgid "Graphics"
+#~ msgstr "Graphics"
+
+#: src/route/Main/Settings/Theme.jsx:128
+msgid "H4 Heading"
+msgstr "H4 Heading"
+
+#: src/route/Main/Settings/Theme.jsx:131
+msgid "H5 Heading"
+msgstr "H5 Heading"
+
+#: src/route/Main/Settings/Theme.jsx:134
+msgid "H6 Heading"
+msgstr "H6 Heading"
+
+#: src/route/Main/PlayMenu/SessionsBrowser.jsx:163
+msgid "Has not ended"
+msgstr "Has not ended"
+
+#: src/route/Main/Play/WaitModal.jsx:135
+msgid "Host selected another player"
+msgstr "Host selected another player"
+
+#: src/route/Main/Profile.jsx:199
+msgid "ISO 3166-1 Alpha-3 compliant string to indicate user's country of origin."
+msgstr "ISO 3166-1 Alpha-3 compliant string to indicate user's country of origin."
+
+#: src/route/Main/Settings.jsx:60
+msgid "Import / Export"
+msgstr "Import / Export"
+
+#: src/route/Main/AnalyzeMenu.jsx:48
+msgid "Import Game"
+msgstr "Import Game"
+
+#: src/components/Player/Status.jsx:193
+#: src/components/Player/Status.jsx:256
+#: src/components/Player/Status.jsx:301
+msgid "In Check"
+msgstr "In Check"
+
+#: src/route/Main/Settings/Palette.jsx:300
 msgid "Inactive Board Border"
 msgstr "Inactive Board Border"
 
-#: src/route/Main/Settings/Palette.jsx:364
+#: src/route/Main/Settings/Palette.jsx:390
 msgid "Inactive Board Labels"
 msgstr "Inactive Board Labels"
 
-#: src/route/Main/Settings/Palette.jsx:283
+#: src/route/Main/Settings/Palette.jsx:309
 msgid "Inactive Board Outline"
 msgstr "Inactive Board Outline"
 
-#: src/route/Main/Dashboard.jsx:40
+#: src/route/Main/Settings/Theme.jsx:195
+msgid "Info - example info alert!"
+msgstr "Info - example info alert!"
+
+#: src/route/Main/Settings/Theme.jsx:596
+msgid "Info Color"
+msgstr "Info Color"
+
+#: src/route/Main/Dashboard/PwaInstall.jsx:20
+msgid "Install Chess In 5D"
+msgstr "Install Chess In 5D"
+
+#: src/route/Main/Dashboard/PwaInstall.jsx:55
+msgid "Install Web App"
+msgstr "Install Web App"
+
+#: src/route/Main/Register.jsx:135
+msgid "Invalid email!"
+msgstr "Invalid email!"
+
+#: src/route/Main/Register.jsx:116
+msgid "Invalid username!"
+msgstr "Invalid username!"
+
+#: src/route/Main/Play/WaitModal.jsx:178
+msgid "Join"
+msgstr "Join"
+
+#: src/route/Main/Dashboard.jsx:52
 msgid "Join the community!"
 msgstr "Join the community!"
 
-#: src/route/Main/Settings/General.jsx:64
+#: src/route/Main/Settings/Controls.jsx:28
+msgid "Keyboard Bindings"
+msgstr "Keyboard Bindings"
+
+#: src/route/Main/Settings/Gameplay.jsx:601
+#: src/route/Main/Settings/Palette.jsx:340
+msgid "Labels"
+msgstr "Labels"
+
+#: src/route/Main/Settings/General.jsx:154
 msgid "Language"
 msgstr "Language"
 
-#: src/route/MainAppBar/Menu.jsx:82
+#: src/route/Main/Settings/Theme.jsx:446
+msgid "Large Breakpoint"
+msgstr "Large Breakpoint"
+
+#: src/route/MainAppBar/Menu.jsx:102
 msgid "Learn"
 msgstr "Learn"
 
-#: src/route/Main/Settings/Palette.jsx:166
+#: src/route/Main/Settings/Theme.jsx:540
+msgid "Light"
+msgstr "Light"
+
+#: src/route/Main/Settings/Palette.jsx:174
 msgid "Light Rectangle - Black Stripe Color"
 msgstr "Light Rectangle - Black Stripe Color"
 
-#: src/route/Main/Settings/Palette.jsx:175
+#: src/route/Main/Settings/Palette.jsx:192
+msgid "Light Rectangle - Past Stripe Color"
+msgstr "Light Rectangle - Past Stripe Color"
+
+#: src/route/Main/Settings/Palette.jsx:183
 msgid "Light Rectangle - White Stripe Color"
 msgstr "Light Rectangle - White Stripe Color"
 
-#: src/route/Main/Settings/General.jsx:70
-#: src/route/Main/Settings/General.jsx:76
+#: src/components/Player/Notation/ExportNotation.jsx:58
+msgid "Link:"
+msgstr "Link:"
+
+#: src/route/Main/Play/WaitModal.jsx:76
+msgid "Loading Game"
+msgstr "Loading Game"
+
+#: src/route/Main/PlayMenu/SessionsBrowser/NewSessionModal.jsx:73
+msgid "Local"
+msgstr "Local"
+
+#: src/route/Main/PlayMenu/QuickPlayMenu.jsx:187
+#: src/route/Main/PlayMenu/QuickPlayMenu.jsx:245
+msgid "Local Play"
+msgstr "Local Play"
+
+#: src/route/Main/Settings/General.jsx:160
+#: src/route/Main/Settings/General.jsx:166
 msgid "Locale"
 msgstr "Locale"
 
-#: src/components/ProfileMenu.jsx:62
+#: src/route/MainAppBar/ProfileMenu.jsx:69
 msgid "Log Out"
 msgstr "Log Out"
 
-#: src/route/MainAppBar.jsx:42
-#: src/route/Main/Dashboard.jsx:45
+#: src/route/Main/PlayMenu/QuickPlayMenu.jsx:137
+#: src/route/Main/PlayMenu/QuickPlayMenu.jsx:159
+#: src/route/Main/PlayMenu/QuickPlayMenu.jsx:196
+#: src/route/Main/PlayMenu/QuickPlayMenu.jsx:217
+msgid "Log in to play online!"
+msgstr "Log in to play online!"
+
+#: src/route/Main/RecoverCode.jsx:180
+msgid "Look in the spam folder if it does not appear in the main folder."
+msgstr "Look in the spam folder if it does not appear in the main folder."
+
+#: src/route/Main/Dashboard.jsx:57
 msgid "Looking for people to play with? Join the 5DCWMTT Discord!"
 msgstr "Looking for people to play with? Join the 5DCWMTT Discord!"
 
-#: src/route/Main/Settings/Theme.jsx:243
+#: src/route/Main/Settings/Theme.jsx:277
+#: src/route/Main/Settings/Theme.jsx:283
+msgid "Main - Font Family"
+msgstr "Main - Font Family"
+
+#: src/route/Main/Settings/Theme.jsx:297
+msgid "Main - Font Size"
+msgstr "Main - Font Size"
+
+#: src/route/Main/Settings/Theme.jsx:531
+msgid "Main Palette"
+msgstr "Main Palette"
+
+#: src/route/Main/PlayMenu/QuickPlayModal.jsx:77
+msgid "Match Found! Waiting for match to start..."
+msgstr "Match Found! Waiting for match to start..."
+
+#: src/route/Main/PlayMenu/SessionsBrowser/NewSessionModal.jsx:61
+#: src/route/Main/PlayMenu/SessionsBrowser/NewSessionModal.jsx:67
+msgid "Match Type"
+msgstr "Match Type"
+
+#: src/route/Main/Settings/Theme.jsx:433
+msgid "Medium Breakpoint"
+msgstr "Medium Breakpoint"
+
+#: src/route/Main/Settings/Theme.jsx:491
 msgid "Menubar Color"
 msgstr "Menubar Color"
 
-#: src/route/Main/Dashboard.jsx:92
+#: src/route/Main/Dashboard.jsx:104
 msgid "Message of the day from:"
 msgstr "Message of the day from:"
 
-#: src/route/Main/Settings/Palette.jsx:490
+#: src/route/Main/Settings/General.jsx:206
+msgid "Mobile Console"
+msgstr "Mobile Console"
+
+#: src/route/Main/Settings/Palette.jsx:516
 msgid "Move Arrow"
 msgstr "Move Arrow"
 
-#: src/route/Main/Settings/Palette.jsx:499
+#: src/route/Main/Settings/Palette.jsx:525
 msgid "Move Arrow Outline"
 msgstr "Move Arrow Outline"
 
-#: src/route/Main/Settings/Palette.jsx:436
+#: src/route/Main/Settings/Palette.jsx:462
 msgid "Move Highlights"
 msgstr "Move Highlights"
 
-#: src/route/Main/Settings/General.jsx:100
+#: src/route/Main/Settings/Gameplay.jsx:691
+msgid "Move Hover Highlight Transparency"
+msgstr "Move Hover Highlight Transparency"
+
+#: src/route/Main/Settings/Gameplay.jsx:723
+msgid "Move Selected Highlight Transparency"
+msgstr "Move Selected Highlight Transparency"
+
+#: src/route/Main/Profile.jsx:172
+msgid "Name"
+msgstr "Name"
+
+#: src/route/Main/Settings/General.jsx:68
 msgid "Network"
 msgstr "Network"
 
-#: src/route/Main/Dashboard.jsx:68
+#: src/route/Main/AnalyzeMenu.jsx:83
+msgid "New Analysis"
+msgstr "New Analysis"
+
+#: src/route/Main/PlayMenu/SessionsBrowser/NewSessionModal.jsx:55
+#: src/route/Main/PlayMenu/SessionsBrowser.jsx:185
+msgid "New Game"
+msgstr "New Game"
+
+#: src/components/Player/Notation/NotationLine/NotationSegment.jsx:335
+msgid "New Timeline Activating!"
+msgstr "New Timeline Activating!"
+
+#: src/components/Player/TutorialMenu.jsx:105
+msgid "Next"
+msgstr "Next"
+
+#: src/route/Main/Settings/Controls.jsx:79
+#: src/route/Main/Settings/Controls.jsx:102
+msgid "Next Action"
+msgstr "Next Action"
+
+#: src/route/Main/Settings/Controls.jsx:73
+#: src/route/Main/Settings/Controls.jsx:101
+msgid "Next Move"
+msgstr "Next Move"
+
+#: src/route/Main/PlayMenu/SessionsPanel.jsx:65
+msgid "No game requests..."
+msgstr "No game requests..."
+
+#: src/route/Main/PlayMenu/SessionsBrowser.jsx:210
+msgid "No games available online"
+msgstr "No games available online"
+
+#: src/route/Main/PlayMenu/SessionsPanel.jsx:89
+msgid "No ongoing games..."
+msgstr "No ongoing games..."
+
+#: src/route/Main/PlayMenu/SessionsPanel.jsx:113
+msgid "No past games..."
+msgstr "No past games..."
+
+#: src/route/Main/Settings/Gameplay.jsx:898
+msgid "Non-Spatial - Enable Curved Arrow"
+msgstr "Non-Spatial - Enable Curved Arrow"
+
+#: src/route/Main/Settings/Gameplay.jsx:926
+msgid "Non-Spatial - Enable Midpoint Mode"
+msgstr "Non-Spatial - Enable Midpoint Mode"
+
+#: src/route/Main/Settings/Gameplay.jsx:940
+msgid "Non-Spatial - Enable Real End Mode"
+msgstr "Non-Spatial - Enable Real End Mode"
+
+#: src/route/Main/Settings/Gameplay.jsx:912
+msgid "Non-Spatial - Use Split Curved Arrow"
+msgstr "Non-Spatial - Use Split Curved Arrow"
+
+#: src/components/Player/SettingsMenu.jsx:127
+msgid "Non-Spatial Only"
+msgstr "Non-Spatial Only"
+
+#: src/components/Player/SettingsMenu.jsx:129
+msgid "None"
+msgstr "None"
+
+#: src/route/Main/Settings/Theme.jsx:329
+#: src/route/Main/Settings/Theme.jsx:335
+msgid "Notation - Font Family"
+msgstr "Notation - Font Family"
+
+#: src/route/Main/Settings/Theme.jsx:350
+msgid "Notation - Font Size"
+msgstr "Notation - Font Size"
+
+#: src/route/Main/Settings/Theme.jsx:614
+msgid "Notation - Highlight"
+msgstr "Notation - Highlight"
+
+#: src/route/Main/Settings/Theme.jsx:363
+msgid "Notation - Highlight Size"
+msgstr "Notation - Highlight Size"
+
+#: src/route/Main/Settings/Theme.jsx:623
+msgid "Notation - New Present Token - Background Color"
+msgstr "Notation - New Present Token - Background Color"
+
+#: src/route/Main/Settings/Theme.jsx:632
+msgid "Notation - New Present Token - Text Color"
+msgstr "Notation - New Present Token - Text Color"
+
+#: src/route/Main/Settings/Theme.jsx:641
+msgid "Notation - New Timeline Token - Background Color"
+msgstr "Notation - New Timeline Token - Background Color"
+
+#: src/route/Main/Settings/Theme.jsx:650
+msgid "Notation - New Timeline Token - Text Color"
+msgstr "Notation - New Timeline Token - Text Color"
+
+#: src/components/SessionCard.jsx:312
+msgid "Observe"
+msgstr "Observe"
+
+#: src/route/Main/PlayMenu/SessionsBrowser/NewSessionModal.jsx:70
+msgid "Online"
+msgstr "Online"
+
+#: src/route/Main/PlayMenu/SessionsBrowser.jsx:57
+msgid "Online Game Browser"
+msgstr "Online Game Browser"
+
+#: src/route/Main/Dashboard.jsx:80
 msgid "Open 5D Chess Discord"
 msgstr "Open 5D Chess Discord"
 
-#: src/route/Main/Settings.jsx:54
+#: src/route/Main/PlayMenu/QuickPlayModal.jsx:75
+msgid "Opponent did not accept, rejoining queue..."
+msgstr "Opponent did not accept, rejoining queue..."
+
+#: src/route/Main/PlayMenu/QuickPlayMenu.jsx:257
+msgid "Options"
+msgstr "Options"
+
+#: src/route/Main/Settings/Theme.jsx:152
+msgid "Overline Text"
+msgstr "Overline Text"
+
+#: src/route/Main/Settings.jsx:57
 msgid "Palette"
 msgstr "Palette"
 
+#: src/route/Main/Settings/Theme.jsx:536
+msgid "Palette Mode"
+msgstr "Palette Mode"
+
 #: src/route/Main/Login.jsx:181
-#: src/route/Main/Register.jsx:190
+#: src/route/Main/Recover.jsx:233
+#: src/route/Main/Register.jsx:220
 msgid "Password"
 msgstr "Password"
 
-#: src/route/Main/Settings/Palette.jsx:463
+#: src/route/Main/Register.jsx:90
+msgid "Passwords do not match!"
+msgstr "Passwords do not match!"
+
+#: src/route/Main/Settings/Palette.jsx:489
 msgid "Past Capture Move Highlights"
 msgstr "Past Capture Move Highlights"
 
-#: src/route/Main/Settings/Palette.jsx:445
+#: src/route/Main/PlayMenu/SessionsPanel.jsx:99
+msgid "Past Games"
+msgstr "Past Games"
+
+#: src/route/Main/Settings/Palette.jsx:471
 msgid "Past Move Highlights"
 msgstr "Past Move Highlights"
 
-#: src/route/Main/Settings/Palette.jsx:427
+#: src/route/Main/Settings/Gameplay.jsx:707
+msgid "Past Move Hover Highlight Transparency"
+msgstr "Past Move Hover Highlight Transparency"
+
+#: src/route/Main/Settings/Gameplay.jsx:739
+msgid "Past Move Selected Highlight Transparency"
+msgstr "Past Move Selected Highlight Transparency"
+
+#: src/route/Main/Settings/Gameplay.jsx:794
+msgid "Piece Height"
+msgstr "Piece Height"
+
+#: src/route/Main/Settings/Palette.jsx:453
 msgid "Piece Highlights"
 msgstr "Piece Highlights"
 
-#: src/route/MainAppBar/Menu.jsx:52
+#: src/components/PieceLists.jsx:1027
+#: src/components/PieceLists.jsx:1033
+msgid "Piece Set"
+msgstr "Piece Set"
+
+#: src/route/Main/Settings/Gameplay.jsx:779
+msgid "Piece Sets"
+msgstr "Piece Sets"
+
+#: src/route/Main/Settings/Gameplay.jsx:806
+msgid "Piece Width"
+msgstr "Piece Width"
+
+#: src/components/SessionCard.jsx:310
+#: src/route/MainAppBar/Menu.jsx:70
 msgid "Play"
 msgstr "Play"
 
-#: src/route/Main/Settings/Theme.jsx:106
-#: src/route/Main/Settings/Theme.jsx:120
+#: src/route/Main/Dashboard/PwaInstall.jsx:24
+msgid "Play games offline!"
+msgstr "Play games offline!"
+
+#: src/route/Main/Dashboard/PwaInstall.jsx:26
+msgid "Play on mobile devices!"
+msgstr "Play on mobile devices!"
+
+#: src/route/Main/Dashboard/PwaInstall.jsx:45
+msgid "Playing on mobile? Looking for a native application experience? Install the web app now!"
+msgstr "Playing on mobile? Looking for a native application experience? Install the web app now!"
+
+#: src/components/Player/ViewMenu.jsx:73
+msgid "Present"
+msgstr "Present"
+
+#: src/components/Player/Notation/NotationLine/NotationSegment.jsx:130
+msgid "Present Moved To Turn {turn}!"
+msgstr "Present Moved To Turn {turn}!"
+
+#: src/route/Main/Settings/Controls.jsx:61
+#: src/route/Main/Settings/Controls.jsx:99
+msgid "Previous Action"
+msgstr "Previous Action"
+
+#: src/route/Main/Settings/Controls.jsx:67
+#: src/route/Main/Settings/Controls.jsx:100
+msgid "Previous Move"
+msgstr "Previous Move"
+
+#: src/route/Main/Settings/Theme.jsx:159
+#: src/route/Main/Settings/Theme.jsx:173
 msgid "Primary"
 msgstr "Primary"
 
-#: src/route/MainAppBar/Menu.jsx:67
+#: src/route/Main/Settings/Theme.jsx:560
+msgid "Primary Color"
+msgstr "Primary Color"
+
+#: src/route/MainAppBar/Menu.jsx:150
+msgid "Profile"
+msgstr "Profile"
+
+#: src/route/Main/Settings/Gameplay.jsx:469
+msgid "Promotion Menu"
+msgstr "Promotion Menu"
+
+#: src/route/Main/Settings/Gameplay.jsx:493
+msgid "Promotion Menu Border Height"
+msgstr "Promotion Menu Border Height"
+
+#: src/route/Main/Settings/Gameplay.jsx:517
+msgid "Promotion Menu Border Line Width"
+msgstr "Promotion Menu Border Line Width"
+
+#: src/route/Main/Settings/Gameplay.jsx:505
+msgid "Promotion Menu Border Radius"
+msgstr "Promotion Menu Border Radius"
+
+#: src/route/Main/Settings/Gameplay.jsx:481
+msgid "Promotion Menu Border Width"
+msgstr "Promotion Menu Border Width"
+
+#: src/route/Main/Settings/Gameplay.jsx:555
+msgid "Promotion Menu Shadow Offset X"
+msgstr "Promotion Menu Shadow Offset X"
+
+#: src/route/Main/Settings/Gameplay.jsx:567
+msgid "Promotion Menu Shadow Offset Y"
+msgstr "Promotion Menu Shadow Offset Y"
+
+#: src/route/Main/Settings/Gameplay.jsx:573
+msgid "Promotion Menu Shadow Transparency"
+msgstr "Promotion Menu Shadow Transparency"
+
+#: src/route/MainAppBar/Menu.jsx:86
 msgid "Puzzles"
 msgstr "Puzzles"
 
-#: src/route/Main/Settings/Theme.jsx:109
-#: src/route/Main/Settings/Theme.jsx:123
+#: src/route/Main/PlayMenu/QuickPlayMenu.jsx:152
+#: src/route/Main/PlayMenu/QuickPlayMenu.jsx:211
+msgid "Quick Play"
+msgstr "Quick Play"
+
+#: src/route/Main/PlayMenu/QuickPlayModal.jsx:39
+msgid "Quick Play Queue"
+msgstr "Quick Play Queue"
+
+#: src/route/Main/PlayMenu/SessionsBrowser/NewSessionModal.jsx:95
+msgid "Random"
+msgstr "Random"
+
+#: src/route/Main/Settings/Gameplay.jsx:1148
+msgid "Rank Ripple Animation Duration (ms)"
+msgstr "Rank Ripple Animation Duration (ms)"
+
+#: src/route/Main/PlayMenu/SessionsBrowser/NewSessionModal.jsx:102
+#: src/route/Main/PlayMenu/SessionsBrowser.jsx:97
+msgid "Ranked"
+msgstr "Ranked"
+
+#: src/route/Main/PlayMenu/QuickPlayMenu.jsx:174
+#: src/route/Main/PlayMenu/QuickPlayMenu.jsx:232
+msgid "Ranked Play"
+msgstr "Ranked Play"
+
+#: src/route/Main/PlayMenu/QuickPlayModal.jsx:37
+msgid "Ranked Play Queue"
+msgstr "Ranked Play Queue"
+
+#: src/route/Main/Play/WaitModal.jsx:187
+msgid "Ready"
+msgstr "Ready"
+
+#: src/route/Main/Recover.jsx:168
+#: src/route/Main/RecoverCode.jsx:99
+#: src/route/Main/RecoverCode.jsx:171
+msgid "Recover Password"
+msgstr "Recover Password"
+
+#: src/route/Main/Recover.jsx:216
+msgid "Recovery Code"
+msgstr "Recovery Code"
+
+#: src/route/Main/PlayMenu/SessionsBrowser.jsx:192
+msgid "Refresh"
+msgstr "Refresh"
+
+#: src/route/Main/Settings/Gameplay.jsx:99
+#: src/route/Main/Settings/Palette.jsx:95
+msgid "Reset Preview"
+msgstr "Reset Preview"
+
+#: src/route/Main/Settings/Controls.jsx:55
+#: src/route/Main/Settings/Controls.jsx:98
+msgid "Restore"
+msgstr "Restore"
+
+#: src/route/Main/Settings/Controls.jsx:90
+msgid "Restore Default Hotkeys"
+msgstr "Restore Default Hotkeys"
+
+#: src/route/Main/Settings/Theme.jsx:254
+msgid "Restore Default Layout"
+msgstr "Restore Default Layout"
+
+#: src/route/Main/Settings/Palette.jsx:107
+msgid "Restore Default Palette"
+msgstr "Restore Default Palette"
+
+#: src/route/Main/Settings/Gameplay.jsx:112
+msgid "Restore Default Settings"
+msgstr "Restore Default Settings"
+
+#: src/route/Main/Settings/Theme.jsx:243
+msgid "Restore Default Theme"
+msgstr "Restore Default Theme"
+
+#: src/route/Main/Settings/Gameplay.jsx:1112
+msgid "Ripple Animation"
+msgstr "Ripple Animation"
+
+#: src/route/Main/Profile.jsx:314
+msgid "Save"
+msgstr "Save"
+
+#: src/route/Main/Dashboard/PwaInstall.jsx:25
+msgid "Save, load, and study games!"
+msgstr "Save, load, and study games!"
+
+#: src/route/Main/Settings/Theme.jsx:162
+#: src/route/Main/Settings/Theme.jsx:176
 msgid "Secondary"
 msgstr "Secondary"
 
-#: src/route/Main/Settings/General.jsx:124
+#: src/route/Main/Settings/Theme.jsx:569
+msgid "Secondary Color"
+msgstr "Secondary Color"
+
+#: src/route/Main/Profile.jsx:233
+msgid "Select Country"
+msgstr "Select Country"
+
+#: src/route/Main/Play/WaitModal.jsx:120
+msgid "Select player from join requests"
+msgstr "Select player from join requests"
+
+#: src/route/Main/Settings/General.jsx:92
 msgid "Server Key"
 msgstr "Server Key"
 
-#: src/route/Main/Settings/General.jsx:112
+#: src/route/Main/Settings/General.jsx:80
 msgid "Server Url"
 msgstr "Server Url"
 
-#: src/route/MainAppBar/Menu.jsx:128
+#: src/route/Main/Analyze.jsx:92
+#: src/route/Main/Play.jsx:120
+msgid "Session does not exist!"
+msgstr "Session does not exist!"
+
+#: src/route/MainAppBar/Menu.jsx:168
+#: src/route/MainAppBar/ProfileMenu.jsx:61
 msgid "Settings"
 msgstr "Settings"
 
-#: src/components/LoginButton.jsx:49
+#: src/route/Main/Settings/Gameplay.jsx:365
+msgid "Show Blinking Border on Present Board"
+msgstr "Show Blinking Border on Present Board"
+
+#: src/route/Main/Settings/Gameplay.jsx:181
+msgid "Show Blur"
+msgstr "Show Blur"
+
+#: src/components/Player/SettingsMenu.jsx:69
+#: src/components/Player/SettingsMenu.jsx:71
+msgid "Show Board"
+msgstr "Show Board"
+
+#: src/route/Main/Settings/Gameplay.jsx:403
+msgid "Show Board Shadows"
+msgstr "Show Board Shadows"
+
+#: src/route/Main/Settings/Gameplay.jsx:233
+msgid "Show Checkered Background"
+msgstr "Show Checkered Background"
+
+#: src/route/Main/Profile.jsx:269
+msgid "Show Email Publically"
+msgstr "Show Email Publically"
+
+#: src/route/Main/Settings/Gameplay.jsx:149
+msgid "Show FPS Indicator"
+msgstr "Show FPS Indicator"
+
+#: src/components/Player/SettingsMenu.jsx:177
+msgid "Show Future Boards"
+msgstr "Show Future Boards"
+
+#: src/components/Player/SettingsMenu.jsx:99
+#: src/components/Player/SettingsMenu.jsx:101
+msgid "Show Move"
+msgstr "Show Move"
+
+#: src/route/Main/Settings/Gameplay.jsx:535
+msgid "Show Promotion Menu Shadows"
+msgstr "Show Promotion Menu Shadows"
+
+#: src/route/Main/Settings/Gameplay.jsx:207
+msgid "Show Striped"
+msgstr "Show Striped"
+
 #: src/route/Main/Login.jsx:131
-#: src/route/Main/Login.jsx:219
+#: src/route/Main/Login.jsx:228
+#: src/route/MainAppBar/LoginButton.jsx:49
 msgid "Sign In"
 msgstr "Sign In"
 
-#: src/components/LoginButton.jsx:65
-#: src/route/Main/Register.jsx:145
-#: src/route/Main/Register.jsx:245
+#: src/route/Main/Register.jsx:159
+#: src/route/Main/Register.jsx:280
+#: src/route/MainAppBar/LoginButton.jsx:65
 msgid "Sign Up"
 msgstr "Sign Up"
 
-#: src/route/Main/Settings/Palette.jsx:121
+#: src/route/Main/Settings/Theme.jsx:420
+msgid "Small Breakpoint"
+msgstr "Small Breakpoint"
+
+#: src/route/Main/Profile.jsx:120
+msgid "Small image or icon used for a user's avatar."
+msgstr "Small image or icon used for a user's avatar."
+
+#: src/route/Main/Settings/Palette.jsx:129
 msgid "Solid Background Color"
 msgstr "Solid Background Color"
 
-#: src/route/Main/Settings/Palette.jsx:386
+#: src/route/Main/Settings/Theme.jsx:381
+msgid "Spacing"
+msgstr "Spacing"
+
+#: src/route/Main/Settings/Theme.jsx:394
+msgid "Spacing Factor"
+msgstr "Spacing Factor"
+
+#: src/route/Main/Settings/Gameplay.jsx:842
+msgid "Spatial - Enable Curved Arrow"
+msgstr "Spatial - Enable Curved Arrow"
+
+#: src/route/Main/Settings/Gameplay.jsx:870
+msgid "Spatial - Enable Midpoint Mode"
+msgstr "Spatial - Enable Midpoint Mode"
+
+#: src/route/Main/Settings/Gameplay.jsx:884
+msgid "Spatial - Enable Real End Mode"
+msgstr "Spatial - Enable Real End Mode"
+
+#: src/route/Main/Settings/Gameplay.jsx:856
+msgid "Spatial - Use Split Curved Arrow"
+msgstr "Spatial - Use Split Curved Arrow"
+
+#: src/components/Player/SettingsMenu.jsx:128
+msgid "Spatial Only"
+msgstr "Spatial Only"
+
+#: src/route/Main/Settings/Palette.jsx:412
 msgid "Square"
 msgstr "Square"
 
-#: src/route/Main/Settings/Palette.jsx:422
+#: src/route/Main/Settings/Gameplay.jsx:643
+msgid "Square Height"
+msgstr "Square Height"
+
+#: src/route/Main/Settings/Gameplay.jsx:685
+#: src/route/Main/Settings/Palette.jsx:448
 msgid "Square Highlights"
 msgstr "Square Highlights"
 
-#: src/route/Main/Settings.jsx:53
+#: src/route/Main/Settings/Gameplay.jsx:655
+msgid "Square Width"
+msgstr "Square Width"
+
+#: src/route/Main/Settings/Gameplay.jsx:631
+msgid "Squares"
+msgstr "Squares"
+
+#: src/route/Main/Play/WaitModal.jsx:205
+#: src/route/Main/PlayMenu/SessionsBrowser/NewSessionModal.jsx:244
+msgid "Start"
+msgstr "Start"
+
+#: src/route/Main/PlayMenu/SessionsBrowser.jsx:145
+msgid "Start / Creation Date"
+msgstr "Start / Creation Date"
+
+#: src/route/Main/AnalyzeMenu.jsx:75
+#: src/route/Main/AnalyzeMenu.jsx:114
+msgid "Start Analysis"
+msgstr "Start Analysis"
+
+#: src/route/Main/Play/WaitModal.jsx:124
+msgid "Start game"
+msgstr "Start game"
+
+#: src/route/Main/PlayMenu/SessionsBrowser.jsx:138
+msgid "Started"
+msgstr "Started"
+
+#: src/route/Main/PlayMenu/SessionsBrowser/NewSessionModal.jsx:80
+#: src/route/Main/PlayMenu/SessionsBrowser/NewSessionModal.jsx:86
+msgid "Starting Side"
+msgstr "Starting Side"
+
+#: src/route/Main/Settings/Gameplay.jsx:227
+msgid "Strip Ratio"
+msgstr "Strip Ratio"
+
+#: src/components/Player/SubmitMenu.jsx:76
+#: src/route/Main/Settings/Controls.jsx:49
+#: src/route/Main/Settings/Controls.jsx:97
+msgid "Submit"
+msgstr "Submit"
+
+#: src/route/Main/Play/WaitModal.jsx:127
+msgid "Submit join request"
+msgstr "Submit join request"
+
+#: src/route/Main/Settings/Theme.jsx:137
+msgid "Subtitle1"
+msgstr "Subtitle1"
+
+#: src/route/Main/Settings/Theme.jsx:140
+msgid "Subtitle2"
+msgstr "Subtitle2"
+
+#: src/route/Main/Settings/Theme.jsx:198
+msgid "Success - example success alert!"
+msgstr "Success - example success alert!"
+
+#: src/route/Main/Settings/Theme.jsx:605
+msgid "Success Color"
+msgstr "Success Color"
+
+#: src/route/Main/Settings/Controls.jsx:37
+msgid "Test Output:"
+msgstr "Test Output:"
+
+#: src/route/Main/Settings.jsx:56
 msgid "Theme"
 msgstr "Theme"
 
 #: src/route/Main/Dashboard.jsx:26
-msgid "This view is still a work in progress."
-msgstr "This view is still a work in progress."
+#~ msgid "This view is still a work in progress."
+#~ msgstr "This view is still a work in progress."
 
-#: src/route/Main/Settings/Palette.jsx:319
+#: src/components/Player/SettingsMenu.jsx:191
+#: src/route/Main/Settings/Palette.jsx:345
 msgid "Timeline Labels"
 msgstr "Timeline Labels"
 
-#: src/route/Main/Settings/Palette.jsx:328
+#: src/route/Main/Settings/Gameplay.jsx:1124
+msgid "Timeline Ripple Animation Duration (ms)"
+msgstr "Timeline Ripple Animation Duration (ms)"
+
+#: src/components/Player/SettingsMenu.jsx:205
+#: src/route/Main/Settings/Palette.jsx:354
 msgid "Turn Labels"
 msgstr "Turn Labels"
 
-#: src/route/Main/Settings/Theme.jsx:165
+#: src/route/Main/Settings/Gameplay.jsx:1136
+msgid "Turn Ripple Animation Duration (ms)"
+msgstr "Turn Ripple Animation Duration (ms)"
+
+#: src/route/Main/Settings/Theme.jsx:271
 msgid "Typography"
 msgstr "Typography"
 
+#: src/components/Player/SubmitMenu.jsx:59
+#: src/route/Main/Settings/Controls.jsx:43
+#: src/route/Main/Settings/Controls.jsx:96
+msgid "Undo"
+msgstr "Undo"
+
+#: src/route/Main/PlayMenu/SessionsBrowser.jsx:115
+msgid "Unknown Variant"
+msgstr "Unknown Variant"
+
+#: src/route/Main/Play/WaitModal.jsx:196
+msgid "Unready"
+msgstr "Unready"
+
+#: src/route/Main/PlayMenu/SessionsBrowser/NewSessionModal.jsx:180
+#: src/route/Main/PlayMenu/SessionsBrowser.jsx:125
+msgid "Untimed"
+msgstr "Untimed"
+
+#: src/route/Main/Settings/General.jsx:112
+msgid "Use BOSH for Chat"
+msgstr "Use BOSH for Chat"
+
+#: src/route/Main/PlayMenu/SessionsBrowser/NewSessionModal.jsx:187
+msgid "Use Custom Format"
+msgstr "Use Custom Format"
+
+#: src/route/Main/PlayMenu/SessionsBrowser/NewSessionModal.jsx:136
+msgid "Use Custom Variant"
+msgstr "Use Custom Variant"
+
+#: src/route/Main/Settings/General.jsx:228
+msgid "User Agent:"
+msgstr "User Agent:"
+
+#: src/route/Main/Profile.jsx:288
+msgid "User information available for everyone to see. <0>Limited to 500 characters</0>"
+msgstr "User information available for everyone to see. <0>Limited to 500 characters</0>"
+
 #: src/route/Main/Login.jsx:159
-#: src/route/Main/Register.jsx:173
+#: src/route/Main/Register.jsx:187
 msgid "Username"
 msgstr "Username"
 
-#: src/route/Main/Dashboard.jsx:59
-msgid "Want to contribute? Working on a 5D Chess project? Join the Open 5D Chess Discord!"
-msgstr "Want to contribute? Working on a 5D Chess project? Join the Open 5D Chess Discord!"
+#: src/route/Main/Register.jsx:108
+msgid "Username already taken!"
+msgstr "Username already taken!"
 
-#: src/route/Main/Dashboard.jsx:23
+#: src/route/Main/Register.jsx:124
+msgid "Username blacklisted!"
+msgstr "Username blacklisted!"
+
+#: src/route/Main/AnalyzeMenu.jsx:89
+#: src/route/Main/AnalyzeMenu.jsx:95
+#: src/route/Main/PlayMenu/SessionsBrowser/NewSessionModal.jsx:117
+#: src/route/Main/PlayMenu/SessionsBrowser/NewSessionModal.jsx:124
+#: src/route/Main/PlayMenu/SessionsBrowser.jsx:104
+msgid "Variant"
+msgstr "Variant"
+
+#: src/components/SessionCard.jsx:291
+msgid "Variant: {0}"
+msgstr "Variant: {0}"
+
+#: src/route/Main/PlayMenu/QuickPlayMenu/QuickPlayOptions.jsx:76
+#: src/route/Main/PlayMenu/QuickPlayMenu/QuickPlayOptions.jsx:87
+msgid "Variants"
+msgstr "Variants"
+
+#: src/route/Main/Play/WaitModal.jsx:129
+msgid "Waiting for host to select player..."
+msgstr "Waiting for host to select player..."
+
+#: src/route/Main/Play/WaitModal.jsx:133
+msgid "Waiting for host to start game..."
+msgstr "Waiting for host to start game..."
+
+#: src/route/Main/Play/WaitModal.jsx:118
+msgid "Waiting for join requests..."
+msgstr "Waiting for join requests..."
+
+#: src/route/Main/Play/WaitModal.jsx:122
+msgid "Waiting for opponent to confirm ready to play..."
+msgstr "Waiting for opponent to confirm ready to play..."
+
+#: src/route/Main/Dashboard.jsx:59
+#~ msgid "Want to contribute? Working on a 5D Chess project? Join the Open 5D Chess Discord!"
+#~ msgstr "Want to contribute? Working on a 5D Chess project? Join the Open 5D Chess Discord!"
+
+#: src/route/Main/Dashboard.jsx:71
+msgid "Want to contribute? Working on an open source 5D Chess project? Got a bug to report? Join the Open 5D Chess Discord!"
+msgstr "Want to contribute? Working on an open source 5D Chess project? Got a bug to report? Join the Open 5D Chess Discord!"
+
+#: src/route/Main/Settings/Theme.jsx:192
+msgid "Warning - example warning alert!"
+msgstr "Warning - example warning alert!"
+
+#: src/route/Main/Settings/Theme.jsx:587
+msgid "Warning Color"
+msgstr "Warning Color"
+
+#: src/route/Main/Dashboard/PwaInstall.jsx:40
+msgid "Web app available!"
+msgstr "Web app available!"
+
+#: src/route/Main/Dashboard.jsx:26
 msgid "Welcome to Chess In 5D!"
 msgstr "Welcome to Chess In 5D!"
 
-#: src/route/Main/Settings/Palette.jsx:220
+#: src/components/Player/SettingsMenu.jsx:91
+#: src/route/Main/PlayMenu/SessionsBrowser/NewSessionModal.jsx:89
+msgid "White"
+msgstr "White"
+
+#: src/route/Main/Settings/Palette.jsx:246
 msgid "White Board Border"
 msgstr "White Board Border"
 
-#: src/route/Main/Settings/Palette.jsx:337
+#: src/route/Main/Settings/Palette.jsx:363
 msgid "White Board Labels"
 msgstr "White Board Labels"
 
-#: src/route/Main/Settings/Palette.jsx:229
+#: src/route/Main/Settings/Palette.jsx:255
 msgid "White Board Outline"
 msgstr "White Board Outline"
 
-#: src/route/Main/Settings/Palette.jsx:391
+#: src/route/Main/PlayMenu/SessionsBrowser.jsx:61
+msgid "White Player"
+msgstr "White Player"
+
+#: src/route/Main/Settings/Palette.jsx:417
 msgid "White Squares"
 msgstr "White Squares"
 
+#: src/components/SessionCard.jsx:218
+#: src/components/SessionCard.jsx:224
+#: src/route/Main/PlayMenu/SessionsBrowser.jsx:68
+#: src/route/Main/PlayMenu/SessionsBrowser.jsx:86
+msgid "[Empty]"
+msgstr "[Empty]"
+
+#: src/components/Player/Status.jsx:249
+msgid "vs"
+msgstr "vs"
+
+#: src/route/Main/PlayMenu/QuickPlayModal.jsx:81
+msgid "{0} players looking for match"
+msgstr "{0} players looking for match"
+
+#: src/route/Main/PlayMenu/QuickPlayModal.jsx:79
+msgid "{0} players looking for ranked match"
+msgstr "{0} players looking for ranked match"
+
+#: src/components/SessionCard.jsx:127
+msgid "{blackPlayerName} won by checkmate!"
+msgstr "{blackPlayerName} won by checkmate!"
+
+#: src/components/SessionCard.jsx:124
+msgid "{blackPlayerName} won by forfeit!"
+msgstr "{blackPlayerName} won by forfeit!"
+
+#: src/components/SessionCard.jsx:121
+msgid "{blackPlayerName} won by time!"
+msgstr "{blackPlayerName} won by time!"
+
+#: src/components/Player/Notation/NotationLine/NotationSegment.jsx:166
+msgid "{timeline} Timeline Created!"
+msgstr "{timeline} Timeline Created!"
+
+#: src/components/SessionCard.jsx:116
+msgid "{whitePlayerName} won by checkmate!"
+msgstr "{whitePlayerName} won by checkmate!"
+
+#: src/components/SessionCard.jsx:113
+msgid "{whitePlayerName} won by forfeit!"
+msgstr "{whitePlayerName} won by forfeit!"
+
+#: src/components/SessionCard.jsx:110
+msgid "{whitePlayerName} won by time!"
+msgstr "{whitePlayerName} won by time!"

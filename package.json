@@ -10,7 +10,7 @@
       "url": "https://gitlab.com/CrazyPenguin0111"
     }
   ],
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Chess across time and space! Open source implementation of '5D Chess With Multiverse Time Travel'. Play the game of Chess In 5D here!",
   "private": true,
   "main": "public/electron.js",
