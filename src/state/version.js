@@ -25,10 +25,7 @@ export const init = () => {
     store.clearAll();
     window.localStorage.clear();
     clearIDB();
-  }
-
-  //Clear storage if older than 1.0.3
-  if(!satisfies(storedVersion, '^1.0.3')) {
+  } else if(!satisfies(storedVersion, '^1.0.3')) {  //Clear storage if older than 1.0.3
     console.info('[Version] Previous version is older than 1.0.3, wiping storage');
     store.clearAll();
     window.localStorage.clear();
