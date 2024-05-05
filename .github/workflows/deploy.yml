@@ -25,7 +25,7 @@ jobs:
       - name: Build
         run: |
           npm run build
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           path: build/
   deploy:
@@ -41,7 +41,7 @@ jobs:
         run: |
           git checkout -b stripped-dist
           find . -mindepth 1 -maxdepth 1 -not -name .git -exec rm -rf {} +
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: artifact
           path: .
