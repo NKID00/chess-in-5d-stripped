@@ -36,7 +36,7 @@ export class Welcome extends React.Component {
             <Trans>Welcome to Chess In 5D (Stripped ver.)!</Trans>
           </Typography>
           <Typography variant='body1' component='p'>
-            <Trans>This website is a fork of Chess In 5D. It contains Analyze only and does not interact with backend.</Trans>
+            <Trans>This website is a fork of Chess In 5D that contains Analyze only and does not interact with backend.</Trans>
           </Typography>
           <Typography variant='body1' component='p'>
             <Trans>

@@ -27,10 +27,6 @@ code {
   height: 100%;
 }
 
-#conversejs {
-  z-index: 2000;
-}
-
 .react-grid-item {
   z-index: 20;
 }
