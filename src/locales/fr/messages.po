@@ -14,8 +14,16 @@ msgstr ""
 "Plural-Forms: \n"
 "MIME-Version: 1.0\n"
 
-#: src/route/Main/Dashboard.jsx:66
+#: src/route/Main/AnalyzeMenu.jsx:69
+msgid "5D Chess QQ 群: 693837061 (Chinese community)"
+msgstr ""
+
+#: src/route/Main/AnalyzeMenu.jsx:78
 msgid "5DCWMTT Discord"
+msgstr ""
+
+#: src/route/Main/AnalyzeMenu.jsx:42
+msgid "<0>Source code</0> under AGPL-3.0."
 msgstr ""
 
 #: src/components/Player/SettingsMenu.jsx:126
@@ -23,15 +31,15 @@ msgid "All"
 msgstr ""
 
 #: src/route/Main/Register.jsx:256
-msgid "Already have an account?"
-msgstr ""
+#~ msgid "Already have an account?"
+#~ msgstr ""
 
 #: src/route/Main/RecoverCode.jsx:175
-msgid "An email has been sent to {0} with the recovery code."
-msgstr ""
+#~ msgid "An email has been sent to {0} with the recovery code."
+#~ msgstr ""
 
 #: src/components/SessionCard.jsx:308
-#: src/route/MainAppBar/Menu.jsx:117
+#: src/route/MainAppBar/Menu.jsx:48
 msgid "Analyze"
 msgstr ""
 
@@ -73,8 +81,8 @@ msgid "Arrows"
 msgstr ""
 
 #: src/route/Main/Settings/General.jsx:126
-msgid "Auto Update"
-msgstr ""
+#~ msgid "Auto Update"
+#~ msgstr ""
 
 #: src/components/Player/SettingsMenu.jsx:149
 msgid "Automatic Flip Perspective"
@@ -89,15 +97,10 @@ msgid "Automatic Submit"
 msgstr ""
 
 #: src/route/Main/Profile.jsx:115
-msgid "Avatar"
-msgstr ""
+#~ msgid "Avatar"
+#~ msgstr ""
 
 #: src/components/Player/TutorialMenu.jsx:88
-#: src/route/Main/Login.jsx:218
-#: src/route/Main/Play/WaitModal.jsx:169
-#: src/route/Main/Recover.jsx:265
-#: src/route/Main/RecoverCode.jsx:147
-#: src/route/Main/Register.jsx:270
 msgid "Back"
 msgstr ""
 
@@ -119,15 +122,14 @@ msgid "Background Stripes"
 msgstr ""
 
 #: src/route/Main/Profile.jsx:301
-msgid "Bio"
-msgstr ""
+#~ msgid "Bio"
+#~ msgstr ""
 
 #: src/route/Main/Profile.jsx:283
-msgid "Biography"
-msgstr ""
+#~ msgid "Biography"
+#~ msgstr ""
 
 #: src/components/Player/SettingsMenu.jsx:92
-#: src/route/Main/PlayMenu/SessionsBrowser/NewSessionModal.jsx:92
 msgid "Black"
 msgstr ""
 
@@ -144,8 +146,8 @@ msgid "Black Board Outline"
 msgstr ""
 
 #: src/route/Main/PlayMenu/SessionsBrowser.jsx:79
-msgid "Black Player"
-msgstr ""
+#~ msgid "Black Player"
+#~ msgstr ""
 
 #: src/route/Main/Settings/Palette.jsx:426
 msgid "Black Squares"
@@ -223,15 +225,15 @@ msgstr ""
 msgid "Both"
 msgstr ""
 
-#: src/route/Main/Settings/General.jsx:220
+#: src/route/Main/Settings/General.jsx:137
 msgid "Browser Info:"
 msgstr ""
 
-#: src/route/Main/Settings/General.jsx:201
+#: src/route/Main/Settings/General.jsx:118
 msgid "Build Type:"
 msgstr ""
 
-#: src/route/Main/Settings/General.jsx:196
+#: src/route/Main/Settings/General.jsx:113
 msgid "Build Version:"
 msgstr ""
 
@@ -258,8 +260,8 @@ msgstr ""
 #: src/route/Main/PlayMenu/QuickPlayModal.jsx:98
 #: src/route/Main/PlayMenu/SessionsBrowser/NewSessionModal.jsx:224
 #: src/route/Main/Profile.jsx:321
-msgid "Cancel"
-msgstr ""
+#~ msgid "Cancel"
+#~ msgstr ""
 
 #: src/route/Main/Settings/Theme.jsx:149
 msgid "Caption Text"
@@ -328,25 +330,25 @@ msgstr ""
 
 #: src/route/Main/Recover.jsx:250
 #: src/route/Main/Register.jsx:242
-msgid "Confirm Password"
-msgstr ""
+#~ msgid "Confirm Password"
+#~ msgstr ""
 
 #: src/route/Main/Play/WaitModal.jsx:131
-msgid "Confirm ready to play"
-msgstr ""
+#~ msgid "Confirm ready to play"
+#~ msgstr ""
 
 #: src/route/Main/Login.jsx:136
 #: src/route/Main/Recover.jsx:173
 #: src/route/Main/RecoverCode.jsx:104
 #: src/route/Main/Register.jsx:164
-msgid "Connecting to:"
-msgstr ""
+#~ msgid "Connecting to:"
+#~ msgstr ""
 
 #: src/route/Main/Recover.jsx:275
 #: src/route/Main/RecoverCode.jsx:157
 #: src/route/Main/RecoverCode.jsx:188
-msgid "Continue"
-msgstr ""
+#~ msgid "Continue"
+#~ msgstr ""
 
 #: src/route/Main/Settings.jsx:59
 msgid "Controls"
@@ -363,12 +365,12 @@ msgstr ""
 #: src/route/Main/Profile.jsx:194
 #: src/route/Main/Profile.jsx:219
 #: src/route/Main/Profile.jsx:230
-msgid "Country"
-msgstr ""
+#~ msgid "Country"
+#~ msgstr ""
 
 #: src/route/Main/PlayMenu/SessionsPanel.jsx:75
-msgid "Current Games"
-msgstr ""
+#~ msgid "Current Games"
+#~ msgstr ""
 
 #: src/components/PieceLists.jsx:1245
 msgid "Custom"
@@ -427,13 +429,13 @@ msgid "Custom Arrows"
 msgstr ""
 
 #: src/route/Main/PlayMenu/SessionsBrowser/NewSessionModal.jsx:210
-msgid "Custom Format"
-msgstr ""
+#~ msgid "Custom Format"
+#~ msgstr ""
 
 #: src/route/Main/PlayMenu/SessionsBrowser/NewSessionModal.jsx:159
 #: src/route/Main/PlayMenu/SessionsBrowser.jsx:108
-msgid "Custom Variant"
-msgstr ""
+#~ msgid "Custom Variant"
+#~ msgstr ""
 
 #: src/route/Main/Settings/Theme.jsx:554
 msgid "Dark"
@@ -452,8 +454,8 @@ msgid "Dark Rectangle - White Stripe Color"
 msgstr ""
 
 #: src/route/MainAppBar/Menu.jsx:55
-msgid "Dashboard"
-msgstr "Tableau de bord"
+#~ msgid "Dashboard"
+#~ msgstr "Tableau de bord"
 
 #: src/components/PieceLists.jsx:1076
 #: src/route/Main/Settings/Theme.jsx:156
@@ -473,7 +475,7 @@ msgstr ""
 msgid "Default V2"
 msgstr ""
 
-#: src/route/Main/Settings/General.jsx:190
+#: src/route/Main/Settings/General.jsx:107
 msgid "Developer"
 msgstr ""
 
@@ -483,12 +485,12 @@ msgid "Disabled"
 msgstr ""
 
 #: src/route/Main/Profile.jsx:177
-msgid "Display name, people will see this name. <0>Limited to 100 characters</0>"
-msgstr ""
+#~ msgid "Display name, people will see this name. <0>Limited to 100 characters</0>"
+#~ msgstr ""
 
 #: src/route/Main/Login.jsx:204
-msgid "Don't have an account?"
-msgstr ""
+#~ msgid "Don't have an account?"
+#~ msgstr ""
 
 #: src/components/Player/Status.jsx:172
 msgid "Draw"
@@ -499,36 +501,36 @@ msgid "Draw!"
 msgstr ""
 
 #: src/route/MainAppBar/Menu.jsx:133
-msgid "Edit"
-msgstr ""
+#~ msgid "Edit"
+#~ msgstr ""
 
 #: src/route/MainAppBar/ProfileMenu.jsx:54
-msgid "Edit Profile"
-msgstr ""
+#~ msgid "Edit Profile"
+#~ msgstr ""
 
 #: src/route/Main/Profile.jsx:247
 #: src/route/Main/Profile.jsx:263
 #: src/route/Main/Recover.jsx:201
 #: src/route/Main/RecoverCode.jsx:132
 #: src/route/Main/Register.jsx:203
-msgid "Email"
-msgstr ""
+#~ msgid "Email"
+#~ msgstr ""
 
 #: src/route/Main/Profile.jsx:252
-msgid "Email address of the user, used primarily for password recovery."
-msgstr ""
+#~ msgid "Email address of the user, used primarily for password recovery."
+#~ msgstr ""
 
 #: src/route/Main/Settings/General.jsx:98
-msgid "Enable Chat"
-msgstr ""
+#~ msgid "Enable Chat"
+#~ msgstr ""
 
 #: src/route/Main/PlayMenu/SessionsBrowser.jsx:160
-msgid "End Date"
-msgstr ""
+#~ msgid "End Date"
+#~ msgstr ""
 
 #: src/route/Main/PlayMenu/SessionsBrowser.jsx:153
-msgid "Ended"
-msgstr ""
+#~ msgid "Ended"
+#~ msgstr ""
 
 #: src/route/Main/Settings/Theme.jsx:189
 msgid "Error - example error alert!"
@@ -597,14 +599,14 @@ msgid "Force Canvas Fallback"
 msgstr ""
 
 #: src/route/Main/Login.jsx:191
-msgid "Forgot Password?"
-msgstr ""
+#~ msgid "Forgot Password?"
+#~ msgstr ""
 
 #: src/route/Main/PlayMenu/SessionsBrowser/NewSessionModal.jsx:165
 #: src/route/Main/PlayMenu/SessionsBrowser/NewSessionModal.jsx:172
 #: src/route/Main/PlayMenu/SessionsBrowser.jsx:121
-msgid "Format"
-msgstr ""
+#~ msgid "Format"
+#~ msgstr ""
 
 #: src/components/SessionCard.jsx:293
 msgid "Format: {0}"
@@ -612,24 +614,24 @@ msgstr ""
 
 #: src/route/Main/PlayMenu/QuickPlayMenu/QuickPlayOptions.jsx:99
 #: src/route/Main/PlayMenu/QuickPlayMenu/QuickPlayOptions.jsx:110
-msgid "Formats"
-msgstr ""
+#~ msgid "Formats"
+#~ msgstr ""
 
 #: src/components/Player/ViewMenu.jsx:87
 msgid "Full"
 msgstr ""
 
 #: src/route/Main/Profile.jsx:188
-msgid "Full Name"
-msgstr ""
+#~ msgid "Full Name"
+#~ msgstr ""
 
 #: src/route/Main/Settings/Gameplay.jsx:349
 msgid "Future Board Transparency"
 msgstr ""
 
 #: src/route/Main/PlayMenu/SessionsPanel.jsx:51
-msgid "Game Requests"
-msgstr ""
+#~ msgid "Game Requests"
+#~ msgstr ""
 
 #: src/components/SessionCard.jsx:256
 msgid "Game ended {0}"
@@ -648,8 +650,8 @@ msgid "General"
 msgstr ""
 
 #: src/route/Main/PlayMenu/SessionsBrowser.jsx:202
-msgid "Go"
-msgstr ""
+#~ msgid "Go"
+#~ msgstr ""
 
 #: src/route/Main/Settings.jsx:55
 #~ msgid "Graphics"
@@ -668,22 +670,22 @@ msgid "H6 Heading"
 msgstr ""
 
 #: src/route/Main/PlayMenu/SessionsBrowser.jsx:163
-msgid "Has not ended"
-msgstr ""
+#~ msgid "Has not ended"
+#~ msgstr ""
 
 #: src/route/Main/Play/WaitModal.jsx:135
-msgid "Host selected another player"
-msgstr ""
+#~ msgid "Host selected another player"
+#~ msgstr ""
 
 #: src/route/Main/Profile.jsx:199
-msgid "ISO 3166-1 Alpha-3 compliant string to indicate user's country of origin."
-msgstr ""
+#~ msgid "ISO 3166-1 Alpha-3 compliant string to indicate user's country of origin."
+#~ msgstr ""
 
 #: src/route/Main/Settings.jsx:60
 msgid "Import / Export"
 msgstr ""
 
-#: src/route/Main/AnalyzeMenu.jsx:48
+#: src/route/Main/AnalyzeMenu.jsx:164
 msgid "Import Game"
 msgstr ""
 
@@ -722,18 +724,18 @@ msgid "Install Web App"
 msgstr ""
 
 #: src/route/Main/Register.jsx:135
-msgid "Invalid email!"
-msgstr ""
+#~ msgid "Invalid email!"
+#~ msgstr ""
 
 #: src/route/Main/Register.jsx:116
-msgid "Invalid username!"
-msgstr ""
+#~ msgid "Invalid username!"
+#~ msgstr ""
 
 #: src/route/Main/Play/WaitModal.jsx:178
-msgid "Join"
-msgstr ""
+#~ msgid "Join"
+#~ msgstr ""
 
-#: src/route/Main/Dashboard.jsx:52
+#: src/route/Main/AnalyzeMenu.jsx:64
 msgid "Join the community!"
 msgstr ""
 
@@ -746,7 +748,7 @@ msgstr ""
 msgid "Labels"
 msgstr ""
 
-#: src/route/Main/Settings/General.jsx:154
+#: src/route/Main/Settings/General.jsx:68
 msgid "Language"
 msgstr ""
 
@@ -755,8 +757,8 @@ msgid "Large Breakpoint"
 msgstr ""
 
 #: src/route/MainAppBar/Menu.jsx:102
-msgid "Learn"
-msgstr ""
+#~ msgid "Learn"
+#~ msgstr ""
 
 #: src/route/Main/Settings/Theme.jsx:540
 msgid "Light"
@@ -779,45 +781,45 @@ msgid "Link:"
 msgstr ""
 
 #: src/route/Main/Play/WaitModal.jsx:76
-msgid "Loading Game"
-msgstr ""
+#~ msgid "Loading Game"
+#~ msgstr ""
 
 #: src/route/Main/PlayMenu/SessionsBrowser/NewSessionModal.jsx:73
-msgid "Local"
-msgstr ""
+#~ msgid "Local"
+#~ msgstr ""
 
 #: src/route/Main/PlayMenu/QuickPlayMenu.jsx:187
 #: src/route/Main/PlayMenu/QuickPlayMenu.jsx:245
-msgid "Local Play"
-msgstr ""
+#~ msgid "Local Play"
+#~ msgstr ""
 
-#: src/route/Main/Settings/General.jsx:160
-#: src/route/Main/Settings/General.jsx:166
+#: src/route/Main/Settings/General.jsx:74
+#: src/route/Main/Settings/General.jsx:80
 msgid "Locale"
 msgstr ""
 
 #: src/route/MainAppBar/ProfileMenu.jsx:69
-msgid "Log Out"
-msgstr ""
+#~ msgid "Log Out"
+#~ msgstr ""
 
 #: src/route/Main/PlayMenu/QuickPlayMenu.jsx:137
 #: src/route/Main/PlayMenu/QuickPlayMenu.jsx:159
 #: src/route/Main/PlayMenu/QuickPlayMenu.jsx:196
 #: src/route/Main/PlayMenu/QuickPlayMenu.jsx:217
-msgid "Log in to play online!"
-msgstr ""
+#~ msgid "Log in to play online!"
+#~ msgstr ""
 
 #: src/route/MainAppBar.jsx:42
 #~ msgid "Login"
 #~ msgstr "Se connecter"
 
 #: src/route/Main/RecoverCode.jsx:180
-msgid "Look in the spam folder if it does not appear in the main folder."
-msgstr ""
+#~ msgid "Look in the spam folder if it does not appear in the main folder."
+#~ msgstr ""
 
 #: src/route/Main/Dashboard.jsx:57
-msgid "Looking for people to play with? Join the 5DCWMTT Discord!"
-msgstr ""
+#~ msgid "Looking for people to play with? Join the 5DCWMTT Discord!"
+#~ msgstr ""
 
 #: src/route/Main/Settings/Theme.jsx:277
 #: src/route/Main/Settings/Theme.jsx:283
@@ -833,13 +835,13 @@ msgid "Main Palette"
 msgstr ""
 
 #: src/route/Main/PlayMenu/QuickPlayModal.jsx:77
-msgid "Match Found! Waiting for match to start..."
-msgstr ""
+#~ msgid "Match Found! Waiting for match to start..."
+#~ msgstr ""
 
 #: src/route/Main/PlayMenu/SessionsBrowser/NewSessionModal.jsx:61
 #: src/route/Main/PlayMenu/SessionsBrowser/NewSessionModal.jsx:67
-msgid "Match Type"
-msgstr ""
+#~ msgid "Match Type"
+#~ msgstr ""
 
 #: src/route/Main/Settings/Theme.jsx:433
 msgid "Medium Breakpoint"
@@ -850,10 +852,10 @@ msgid "Menubar Color"
 msgstr ""
 
 #: src/route/Main/Dashboard.jsx:104
-msgid "Message of the day from:"
-msgstr ""
+#~ msgid "Message of the day from:"
+#~ msgstr ""
 
-#: src/route/Main/Settings/General.jsx:206
+#: src/route/Main/Settings/General.jsx:123
 msgid "Mobile Console"
 msgstr ""
 
@@ -878,21 +880,21 @@ msgid "Move Selected Highlight Transparency"
 msgstr ""
 
 #: src/route/Main/Profile.jsx:172
-msgid "Name"
-msgstr ""
+#~ msgid "Name"
+#~ msgstr ""
 
 #: src/route/Main/Settings/General.jsx:68
-msgid "Network"
-msgstr ""
+#~ msgid "Network"
+#~ msgstr ""
 
-#: src/route/Main/AnalyzeMenu.jsx:83
+#: src/route/Main/AnalyzeMenu.jsx:125
 msgid "New Analysis"
 msgstr ""
 
 #: src/route/Main/PlayMenu/SessionsBrowser/NewSessionModal.jsx:55
 #: src/route/Main/PlayMenu/SessionsBrowser.jsx:185
-msgid "New Game"
-msgstr ""
+#~ msgid "New Game"
+#~ msgstr ""
 
 #: src/components/Player/Notation/NotationLine/NotationSegment.jsx:335
 msgid "New Timeline Activating!"
@@ -913,20 +915,20 @@ msgid "Next Move"
 msgstr ""
 
 #: src/route/Main/PlayMenu/SessionsPanel.jsx:65
-msgid "No game requests..."
-msgstr ""
+#~ msgid "No game requests..."
+#~ msgstr ""
 
 #: src/route/Main/PlayMenu/SessionsBrowser.jsx:210
-msgid "No games available online"
-msgstr ""
+#~ msgid "No games available online"
+#~ msgstr ""
 
 #: src/route/Main/PlayMenu/SessionsPanel.jsx:89
-msgid "No ongoing games..."
-msgstr ""
+#~ msgid "No ongoing games..."
+#~ msgstr ""
 
 #: src/route/Main/PlayMenu/SessionsPanel.jsx:113
-msgid "No past games..."
-msgstr ""
+#~ msgid "No past games..."
+#~ msgstr ""
 
 #: src/route/Main/Settings/Gameplay.jsx:898
 msgid "Non-Spatial - Enable Curved Arrow"
@@ -990,24 +992,24 @@ msgid "Observe"
 msgstr ""
 
 #: src/route/Main/PlayMenu/SessionsBrowser/NewSessionModal.jsx:70
-msgid "Online"
-msgstr ""
+#~ msgid "Online"
+#~ msgstr ""
 
 #: src/route/Main/PlayMenu/SessionsBrowser.jsx:57
-msgid "Online Game Browser"
-msgstr ""
+#~ msgid "Online Game Browser"
+#~ msgstr ""
 
-#: src/route/Main/Dashboard.jsx:80
+#: src/route/Main/AnalyzeMenu.jsx:87
 msgid "Open 5D Chess Discord"
 msgstr ""
 
 #: src/route/Main/PlayMenu/QuickPlayModal.jsx:75
-msgid "Opponent did not accept, rejoining queue..."
-msgstr ""
+#~ msgid "Opponent did not accept, rejoining queue..."
+#~ msgstr ""
 
 #: src/route/Main/PlayMenu/QuickPlayMenu.jsx:257
-msgid "Options"
-msgstr ""
+#~ msgid "Options"
+#~ msgstr ""
 
 #: src/route/Main/Settings/Theme.jsx:152
 msgid "Overline Text"
@@ -1024,20 +1026,20 @@ msgstr ""
 #: src/route/Main/Login.jsx:181
 #: src/route/Main/Recover.jsx:233
 #: src/route/Main/Register.jsx:220
-msgid "Password"
-msgstr ""
+#~ msgid "Password"
+#~ msgstr ""
 
 #: src/route/Main/Register.jsx:90
-msgid "Passwords do not match!"
-msgstr ""
+#~ msgid "Passwords do not match!"
+#~ msgstr ""
 
 #: src/route/Main/Settings/Palette.jsx:489
 msgid "Past Capture Move Highlights"
 msgstr ""
 
 #: src/route/Main/PlayMenu/SessionsPanel.jsx:99
-msgid "Past Games"
-msgstr ""
+#~ msgid "Past Games"
+#~ msgstr ""
 
 #: src/route/Main/Settings/Palette.jsx:471
 msgid "Past Move Highlights"
@@ -1073,7 +1075,6 @@ msgid "Piece Width"
 msgstr ""
 
 #: src/components/SessionCard.jsx:310
-#: src/route/MainAppBar/Menu.jsx:70
 msgid "Play"
 msgstr ""
 
@@ -1117,8 +1118,8 @@ msgid "Primary Color"
 msgstr ""
 
 #: src/route/MainAppBar/Menu.jsx:150
-msgid "Profile"
-msgstr ""
+#~ msgid "Profile"
+#~ msgstr ""
 
 #: src/route/Main/Settings/Gameplay.jsx:469
 msgid "Promotion Menu"
@@ -1153,21 +1154,21 @@ msgid "Promotion Menu Shadow Transparency"
 msgstr ""
 
 #: src/route/MainAppBar/Menu.jsx:86
-msgid "Puzzles"
-msgstr ""
+#~ msgid "Puzzles"
+#~ msgstr ""
 
 #: src/route/Main/PlayMenu/QuickPlayMenu.jsx:152
 #: src/route/Main/PlayMenu/QuickPlayMenu.jsx:211
-msgid "Quick Play"
-msgstr ""
+#~ msgid "Quick Play"
+#~ msgstr ""
 
 #: src/route/Main/PlayMenu/QuickPlayModal.jsx:39
-msgid "Quick Play Queue"
-msgstr ""
+#~ msgid "Quick Play Queue"
+#~ msgstr ""
 
 #: src/route/Main/PlayMenu/SessionsBrowser/NewSessionModal.jsx:95
-msgid "Random"
-msgstr ""
+#~ msgid "Random"
+#~ msgstr ""
 
 #: src/route/Main/Settings/Gameplay.jsx:1148
 msgid "Rank Ripple Animation Duration (ms)"
@@ -1175,35 +1176,35 @@ msgstr ""
 
 #: src/route/Main/PlayMenu/SessionsBrowser/NewSessionModal.jsx:102
 #: src/route/Main/PlayMenu/SessionsBrowser.jsx:97
-msgid "Ranked"
-msgstr ""
+#~ msgid "Ranked"
+#~ msgstr ""
 
 #: src/route/Main/PlayMenu/QuickPlayMenu.jsx:174
 #: src/route/Main/PlayMenu/QuickPlayMenu.jsx:232
-msgid "Ranked Play"
-msgstr ""
+#~ msgid "Ranked Play"
+#~ msgstr ""
 
 #: src/route/Main/PlayMenu/QuickPlayModal.jsx:37
-msgid "Ranked Play Queue"
-msgstr ""
+#~ msgid "Ranked Play Queue"
+#~ msgstr ""
 
 #: src/route/Main/Play/WaitModal.jsx:187
-msgid "Ready"
-msgstr ""
+#~ msgid "Ready"
+#~ msgstr ""
 
 #: src/route/Main/Recover.jsx:168
 #: src/route/Main/RecoverCode.jsx:99
 #: src/route/Main/RecoverCode.jsx:171
-msgid "Recover Password"
-msgstr ""
+#~ msgid "Recover Password"
+#~ msgstr ""
 
 #: src/route/Main/Recover.jsx:216
-msgid "Recovery Code"
-msgstr ""
+#~ msgid "Recovery Code"
+#~ msgstr ""
 
 #: src/route/Main/PlayMenu/SessionsBrowser.jsx:192
-msgid "Refresh"
-msgstr ""
+#~ msgid "Refresh"
+#~ msgstr ""
 
 #: src/route/Main/Settings/Gameplay.jsx:99
 #: src/route/Main/Settings/Palette.jsx:95
@@ -1240,8 +1241,8 @@ msgid "Ripple Animation"
 msgstr ""
 
 #: src/route/Main/Profile.jsx:314
-msgid "Save"
-msgstr ""
+#~ msgid "Save"
+#~ msgstr ""
 
 #: src/route/Main/Dashboard/PwaInstall.jsx:25
 msgid "Save, load, and study games!"
@@ -1257,28 +1258,26 @@ msgid "Secondary Color"
 msgstr ""
 
 #: src/route/Main/Profile.jsx:233
-msgid "Select Country"
-msgstr ""
+#~ msgid "Select Country"
+#~ msgstr ""
 
 #: src/route/Main/Play/WaitModal.jsx:120
-msgid "Select player from join requests"
-msgstr ""
+#~ msgid "Select player from join requests"
+#~ msgstr ""
 
 #: src/route/Main/Settings/General.jsx:92
-msgid "Server Key"
-msgstr ""
+#~ msgid "Server Key"
+#~ msgstr ""
 
 #: src/route/Main/Settings/General.jsx:80
-msgid "Server Url"
-msgstr ""
+#~ msgid "Server Url"
+#~ msgstr ""
 
 #: src/route/Main/Analyze.jsx:92
-#: src/route/Main/Play.jsx:120
 msgid "Session does not exist!"
 msgstr ""
 
-#: src/route/MainAppBar/Menu.jsx:168
-#: src/route/MainAppBar/ProfileMenu.jsx:61
+#: src/route/MainAppBar/Menu.jsx:63
 msgid "Settings"
 msgstr ""
 
@@ -1304,8 +1303,8 @@ msgid "Show Checkered Background"
 msgstr ""
 
 #: src/route/Main/Profile.jsx:269
-msgid "Show Email Publically"
-msgstr ""
+#~ msgid "Show Email Publically"
+#~ msgstr ""
 
 #: src/route/Main/Settings/Gameplay.jsx:149
 msgid "Show FPS Indicator"
@@ -1328,25 +1327,21 @@ msgstr ""
 msgid "Show Striped"
 msgstr ""
 
-#: src/route/Main/Login.jsx:131
-#: src/route/Main/Login.jsx:228
 #: src/route/MainAppBar/LoginButton.jsx:49
-msgid "Sign In"
-msgstr ""
+#~ msgid "Sign In"
+#~ msgstr ""
 
-#: src/route/Main/Register.jsx:159
-#: src/route/Main/Register.jsx:280
 #: src/route/MainAppBar/LoginButton.jsx:65
-msgid "Sign Up"
-msgstr ""
+#~ msgid "Sign Up"
+#~ msgstr ""
 
 #: src/route/Main/Settings/Theme.jsx:420
 msgid "Small Breakpoint"
 msgstr ""
 
 #: src/route/Main/Profile.jsx:120
-msgid "Small image or icon used for a user's avatar."
-msgstr ""
+#~ msgid "Small image or icon used for a user's avatar."
+#~ msgstr ""
 
 #: src/route/Main/Settings/Palette.jsx:129
 msgid "Solid Background Color"
@@ -1403,30 +1398,30 @@ msgstr ""
 
 #: src/route/Main/Play/WaitModal.jsx:205
 #: src/route/Main/PlayMenu/SessionsBrowser/NewSessionModal.jsx:244
-msgid "Start"
-msgstr ""
+#~ msgid "Start"
+#~ msgstr ""
 
 #: src/route/Main/PlayMenu/SessionsBrowser.jsx:145
-msgid "Start / Creation Date"
-msgstr ""
+#~ msgid "Start / Creation Date"
+#~ msgstr ""
 
-#: src/route/Main/AnalyzeMenu.jsx:75
-#: src/route/Main/AnalyzeMenu.jsx:114
+#: src/route/Main/AnalyzeMenu.jsx:155
+#: src/route/Main/AnalyzeMenu.jsx:190
 msgid "Start Analysis"
 msgstr ""
 
 #: src/route/Main/Play/WaitModal.jsx:124
-msgid "Start game"
-msgstr ""
+#~ msgid "Start game"
+#~ msgstr ""
 
 #: src/route/Main/PlayMenu/SessionsBrowser.jsx:138
-msgid "Started"
-msgstr ""
+#~ msgid "Started"
+#~ msgstr ""
 
 #: src/route/Main/PlayMenu/SessionsBrowser/NewSessionModal.jsx:80
 #: src/route/Main/PlayMenu/SessionsBrowser/NewSessionModal.jsx:86
-msgid "Starting Side"
-msgstr ""
+#~ msgid "Starting Side"
+#~ msgstr ""
 
 #: src/route/Main/Settings/Gameplay.jsx:227
 msgid "Strip Ratio"
@@ -1439,8 +1434,8 @@ msgid "Submit"
 msgstr ""
 
 #: src/route/Main/Play/WaitModal.jsx:127
-msgid "Submit join request"
-msgstr ""
+#~ msgid "Submit join request"
+#~ msgstr ""
 
 #: src/route/Main/Settings/Theme.jsx:137
 msgid "Subtitle1"
@@ -1469,6 +1464,10 @@ msgstr ""
 #: src/route/Main/Dashboard.jsx:26
 #~ msgid "This view is still a work in progress."
 #~ msgstr "Cet écran n'est pas encore fini."
+
+#: src/route/Main/AnalyzeMenu.jsx:39
+msgid "This website is a fork of Chess In 5D. It contains Analyze only and does not interact with backend."
+msgstr ""
 
 #: src/components/Player/SettingsMenu.jsx:191
 #: src/route/Main/Settings/Palette.jsx:345
@@ -1499,56 +1498,53 @@ msgid "Undo"
 msgstr ""
 
 #: src/route/Main/PlayMenu/SessionsBrowser.jsx:115
-msgid "Unknown Variant"
-msgstr ""
+#~ msgid "Unknown Variant"
+#~ msgstr ""
 
 #: src/route/Main/Play/WaitModal.jsx:196
-msgid "Unready"
-msgstr ""
+#~ msgid "Unready"
+#~ msgstr ""
 
 #: src/route/Main/PlayMenu/SessionsBrowser/NewSessionModal.jsx:180
 #: src/route/Main/PlayMenu/SessionsBrowser.jsx:125
-msgid "Untimed"
-msgstr ""
+#~ msgid "Untimed"
+#~ msgstr ""
 
 #: src/route/Main/Settings/General.jsx:112
-msgid "Use BOSH for Chat"
-msgstr ""
+#~ msgid "Use BOSH for Chat"
+#~ msgstr ""
 
 #: src/route/Main/PlayMenu/SessionsBrowser/NewSessionModal.jsx:187
-msgid "Use Custom Format"
-msgstr ""
+#~ msgid "Use Custom Format"
+#~ msgstr ""
 
 #: src/route/Main/PlayMenu/SessionsBrowser/NewSessionModal.jsx:136
-msgid "Use Custom Variant"
-msgstr ""
+#~ msgid "Use Custom Variant"
+#~ msgstr ""
 
-#: src/route/Main/Settings/General.jsx:228
+#: src/route/Main/Settings/General.jsx:145
 msgid "User Agent:"
 msgstr ""
 
 #: src/route/Main/Profile.jsx:288
-msgid "User information available for everyone to see. <0>Limited to 500 characters</0>"
-msgstr ""
+#~ msgid "User information available for everyone to see. <0>Limited to 500 characters</0>"
+#~ msgstr ""
 
 #: src/route/Main/Login.jsx:159
 #: src/route/Main/Register.jsx:187
-msgid "Username"
-msgstr ""
+#~ msgid "Username"
+#~ msgstr ""
 
 #: src/route/Main/Register.jsx:108
-msgid "Username already taken!"
-msgstr ""
+#~ msgid "Username already taken!"
+#~ msgstr ""
 
 #: src/route/Main/Register.jsx:124
-msgid "Username blacklisted!"
-msgstr ""
+#~ msgid "Username blacklisted!"
+#~ msgstr ""
 
-#: src/route/Main/AnalyzeMenu.jsx:89
-#: src/route/Main/AnalyzeMenu.jsx:95
-#: src/route/Main/PlayMenu/SessionsBrowser/NewSessionModal.jsx:117
-#: src/route/Main/PlayMenu/SessionsBrowser/NewSessionModal.jsx:124
-#: src/route/Main/PlayMenu/SessionsBrowser.jsx:104
+#: src/route/Main/AnalyzeMenu.jsx:130
+#: src/route/Main/AnalyzeMenu.jsx:136
 msgid "Variant"
 msgstr ""
 
@@ -1558,32 +1554,32 @@ msgstr ""
 
 #: src/route/Main/PlayMenu/QuickPlayMenu/QuickPlayOptions.jsx:76
 #: src/route/Main/PlayMenu/QuickPlayMenu/QuickPlayOptions.jsx:87
-msgid "Variants"
-msgstr ""
+#~ msgid "Variants"
+#~ msgstr ""
 
 #: src/route/Main/Play/WaitModal.jsx:129
-msgid "Waiting for host to select player..."
-msgstr ""
+#~ msgid "Waiting for host to select player..."
+#~ msgstr ""
 
 #: src/route/Main/Play/WaitModal.jsx:133
-msgid "Waiting for host to start game..."
-msgstr ""
+#~ msgid "Waiting for host to start game..."
+#~ msgstr ""
 
 #: src/route/Main/Play/WaitModal.jsx:118
-msgid "Waiting for join requests..."
-msgstr ""
+#~ msgid "Waiting for join requests..."
+#~ msgstr ""
 
 #: src/route/Main/Play/WaitModal.jsx:122
-msgid "Waiting for opponent to confirm ready to play..."
-msgstr ""
+#~ msgid "Waiting for opponent to confirm ready to play..."
+#~ msgstr ""
 
 #: src/route/Main/Dashboard.jsx:59
 #~ msgid "Want to contribute? Working on a 5D Chess project? Join the Open 5D Chess Discord!"
 #~ msgstr ""
 
 #: src/route/Main/Dashboard.jsx:71
-msgid "Want to contribute? Working on an open source 5D Chess project? Got a bug to report? Join the Open 5D Chess Discord!"
-msgstr ""
+#~ msgid "Want to contribute? Working on an open source 5D Chess project? Got a bug to report? Join the Open 5D Chess Discord!"
+#~ msgstr ""
 
 #: src/route/Main/Settings/Theme.jsx:192
 msgid "Warning - example warning alert!"
@@ -1597,12 +1593,15 @@ msgstr ""
 msgid "Web app available!"
 msgstr ""
 
+#: src/route/Main/AnalyzeMenu.jsx:36
+msgid "Welcome to Chess In 5D (Stripped ver.)!"
+msgstr ""
+
 #: src/route/Main/Dashboard.jsx:26
-msgid "Welcome to Chess In 5D!"
-msgstr "Bienvenue sur « Chess in 5D » !"
+#~ msgid "Welcome to Chess In 5D!"
+#~ msgstr "Bienvenue sur « Chess in 5D » !"
 
 #: src/components/Player/SettingsMenu.jsx:91
-#: src/route/Main/PlayMenu/SessionsBrowser/NewSessionModal.jsx:89
 msgid "White"
 msgstr ""
 
@@ -1619,8 +1618,8 @@ msgid "White Board Outline"
 msgstr ""
 
 #: src/route/Main/PlayMenu/SessionsBrowser.jsx:61
-msgid "White Player"
-msgstr ""
+#~ msgid "White Player"
+#~ msgstr ""
 
 #: src/route/Main/Settings/Palette.jsx:417
 msgid "White Squares"
@@ -1628,8 +1627,6 @@ msgstr ""
 
 #: src/components/SessionCard.jsx:218
 #: src/components/SessionCard.jsx:224
-#: src/route/Main/PlayMenu/SessionsBrowser.jsx:68
-#: src/route/Main/PlayMenu/SessionsBrowser.jsx:86
 msgid "[Empty]"
 msgstr ""
 
@@ -1638,12 +1635,12 @@ msgid "vs"
 msgstr ""
 
 #: src/route/Main/PlayMenu/QuickPlayModal.jsx:81
-msgid "{0} players looking for match"
-msgstr ""
+#~ msgid "{0} players looking for match"
+#~ msgstr ""
 
 #: src/route/Main/PlayMenu/QuickPlayModal.jsx:79
-msgid "{0} players looking for ranked match"
-msgstr ""
+#~ msgid "{0} players looking for ranked match"
+#~ msgstr ""
 
 #: src/components/SessionCard.jsx:127
 msgid "{blackPlayerName} won by checkmate!"
