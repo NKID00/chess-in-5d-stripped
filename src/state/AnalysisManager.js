@@ -14,7 +14,7 @@ export default class AnalysisManager {
   }
   async init(id, emptyBase = false) {
     //Import session if available
-    this.importB64 = '';
+    this.importB64 = id;
     this.pastAvailableMoves = [];
     this.futureAvailableMoves = [];
     this.currentActionHistory = [];
