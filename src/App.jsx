@@ -21,8 +21,6 @@ import * as muiTheme from 'state/theme'
 //App components
 import Main from 'route/Main';
 import UpdateToast from 'route/UpdateToast';
-import ConverseManager from 'route/ConverseManager';
-import Eruda from 'route/Eruda';
 
 //Importing fonts preemptively
 import 'components/FontLists';
@@ -60,8 +58,6 @@ export default class App extends React.Component {
                   <div>
                     <UpdateToast />
                     <Main />
-                    <ConverseManager />
-                    <Eruda />
                   </div>
                 </ReactPWAInstallProvider>
               </SnackbarProvider>

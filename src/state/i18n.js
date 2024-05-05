@@ -4,9 +4,6 @@ import { messages as frMessages } from '@lingui/loader!locales/fr/messages.po'; 
 import { messages as zhCnMessages } from '@lingui/loader!locales/zh-CN/messages.po'; // eslint-disable-line import/no-webpack-loader-syntax
 import { en, fr, zh } from 'make-plural/plurals';
 
-//Locale for converse.js
-import 'converse.js/dist/locales/fr-LC_MESSAGES-converse-po';
-
 import moment from 'moment';
 
 import * as settings from 'state/settings';
