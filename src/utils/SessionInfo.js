@@ -9,37 +9,6 @@ export const getInfo = async (session) => {
   let blackPlayerName = '';
   let blackPlayerType = 'blank'; //'human', 'bot', or 'blank'
   let blackUsername = '';
-  //Define a function that grabs information from user object returned by 5d-chess-server
-  const processUser = (user, player = 'white') => {
-    if(player === 'white') {
-      if(user.fullname.length > 0) {
-        whitePlayerName = user.fullname;
-      }
-      else {
-        whitePlayerName = user.username;
-      }
-      whitePlayerType = user.bot ? 'bot' : 'human';
-      whiteUsername = user.username;
-    }
-    else if(player === 'black') {
-      if(user.fullname.length > 0) {
-        blackPlayerName = user.fullname;
-      }
-      else {
-        blackPlayerName = user.username;
-      }
-      blackPlayerType = user.bot ? 'bot' : 'human';
-      blackUsername = user.username;
-    }
-    if(typeof player === 'string') {
-      if(authStore.isLoggedIn()) {
-        let selfUsername = authStore.get().username;
-        if(selfUsername === user.username) {
-          canPlay = true;
-        }
-      }
-    }
-  };
   if(session.white.length > 0 || session.black.length > 0) {
     let selfUsername = authStore.get().username;
     if(selfUsername.length <= 0) {
