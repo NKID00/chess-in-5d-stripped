@@ -55,92 +55,6 @@ export default class General extends React.Component {
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <Accordion
-              expanded={this.state.section === 'network' && this.state.showSection}
-              onChange={() => {
-                this.setState({ section: 'network', showSection: this.state.section !== 'network' ? true : !this.state.showSection });
-              }}
-              elevation={0}
-              style={{ margin: 0 }}
-              square={false}
-              TransitionProps={{ unmountOnExit: true }}
-            >
-              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                <Typography variant='h5'><Trans>Network</Trans></Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <Grid container spacing={2}>
-                  <Grid item xs={12} sm={6} md={12} lg={6}>
-                    <FormControl fullWidth>
-                      <TextField
-                        variant='outlined'
-                        value={this.state.settings.server}
-                        onChange={(event) => {
-                          this.setState(deepmerge(this.state, { settings: { server: event.target.value } }));
-                        }}
-                        label={<Trans>Server Url</Trans>}
-                      />
-                    </FormControl>
-                  </Grid>
-                  <Grid item xs={12} sm={6} md={12} lg={6}>
-                    <FormControl fullWidth>
-                      <TextField
-                        variant='outlined'
-                        value={this.state.settings.key}
-                        onChange={(event) => {
-                          this.setState(deepmerge(this.state, { settings: { key: event.target.value } }));
-                        }}
-                        label={<Trans>Server Key</Trans>}
-                      />
-                    </FormControl>
-                  </Grid>
-                  <Grid item xs={12} sm={6} md={12} lg={6}>
-                    <FormControlLabel
-                      label={<Trans>Enable Chat</Trans>}
-                      control={
-                        <Checkbox
-                          color='primary'
-                          checked={this.state.settings.xmpp}
-                          onChange={(e) => { 
-                            this.setState(deepmerge(this.state, { settings: { xmpp: e.target.checked } }));
-                          }}
-                        />
-                      }
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={6} md={12} lg={6}>
-                    <FormControlLabel
-                      label={<Trans>Use BOSH for Chat</Trans>}
-                      control={
-                        <Checkbox
-                          color='primary'
-                          checked={this.state.settings.xmppBosh}
-                          onChange={(e) => { 
-                            this.setState(deepmerge(this.state, { settings: { xmppBosh: e.target.checked } }));
-                          }}
-                        />
-                      }
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={6} md={12} lg={6}>
-                    <FormControlLabel
-                      label={<Trans>Auto Update</Trans>}
-                      control={
-                        <Checkbox
-                          color='primary'
-                          checked={this.state.settings.autoUpdate}
-                          onChange={(e) => { 
-                            this.setState(deepmerge(this.state, { settings: { autoUpdate: e.target.checked } }));
-                          }}
-                        />
-                      }
-                    />
-                  </Grid>
-                </Grid>
-              </AccordionDetails>
-            </Accordion>
-          </Grid>
-          <Grid item xs={12}>
-            <Accordion
               expanded={this.state.section === 'language' && this.state.showSection}
               onChange={() => {
                 this.setState({ section: 'language', showSection: this.state.section !== 'language' ? true : !this.state.showSection });
@@ -167,6 +81,9 @@ export default class General extends React.Component {
                       >
                         <MenuItem value='en'>
                           English
+                        </MenuItem>
+                        <MenuItem value='zh-CN'>
+                          简体中文
                         </MenuItem>
                       </Select>
                     </FormControl>

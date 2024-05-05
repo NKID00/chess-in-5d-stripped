@@ -3,7 +3,6 @@ import React from 'react';
 import EmitterContext from 'utils/EmitterContext';
 import * as authStore from 'state/auth';
 import * as settings from 'state/settings';
-import * as auth from 'network/auth';
 
 import 'converse.js/dist/converse.min';
 import 'converse.js/dist/converse.min.css';
@@ -72,7 +71,6 @@ export default class ConverseManager extends React.Component {
     if(!this.isInitialized && authStore.isLoggedIn() && settings.get().xmpp) {
       var storedAuth = authStore.get();
       if(storedAuth.xmpp === null) {
-        await auth.xmpp();
         storedAuth = authStore.get();
       }
       if(!this.isInitialized && storedAuth.xmpp !== null) {

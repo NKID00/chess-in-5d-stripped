@@ -1,7 +1,6 @@
 import Chess from '5d-chess-js';
 import { createNanoEvents } from 'nanoevents';
 
-import * as sessions from 'network/sessions';
 import * as LinkCompression from 'utils/LinkCompression';
 
 const deepcopy = require('deepcopy');
@@ -16,26 +15,6 @@ export default class AnalysisManager {
   async init(id, emptyBase = false) {
     //Import session if available
     this.importB64 = '';
-    this.session = await sessions.getSession(id);
-    if(this.session === null) {
-      try {
-        let pastSessions = await sessions.getPastSessionsQuery({ id: id });
-        if(pastSessions.length > 0) {
-          this.session = pastSessions[0];
-          this.emitter.emit('onSessionUpdate', this.session);
-        }
-        else {
-          //No session available, assuming id is Base64 import
-          this.importB64 = id;
-        }
-      }
-      catch(err) {
-        this.importB64 = id;
-      }
-    }
-    else {
-      this.emitter.emit('onSessionUpdate', this.session);
-    }
     this.pastAvailableMoves = [];
     this.futureAvailableMoves = [];
     this.currentActionHistory = [];
@@ -52,27 +31,12 @@ export default class AnalysisManager {
     window.chessClock = this.chessClock;
   }
   reset() {
-    //If session based
-    if(this.session !== null) {
-      //Initialize chess board with variant
-      if(this.session.variant.includes('[')) {
-        this.chess.import(this.session.variant);
-        this.chess.reset();
-      }
-      else {
-        this.chess.reset(this.session.variant);
-      }
-      this.currentActionHistory = deepcopy(this.session.actionHistory);
-      this.currentMoveBuffer = deepcopy(this.session.moveBuffer);
-    }
-    else {
-      let importStr = LinkCompression.decompressLink(this.importB64);
-      let tmpChess = new Chess();
-      tmpChess.import(importStr);
-      this.chess.state(tmpChess.state());
-      this.currentActionHistory = tmpChess.actionHistory;
-      this.currentMoveBuffer = tmpChess.moveBuffer;
-    }
+    let importStr = LinkCompression.decompressLink(this.importB64);
+    let tmpChess = new Chess();
+    tmpChess.import(importStr);
+    this.chess.state(tmpChess.state());
+    this.currentActionHistory = tmpChess.actionHistory;
+    this.currentMoveBuffer = tmpChess.moveBuffer;
     this.baseActionHistory = deepcopy(this.currentActionHistory);
     this.baseMoveBuffer = deepcopy(this.currentMoveBuffer);
     this.setCurrentState(false);

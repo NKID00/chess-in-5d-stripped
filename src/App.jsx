@@ -17,7 +17,6 @@ import ReactPWAInstallProvider from 'react-pwa-install';
 //App specific event and state management
 import EmitterContext from 'utils/EmitterContext';
 import * as muiTheme from 'state/theme'
-import * as auth from 'network/auth';
 
 //App components
 import Main from 'route/Main';
@@ -48,7 +47,6 @@ export default class App extends React.Component {
         muiTheme: muiTheme.get()
       });
     });
-    auth.init(this.emitter);
   }
   render() {
     return (
