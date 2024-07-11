@@ -1,0 +1,6 @@
+/*! # FEN Conversion utilities
+      
+          This module contains a few functions allowing the conversion from/to 5DFEN.
+      
+          The FEN format is described in [fen.ebnf](https://github.com/adri326/5dchess-notation/blob/master/fen.ebnf).
+      */
